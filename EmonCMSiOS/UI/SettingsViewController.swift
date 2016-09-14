@@ -8,11 +8,15 @@
 
 import UIKit
 
+import Former
+
 protocol SettingsViewControllerDelegate: class {
+
   func settingsViewControllerDidRequestLogout(controller: SettingsViewController)
+
 }
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: FormViewController {
 
   var viewModel: SettingsViewModel!
 
@@ -22,10 +26,22 @@ class SettingsViewController: UIViewController {
     super.viewDidLoad()
 
     self.title = "Settings"
+
+    self.setupFormer()
   }
 
-  @IBAction private func logout() {
-    self.delegate?.settingsViewControllerDidRequestLogout(controller: self)
+  private func setupFormer() {
+    let logoutRow = LabelRowFormer<FormLabelCell>() {
+      $0.accessoryType = .disclosureIndicator
+      }.configure {
+        $0.text = "Logout"
+      }.onSelected { [weak self] _ in
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
+    }
+
+    let section = SectionFormer(rowFormer: logoutRow)
+    former.append(sectionFormer: section)
   }
 
 }
