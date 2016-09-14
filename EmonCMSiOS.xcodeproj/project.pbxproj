@@ -1,0 +1,508 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
+		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
+		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
+		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
+		C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
+		C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83581D86B6120058C059 /* FeedViewController.swift */; };
+		C9BB835B1D86D8770058C059 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835A1D86D8770058C059 /* SettingsViewController.swift */; };
+		C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */; };
+		C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */; };
+		C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83611D873E130058C059 /* FeedListViewModel.swift */; };
+		C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83631D8743530058C059 /* FeedViewModel.swift */; };
+		C9BB83671D87F52E0058C059 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83661D87F52E0058C059 /* MainController.swift */; };
+		C9BB83691D87F5630058C059 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* LoginController.swift */; };
+		C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */; };
+		C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */; };
+		C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */; };
+		C9BB83721D8883480058C059 /* FeedData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* FeedData.swift */; };
+		C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */; };
+		C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */; };
+		C9C041A21D85F7D600E3CEC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */; };
+		C9C041A51D85F7D600E3CEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9C041A31D85F7D600E3CEC4 /* LaunchScreen.storyboard */; };
+		D0D2080C98138B924898A4D9 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.release.xcconfig"; sourceTree = "<group>"; };
+		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
+		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
+		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
+		C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatHelpers.swift; sourceTree = "<group>"; };
+		C9BB83581D86B6120058C059 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		C9BB835A1D86D8770058C059 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
+		C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountQRViewController.swift; sourceTree = "<group>"; };
+		C9BB83611D873E130058C059 /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
+		C9BB83631D8743530058C059 /* FeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		C9BB83661D87F52E0058C059 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		C9BB83681D87F5630058C059 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
+		C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewModel.swift; sourceTree = "<group>"; };
+		C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		C9BB836E1D8800620058C059 /* EmonCMSiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSiOS.entitlements; sourceTree = "<group>"; };
+		C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotViewController.swift; sourceTree = "<group>"; };
+		C9BB83711D8883480058C059 /* FeedData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedData.swift; sourceTree = "<group>"; };
+		C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmonCMSiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C9C0419F1D85F7D600E3CEC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C9C041A41D85F7D600E3CEC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C9C041A61D85F7D600E3CEC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C9C041941D85F7D600E3CEC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0D2080C98138B924898A4D9 /* Pods_EmonCMSiOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		26BEF4AB69003D70074DBC16 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6556328E05CB7C00C84AB78E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */,
+				BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		C9BB83461D869CB00058C059 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB834C1D869CC80058C059 /* Account.swift */,
+				C9BB83531D86AA3E0058C059 /* Feed.swift */,
+				C9BB83711D8883480058C059 /* FeedData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C9BB83471D869CB00058C059 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB83491D869CB00058C059 /* FeedListViewController.swift */,
+				C9BB83581D86B6120058C059 /* FeedViewController.swift */,
+				C9BB835A1D86D8770058C059 /* SettingsViewController.swift */,
+				C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */,
+				C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */,
+				C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		C9BB834E1D869DBF0058C059 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C9BB83551D86B19C0058C059 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C9BB83601D873DF70058C059 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB83611D873E130058C059 /* FeedListViewModel.swift */,
+				C9BB83631D8743530058C059 /* FeedViewModel.swift */,
+				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
+				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C9BB83651D87F52E0058C059 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB83661D87F52E0058C059 /* MainController.swift */,
+				C9BB83681D87F5630058C059 /* LoginController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C9C0418E1D85F7D600E3CEC4 = {
+			isa = PBXGroup;
+			children = (
+				C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */,
+				C9C041981D85F7D600E3CEC4 /* Products */,
+				6556328E05CB7C00C84AB78E /* Pods */,
+				26BEF4AB69003D70074DBC16 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C9C041981D85F7D600E3CEC4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */ = {
+			isa = PBXGroup;
+			children = (
+				C9BB836E1D8800620058C059 /* EmonCMSiOS.entitlements */,
+				C9BB834E1D869DBF0058C059 /* API */,
+				C9BB83461D869CB00058C059 /* Model */,
+				C9BB83601D873DF70058C059 /* ViewModel */,
+				C9BB83651D87F52E0058C059 /* Controllers */,
+				C9BB83471D869CB00058C059 /* UI */,
+				C9BB83551D86B19C0058C059 /* Helpers */,
+				C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */,
+				C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */,
+				C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */,
+				C9C041A31D85F7D600E3CEC4 /* LaunchScreen.storyboard */,
+				C9C041A61D85F7D600E3CEC4 /* Info.plist */,
+			);
+			path = EmonCMSiOS;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9C041A91D85F7D600E3CEC4 /* Build configuration list for PBXNativeTarget "EmonCMSiOS" */;
+			buildPhases = (
+				3F8BD55DAFAD335A31A88476 /* [CP] Check Pods Manifest.lock */,
+				C9C041931D85F7D600E3CEC4 /* Sources */,
+				C9C041941D85F7D600E3CEC4 /* Frameworks */,
+				C9C041951D85F7D600E3CEC4 /* Resources */,
+				3DE1AAB83807856E89450B15 /* [CP] Embed Pods Frameworks */,
+				3B2732AE6A342CD88ACBA4D5 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EmonCMSiOS;
+			productName = EmonCMSiOS;
+			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C9C0418F1D85F7D600E3CEC4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0800;
+				LastUpgradeCheck = 0800;
+				ORGANIZATIONNAME = "Matt Galloway";
+				TargetAttributes = {
+					C9C041961D85F7D600E3CEC4 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = ZUVAR94RXN;
+						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = C9C041921D85F7D600E3CEC4 /* Build configuration list for PBXProject "EmonCMSiOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C9C0418E1D85F7D600E3CEC4;
+			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C9C041951D85F7D600E3CEC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9C041A51D85F7D600E3CEC4 /* LaunchScreen.storyboard in Resources */,
+				C9C041A21D85F7D600E3CEC4 /* Assets.xcassets in Resources */,
+				C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		3B2732AE6A342CD88ACBA4D5 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3DE1AAB83807856E89450B15 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3F8BD55DAFAD335A31A88476 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C9C041931D85F7D600E3CEC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */,
+				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
+				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
+				C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */,
+				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
+				C9BB83691D87F5630058C059 /* LoginController.swift in Sources */,
+				C9BB835B1D86D8770058C059 /* SettingsViewController.swift in Sources */,
+				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
+				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
+				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
+				C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */,
+				C9BB834D1D869CC80058C059 /* Account.swift in Sources */,
+				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
+				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
+				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
+				C9BB83721D8883480058C059 /* FeedData.swift in Sources */,
+				C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */,
+				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9C0419F1D85F7D600E3CEC4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C9C041A31D85F7D600E3CEC4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C9C041A41D85F7D600E3CEC4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C9C041A71D85F7D600E3CEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9C041A81D85F7D600E3CEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C9C041AA1D85F7D600E3CEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
+				DEVELOPMENT_TEAM = ZUVAR94RXN;
+				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		C9C041AB1D85F7D600E3CEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
+				DEVELOPMENT_TEAM = ZUVAR94RXN;
+				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C9C041921D85F7D600E3CEC4 /* Build configuration list for PBXProject "EmonCMSiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9C041A71D85F7D600E3CEC4 /* Debug */,
+				C9C041A81D85F7D600E3CEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9C041A91D85F7D600E3CEC4 /* Build configuration list for PBXNativeTarget "EmonCMSiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9C041AA1D85F7D600E3CEC4 /* Debug */,
+				C9C041AB1D85F7D600E3CEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C9C0418F1D85F7D600E3CEC4 /* Project object */;
+}
