@@ -126,6 +126,9 @@ class AddAccountViewController: FormViewController {
   fileprivate func updateWithAccount(_ account: Account) {
     self.urlRow?.text = account.url
     self.apikeyRow?.text = account.apikey
+    self.urlRow?.update()
+    self.apikeyRow?.update()
+    self.updateSaveButtonState()
   }
 
 }

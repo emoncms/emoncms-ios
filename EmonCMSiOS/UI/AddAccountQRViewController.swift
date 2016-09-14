@@ -30,8 +30,40 @@ class AddAccountQRViewController: UIViewController {
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
   }
 
-  func cancel() {
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.checkCameraPermissionAndSetupStack()
+    self.captureSession?.startRunning()
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    self.captureSession?.stopRunning()
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    self.videoPreviewLayer?.frame = self.playerLayerView.bounds
+  }
+
+  private dynamic func cancel() {
     self.delegate?.addAccountQRViewControllerDidCancel(controller: self)
+  }
+
+  private func checkCameraPermissionAndSetupStack() {
+    guard self.captureSession == nil else { return }
+
+    let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+    switch authStatus {
+    case .authorized:
+      self.setupAVStack()
+    case .notDetermined:
+      self.askForCameraPermission()
+    case .denied:
+      self.presentCameraRequiredDialog()
+    case .restricted:
+      self.presentCameraRestrictedDialog()
+    }
   }
 
   private func setupAVStack() {
@@ -45,12 +77,12 @@ class AddAccountQRViewController: UIViewController {
 
       let captureMetadataOutput = AVCaptureMetadataOutput()
       captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-      captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
       captureSession.addOutput(captureMetadataOutput)
+      captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
 
       if let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
         videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        videoPreviewLayer.frame = self.playerLayerView.layer.bounds
+        videoPreviewLayer.frame = self.playerLayerView.bounds
         self.videoPreviewLayer = videoPreviewLayer
         self.playerLayerView.layer.addSublayer(videoPreviewLayer)
       }
@@ -60,6 +92,33 @@ class AddAccountQRViewController: UIViewController {
     } catch {
       print("Error setting up AV stack: \(error)")
     }
+  }
+
+  private func askForCameraPermission() {
+    AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (enabled) in
+      if enabled {
+        self.setupAVStack()
+      } else {
+        self.presentCameraRequiredDialog()
+      }
+    }
+  }
+
+  private func presentCameraRequiredDialog() {
+    let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
+      if let url = URL(string: UIApplicationOpenSettingsURLString) {
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+      }
+    }))
+    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
+  }
+
+  private func presentCameraRestrictedDialog() {
+    let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+    self.present(alert, animated: true, completion: nil)
   }
 
 }
@@ -89,14 +148,16 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
     var apikey: String? = nil
     for item in queryItems {
-      if item.name == "apikey" {
+      if item.name == "readkey" {
         apikey = item.value
       }
     }
 
-    if let apikey = apikey, let host = url.host {
-      let account = Account(url: host, apikey: apikey)
-      self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
+    if let apikey = apikey, let scheme = url.scheme, let host = url.host {
+      let account = Account(url: scheme + "://" + host, apikey: apikey)
+      DispatchQueue.main.async {
+        self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
+      }
     }
   }
   
