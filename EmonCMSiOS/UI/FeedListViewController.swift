@@ -69,22 +69,6 @@ class FeedListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    self.update()
-  }
-
-  func update() {
-    self.tableView.refreshControl?.beginRefreshing()
-//    viewModel.update()
-//      .catchError() { _ in Observable.empty() }
-//      .observeOn(MainScheduler.instance)
-//      .subscribe(onCompleted: {
-//        self.tableView.reloadData()
-//        self.tableView.refreshControl?.endRefreshing()
-//      })
-//      .addDisposableTo(self.disposeBag)
-  }
-
 }
 
 extension FeedListViewController {
