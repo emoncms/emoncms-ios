@@ -40,6 +40,7 @@ class MainController {
       self.loadMainUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Login failed. Please try again.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
       self.window.rootViewController?.present(alert, animated: true, completion: nil)
     }
   }
@@ -51,6 +52,7 @@ class MainController {
       self.loadAddAccountUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Logout failed. Please try again.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
       self.window.rootViewController?.present(alert, animated: true, completion: nil)
     }
   }

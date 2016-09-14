@@ -64,6 +64,7 @@ class AddAccountViewController: FormViewController {
         onError: { [weak self] _ in
           guard let strongSelf = self else { return }
           let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
           strongSelf.present(alert, animated: true, completion: nil)
         },
         onCompleted: { [weak self] in
