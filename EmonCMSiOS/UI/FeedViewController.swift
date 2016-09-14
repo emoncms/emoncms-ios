@@ -63,8 +63,10 @@ class FeedViewController: UIViewController {
     self.viewModel.fetchData(at: startDate, until: endDate, interval: 10)
       .observeOn(MainScheduler.instance)
       .subscribe(
-        onNext: { (feedDataPoints) in
-          guard let data = self.chartView.data,
+        onNext: { [weak self] (feedDataPoints) in
+          guard let strongSelf = self else { return }
+
+          guard let data = strongSelf.chartView.data,
             let dataSet = data.getDataSetByIndex(0) else {
               return
           }
@@ -80,7 +82,7 @@ class FeedViewController: UIViewController {
           }
 
           data.notifyDataChanged()
-          self.chartView.notifyDataSetChanged()
+          strongSelf.chartView.notifyDataSetChanged()
         },
         onError: { (error) in
           // TODO
