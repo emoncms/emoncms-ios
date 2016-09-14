@@ -35,6 +35,7 @@ class FeedListViewController: UITableViewController {
     self.tableView.refreshControl?.beginRefreshing()
     viewModel.update()
       .catchError() { _ in Observable.empty() }
+      .observeOn(MainScheduler.instance)
       .subscribe(onCompleted: {
         self.tableView.reloadData()
         self.tableView.refreshControl?.endRefreshing()

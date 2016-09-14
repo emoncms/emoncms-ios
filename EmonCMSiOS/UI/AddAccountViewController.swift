@@ -58,16 +58,18 @@ class AddAccountViewController: FormViewController {
     }
 
     let account = Account(url: url, apikey: apikey)
-    account.validate().subscribe(
-      onError: { [weak self] _ in
-        guard let strongSelf = self else { return }
-        let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
-        strongSelf.present(alert, animated: true, completion: nil)
-      },
-      onCompleted: { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
-      })
+    account.validate()
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onError: { [weak self] _ in
+          guard let strongSelf = self else { return }
+          let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
+          strongSelf.present(alert, animated: true, completion: nil)
+        },
+        onCompleted: { [weak self] in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+        })
       .addDisposableTo(self.disposeBag)
   }
 

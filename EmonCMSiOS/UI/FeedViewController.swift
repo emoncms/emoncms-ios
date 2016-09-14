@@ -61,6 +61,7 @@ class FeedViewController: UIViewController {
     let endDate = Date()
     let startDate = endDate - (60 * 60 * 24)
     self.viewModel.fetchData(at: startDate, until: endDate, interval: 10)
+      .observeOn(MainScheduler.instance)
       .subscribe(
         onNext: { (feedDataPoints) in
           guard let data = self.chartView.data,
