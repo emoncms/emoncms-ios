@@ -221,7 +221,7 @@
 				TargetAttributes = {
 					C9C041961D85F7D600E3CEC4 = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = ZUVAR94RXN;
+						DevelopmentTeam = KGUUH6BP8Y;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -457,7 +457,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
-				DEVELOPMENT_TEAM = ZUVAR94RXN;
+				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
@@ -472,7 +472,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
-				DEVELOPMENT_TEAM = ZUVAR94RXN;
+				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
