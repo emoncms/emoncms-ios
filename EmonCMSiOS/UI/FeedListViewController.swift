@@ -8,9 +8,14 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class FeedListViewController: UITableViewController {
 
   var viewModel: FeedListViewModel!
+
+  private let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {
     case showFeed
@@ -29,10 +34,13 @@ class FeedListViewController: UITableViewController {
 
   func update() {
     self.navigationItem.rightBarButtonItem?.isEnabled = false
-    viewModel.update() {
-      self.tableView.reloadData()
-      self.navigationItem.rightBarButtonItem?.isEnabled = true
-    }
+    viewModel.update()
+      .catchError() { _ in Observable.empty() }
+      .subscribe(onCompleted: {
+        self.tableView.reloadData()
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+      })
+      .addDisposableTo(self.disposeBag)
   }
 
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+import RxSwift
 import Former
 
 protocol AddAccountViewControllerDelegate: class {
@@ -22,6 +24,8 @@ class AddAccountViewController: FormViewController {
   private var urlRow: TextFieldRowFormer<FormTextFieldCell>?
   private var apikeyRow: TextFieldRowFormer<FormTextFieldCell>?
   private var scanQRRow: LabelRowFormer<FormLabelCell>?
+
+  private let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {
     case scanQR
@@ -54,14 +58,17 @@ class AddAccountViewController: FormViewController {
     }
 
     let account = Account(url: url, apikey: apikey)
-    account.validate {
-      if $0 {
-        self.delegate?.addAccountViewController(controller: self, didFinishWithAccount: account)
-      } else {
+    account.validate().subscribe(
+      onError: { [weak self] _ in
+        guard let strongSelf = self else { return }
         let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
-        self.present(alert, animated: true, completion: nil)
-      }
-    }
+        strongSelf.present(alert, animated: true, completion: nil)
+      },
+      onCompleted: { [weak self] in
+        guard let strongSelf = self else { return }
+        strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+      })
+      .addDisposableTo(self.disposeBag)
   }
 
   private var canSave: Bool {

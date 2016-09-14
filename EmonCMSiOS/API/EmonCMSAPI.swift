@@ -7,13 +7,10 @@
 //
 
 import Foundation
+
+import RxSwift
 import Alamofire
 import Unbox
-
-enum EmonCMSAPIResult<T> {
-  case Result(T)
-  case Error
-}
 
 class EmonCMSAPI {
 
@@ -21,6 +18,8 @@ class EmonCMSAPI {
 
   private enum EmonCMSAPIError: Error {
     case FailedToCreateURL
+    case RequestFailed
+    case InvalidResponse
   }
 
   init(account: Account) {
@@ -45,44 +44,50 @@ class EmonCMSAPI {
     }
   }
 
-  func request(path: String, queryItems: [String:String] = [:], callback: @escaping (Data?) -> Void) {
+  func request(path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
     let url: URL
     do {
       url = try self.buildURL(path: path, queryItems: queryItems)
     } catch {
-      // TODO: Handle errors!
-      return
+      return Observable.error(error)
     }
-    Alamofire.request(url).responseData { response in
-      callback(response.result.value)
-      // TODO: Handle errors!
+
+    return Observable.create { observer in
+      Alamofire.request(url).responseData { response in
+        if let data = response.result.value {
+          observer.onNext(data)
+          observer.onCompleted()
+        } else {
+          observer.onError(EmonCMSAPIError.RequestFailed)
+        }
+      }
+      return Disposables.create()
     }
   }
 
-  func feedList(callback: @escaping (EmonCMSAPIResult<[Feed]>) -> Void) {
-    self.request(path: "list") { resultData in
-      if let resultData = resultData,
-        let feeds: [Feed] = try? Unbox(data: resultData) {
-        callback(.Result(feeds))
-      } else {
-        callback(.Error)
+  func feedList() -> Observable<[Feed]> {
+    return self.request(path: "list").map { resultData -> [Feed] in
+      do {
+        let feeds: [Feed] = try Unbox(data: resultData)
+        return feeds
+      } catch {
+        throw EmonCMSAPIError.InvalidResponse
       }
     }
   }
 
-  func feedData(id: String, at startTime: Date, until endTime: Date, interval: Int, callback: @escaping (EmonCMSAPIResult<[FeedDataPoint]>) -> Void) {
+  func feedData(id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
       "end": "\(Int(endTime.timeIntervalSince1970 * 1000))",
       "interval": "\(interval)"
     ]
-    self.request(path: "data", queryItems: queryItems) { resultData in
-      guard let resultData = resultData,
-          let json = try? JSONSerialization.jsonObject(with: resultData),
+
+    return self.request(path: "data", queryItems: queryItems).map { resultData -> [FeedDataPoint] in
+      guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let dataPoints = json as? [Any] else {
-          callback(.Error)
-          return
+          throw EmonCMSAPIError.InvalidResponse
       }
 
       var feedDataPoints: [FeedDataPoint] = []
@@ -94,7 +99,7 @@ class EmonCMSAPI {
           feedDataPoints.append(feedDataPoint)
         }
       }
-      callback(.Result(feedDataPoints))
+      return feedDataPoints
     }
   }
 

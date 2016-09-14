@@ -7,6 +7,8 @@
 //
 
 import UIKit
+
+import RxSwift
 import Charts
 
 class FeedViewController: UIViewController {
@@ -14,6 +16,8 @@ class FeedViewController: UIViewController {
   var viewModel: FeedViewModel!
 
   @IBOutlet var chartView: LineChartView!
+
+  private let disposeBag = DisposeBag()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -50,27 +54,37 @@ class FeedViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
 
+    self.refresh()
+  }
+
+  private func refresh() {
     let endDate = Date()
     let startDate = endDate - (60 * 60 * 24)
-    self.viewModel.fetchData(at: startDate, until: endDate, interval: 10) { feedDataPoints in
-      guard let data = self.chartView.data,
-        let dataSet = data.getDataSetByIndex(0) else {
-          return
-      }
+    self.viewModel.fetchData(at: startDate, until: endDate, interval: 10)
+      .subscribe(
+        onNext: { (feedDataPoints) in
+          guard let data = self.chartView.data,
+            let dataSet = data.getDataSetByIndex(0) else {
+              return
+          }
 
-      data.xVals = []
-      dataSet.clear()
+          data.xVals = []
+          dataSet.clear()
 
-      for (i, point) in feedDataPoints.enumerated() {
-        data.addXValue("\(point.time.timeIntervalSince1970)")
+          for (i, point) in feedDataPoints.enumerated() {
+            data.addXValue("\(point.time.timeIntervalSince1970)")
 
-        let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
-        data.addEntry(yDataEntry, dataSetIndex: 0)
-      }
+            let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
+            data.addEntry(yDataEntry, dataSetIndex: 0)
+          }
 
-      data.notifyDataChanged()
-      self.chartView.notifyDataSetChanged()
-    }
+          data.notifyDataChanged()
+          self.chartView.notifyDataSetChanged()
+        },
+        onError: { (error) in
+          // TODO
+      })
+      .addDisposableTo(self.disposeBag)
   }
 
 }

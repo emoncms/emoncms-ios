@@ -8,6 +8,8 @@
 
 import Foundation
 
+import RxSwift
+
 class FeedViewModel {
 
   private let api: EmonCMSAPI
@@ -26,15 +28,8 @@ class FeedViewModel {
     return self.feed.value.prettyFormat()
   }
 
-  func fetchData(at startTime: Date, until endTime: Date, interval: Int, callback: @escaping ([FeedDataPoint]) -> Void) {
-    self.api.feedData(id: self.feed.id, at: startTime, until: endTime, interval: interval) { result in
-      switch result {
-      case .Result(let feedDataPoints):
-        callback(feedDataPoints)
-      case .Error:
-        callback([])
-      }
-    }
+  func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
+    return self.api.feedData(id: self.feed.id, at: startTime, until: endTime, interval: interval)
   }
 
 }

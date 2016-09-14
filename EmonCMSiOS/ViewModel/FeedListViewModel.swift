@@ -8,6 +8,8 @@
 
 import Foundation
 
+import RxSwift
+
 class FeedListViewModel {
 
   private let api: EmonCMSAPI
@@ -42,10 +44,11 @@ class FeedListViewModel {
     return section.name
   }
 
-  func update(callback: @escaping () -> Void) {
-    self.api.feedList() { result in
-      switch result {
-      case .Result(let feeds):
+  func update() -> Observable<Void> {
+    return self.api.feedList()
+      .map{ [weak self] feeds in
+        guard let strongSelf = self else { return }
+
         var sectionBuilder: [String:[Feed]] = [:]
         for feed in feeds {
           let sectionFeeds: [Feed]
@@ -63,13 +66,9 @@ class FeedListViewModel {
           sections.append(Section(name: section, feeds: sortedSectionFeeds))
         }
 
-        self.sections = sections
-        
-        callback()
-      case .Error:
-        callback()
+        strongSelf.sections = sections
       }
-    }
+      .ignoreElements()
   }
 
 }

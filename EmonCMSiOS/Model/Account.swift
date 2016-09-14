@@ -7,9 +7,16 @@
 //
 
 import Foundation
+
+import RxSwift
 import Locksmith
 
 struct Account {
+
+  enum AccountError: Error {
+    case InvalidURL
+    case IncorrectCredentials
+  }
 
   let url: String
   let apikey: String
@@ -19,21 +26,22 @@ struct Account {
     self.apikey = apikey
   }
 
-  func validate(callback: @escaping (Bool) -> Void) {
+  func validate() -> Observable<Void> {
     guard URLComponents(string: url) != nil else {
-      callback(false)
-      return
+      return Observable.error(AccountError.InvalidURL)
     }
 
     let api = EmonCMSAPI(account: self)
-    api.feedList { result in
-      switch result {
-      case .Result(_):
-        callback(true)
-      case .Error:
-        callback(false)
+    return api.feedList()
+      .catchError { (_) -> Observable<[Feed]> in
+        // TODO: Probably check what the actual error is here. If it's a network error, we could have a different error thrown
+        throw AccountError.IncorrectCredentials
       }
-    }
+      .map { _ in
+        return
+      }
+      .ignoreElements()
+      .concat(Observable.empty())
   }
 
 }
