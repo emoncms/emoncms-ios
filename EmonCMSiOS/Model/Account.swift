@@ -26,7 +26,7 @@ struct Account {
     self.apikey = apikey
   }
 
-  func validate() -> Observable<Void> {
+  func validate() -> Observable<Account> {
     guard URLComponents(string: url) != nil else {
       return Observable.error(AccountError.InvalidURL)
     }
@@ -38,10 +38,8 @@ struct Account {
         throw AccountError.IncorrectCredentials
       }
       .map { _ in
-        return
+        return self
       }
-      .ignoreElements()
-      .concat(Observable.empty())
   }
 
 }

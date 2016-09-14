@@ -35,10 +35,11 @@ class AddAccountViewController: FormViewController {
     super.viewDidLoad()
 
     self.title = "Account Details"
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
+
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
 
     self.setupFormer()
-    self.updateSaveButtonState()
+    self.setupBindings()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -49,39 +50,6 @@ class AddAccountViewController: FormViewController {
     }
   }
 
-  private dynamic func save() {
-    guard self.canSave == true,
-      let url = self.urlRow?.text,
-      let apikey = self.apikeyRow?.text
-      else {
-        return
-    }
-
-    let account = Account(url: url, apikey: apikey)
-    account.validate()
-      .observeOn(MainScheduler.instance)
-      .subscribe(
-        onError: { [weak self] _ in
-          guard let strongSelf = self else { return }
-          let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
-        },
-        onCompleted: { [weak self] in
-          guard let strongSelf = self else { return }
-          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
-        })
-      .addDisposableTo(self.disposeBag)
-  }
-
-  private var canSave: Bool {
-    return !(self.urlRow?.text?.isEmpty ?? true) && !(self.apikeyRow?.text?.isEmpty ?? true)
-  }
-
-  private func updateSaveButtonState() {
-    self.navigationItem.rightBarButtonItem?.isEnabled = self.canSave
-  }
-
   private func setupFormer() {
     let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
@@ -90,8 +58,9 @@ class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Emoncms instance URL"
-      }.onTextChanged { [weak self] _ in
-        self?.updateSaveButtonState()
+      }.onTextChanged { [weak self] text in
+        guard let strongSelf = self else { return }
+        strongSelf.viewModel.url.value = text
     }
 
     let apikeyRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -100,8 +69,9 @@ class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Emoncms API read Key"
-      }.onTextChanged { [weak self] _ in
-        self?.updateSaveButtonState()
+      }.onTextChanged { [weak self] text in
+        guard let strongSelf = self else { return }
+        strongSelf.viewModel.apikey.value = text
     }
 
     let scanQRRow = LabelRowFormer<FormLabelCell>() {
@@ -120,16 +90,50 @@ class AddAccountViewController: FormViewController {
     former.append(sectionFormer: section)
   }
 
+  private func setupBindings() {
+    self.viewModel.canSave()
+      .asDriver(onErrorJustReturn: false)
+      .drive(self.navigationItem.rightBarButtonItem!.rx.enabled)
+      .addDisposableTo(self.disposeBag)
+
+    Observable
+      .combineLatest(self.navigationItem.rightBarButtonItem!.rx.tap, self.viewModel.canSave().asObservable()) { $1 }
+      .filter { $0 == true }
+      .flatMapLatest { [weak self] _ -> Observable<Account> in
+        guard let strongSelf = self else { return Observable.never() }
+
+        let url = strongSelf.viewModel.url.value
+        let apikey = strongSelf.viewModel.apikey.value
+
+        let account = Account(url: url, apikey: apikey)
+        return account.validate()
+      }
+      .observeOn(MainScheduler.instance)
+      .subscribe(
+        onNext: { [weak self] account in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+        },
+        onError: { [weak self] _ in
+          guard let strongSelf = self else { return }
+          let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+          strongSelf.present(alert, animated: true, completion: nil)
+        })
+      .addDisposableTo(self.disposeBag)
+  }
+
   private func presentScanQR() {
     self.performSegue(withIdentifier: Segues.scanQR.rawValue, sender: self)
   }
 
   fileprivate func updateWithAccount(_ account: Account) {
+    self.viewModel.url.value = account.url
+    self.viewModel.apikey.value = account.apikey
     self.urlRow?.text = account.url
-    self.apikeyRow?.text = account.apikey
     self.urlRow?.update()
+    self.apikeyRow?.text = account.apikey
     self.apikeyRow?.update()
-    self.updateSaveButtonState()
   }
 
 }

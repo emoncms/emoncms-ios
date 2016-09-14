@@ -8,6 +8,18 @@
 
 import Foundation
 
+import RxSwift
+
 class AddAccountViewModel {
+
+  var url = Variable<String>("")
+  var apikey = Variable<String>("")
+
+  func canSave() -> Observable<Bool> {
+    return Observable
+      .combineLatest(self.url.asObservable(), self.apikey.asObservable()) { url, apikey in
+        return !url.isEmpty && !apikey.isEmpty
+    }
+  }
   
 }
