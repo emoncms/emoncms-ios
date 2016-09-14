@@ -80,10 +80,14 @@ class MainController {
     let tabBarViewControllers = rootViewController.viewControllers!
 
     let feedListNavController = tabBarViewControllers[0] as! UINavigationController
+    feedListNavController.tabBarItem.title = "Feeds"
+    feedListNavController.tabBarItem.image = UIImage(named: "tab_list")
     let feedListViewController = feedListNavController.topViewController! as! FeedListViewController
     feedListViewController.viewModel = FeedListViewModel(api: api)
 
     let settingsNavController = tabBarViewControllers[1] as! UINavigationController
+    settingsNavController.tabBarItem.title = "Settings"
+    settingsNavController.tabBarItem.image = UIImage(named: "tab_wrench")
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.delegate = self
     settingsViewController.viewModel = SettingsViewModel(api: api)
