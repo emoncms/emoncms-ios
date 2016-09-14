@@ -25,7 +25,6 @@ class FeedListViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Feeds"
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(update))
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -33,14 +32,18 @@ class FeedListViewController: UITableViewController {
   }
 
   func update() {
-    self.navigationItem.rightBarButtonItem?.isEnabled = false
+    self.tableView.refreshControl?.beginRefreshing()
     viewModel.update()
       .catchError() { _ in Observable.empty() }
       .subscribe(onCompleted: {
         self.tableView.reloadData()
-        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        self.tableView.refreshControl?.endRefreshing()
       })
       .addDisposableTo(self.disposeBag)
+  }
+
+  @IBAction private func refresh() {
+    self.update()
   }
 
 }
