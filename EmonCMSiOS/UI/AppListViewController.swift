@@ -17,15 +17,6 @@ class AppListViewController: UITableViewController {
 
   fileprivate let disposeBag = DisposeBag()
 
-  struct App {
-    let name: String
-    let storyboardIdentifier: String
-  }
-
-  fileprivate let apps = [
-    App(name: "My Electric", storyboardIdentifier: "myElectric")
-  ]
-
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -37,14 +28,14 @@ class AppListViewController: UITableViewController {
   private func setupDataSource() {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
-    Observable.just(self.apps)
+    Observable.just(viewModel.apps)
       .bindTo(self.tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
         cell.textLabel?.text = element.name
       }
       .addDisposableTo(self.disposeBag)
 
     self.tableView.rx
-      .modelSelected(App.self)
+      .modelSelected(AppListViewModel.App.self)
       .subscribe(onNext: { [weak self] (app) in
         guard let strongSelf = self else { return }
         strongSelf.present(app: app)
@@ -52,8 +43,14 @@ class AppListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func present(app: App) {
-    // TODO
+  private func present(app: AppListViewModel.App) {
+    let storyboard = UIStoryboard(name: "Apps", bundle: nil)
+    let viewController = storyboard.instantiateViewController(withIdentifier: app.storyboardIdentifier)
+    if let appVC = viewController as? AppViewController {
+      let viewModel = app.viewModelGenerator()
+      appVC.genericViewModel = viewModel
+    }
+    self.navigationController?.pushViewController(viewController, animated: true)
   }
 
 }

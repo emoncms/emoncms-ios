@@ -12,8 +12,21 @@ class AppListViewModel {
 
   private let api: EmonCMSAPI
 
+  struct App {
+    let name: String
+    let storyboardIdentifier: String
+    let viewModelGenerator: () -> AppViewModel
+  }
+
+  let apps: [App]
+
   init(api: EmonCMSAPI) {
     self.api = api
+    apps = [
+      App(name: "My Electric", storyboardIdentifier: "myElectric") {
+        return MyElectricAppViewModel(api: api)
+      }
+    ]
   }
 
 }

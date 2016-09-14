@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
 		C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F11D89F34500C9974B /* AppListViewController.swift */; };
+		C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C92010F31D89F6AD00C9974B /* Apps.storyboard */; };
+		C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */; };
+		C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppProtocols.swift */; };
+		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
 		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
@@ -39,6 +43,10 @@
 		BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.release.xcconfig"; sourceTree = "<group>"; };
 		C92010EF1D89F2E600C9974B /* AppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
 		C92010F11D89F34500C9974B /* AppListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
+		C92010F41D89F6AD00C9974B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Apps.storyboard; sourceTree = "<group>"; };
+		C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewModel.swift; sourceTree = "<group>"; };
+		C92010FB1D89FD7300C9974B /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
+		C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewController.swift; sourceTree = "<group>"; };
 		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
@@ -92,6 +100,16 @@
 				BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C92010F81D89FD2500C9974B /* Apps */ = {
+			isa = PBXGroup;
+			children = (
+				C92010FB1D89FD7300C9974B /* AppProtocols.swift */,
+				C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */,
+				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
+			);
+			path = Apps;
 			sourceTree = "<group>";
 		};
 		C9BB83461D869CB00058C059 /* Model */ = {
@@ -182,9 +200,11 @@
 				C9BB83601D873DF70058C059 /* ViewModel */,
 				C9BB83651D87F52E0058C059 /* Controllers */,
 				C9BB83471D869CB00058C059 /* UI */,
+				C92010F81D89FD2500C9974B /* Apps */,
 				C9BB83551D86B19C0058C059 /* Helpers */,
 				C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */,
 				C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */,
+				C92010F31D89F6AD00C9974B /* Apps.storyboard */,
 				C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */,
 				C9C041A31D85F7D600E3CEC4 /* LaunchScreen.storyboard */,
 				C9C041A61D85F7D600E3CEC4 /* Info.plist */,
@@ -262,6 +282,7 @@
 			files = (
 				C9C041A51D85F7D600E3CEC4 /* LaunchScreen.storyboard in Resources */,
 				C9C041A21D85F7D600E3CEC4 /* Assets.xcassets in Resources */,
+				C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */,
 				C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,6 +347,7 @@
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
 				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
 				C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */,
+				C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */,
 				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* LoginController.swift in Sources */,
 				C9BB835B1D86D8770058C059 /* SettingsViewController.swift in Sources */,
@@ -337,9 +359,11 @@
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
+				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C9BB83721D8883480058C059 /* FeedData.swift in Sources */,
 				C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */,
+				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,6 +371,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		C92010F31D89F6AD00C9974B /* Apps.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C92010F41D89F6AD00C9974B /* Base */,
+			);
+			name = Apps.storyboard;
+			sourceTree = "<group>";
+		};
 		C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
