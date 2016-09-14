@@ -10,12 +10,14 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import RxDataSources
 
 class FeedListViewController: UITableViewController {
 
   var viewModel: FeedListViewModel!
 
-  private let disposeBag = DisposeBag()
+  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListSection>()
+  fileprivate let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {
     case showFeed
@@ -25,6 +27,46 @@ class FeedListViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Feeds"
+
+    self.setupDataSource()
+  }
+
+  private func setupDataSource() {
+    self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
+      let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath)
+      cell.textLabel?.text = item.name
+      cell.detailTextLabel?.text = "\(item.value)"
+      return cell
+    }
+
+    self.dataSource.titleForHeaderInSection = { (ds, index) in
+      return ds.sectionModels[index].header
+    }
+
+    self.tableView.delegate = nil
+    self.tableView.dataSource = nil
+
+    let refreshControl = self.tableView.refreshControl!
+
+    let initial = Observable.just(())
+    let refresh = refreshControl.rx.controlEvent(.valueChanged).map { _ in () }
+
+    let driver = Observable.of(initial, refresh)
+      .merge()
+      .flatMapLatest { [weak self] _ -> Observable<[FeedListSection]> in
+        guard let strongSelf = self else { return Observable.empty() }
+        return strongSelf.viewModel.fetch()
+      }
+      .asDriver(onErrorJustReturn: [])
+
+    driver
+      .drive(self.tableView.rx.items(dataSource: self.dataSource))
+      .addDisposableTo(self.disposeBag)
+
+    driver
+      .map { _ in false }
+      .drive(refreshControl.rx.refreshing)
+      .addDisposableTo(self.disposeBag)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -33,42 +75,14 @@ class FeedListViewController: UITableViewController {
 
   func update() {
     self.tableView.refreshControl?.beginRefreshing()
-    viewModel.update()
-      .catchError() { _ in Observable.empty() }
-      .observeOn(MainScheduler.instance)
-      .subscribe(onCompleted: {
-        self.tableView.reloadData()
-        self.tableView.refreshControl?.endRefreshing()
-      })
-      .addDisposableTo(self.disposeBag)
-  }
-
-  @IBAction private func refresh() {
-    self.update()
-  }
-
-}
-
-extension FeedListViewController {
-
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    return self.viewModel.numberOfSections
-  }
-
-  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return self.viewModel.numberOfFeeds(inSection: section)
-  }
-
-  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let feedViewModel = self.viewModel.feedViewModel(atIndexPath: indexPath)
-    let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath)
-    cell.textLabel?.text = feedViewModel.name
-    cell.detailTextLabel?.text = "\(feedViewModel.value)"
-    return cell
-  }
-
-  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return self.viewModel.titleForSection(atIndex: section)
+//    viewModel.update()
+//      .catchError() { _ in Observable.empty() }
+//      .observeOn(MainScheduler.instance)
+//      .subscribe(onCompleted: {
+//        self.tableView.reloadData()
+//        self.tableView.refreshControl?.endRefreshing()
+//      })
+//      .addDisposableTo(self.disposeBag)
   }
 
 }
@@ -79,7 +93,7 @@ extension FeedListViewController {
     if segue.identifier == Segues.showFeed.rawValue {
       let feedViewController = segue.destination as! FeedViewController
       let selectedIndexPath = self.tableView.indexPathForSelectedRow!
-      let feedViewModel = self.viewModel.feedViewModel(atIndexPath: selectedIndexPath)
+      let feedViewModel = self.dataSource[selectedIndexPath]
       feedViewController.viewModel = feedViewModel
     }
   }

@@ -7,6 +7,7 @@ target 'EmonCMSiOS' do
 
     pod 'RxSwift', '~> 3.0.0.alpha.1'
     pod 'RxCocoa', '~> 3.0.0.alpha.1'
+    pod 'RxDataSources', '~> 1.0.0-beta.1'
 
     pod 'Unbox', :git => 'https://github.com/JohnSundell/Unbox.git', branch: 'swift3'
 

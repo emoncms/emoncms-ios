@@ -7,6 +7,9 @@ PODS:
   - Locksmith (2.0.8)
   - RxCocoa (3.0.0.alpha.1):
     - RxSwift (~> 3.0.0.alpha.1)
+  - RxDataSources (1.0.0.beta.1):
+    - RxCocoa (~> 3.0.0.alpha.1)
+    - RxSwift (~> 3.0.0.alpha.1)
   - RxSwift (3.0.0.alpha.1)
   - Unbox (1.9)
 
@@ -16,6 +19,7 @@ DEPENDENCIES:
   - Former (from `git@github.com:mattjgalloway/Former.git`, branch `swift3`)
   - Locksmith (from `https://github.com/fedetrim/Locksmith.git`, branch `swift-3.0`)
   - RxCocoa (~> 3.0.0.alpha.1)
+  - RxDataSources (~> 1.0.0-beta.1)
   - RxSwift (~> 3.0.0.alpha.1)
   - Unbox (from `https://github.com/JohnSundell/Unbox.git`, branch `swift3`)
 
@@ -53,9 +57,10 @@ SPEC CHECKSUMS:
   Former: 98a7915b1b2383270edfaee9eed785df4a259048
   Locksmith: a8ed41ac4c06506ea8cb199d8ec8a8d3d108eb2a
   RxCocoa: 37b3b167eaa14446a315493ef6a188b277942b15
+  RxDataSources: b2f3d80aeb9de4faeebc5e05e2fd975cadd6e308
   RxSwift: 0bccfee1e979c1b72a5d1dffdf96119303b5d111
   Unbox: a6f56a1682b5fd2ba6aea96d7b1ec17599db4f05
 
-PODFILE CHECKSUM: 90fd102d47ed66933ace70570747d5590d6325ee
+PODFILE CHECKSUM: 1683b6d7eb6496e213af80a27ab9dcda921a7255
 
-COCOAPODS: 1.1.0.rc.1
+COCOAPODS: 1.1.0.rc.2
