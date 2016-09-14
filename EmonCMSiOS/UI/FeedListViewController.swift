@@ -51,20 +51,27 @@ class FeedListViewController: UITableViewController {
     let initial = Observable.just(())
     let refresh = refreshControl.rx.controlEvent(.valueChanged).map { _ in () }
 
-    let driver = Observable.of(initial, refresh)
+    let refreshDriver = Observable.of(initial, refresh)
       .merge()
+      .asDriver(onErrorJustReturn: ())
+
+    let dataDriver = refreshDriver.asObservable()
       .flatMapLatest { [weak self] _ -> Observable<[FeedListSection]> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.viewModel.fetch()
       }
       .asDriver(onErrorJustReturn: [])
 
-    driver
+    dataDriver
       .drive(self.tableView.rx.items(dataSource: self.dataSource))
       .addDisposableTo(self.disposeBag)
 
-    driver
-      .map { _ in false }
+    Observable.of(
+      refreshDriver.asObservable().map { _ in true },
+      dataDriver.asObservable().map { _ in false }
+      )
+      .merge()
+      .asDriver(onErrorJustReturn: false)
       .drive(refreshControl.rx.refreshing)
       .addDisposableTo(self.disposeBag)
   }
