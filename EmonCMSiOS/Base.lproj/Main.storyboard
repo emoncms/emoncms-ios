@@ -148,21 +148,30 @@
             </objects>
             <point key="canvasLocation" x="1982" y="139"/>
         </scene>
-        <!--Root View Controller-->
+        <!--App List View Controller-->
         <scene sceneID="deO-D0-adZ">
             <objects>
-                <tableViewController id="4GY-Uh-Aq9" sceneMemberID="viewController">
+                <tableViewController id="4GY-Uh-Aq9" customClass="AppListViewController" customModule="EmonCMSiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="0it-Aj-L3D">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="gpo-iP-Xfy">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="KKm-Yo-dif" style="IBUITableViewCellStyleDefault" id="7j1-1U-a5H">
                                 <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gpo-iP-Xfy" id="6Hn-qQ-HBU">
-                                    <frame key="frameInset" width="375" height="43"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7j1-1U-a5H" id="vJ9-9z-28e">
+                                    <frame key="frameInset" width="342" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KKm-Yo-dif">
+                                            <frame key="frameInset" minX="15" width="325" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
@@ -171,7 +180,7 @@
                             <outlet property="delegate" destination="4GY-Uh-Aq9" id="txO-1E-oWF"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="5nv-Gb-xYL"/>
+                    <navigationItem key="navigationItem" id="5nv-Gb-xYL"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2yD-4v-j0A" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

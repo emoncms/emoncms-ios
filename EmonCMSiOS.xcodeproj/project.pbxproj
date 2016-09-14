@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
+		C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F11D89F34500C9974B /* AppListViewController.swift */; };
 		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
@@ -35,6 +37,8 @@
 		5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.debug.xcconfig"; sourceTree = "<group>"; };
 		8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.release.xcconfig"; sourceTree = "<group>"; };
+		C92010EF1D89F2E600C9974B /* AppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
+		C92010F11D89F34500C9974B /* AppListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
 		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
@@ -109,6 +113,7 @@
 				C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */,
 				C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */,
 				C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */,
+				C92010F11D89F34500C9974B /* AppListViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -136,6 +141,7 @@
 				C9BB83631D8743530058C059 /* FeedViewModel.swift */,
 				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
 				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
+				C92010EF1D89F2E600C9974B /* AppListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -315,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
 				C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */,
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
 				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
@@ -328,6 +335,7 @@
 				C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* Account.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
+				C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C9BB83721D8883480058C059 /* FeedData.swift in Sources */,

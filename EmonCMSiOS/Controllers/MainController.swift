@@ -83,6 +83,10 @@ class MainController {
     let feedListViewController = feedListNavController.topViewController! as! FeedListViewController
     feedListViewController.viewModel = FeedListViewModel(api: api)
 
+    let appListNavController = tabBarViewControllers[1] as! UINavigationController
+    let appListViewController = appListNavController.topViewController! as! AppListViewController
+    appListViewController.viewModel = AppListViewModel(api: api)
+
     let settingsNavController = tabBarViewControllers[2] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.delegate = self
