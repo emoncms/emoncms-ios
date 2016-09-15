@@ -18,8 +18,8 @@ class AddAccountViewModel {
 
   let api: EmonCMSAPI
 
-  var url = Variable<String>("")
-  var apikey = Variable<String>("")
+  let url = Variable<String>("")
+  let apikey = Variable<String>("")
 
   init(api: EmonCMSAPI) {
     self.api = api
