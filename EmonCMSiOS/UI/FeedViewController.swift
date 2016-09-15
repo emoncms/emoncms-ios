@@ -34,7 +34,7 @@ class FeedViewController: UIViewController {
     let xAxis = self.chartView.xAxis
     xAxis.drawGridLinesEnabled = false
     xAxis.labelPosition = .bottom
-    xAxis.valueFormatter = FeedChartXAxisValueFormatter()
+    xAxis.valueFormatter = ChartXAxisDateFormatter()
 
     let yAxis = self.chartView.leftAxis
     yAxis.drawGridLinesEnabled = false
@@ -90,32 +90,6 @@ class FeedViewController: UIViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-}
-
-extension FeedViewController {
-
-  fileprivate class FeedChartXAxisValueFormatter: ChartXAxisValueFormatter {
-
-    private let dateFormatter: DateFormatter
-
-    init() {
-      let dateFormatter = DateFormatter()
-      dateFormatter.timeStyle = .short
-      dateFormatter.dateStyle = .none
-      self.dateFormatter = dateFormatter
-    }
-
-    func stringForXValue(_ index: Int, original: String, viewPortHandler: ChartViewPortHandler) -> String {
-      guard let time = Double(original) else {
-        return original
-      }
-
-      let date = Date(timeIntervalSince1970: time)
-      return self.dateFormatter.string(from: date)
-    }
-    
-  }
-  
 }
 
 extension FeedViewController: ChartViewDelegate {

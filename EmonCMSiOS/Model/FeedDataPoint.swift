@@ -1,5 +1,5 @@
 //
-//  FeedData.swift
+//  FeedDataPoint.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 13/09/2016.

@@ -97,6 +97,24 @@ class EmonCMSAPI {
     }
   }
 
+  private static func feedDataPoints(fromJsonData data: Data) throws -> [FeedDataPoint] {
+    guard let json = try? JSONSerialization.jsonObject(with: data),
+      let dataPoints = json as? [Any] else {
+        throw EmonCMSAPIError.InvalidResponse
+    }
+
+    var feedDataPoints: [FeedDataPoint] = []
+    for dataPoint in dataPoints {
+      guard let typedDataPoint = dataPoint as? [Double] else {
+        continue
+      }
+      if let feedDataPoint = FeedDataPoint.from(dataArray: typedDataPoint) {
+        feedDataPoints.append(feedDataPoint)
+      }
+    }
+    return feedDataPoints
+  }
+
   func feedData(_ account: Account, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
     let queryItems = [
       "id": id,
@@ -106,21 +124,20 @@ class EmonCMSAPI {
     ]
 
     return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [FeedDataPoint] in
-      guard let json = try? JSONSerialization.jsonObject(with: resultData),
-        let dataPoints = json as? [Any] else {
-          throw EmonCMSAPIError.InvalidResponse
-      }
+      return try EmonCMSAPI.feedDataPoints(fromJsonData: resultData)
+    }
+  }
 
-      var feedDataPoints: [FeedDataPoint] = []
-      for dataPoint in dataPoints {
-        guard let typedDataPoint = dataPoint as? [Double] else {
-          continue
-        }
-        if let feedDataPoint = FeedDataPoint.from(dataArray: typedDataPoint) {
-          feedDataPoints.append(feedDataPoint)
-        }
-      }
-      return feedDataPoints
+  func feedDataDaily(_ account: Account, id: String, at startTime: Date, until endTime: Date) -> Observable<[FeedDataPoint]> {
+    let queryItems = [
+      "id": id,
+      "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
+      "end": "\(Int(endTime.timeIntervalSince1970 * 1000))",
+      "mode": "daily"
+    ]
+
+    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [FeedDataPoint] in
+      return try EmonCMSAPI.feedDataPoints(fromJsonData: resultData)
     }
   }
 
