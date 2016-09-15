@@ -26,7 +26,7 @@ class AppListViewModel {
     self.api = api
     apps = [
       App(name: "My Electric", storyboardIdentifier: "myElectric") {
-        return MyElectricAppViewModel(api: api)
+        return MyElectricAppViewModel(account: account, api: api)
       }
     ]
   }
