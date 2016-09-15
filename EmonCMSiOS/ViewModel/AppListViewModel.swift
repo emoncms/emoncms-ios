@@ -10,6 +10,7 @@ import Foundation
 
 class AppListViewModel {
 
+  private let account: Account
   private let api: EmonCMSAPI
 
   struct App {
@@ -20,7 +21,8 @@ class AppListViewModel {
 
   let apps: [App]
 
-  init(api: EmonCMSAPI) {
+  init(account: Account, api: EmonCMSAPI) {
+    self.account = account
     self.api = api
     apps = [
       App(name: "My Electric", storyboardIdentifier: "myElectric") {

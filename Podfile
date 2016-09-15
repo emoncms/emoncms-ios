@@ -21,3 +21,12 @@ target 'EmonCMSiOS' do
 
 #    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
 end
+
+target 'EmonCMSiOSTests' do
+    pod 'Quick', :git => 'https://github.com/Quick/Quick.git', branch: 'swift-3.0'
+    pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', branch: 'master'
+    pod 'RxSwift', '~> 3.0.0.alpha.1'
+    pod 'RxCocoa', '~> 3.0.0.alpha.1'
+    pod 'RxTests', '~> 3.0.0.alpha.1'
+end
+

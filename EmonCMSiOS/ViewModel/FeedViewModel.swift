@@ -12,10 +12,12 @@ import RxSwift
 
 class FeedViewModel {
 
+  private let account: Account
   private let api: EmonCMSAPI
   private let feed: Feed
 
-  init(api: EmonCMSAPI, feed: Feed) {
+  init(account: Account, api: EmonCMSAPI, feed: Feed) {
+    self.account = account
     self.api = api
     self.feed = feed
   }
@@ -29,7 +31,7 @@ class FeedViewModel {
   }
 
   func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
-    return self.api.feedData(id: self.feed.id, at: startTime, until: endTime, interval: interval)
+    return self.api.feedData(account, id: self.feed.id, at: startTime, until: endTime, interval: interval)
   }
 
 }

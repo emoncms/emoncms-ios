@@ -106,7 +106,7 @@ class AddAccountViewController: FormViewController {
         let apikey = strongSelf.viewModel.apikey.value
 
         let account = Account(url: url, apikey: apikey)
-        return account.validate()
+        return strongSelf.viewModel.validate(account: account)
       }
       .observeOn(MainScheduler.instance)
       .subscribe(

@@ -11,21 +11,23 @@ import UIKit
 class MainController {
 
   let window: UIWindow
+  let requestProvider: AlamofireHTTPRequestProvider
+  let api: EmonCMSAPI
   let loginController: LoginController
-  var api: EmonCMSAPI?
 
   fileprivate var addAccountViewStack: UINavigationController?
   fileprivate var mainViewStack: UITabBarController?
 
   init() {
     self.window = UIWindow()
+    self.requestProvider = AlamofireHTTPRequestProvider()
+    self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
     self.loginController.delegate = self
   }
 
   func loadUserInterface() {
-    self.setupAPI()
-    if self.api != nil {
+    if self.loginController.account != nil {
       self.loadMainUI()
     } else {
       self.loadAddAccountUI()
@@ -36,7 +38,6 @@ class MainController {
   func login(withAccount account: Account) {
     do {
       try self.loginController.login(withAccount: account)
-      self.setupAPI()
       self.loadMainUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Login failed. Please try again.", preferredStyle: .alert)
@@ -48,7 +49,6 @@ class MainController {
   func logout() {
     do {
       try self.loginController.logout()
-      self.setupAPI()
       self.loadAddAccountUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Logout failed. Please try again.", preferredStyle: .alert)
@@ -57,16 +57,8 @@ class MainController {
     }
   }
 
-  private func setupAPI() {
-    if let account = loginController.account {
-      self.api = EmonCMSAPI(account: account)
-    } else {
-      self.api = nil
-    }
-  }
-
   private func loadMainUI() {
-    guard let api = self.api else {
+    guard let account = self.loginController.account else {
       print("Tried to load main UI, but no account set yet!")
       return
     }
@@ -81,16 +73,16 @@ class MainController {
 
     let feedListNavController = tabBarViewControllers[0] as! UINavigationController
     let feedListViewController = feedListNavController.topViewController! as! FeedListViewController
-    feedListViewController.viewModel = FeedListViewModel(api: api)
+    feedListViewController.viewModel = FeedListViewModel(account: account, api: self.api)
 
     let appListNavController = tabBarViewControllers[1] as! UINavigationController
     let appListViewController = appListNavController.topViewController! as! AppListViewController
-    appListViewController.viewModel = AppListViewModel(api: api)
+    appListViewController.viewModel = AppListViewModel(account: account, api: self.api)
 
     let settingsNavController = tabBarViewControllers[2] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.delegate = self
-    settingsViewController.viewModel = SettingsViewModel(api: api)
+    settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api)
 
     self.window.rootViewController = rootViewController
 
@@ -111,7 +103,7 @@ class MainController {
 
     // Setup view models
     let addAccountViewController = rootViewController.topViewController! as! AddAccountViewController
-    addAccountViewController.viewModel = AddAccountViewModel()
+    addAccountViewController.viewModel = AddAccountViewModel(api: self.api)
     addAccountViewController.delegate = self
 
     if let vc = self.mainViewStack {

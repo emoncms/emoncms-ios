@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AFB250C0A9F5A85118B994A2 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC06E7333BB746F75E482C7 /* Pods_EmonCMSiOSTests.framework */; };
+		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
+		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
+		C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
 		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
 		C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F11D89F34500C9974B /* AppListViewController.swift */; };
 		C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C92010F31D89F6AD00C9974B /* Apps.storyboard */; };
 		C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */; };
 		C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppProtocols.swift */; };
 		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
+		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
@@ -37,16 +42,35 @@
 		D0D2080C98138B924898A4D9 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C95640AF1D8A9C7D003B9757 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9C041961D85F7D600E3CEC4;
+			remoteInfo = EmonCMSiOS;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		04609C891FEE78D0EC5AC18E /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0CC06E7333BB746F75E482C7 /* Pods_EmonCMSiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.debug.xcconfig"; sourceTree = "<group>"; };
+		748B5E52AAD3BA067FF83EF1 /* Pods-EmonCMSiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.release.xcconfig"; sourceTree = "<group>"; };
+		C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHTTPRequestProvider.swift; sourceTree = "<group>"; };
+		C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequestProvider.swift; sourceTree = "<group>"; };
+		C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C92010EF1D89F2E600C9974B /* AppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
 		C92010F11D89F34500C9974B /* AppListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
 		C92010F41D89F6AD00C9974B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Apps.storyboard; sourceTree = "<group>"; };
 		C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewModel.swift; sourceTree = "<group>"; };
 		C92010FB1D89FD7300C9974B /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
 		C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewController.swift; sourceTree = "<group>"; };
+		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
+		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
@@ -74,6 +98,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		C95640A71D8A9C7D003B9757 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AFB250C0A9F5A85118B994A2 /* Pods_EmonCMSiOSTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9C041941D85F7D600E3CEC4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -89,6 +121,7 @@
 			isa = PBXGroup;
 			children = (
 				8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */,
+				0CC06E7333BB746F75E482C7 /* Pods_EmonCMSiOSTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -98,6 +131,8 @@
 			children = (
 				5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */,
 				BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */,
+				04609C891FEE78D0EC5AC18E /* Pods-EmonCMSiOSTests.debug.xcconfig */,
+				748B5E52AAD3BA067FF83EF1 /* Pods-EmonCMSiOSTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -110,6 +145,16 @@
 				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
 			);
 			path = Apps;
+			sourceTree = "<group>";
+		};
+		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
+				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
+				C95640AE1D8A9C7D003B9757 /* Info.plist */,
+			);
+			path = EmonCMSiOSTests;
 			sourceTree = "<group>";
 		};
 		C9BB83461D869CB00058C059 /* Model */ = {
@@ -140,6 +185,8 @@
 			isa = PBXGroup;
 			children = (
 				C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */,
+				C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */,
+				C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -177,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */,
+				C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */,
 				C9C041981D85F7D600E3CEC4 /* Products */,
 				6556328E05CB7C00C84AB78E /* Pods */,
 				26BEF4AB69003D70074DBC16 /* Frameworks */,
@@ -187,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */,
+				C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -215,6 +264,27 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C95640A91D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C95640B31D8A9C7D003B9757 /* Build configuration list for PBXNativeTarget "EmonCMSiOSTests" */;
+			buildPhases = (
+				4EDC7450A22211267FDBE54C /* [CP] Check Pods Manifest.lock */,
+				C95640A61D8A9C7D003B9757 /* Sources */,
+				C95640A71D8A9C7D003B9757 /* Frameworks */,
+				C95640A81D8A9C7D003B9757 /* Resources */,
+				A12E3435EABAD0F80C2F2733 /* [CP] Embed Pods Frameworks */,
+				D83873CB7D51F8A0E4901AFE /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C95640B01D8A9C7D003B9757 /* PBXTargetDependency */,
+			);
+			name = EmonCMSiOSTests;
+			productName = EmonCMSiOSTests;
+			productReference = C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9C041A91D85F7D600E3CEC4 /* Build configuration list for PBXNativeTarget "EmonCMSiOS" */;
@@ -245,6 +315,12 @@
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Matt Galloway";
 				TargetAttributes = {
+					C95640A91D8A9C7D003B9757 = {
+						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = KGUUH6BP8Y;
+						ProvisioningStyle = Automatic;
+						TestTargetID = C9C041961D85F7D600E3CEC4;
+					};
 					C9C041961D85F7D600E3CEC4 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = KGUUH6BP8Y;
@@ -271,11 +347,19 @@
 			projectRoot = "";
 			targets = (
 				C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */,
+				C95640A91D8A9C7D003B9757 /* EmonCMSiOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C95640A81D8A9C7D003B9757 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9C041951D85F7D600E3CEC4 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -335,14 +419,70 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		4EDC7450A22211267FDBE54C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A12E3435EABAD0F80C2F2733 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D83873CB7D51F8A0E4901AFE /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C95640A61D8A9C7D003B9757 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
+				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C9C041931D85F7D600E3CEC4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */,
 				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
+				C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */,
 				C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */,
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
 				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
@@ -369,6 +509,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C95640B01D8A9C7D003B9757 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */;
+			targetProxy = C95640AF1D8A9C7D003B9757 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		C92010F31D89F6AD00C9974B /* Apps.storyboard */ = {
@@ -398,6 +546,36 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C95640B11D8A9C7D003B9757 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 04609C891FEE78D0EC5AC18E /* Pods-EmonCMSiOSTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
+			};
+			name = Debug;
+		};
+		C95640B21D8A9C7D003B9757 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 748B5E52AAD3BA067FF83EF1 /* Pods-EmonCMSiOSTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
+			};
+			name = Release;
+		};
 		C9C041A71D85F7D600E3CEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -524,6 +702,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C95640B31D8A9C7D003B9757 /* Build configuration list for PBXNativeTarget "EmonCMSiOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C95640B11D8A9C7D003B9757 /* Debug */,
+				C95640B21D8A9C7D003B9757 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C9C041921D85F7D600E3CEC4 /* Build configuration list for PBXProject "EmonCMSiOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

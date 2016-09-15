@@ -10,9 +10,11 @@ import Foundation
 
 class SettingsViewModel {
 
+  private let account: Account
   private let api: EmonCMSAPI
 
-  init(api: EmonCMSAPI) {
+  init(account: Account, api: EmonCMSAPI) {
+    self.account = account
     self.api = api
   }
 
