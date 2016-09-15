@@ -12,6 +12,7 @@ protocol AppViewModel {}
 
 protocol AppViewController: class {
 
+  // TODO: There must be a better way to do this. Perhaps with an `associatedtype`?
   var genericViewModel: AppViewModel! { get set }
 
 }
