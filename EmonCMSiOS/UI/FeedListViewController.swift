@@ -29,6 +29,7 @@ class FeedListViewController: UITableViewController {
     self.title = "Feeds"
 
     self.setupDataSource()
+    self.setupBindings()
   }
 
   private func setupDataSource() {
@@ -46,6 +47,13 @@ class FeedListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
+    self.viewModel.feeds
+      .asDriver()
+      .drive(self.tableView.rx.items(dataSource: self.dataSource))
+      .addDisposableTo(self.disposeBag)
+  }
+
+  private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
 
     let initial = Observable.just(())
@@ -56,15 +64,13 @@ class FeedListViewController: UITableViewController {
       .asDriver(onErrorJustReturn: ())
 
     let dataDriver = refreshDriver.asObservable()
-      .flatMapLatest { [weak self] _ -> Observable<[FeedListSection]> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.viewModel.fetch()
+      .flatMapLatest { [weak self] _ -> Observable<()> in
+        guard let strongSelf = self else { return Observable.just(()) }
+        return strongSelf.viewModel.update()
+          .map { _ in () }
+          .concat(Observable.just(()))
       }
-      .asDriver(onErrorJustReturn: [])
-
-    dataDriver
-      .drive(self.tableView.rx.items(dataSource: self.dataSource))
-      .addDisposableTo(self.disposeBag)
+      .asDriver(onErrorJustReturn: ())
 
     Observable.of(
       refreshDriver.asObservable().map { _ in true },

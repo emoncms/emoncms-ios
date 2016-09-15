@@ -32,14 +32,25 @@ class FeedListViewModel {
   private let account: Account
   private let api: EmonCMSAPI
 
+  let feeds = Variable<[FeedListSection]>([])
+
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
   }
 
-  func fetch() -> Observable<[FeedListSection]> {
+  func update() -> Observable<()> {
+    return self.fetch()
+      .do(onNext: { feeds in
+        self.feeds.value = feeds
+      })
+      .map { _ in () }
+      .ignoreElements()
+  }
+
+  private func fetch() -> Observable<[FeedListSection]> {
     return self.api.feedList(account)
-      .map{ [weak self] feeds -> [FeedListSection] in
+      .map{ [weak self] feeds in
         guard let strongSelf = self else { return [] }
 
         var sectionBuilder: [String:[Feed]] = [:]
