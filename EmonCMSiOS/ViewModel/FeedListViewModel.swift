@@ -55,8 +55,7 @@ class FeedListViewModel {
 
   func update() -> Observable<()> {
     return self.api.feedList(account)
-      .map { _ in () }
-      .ignoreElements()
+      .becomeVoidAndIgnoreElements()
   }
 
   private func feedsToSections(_ feeds: [Feed]) -> [FeedListSection] {

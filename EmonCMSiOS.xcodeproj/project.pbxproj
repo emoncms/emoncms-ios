@@ -13,6 +13,7 @@
 		C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartXAxisDateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartXAxisDateFormatter.swift */; };
 		C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* RxOperators.swift */; };
 		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
 		C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F11D89F34500C9974B /* AppListViewController.swift */; };
 		C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C92010F31D89F6AD00C9974B /* Apps.storyboard */; };
@@ -66,6 +67,7 @@
 		C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4541D8B0316007FE19A /* ChartXAxisDateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartXAxisDateFormatter.swift; sourceTree = "<group>"; };
 		C906B4561D8B045F007FE19A /* EmonCMSColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSColors.swift; sourceTree = "<group>"; };
+		C91CC3441D8CAE1E0048A356 /* RxOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxOperators.swift; sourceTree = "<group>"; };
 		C92010EF1D89F2E600C9974B /* AppListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewModel.swift; sourceTree = "<group>"; };
 		C92010F11D89F34500C9974B /* AppListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
 		C92010F41D89F6AD00C9974B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Apps.storyboard; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
 				C906B4541D8B0316007FE19A /* ChartXAxisDateFormatter.swift */,
 				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
+				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				C9BB835B1D86D8770058C059 /* SettingsViewController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
+				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */,

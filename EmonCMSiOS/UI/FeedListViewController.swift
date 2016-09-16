@@ -57,7 +57,7 @@ class FeedListViewController: UITableViewController {
     let refreshControl = self.tableView.refreshControl!
 
     let initial = Observable.just(())
-    let refresh = refreshControl.rx.controlEvent(.valueChanged).map { _ in () }
+    let refresh = refreshControl.rx.controlEvent(.valueChanged).becomeVoid()
 
     let refreshDriver = Observable.of(initial, refresh)
       .merge()
@@ -67,7 +67,6 @@ class FeedListViewController: UITableViewController {
       .flatMapLatest { [weak self] _ -> Observable<()> in
         guard let strongSelf = self else { return Observable.just(()) }
         return strongSelf.viewModel.update()
-          .map { _ in () }
           .concat(Observable.just(()))
       }
       .asDriver(onErrorJustReturn: ())

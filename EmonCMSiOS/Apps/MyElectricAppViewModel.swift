@@ -48,8 +48,7 @@ class MyElectricAppViewModel: AppViewModel {
         strongSelf.powerNow.value = use
         strongSelf.usageToday.value = useKwh // TODO: Obviously this isn't right
       })
-      .map { _ in () }
-      .ignoreElements()
+      .becomeVoidAndIgnoreElements()
   }
 
   func updateChartData() -> Observable<()> {
@@ -69,8 +68,7 @@ class MyElectricAppViewModel: AppViewModel {
 
     return Observable.of(lineChart, barChart)
       .merge()
-      .map { _ in () }
-      .ignoreElements()
+      .becomeVoidAndIgnoreElements()
   }
 
   private func fetchLineChartHistory() -> Observable<[FeedDataPoint]> {
