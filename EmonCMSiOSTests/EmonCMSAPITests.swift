@@ -115,6 +115,22 @@ class EmonCMSAPITests: QuickSpec {
       }
     }
 
+    describe("feedDataDaily") {
+      it("should fetch the data for the feed") {
+        let observer = scheduler.createObserver([FeedDataPoint].self)
+
+        let result = api.feedDataDaily(account, id: "1", at: Date()-100, until: Date())
+
+        call(api: result, observer: observer) {
+          expect(observer.events.count).to(equal(2))
+          expect(observer.events[0].value.element).notTo(beNil())
+          expect(observer.events[0].value.element!.count).to(equal(3))
+        }
+
+        scheduler.start()
+      }
+    }
+
     describe("feedValue") {
       it("should fetch the value for the feed") {
         let observer = scheduler.createObserver(Double.self)

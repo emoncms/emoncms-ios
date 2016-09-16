@@ -21,13 +21,13 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
 
     let path = urlComponents.path
     let queryItems = urlComponents.queryItems ?? []
-    let queryValues = queryItems.reduce([String:String?]()) { (dictionary, item) in
+    let queryValues = queryItems.reduce([String:String]()) { (dictionary, item) in
       var mutableDictionary = dictionary
-      mutableDictionary[item.name] = item.value
+      mutableDictionary[item.name] = item.value ?? ""
       return mutableDictionary
     }
 
-    guard let value = queryValues["apikey"], value == "ilikecats" else {
+    guard queryValues["apikey"] == "ilikecats" else {
       return Observable.empty()
     }
 
@@ -40,7 +40,11 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
     case "/feed/get.json":
       responseString = "\"use\""
     case "/feed/data.json":
-      responseString = "[[1473793120000,257],[1473793130000,262],[1473793140000,306],[1473793150000,322],[1473793160000,321],[1473793170000,325],[1473793180000,322],[1473793190000,325],[1473793200000,320],[1473793210000,299]]"
+      if queryValues["mode"] == "daily" {
+        responseString = "[[0,0],[86400000,10],[172800000,20]]"
+      } else {
+        responseString = "[[1473793120000,257],[1473793130000,262],[1473793140000,306],[1473793150000,322],[1473793160000,321],[1473793170000,325],[1473793180000,322],[1473793190000,325],[1473793200000,320],[1473793210000,299]]"
+      }
     case "/feed/value.json":
       responseString = "\"100\""
     case "/feed/fetch.json":
