@@ -1,3 +1,6 @@
 language: objective-c
 osx_image: xcode8
-script: 'sh scripts/ci.sh'
+script:
+  - sh scripts/ci.sh
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
