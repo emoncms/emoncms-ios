@@ -1,0 +1,4 @@
+language: objective-c
+osx_image: xcode8
+xcode_workspace: EmonCMSiOS.xcworkspace
+xcode_scheme: EmonCMSiOS
