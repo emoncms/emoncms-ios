@@ -53,7 +53,7 @@ class ControlTarget: RxTarget {
         }
     }
 #elseif os(OSX)
-    init(control: Control, callback: Callback) {
+    init(control: Control, callback: @escaping Callback) {
         MainScheduler.ensureExecutingOnScheduler()
 
         self.control = control

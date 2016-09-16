@@ -5,8 +5,8 @@ use_frameworks!
 target 'EmonCMSiOS' do
     pod 'Alamofire', '~> 4.0'
 
-    pod 'RxSwift', '~> 3.0.0.alpha.1'
-    pod 'RxCocoa', '~> 3.0.0.alpha.1'
+    pod 'RxSwift', '~> 3.0.0-beta.1'
+    pod 'RxCocoa', '~> 3.0.0-beta.1'
     pod 'RxDataSources', '~> 1.0.0-beta.1'
 
     pod 'Unbox', :git => 'https://github.com/JohnSundell/Unbox.git', branch: 'swift3'
@@ -25,8 +25,8 @@ end
 target 'EmonCMSiOSTests' do
     pod 'Quick', :git => 'https://github.com/Quick/Quick.git', branch: 'swift-3.0'
     pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', branch: 'master'
-    pod 'RxSwift', '~> 3.0.0.alpha.1'
-    pod 'RxCocoa', '~> 3.0.0.alpha.1'
-    pod 'RxTests', '~> 3.0.0.alpha.1'
+    pod 'RxSwift', '~> 3.0.0-beta.1'
+    pod 'RxCocoa', '~> 3.0.0-beta.1'
+    pod 'RxTests', '~> 3.0.0-beta.1'
 end
 

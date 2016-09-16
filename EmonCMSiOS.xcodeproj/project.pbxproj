@@ -558,7 +558,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04609C891FEE78D0EC5AC18E /* Pods-EmonCMSiOSTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
@@ -574,7 +574,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 748B5E52AAD3BA067FF83EF1 /* Pods-EmonCMSiOSTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
@@ -685,7 +685,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 5784AC744742E4584D271263 /* Pods-EmonCMSiOS.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
@@ -701,7 +701,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BA2025315BFC8802DB0284B0 /* Pods-EmonCMSiOS.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
