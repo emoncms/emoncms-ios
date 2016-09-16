@@ -10,7 +10,6 @@ import Foundation
 
 import RxSwift
 import Alamofire
-import Unbox
 
 class EmonCMSAPI {
 
@@ -57,12 +56,19 @@ class EmonCMSAPI {
 
   func feedList(_ account: Account) -> Observable<[Feed]> {
     return self.request(account, path: "list").map { resultData -> [Feed] in
-      do {
-        let feeds: [Feed] = try Unbox(data: resultData)
-        return feeds
-      } catch {
+      guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
+        let json = anyJson as? [Any] else {
         throw EmonCMSAPIError.InvalidResponse
       }
+
+      var feeds: [Feed] = []
+      for i in json {
+        if let feedJson = i as? [String:Any],
+          let feed = Feed(json: feedJson) {
+          feeds.append(feed)
+        }
+      }
+      return feeds
     }
   }
 
@@ -72,12 +78,13 @@ class EmonCMSAPI {
     ]
 
     return self.request(account, path: "aget", queryItems: queryItems).map { resultData -> Feed in
-      do {
-        let feed: Feed = try Unbox(data: resultData)
-        return feed
-      } catch {
-        throw EmonCMSAPIError.InvalidResponse
+      guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
+        let json = anyJson as? [String: Any],
+        let feed = Feed(json: json) else {
+          throw EmonCMSAPIError.InvalidResponse
       }
+
+      return feed
     }
   }
 

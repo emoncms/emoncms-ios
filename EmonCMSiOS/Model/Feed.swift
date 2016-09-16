@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Unbox
 
 struct Feed {
 
@@ -19,18 +18,20 @@ struct Feed {
 
 }
 
-extension Feed: Unboxable {
+extension Feed {
 
-  init(unboxer: Unboxer) {
-    self.id = unboxer.unbox(key: "id")
-    self.name = unboxer.unbox(key: "name")
-    self.tag = unboxer.unbox(key: "tag")
+  init?(json: [String:Any]) {
+    guard let id = json["id"] as? String else { return nil }
+    guard let name = json["name"] as? String else { return nil }
+    guard let tag = json["tag"] as? String else { return nil }
+    guard let timeString = json["time"] as? String,
+      let timeDouble = Double(timeString) else { return nil }
+    guard let valueString = json["value"] as? String,
+      let value = Double(valueString) else { return nil }
 
-    let time: String = unboxer.unbox(key: "time")
-    self.time = Date(timeIntervalSince1970: Double(time) ?? 0)
+    let time = Date(timeIntervalSince1970: timeDouble)
 
-    let value: String = unboxer.unbox(key: "value")
-    self.value = Double(value) ?? 0
+    self.init(id: id, name: name, tag: tag, time: time, value: value)
   }
   
 }
