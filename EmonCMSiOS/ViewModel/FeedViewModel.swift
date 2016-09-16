@@ -9,6 +9,8 @@
 import Foundation
 
 import RxSwift
+import RxCocoa
+import Realm
 
 class FeedViewModel {
 
@@ -16,19 +18,27 @@ class FeedViewModel {
   private let api: EmonCMSAPI
   private let feed: Feed
 
+  private let disposeBag = DisposeBag()
+
   init(account: Account, api: EmonCMSAPI, feed: Feed) {
     self.account = account
     self.api = api
     self.feed = feed
+
+    self.feed.rx.observe(String.self, "name")
+      .map { $0 ?? "" }
+      .bindTo(self.name)
+      .addDisposableTo(self.disposeBag)
+
+    self.feed.rx.observe(Double.self, "value")
+      .map { $0 ?? 0 }
+      .map { $0.prettyFormat() }
+      .bindTo(self.value)
+      .addDisposableTo(self.disposeBag)
   }
 
-  var name: String {
-    return self.feed.name
-  }
-
-  var value: String {
-    return self.feed.value.prettyFormat()
-  }
+  let name = Variable<String>("")
+  let value = Variable<String>("")
 
   func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
     return self.api.feedData(account, id: self.feed.id, at: startTime, until: endTime, interval: interval)

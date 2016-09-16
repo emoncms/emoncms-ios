@@ -154,7 +154,7 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
     }
 
     if let apikey = apikey, let scheme = url.scheme, let host = url.host {
-      let account = Account(url: scheme + "://" + host, apikey: apikey)
+      let account = Account(uuid: UUID(), url: scheme + "://" + host, apikey: apikey)
       DispatchQueue.main.async {
         self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
       }

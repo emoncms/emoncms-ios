@@ -26,6 +26,7 @@ class LoginController {
 
   private enum UserDefaultKeys: String {
     case accountURL
+    case accountUUID
   }
 
   init() {
@@ -33,20 +34,33 @@ class LoginController {
   }
 
   private func loadAccount() {
-    guard let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue) else { return }
-    guard let data = Locksmith.loadDataForUserAccount(userAccount: accountURL),
+    guard
+    let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue),
+    let accountUUIDString = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue),
+    let accountUUID = UUID(uuidString: accountUUIDString)
+    else { return }
+
+    guard let data = Locksmith.loadDataForUserAccount(userAccount: accountUUIDString),
       let apikey = data["apikey"] as? String
       else {
         return
     }
-    let account = Account(url: accountURL, apikey: apikey)
+
+    let account = Account(uuid: accountUUID, url: accountURL, apikey: apikey)
     self.account = account
   }
 
   func login(withAccount account: Account) throws {
     do {
-      try Locksmith.saveData(data: ["apikey": account.apikey], forUserAccount: account.url)
+      let data = ["apikey": account.apikey]
+      do {
+        try Locksmith.saveData(data: data, forUserAccount: account.uuid.uuidString)
+      } catch LocksmithError.duplicate {
+        // We already have it, let's try updating it
+        try Locksmith.updateData(data: data, forUserAccount: account.uuid.uuidString)
+      }
       UserDefaults.standard.set(account.url, forKey: UserDefaultKeys.accountURL.rawValue)
+      UserDefaults.standard.set(account.uuid.uuidString, forKey: UserDefaultKeys.accountUUID.rawValue)
       self.account = account
     } catch {
       throw LoginControllerError.KeychainFailed

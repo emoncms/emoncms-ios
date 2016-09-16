@@ -22,7 +22,10 @@ class FeedViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.title = self.viewModel.name
+    self.viewModel.name
+      .asDriver()
+      .drive(self.rx.title)
+      .addDisposableTo(self.disposeBag)
 
     self.chartView.delegate = self
     self.chartView.dragEnabled = true
@@ -40,7 +43,7 @@ class FeedViewController: UIViewController {
     yAxis.drawGridLinesEnabled = false
     yAxis.labelPosition = .outsideChart
 
-    let dataSet = LineChartDataSet(yVals: nil, label: self.viewModel.name)
+    let dataSet = LineChartDataSet(yVals: nil, label: self.viewModel.name.value)
     dataSet.valueTextColor = UIColor.lightGray
     dataSet.drawCirclesEnabled = false
     dataSet.drawFilledEnabled = true

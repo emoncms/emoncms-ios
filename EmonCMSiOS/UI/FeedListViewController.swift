@@ -35,8 +35,8 @@ class FeedListViewController: UITableViewController {
   private func setupDataSource() {
     self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
       let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath)
-      cell.textLabel?.text = item.name
-      cell.detailTextLabel?.text = "\(item.value)"
+      cell.textLabel?.text = item.name.value
+      cell.detailTextLabel?.text = "\(item.value.value)"
       return cell
     }
 

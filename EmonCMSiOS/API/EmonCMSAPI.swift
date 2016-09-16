@@ -62,9 +62,10 @@ class EmonCMSAPI {
       }
 
       var feeds: [Feed] = []
+      let realm = account.realm()
       for i in json {
         if let feedJson = i as? [String:Any],
-          let feed = Feed(json: feedJson) {
+          let feed = Feed.fromJson(json: feedJson, inRealm: realm) {
           feeds.append(feed)
         }
       }
@@ -80,7 +81,7 @@ class EmonCMSAPI {
     return self.request(account, path: "aget", queryItems: queryItems).map { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
-        let feed = Feed(json: json) else {
+        let feed = Feed.fromJson(json: json, inRealm: account.realm()) else {
           throw EmonCMSAPIError.InvalidResponse
       }
 

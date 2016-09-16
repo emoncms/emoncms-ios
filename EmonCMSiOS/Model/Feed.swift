@@ -8,19 +8,25 @@
 
 import Foundation
 
-struct Feed {
+import RealmSwift
 
-  let id: String
-  let name: String
-  let tag: String
-  let time: Date
-  let value: Double
+class Feed: Object {
+
+  dynamic var id: String = ""
+  dynamic var name: String = ""
+  dynamic var tag: String = ""
+  dynamic var time: Date = Date()
+  dynamic var value: Double = 0
+
+  override class func primaryKey() -> String? {
+    return "id"
+  }
 
 }
 
 extension Feed {
 
-  init?(json: [String:Any]) {
+  static func fromJson(json: [String:Any], inRealm realm: Realm) -> Feed? {
     guard let id = json["id"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }
@@ -31,7 +37,22 @@ extension Feed {
 
     let time = Date(timeIntervalSince1970: timeDouble)
 
-    self.init(id: id, name: name, tag: tag, time: time, value: value)
+    do {
+      let feed = Feed()
+      feed.id = id
+      feed.name = name
+      feed.tag = tag
+      feed.time = time
+      feed.value = value
+
+      try realm.write {
+        realm.add(feed, update: true)
+      }
+
+      return feed
+    } catch {
+      return nil
+    }
   }
-  
+
 }

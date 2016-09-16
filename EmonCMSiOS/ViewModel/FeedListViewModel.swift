@@ -10,6 +10,9 @@ import Foundation
 
 import RxSwift
 import RxDataSources
+import Realm
+import RealmSwift
+import RxRealm
 
 struct FeedListSection: SectionModelType {
   private(set) var header: String
@@ -31,49 +34,52 @@ class FeedListViewModel {
 
   private let account: Account
   private let api: EmonCMSAPI
+  private let realm: Realm
+
+  private let disposeBag = DisposeBag()
 
   let feeds = Variable<[FeedListSection]>([])
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
+    self.realm = account.realm()
+
+    self.realm.objects(Feed.self)
+      .asObservableArray()
+      .map(self.feedsToSections)
+      .debug()
+      .bindTo(self.feeds)
+      .addDisposableTo(self.disposeBag)
   }
 
   func update() -> Observable<()> {
-    return self.fetch()
-      .do(onNext: { feeds in
-        self.feeds.value = feeds
-      })
+    return self.api.feedList(account)
       .map { _ in () }
       .ignoreElements()
   }
 
-  private func fetch() -> Observable<[FeedListSection]> {
-    return self.api.feedList(account)
-      .map{ [weak self] feeds in
-        guard let strongSelf = self else { return [] }
-
-        var sectionBuilder: [String:[Feed]] = [:]
-        for feed in feeds {
-          let sectionFeeds: [Feed]
-          if let existingFeeds = sectionBuilder[feed.tag] {
-            sectionFeeds = existingFeeds
-          } else {
-            sectionFeeds = []
-          }
-          sectionBuilder[feed.tag] = sectionFeeds + [feed]
-        }
-
-        var sections: [FeedListSection] = []
-        for section in sectionBuilder.keys.sorted(by: <) {
-          let sortedSectionFeeds = sectionBuilder[section]!
-            .sorted(by: { $0.name < $1.name })
-            .map { FeedViewModel(account: strongSelf.account, api: strongSelf.api, feed: $0) }
-          sections.append(FeedListSection(header: section, items: sortedSectionFeeds))
-        }
-
-        return sections
+  private func feedsToSections(_ feeds: [Feed]) -> [FeedListSection] {
+    var sectionBuilder: [String:[Feed]] = [:]
+    for feed in feeds {
+      let sectionFeeds: [Feed]
+      if let existingFeeds = sectionBuilder[feed.tag] {
+        sectionFeeds = existingFeeds
+      } else {
+        sectionFeeds = []
       }
+      sectionBuilder[feed.tag] = sectionFeeds + [feed]
+    }
+
+    var sections: [FeedListSection] = []
+    for section in sectionBuilder.keys.sorted(by: <) {
+      let sortedSectionFeeds = sectionBuilder[section]!
+        .sorted(by: { $0.name < $1.name })
+        .map { FeedViewModel(account: self.account, api: self.api, feed: $0) }
+      sections.append(FeedListSection(header: section, items: sortedSectionFeeds))
+    }
+
+    return sections
   }
 
 }
