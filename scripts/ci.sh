@@ -2,4 +2,4 @@
 
 set -e
 
-xcodebuild -workspace EmonCMSiOS.xcworkspace -scheme EmonCMSiOS -sdk iphonesimulator -destination "name=iPhone SE" test
+xcodebuild -workspace EmonCMSiOS.xcworkspace -scheme EmonCMSiOS -sdk iphonesimulator -destination "name=iPhone SE" test | xcpretty
