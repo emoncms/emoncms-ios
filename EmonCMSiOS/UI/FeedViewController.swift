@@ -58,9 +58,11 @@ class FeedViewController: UIViewController {
   }
 
   private func refresh() {
+    let timeRange = Double(60 * 60 * 24)
     let endDate = Date()
-    let startDate = endDate - (60 * 60 * 24)
-    self.viewModel.fetchData(at: startDate, until: endDate, interval: 10)
+    let startDate = endDate - timeRange
+    let interval = Int(ceil(timeRange / Double(self.chartView.bounds.width)))
+    self.viewModel.fetchData(at: startDate, until: endDate, interval: interval)
       .observeOn(MainScheduler.instance)
       .subscribe(
         onNext: { [weak self] (feedDataPoints) in
