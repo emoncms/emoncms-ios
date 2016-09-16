@@ -9,8 +9,6 @@ target 'EmonCMSiOS' do
     pod 'RxCocoa', '~> 3.0.0-beta.1'
     pod 'RxDataSources', '~> 1.0.0-beta.1'
 
-    pod 'Unbox', :git => 'https://github.com/JohnSundell/Unbox.git', branch: 'swift3'
-
     pod 'Locksmith', :git => 'https://github.com/fedetrim/Locksmith.git', branch: 'swift-3.0'
 
     pod 'Charts', :git => 'https://github.com/danielgindi/Charts.git', branch: 'Swift-3.0'
@@ -19,7 +17,9 @@ target 'EmonCMSiOS' do
 #    pod 'Former', :git => 'https://github.com/ra1028/Former.git', branch: 'master'
     pod 'Former', :git => 'git@github.com:mattjgalloway/Former.git', branch: 'swift3'
 
-#    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: true
+    pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: 'true'
+    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: 'true'
+    pod 'RxRealm', git: 'https://github.com/ewerx/RxRealm.git', branch: 'swift-3.0'
 end
 
 target 'EmonCMSiOSTests' do
