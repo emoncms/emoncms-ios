@@ -14,11 +14,24 @@ class ChartXAxisDateFormatter: ChartXAxisValueFormatter {
 
   private let dateFormatter: DateFormatter
 
-  init() {
+  static let posixLocale = Locale(identifier: "en_US_POSIX")
+
+  init(dateFormatter: DateFormatter) {
+    self.dateFormatter = dateFormatter
+  }
+
+  convenience init(formatString: String) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = ChartXAxisDateFormatter.posixLocale
+    dateFormatter.dateFormat = formatString
+    self.init(dateFormatter: dateFormatter)
+  }
+
+  convenience init() {
     let dateFormatter = DateFormatter()
     dateFormatter.timeStyle = .short
     dateFormatter.dateStyle = .none
-    self.dateFormatter = dateFormatter
+    self.init(dateFormatter: dateFormatter)
   }
 
   func stringForXValue(_ index: Int, original: String, viewPortHandler: ChartViewPortHandler) -> String {
