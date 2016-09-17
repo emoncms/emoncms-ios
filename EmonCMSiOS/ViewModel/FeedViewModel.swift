@@ -44,4 +44,9 @@ class FeedViewModel {
     return self.api.feedData(account, id: self.feed.id, at: startTime, until: endTime, interval: interval)
   }
 
+  func update() -> Observable<()> {
+    return self.api.feedFields(self.account, id: self.feed.id)
+      .becomeVoidAndIgnoreElements()
+  }
+
 }
