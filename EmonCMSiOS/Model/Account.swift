@@ -23,7 +23,7 @@ struct Account {
     return config
   }
 
-  func realm() -> Realm {
+  func createRealm() -> Realm {
     let config = self.realmConfiguration()
     let realm = try! Realm(configuration: config)
     return realm

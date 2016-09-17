@@ -43,7 +43,7 @@ class FeedListViewModel {
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
-    self.realm = account.realm()
+    self.realm = account.createRealm()
 
     self.realm.objects(Feed.self)
       .asObservableArray()
