@@ -65,7 +65,7 @@ class EmonCMSAPI {
       let realm = account.realm()
       for i in json {
         if let feedJson = i as? [String:Any],
-          let feed = Feed.fromJson(json: feedJson, inRealm: realm) {
+          let feed = Feed.from(json: feedJson, inRealm: realm) {
           feeds.append(feed)
         }
       }
@@ -81,7 +81,7 @@ class EmonCMSAPI {
     return self.request(account, path: "aget", queryItems: queryItems).map { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
-        let feed = Feed.fromJson(json: json, inRealm: account.realm()) else {
+        let feed = Feed.from(json: json, inRealm: account.realm()) else {
           throw EmonCMSAPIError.InvalidResponse
       }
 
@@ -105,25 +105,25 @@ class EmonCMSAPI {
     }
   }
 
-  private static func feedDataPoints(fromJsonData data: Data) throws -> [FeedDataPoint] {
+  private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
-      let dataPoints = json as? [Any] else {
+      let dataPointsJson = json as? [Any] else {
         throw EmonCMSAPIError.InvalidResponse
     }
 
-    var feedDataPoints: [FeedDataPoint] = []
-    for dataPoint in dataPoints {
-      guard let typedDataPoint = dataPoint as? [Double] else {
+    var dataPoints: [DataPoint] = []
+    for dataPointJson in dataPointsJson {
+      guard let typedDataPoint = dataPointJson as? [Double] else {
         continue
       }
-      if let feedDataPoint = FeedDataPoint.from(dataArray: typedDataPoint) {
-        feedDataPoints.append(feedDataPoint)
+      if let dataPoint = DataPoint.from(dataArray: typedDataPoint) {
+        dataPoints.append(dataPoint)
       }
     }
-    return feedDataPoints
+    return dataPoints
   }
 
-  func feedData(_ account: Account, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
+  func feedData(_ account: Account, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
@@ -131,12 +131,12 @@ class EmonCMSAPI {
       "interval": "\(interval)"
     ]
 
-    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [FeedDataPoint] in
-      return try EmonCMSAPI.feedDataPoints(fromJsonData: resultData)
+    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [DataPoint] in
+      return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }
 
-  func feedDataDaily(_ account: Account, id: String, at startTime: Date, until endTime: Date) -> Observable<[FeedDataPoint]> {
+  func feedDataDaily(_ account: Account, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
@@ -144,8 +144,8 @@ class EmonCMSAPI {
       "mode": "daily"
     ]
 
-    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [FeedDataPoint] in
-      return try EmonCMSAPI.feedDataPoints(fromJsonData: resultData)
+    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [DataPoint] in
+      return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }
 

@@ -101,7 +101,7 @@ class EmonCMSAPITests: QuickSpec {
 
     describe("feedData") {
       it("should fetch the data for the feed") {
-        let observer = scheduler.createObserver([FeedDataPoint].self)
+        let observer = scheduler.createObserver([DataPoint].self)
 
         let result = api.feedData(account, id: "1", at: Date()-100, until: Date(), interval: 10)
 
@@ -117,7 +117,7 @@ class EmonCMSAPITests: QuickSpec {
 
     describe("feedDataDaily") {
       it("should fetch the data for the feed") {
-        let observer = scheduler.createObserver([FeedDataPoint].self)
+        let observer = scheduler.createObserver([DataPoint].self)
 
         let result = api.feedDataDaily(account, id: "1", at: Date()-100, until: Date())
 

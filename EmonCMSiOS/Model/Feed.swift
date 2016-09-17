@@ -26,7 +26,7 @@ class Feed: Object {
 
 extension Feed {
 
-  static func fromJson(json: [String:Any], inRealm realm: Realm) -> Feed? {
+  static func from(json: [String:Any], inRealm realm: Realm) -> Feed? {
     guard let id = json["id"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }

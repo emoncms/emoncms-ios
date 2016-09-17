@@ -60,7 +60,7 @@ class MyElectricAppViewController: UIViewController, AppViewController {
 
     self.viewModel.lineChartData
       .asDriver()
-      .drive(onNext: { [weak self] feedDataPoints in
+      .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
 
         guard let data = strongSelf.lineChart.data,
@@ -71,7 +71,7 @@ class MyElectricAppViewController: UIViewController, AppViewController {
         data.xVals = []
         dataSet.clear()
 
-        for (i, point) in feedDataPoints.enumerated() {
+        for (i, point) in dataPoints.enumerated() {
           data.addXValue("\(point.time.timeIntervalSince1970)")
 
           let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
@@ -85,7 +85,7 @@ class MyElectricAppViewController: UIViewController, AppViewController {
 
     self.viewModel.barChartData
       .asDriver()
-      .drive(onNext: { [weak self] feedDataPoints in
+      .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
 
         guard let data = strongSelf.barChart.data,
@@ -100,7 +100,7 @@ class MyElectricAppViewController: UIViewController, AppViewController {
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "eeeee"
 
-        for (i, point) in feedDataPoints.enumerated() {
+        for (i, point) in dataPoints.enumerated() {
           // We minus 1 day here, because we want the date to represent the previous day.
           // For example:
           //   [0].time is Thursday midnight, [1].time is Friday midnight.

@@ -68,7 +68,7 @@ class FeedViewController: UIViewController {
     self.viewModel.fetchData(at: startDate, until: endDate, interval: interval)
       .observeOn(MainScheduler.instance)
       .subscribe(
-        onNext: { [weak self] (feedDataPoints) in
+        onNext: { [weak self] (dataPoints) in
           guard let strongSelf = self else { return }
 
           guard let data = strongSelf.chartView.data,
@@ -79,7 +79,7 @@ class FeedViewController: UIViewController {
           data.xVals = []
           dataSet.clear()
 
-          for (i, point) in feedDataPoints.enumerated() {
+          for (i, point) in dataPoints.enumerated() {
             data.addXValue("\(point.time.timeIntervalSince1970)")
 
             let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)

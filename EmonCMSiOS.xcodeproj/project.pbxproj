@@ -37,7 +37,7 @@
 		C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */; };
 		C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */; };
 		C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */; };
-		C9BB83721D8883480058C059 /* FeedDataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* FeedDataPoint.swift */; };
+		C9BB83721D8883480058C059 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
 		C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */; };
 		C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */; };
 		C9C041A21D85F7D600E3CEC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */; };
@@ -94,7 +94,7 @@
 		C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C9BB836E1D8800620058C059 /* EmonCMSiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSiOS.entitlements; sourceTree = "<group>"; };
 		C9BB836F1D88450D0058C059 /* ScreenshotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotViewController.swift; sourceTree = "<group>"; };
-		C9BB83711D8883480058C059 /* FeedDataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedDataPoint.swift; sourceTree = "<group>"; };
+		C9BB83711D8883480058C059 /* DataPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataPoint.swift; sourceTree = "<group>"; };
 		C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmonCMSiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C9C0419F1D85F7D600E3CEC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -168,7 +168,7 @@
 			children = (
 				C9BB834C1D869CC80058C059 /* Account.swift */,
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
-				C9BB83711D8883480058C059 /* FeedDataPoint.swift */,
+				C9BB83711D8883480058C059 /* DataPoint.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -512,7 +512,7 @@
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
-				C9BB83721D8883480058C059 /* FeedDataPoint.swift in Sources */,
+				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartXAxisDateFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,

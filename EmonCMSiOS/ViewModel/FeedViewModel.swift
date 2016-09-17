@@ -40,7 +40,7 @@ class FeedViewModel {
       .addDisposableTo(self.disposeBag)
   }
 
-  func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
+  func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
     return self.api.feedData(account, id: self.feed.id, at: startTime, until: endTime, interval: interval)
   }
 

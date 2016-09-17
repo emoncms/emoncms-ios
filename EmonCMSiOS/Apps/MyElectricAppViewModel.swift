@@ -17,8 +17,8 @@ class MyElectricAppViewModel: AppViewModel {
 
   let powerNow = Variable<Double>(0)
   let usageToday = Variable<Double>(0)
-  let lineChartData = Variable<[FeedDataPoint]>([])
-  let barChartData = Variable<[FeedDataPoint]>([])
+  let lineChartData = Variable<[DataPoint]>([])
+  let barChartData = Variable<[DataPoint]>([])
 
   private var useFeedId: String?
   private var useKwhFeedId: String?
@@ -71,7 +71,7 @@ class MyElectricAppViewModel: AppViewModel {
       .becomeVoidAndIgnoreElements()
   }
 
-  private func fetchLineChartHistory() -> Observable<[FeedDataPoint]> {
+  private func fetchLineChartHistory() -> Observable<[DataPoint]> {
     guard let useFeedId = self.useFeedId else {
       return Observable.empty()
     }
@@ -83,7 +83,7 @@ class MyElectricAppViewModel: AppViewModel {
     return self.api.feedData(self.account, id: useFeedId, at: startTime, until: endTime, interval: interval)
   }
 
-  private func fetchBarChartHistory() -> Observable<[FeedDataPoint]> {
+  private func fetchBarChartHistory() -> Observable<[DataPoint]> {
     guard let useKwhFeedId = self.useKwhFeedId else {
       return Observable.empty()
     }
@@ -96,13 +96,13 @@ class MyElectricAppViewModel: AppViewModel {
       .map { dataPoints in
         guard dataPoints.count > 1 else { return [] }
 
-        var newDataPoints: [FeedDataPoint] = []
+        var newDataPoints: [DataPoint] = []
         var lastValue: Double = dataPoints[0].value
         for i in 1..<dataPoints.count {
           let thisDataPoint = dataPoints[i]
           let differenceValue = thisDataPoint.value - lastValue
           lastValue = thisDataPoint.value
-          newDataPoints.append(FeedDataPoint(time: thisDataPoint.time, value: differenceValue))
+          newDataPoints.append(DataPoint(time: thisDataPoint.time, value: differenceValue))
         }
 
         return newDataPoints

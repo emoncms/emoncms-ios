@@ -28,5 +28,7 @@ target 'EmonCMSiOSTests' do
     pod 'RxSwift', '~> 3.0.0-beta.1'
     pod 'RxCocoa', '~> 3.0.0-beta.1'
     pod 'RxTests', '~> 3.0.0-beta.1'
+    pod 'Realm', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: 'true'
+    pod 'RealmSwift', git: 'https://github.com/realm/realm-cocoa.git', branch: 'master', submodules: 'true'
 end
 
