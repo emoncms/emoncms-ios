@@ -8,6 +8,8 @@
 
 import Foundation
 
+import RxSwift
+
 class AppListViewModel {
 
   private let account: Account
@@ -19,16 +21,17 @@ class AppListViewModel {
     let viewModelGenerator: () -> AppViewModel
   }
 
-  let apps: [App]
+  var apps: Observable<[App]> {
+    return Observable.just([
+      App(name: "My Electric", storyboardIdentifier: "myElectric") {
+        return MyElectricAppViewModel(account: self.account, api: self.api)
+      }
+    ])
+  }
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
-    apps = [
-      App(name: "My Electric", storyboardIdentifier: "myElectric") {
-        return MyElectricAppViewModel(account: account, api: api)
-      }
-    ]
   }
 
 }

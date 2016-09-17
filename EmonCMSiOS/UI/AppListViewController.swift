@@ -28,7 +28,8 @@ class AppListViewController: UITableViewController {
   private func setupDataSource() {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
-    Observable.just(viewModel.apps)
+
+    self.viewModel.apps
       .bindTo(self.tableView.rx.items(cellIdentifier: "Cell", cellType: UITableViewCell.self)) { (row, element, cell) in
         cell.textLabel?.text = element.name
       }
