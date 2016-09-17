@@ -16,7 +16,7 @@ class FeedListViewController: UITableViewController {
 
   var viewModel: FeedListViewModel!
 
-  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListSection>()
+  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {

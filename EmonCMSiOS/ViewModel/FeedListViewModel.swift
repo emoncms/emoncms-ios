@@ -14,23 +14,23 @@ import Realm
 import RealmSwift
 import RxRealm
 
-struct FeedListSection: SectionModelType {
-  private(set) var header: String
-  private(set) var items: [FeedViewModel]
-
-  init(header: String, items: [FeedViewModel]) {
-    self.header = header
-    self.items = items
-  }
-
-  typealias Item = FeedViewModel
-  init(original: FeedListSection, items: [FeedViewModel]) {
-    self = original
-    self.items = items
-  }
-}
-
 class FeedListViewModel {
+
+  struct Section: SectionModelType {
+    private(set) var header: String
+    private(set) var items: [FeedViewModel]
+
+    init(header: String, items: [FeedViewModel]) {
+      self.header = header
+      self.items = items
+    }
+
+    typealias Item = FeedViewModel
+    init(original: Section, items: [FeedViewModel]) {
+      self = original
+      self.items = items
+    }
+  }
 
   private let account: Account
   private let api: EmonCMSAPI
@@ -38,7 +38,7 @@ class FeedListViewModel {
 
   private let disposeBag = DisposeBag()
 
-  let feeds = Variable<[FeedListSection]>([])
+  let feeds = Variable<[Section]>([])
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
@@ -58,7 +58,7 @@ class FeedListViewModel {
       .becomeVoidAndIgnoreElements()
   }
 
-  private func feedsToSections(_ feeds: [Feed]) -> [FeedListSection] {
+  private func feedsToSections(_ feeds: [Feed]) -> [Section] {
     var sectionBuilder: [String:[Feed]] = [:]
     for feed in feeds {
       let sectionFeeds: [Feed]
@@ -70,12 +70,12 @@ class FeedListViewModel {
       sectionBuilder[feed.tag] = sectionFeeds + [feed]
     }
 
-    var sections: [FeedListSection] = []
+    var sections: [Section] = []
     for section in sectionBuilder.keys.sorted(by: <) {
       let sortedSectionFeeds = sectionBuilder[section]!
         .sorted(by: { $0.name < $1.name })
         .map { FeedViewModel(account: self.account, api: self.api, feed: $0) }
-      sections.append(FeedListSection(header: section, items: sortedSectionFeeds))
+      sections.append(Section(header: section, items: sortedSectionFeeds))
     }
 
     return sections
