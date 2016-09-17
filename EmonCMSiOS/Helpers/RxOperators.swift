@@ -10,12 +10,12 @@ import RxSwift
 
 extension ObservableType {
 
-  func becomeVoid() -> Observable<()> {
+  public func becomeVoid() -> Observable<()> {
     return map { _ in () }
   }
 
-  func becomeVoidAndIgnoreElements() -> Observable<()> {
-    return self.becomeVoid().ignoreElements()
+  public func becomeVoidAndIgnoreElements() -> Observable<()> {
+    return becomeVoid().ignoreElements()
   }
 
 }
