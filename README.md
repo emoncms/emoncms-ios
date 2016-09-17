@@ -12,8 +12,11 @@
 - [x] Login
   - [x] Manual URL + API key
   - [x] Scan QR code
+- [x] Data caching
 - [ ] Apps
   - [ ] My Electric app
   - [ ] My Solar PV app
-- [ ] Data caching
+- [ ] watchOS app
+- [ ] Today extension
+- [ ] tvOS app
 
