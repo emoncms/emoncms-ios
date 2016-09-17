@@ -20,6 +20,9 @@ class FeedViewModel {
 
   private let disposeBag = DisposeBag()
 
+  let name = Variable<String>("")
+  let value = Variable<String>("")
+
   init(account: Account, api: EmonCMSAPI, feed: Feed) {
     self.account = account
     self.api = api
@@ -36,9 +39,6 @@ class FeedViewModel {
       .bindTo(self.value)
       .addDisposableTo(self.disposeBag)
   }
-
-  let name = Variable<String>("")
-  let value = Variable<String>("")
 
   func fetchData(at startTime: Date, until endTime: Date, interval: Int) -> Observable<[FeedDataPoint]> {
     return self.api.feedData(account, id: self.feed.id, at: startTime, until: endTime, interval: interval)
