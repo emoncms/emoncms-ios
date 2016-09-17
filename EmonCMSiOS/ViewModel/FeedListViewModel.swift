@@ -48,7 +48,6 @@ class FeedListViewModel {
     self.realm.objects(Feed.self)
       .asObservableArray()
       .map(self.feedsToSections)
-      .debug()
       .bindTo(self.feeds)
       .addDisposableTo(self.disposeBag)
   }
