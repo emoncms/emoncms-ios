@@ -101,12 +101,7 @@ class AddAccountViewController: FormViewController {
       .filter { $0 == true }
       .flatMapLatest { [weak self] _ -> Observable<Account> in
         guard let strongSelf = self else { return Observable.never() }
-
-        let url = strongSelf.viewModel.url.value
-        let apikey = strongSelf.viewModel.apikey.value
-
-        let account = Account(uuid: UUID(), url: url, apikey: apikey)
-        return strongSelf.viewModel.validate(account: account)
+        return strongSelf.viewModel.validate()
       }
       .observeOn(MainScheduler.instance)
       .subscribe(

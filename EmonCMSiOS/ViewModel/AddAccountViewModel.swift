@@ -32,7 +32,8 @@ class AddAccountViewModel {
     }
   }
 
-  func validate(account: Account) -> Observable<Account> {
+  func validate() -> Observable<Account> {
+    let account = Account(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
     return self.api.feedList(account)
       .catchError { (_) -> Observable<[Feed]> in
         // TODO: Probably check what the actual error is here. If it's a network error, we could have a different error thrown
