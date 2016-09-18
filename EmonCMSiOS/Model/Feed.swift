@@ -26,7 +26,7 @@ class Feed: Object {
 
 extension Feed {
 
-  static func from(json: [String:Any], inRealm realm: Realm) -> Feed? {
+  static func from(json: [String:Any]) -> Feed? {
     guard let id = json["id"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }
@@ -37,22 +37,14 @@ extension Feed {
 
     let time = Date(timeIntervalSince1970: timeDouble)
 
-    do {
-      let feed = Feed()
-      feed.id = id
-      feed.name = name
-      feed.tag = tag
-      feed.time = time
-      feed.value = value
+    let feed = Feed()
+    feed.id = id
+    feed.name = name
+    feed.tag = tag
+    feed.time = time
+    feed.value = value
 
-      try realm.write {
-        realm.add(feed, update: true)
-      }
-
-      return feed
-    } catch {
-      return nil
-    }
+    return feed
   }
 
 }

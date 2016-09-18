@@ -62,13 +62,20 @@ class EmonCMSAPI {
       }
 
       var feeds: [Feed] = []
-      let realm = account.createRealm()
       for i in json {
         if let feedJson = i as? [String:Any],
-          let feed = Feed.from(json: feedJson, inRealm: realm) {
+          let feed = Feed.from(json: feedJson) {
           feeds.append(feed)
         }
       }
+
+      let realm = account.createRealm()
+      try realm.write {
+        for feed in feeds {
+          realm.add(feed, update: true)
+        }
+      }
+
       return feeds
     }
   }
@@ -81,8 +88,13 @@ class EmonCMSAPI {
     return self.request(account, path: "aget", queryItems: queryItems).map { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
-        let feed = Feed.from(json: json, inRealm: account.createRealm()) else {
+        let feed = Feed.from(json: json) else {
           throw EmonCMSAPIError.InvalidResponse
+      }
+
+      let realm = account.createRealm()
+      try realm.write {
+        realm.add(feed, update: true)
       }
 
       return feed
