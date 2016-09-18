@@ -22,6 +22,7 @@ class MyElectricAppViewModel: AppViewModel {
 
   private var useFeedId: String?
   private var useKwhFeedId: String?
+  private var startOfDayKwh: DataPoint?
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
@@ -37,17 +38,34 @@ class MyElectricAppViewModel: AppViewModel {
       return Observable.empty()
     }
 
-    return self.api.feedValue(self.account, ids: [useFeedId, useKwhFeedId])
-      .do(onNext: { [weak self] results in
+    let calendar = Calendar.current
+    let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+    let midnightToday = calendar.date(from: dateComponents)!
+
+    let startOfDayKwhSignal: Observable<DataPoint>
+    if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
+      startOfDayKwhSignal = Observable.just(startOfDayKwh)
+    } else {
+      startOfDayKwhSignal = self.api.feedData(self.account, id: useKwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
+        .map { $0[0] }
+        .do(onNext: { [weak self] in
+          guard let strongSelf = self else { return }
+          strongSelf.startOfDayKwh = $0
+        })
+    }
+
+    let feedValuesSignal = self.api.feedValue(self.account, ids: [useFeedId, useKwhFeedId])
+
+    return Observable.zip(startOfDayKwhSignal, feedValuesSignal) { [weak self] (startOfDayUsage, feedValues) in
         guard let strongSelf = self else { return }
 
-        guard let use = results[useFeedId], let useKwh = results[useKwhFeedId] else {
-          return
-        }
+        guard let use = feedValues[useFeedId], let useKwh = feedValues[useKwhFeedId] else { return }
 
         strongSelf.powerNow.value = use
-        strongSelf.usageToday.value = useKwh // TODO: Obviously this isn't right
-      })
+        strongSelf.usageToday.value = useKwh - startOfDayUsage.value
+
+        return ()
+      }
       .becomeVoidAndIgnoreElements()
   }
 
