@@ -42,7 +42,6 @@ class MyElectricAppViewController: UIViewController, AppViewController {
 
     self.viewModel.updatePowerAndUsage().subscribe().addDisposableTo(self.disposeBag)
     self.viewModel.updateChartData().subscribe().addDisposableTo(self.disposeBag)
-
   }
 
   private func setupBindings() {
