@@ -68,34 +68,8 @@
                     <view key="view" contentMode="scaleToFill" id="m0D-6h-gXJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Haf-5x-PvK" customClass="LineChartView" customModule="Charts">
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jnn-Xj-lN4">
-                                <segments>
-                                    <segment title="1h"/>
-                                    <segment title="8h"/>
-                                    <segment title="Day"/>
-                                    <segment title="Month"/>
-                                    <segment title="Year"/>
-                                </segments>
-                            </segmentedControl>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="wRT-VC-thR" firstAttribute="top" secondItem="Haf-5x-PvK" secondAttribute="bottom" constant="8" id="0gg-lw-7hi"/>
-                            <constraint firstItem="jnn-Xj-lN4" firstAttribute="centerX" secondItem="m0D-6h-gXJ" secondAttribute="centerX" id="OTz-w2-xOf"/>
-                            <constraint firstItem="Haf-5x-PvK" firstAttribute="leading" secondItem="m0D-6h-gXJ" secondAttribute="leading" id="ZQz-vF-mn4"/>
-                            <constraint firstItem="Haf-5x-PvK" firstAttribute="top" secondItem="jnn-Xj-lN4" secondAttribute="bottom" constant="8" id="Zfe-tB-raw"/>
-                            <constraint firstItem="jnn-Xj-lN4" firstAttribute="top" secondItem="57d-FJ-7pQ" secondAttribute="bottom" constant="8" id="n8j-Jn-6sq"/>
-                            <constraint firstAttribute="trailing" secondItem="Haf-5x-PvK" secondAttribute="trailing" id="vYh-7e-hvm"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="chartView" destination="Haf-5x-PvK" id="uAG-uu-iPu"/>
-                        <outlet property="timeSegmentedControl" destination="jnn-Xj-lN4" id="Bf4-1Y-tNn"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nKv-or-cGu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

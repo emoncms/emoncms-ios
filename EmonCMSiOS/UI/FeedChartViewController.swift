@@ -10,16 +10,15 @@ import UIKit
 
 import RxSwift
 import Charts
+import Former
 
-class FeedChartViewController: UIViewController {
+class FeedChartViewController: FormViewController {
 
   var viewModel: FeedChartViewModel!
 
-  @IBOutlet var chartView: LineChartView!
-  @IBOutlet var timeSegmentedControl: UISegmentedControl!
+  private var chartRow: CustomRowFormer<ChartCell<LineChartView>>!
 
   private let disposeBag = DisposeBag()
-  private let visible = Variable<Bool>(false)
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -28,128 +27,133 @@ class FeedChartViewController: UIViewController {
       .drive(self.rx.title)
       .addDisposableTo(self.disposeBag)
 
-    self.setupChart()
+    self.setupFormer()
     self.setupBindings()
   }
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.visible.value = true
+    self.viewModel.active.value = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(true)
-    self.visible.value = false
+    self.viewModel.active.value = false
   }
 
-  private func setupChart() {
-    self.chartView.dragEnabled = false
-    self.chartView.descriptionText = ""
-    self.chartView.drawGridBackgroundEnabled = false
-    self.chartView.legend.enabled = false
-    self.chartView.rightAxis.enabled = false
+  private func setupFormer() {
+    // Chart
+    let chartRow = CustomRowFormer<ChartCell<LineChartView>>(instantiateType: .Class) {
+      $0.chartView.dragEnabled = false
+      $0.chartView.pinchZoomEnabled = false
+      $0.chartView.setScaleEnabled(false)
+      $0.chartView.descriptionText = ""
+      $0.chartView.drawGridBackgroundEnabled = false
+      $0.chartView.legend.enabled = false
+      $0.chartView.rightAxis.enabled = false
 
-    let xAxis = self.chartView.xAxis
-    xAxis.drawGridLinesEnabled = false
-    xAxis.labelPosition = .bottom
-    xAxis.valueFormatter = ChartXAxisDateFormatter()
+      let xAxis = $0.chartView.xAxis
+      xAxis.drawGridLinesEnabled = false
+      xAxis.labelPosition = .bottom
+      xAxis.valueFormatter = ChartXAxisDateFormatter()
 
-    let yAxis = self.chartView.leftAxis
-    yAxis.drawGridLinesEnabled = false
-    yAxis.labelPosition = .outsideChart
+      let yAxis = $0.chartView.leftAxis
+      yAxis.drawGridLinesEnabled = false
+      yAxis.labelPosition = .outsideChart
 
-    let dataSet = LineChartDataSet(yVals: nil, label: nil)
-    dataSet.valueTextColor = .lightGray
-    dataSet.fillColor = .black
-    dataSet.setColor(.black)
-    dataSet.drawCirclesEnabled = false
-    dataSet.drawFilledEnabled = true
-    dataSet.drawValuesEnabled = false
+      let dataSet = LineChartDataSet(yVals: nil, label: nil)
+      dataSet.valueTextColor = .lightGray
+      dataSet.fillColor = .black
+      dataSet.setColor(.black)
+      dataSet.drawCirclesEnabled = false
+      dataSet.drawFilledEnabled = true
+      dataSet.drawValuesEnabled = false
 
-    let data = LineChartData()
-    data.addDataSet(dataSet)
-    self.chartView.data = data
+      let data = LineChartData()
+      data.addDataSet(dataSet)
+      $0.chartView.data = data
+      }.configure {
+        $0.rowHeight = 250
+    }
+
+    self.chartRow = chartRow
+    let chartSection = SectionFormer(rowFormer: chartRow)
+
+    // Options
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeStyle = .short
+    dateFormatter.dateStyle = .medium
+
+    let startDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
+      $0.titleLabel.text = "Start"
+      $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+      $0.displayLabel.font = .systemFont(ofSize: 15)
+      }.inlineCellSetup {
+        $0.datePicker.datePickerMode = .dateAndTime
+      }.displayTextFromDate(dateFormatter.string)
+    startDateRow.date = Date() - (8 * 60 * 60)
+
+    let endDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
+      $0.titleLabel.text = "End"
+      $0.titleLabel.font = .boldSystemFont(ofSize: 15)
+      $0.displayLabel.font = .systemFont(ofSize: 15)
+      }.inlineCellSetup {
+        $0.datePicker.datePickerMode = .dateAndTime
+      }.displayTextFromDate(dateFormatter.string)
+    endDateRow.date = Date()
+
+    let optionsSection = SectionFormer(rowFormer: startDateRow, endDateRow)
+
+    self.former.append(sectionFormer: chartSection, optionsSection)
+
+    let startDateSignal = Observable<Date>.create { observer in
+      observer.onNext(startDateRow.date)
+      startDateRow.onDateChanged { date in
+        observer.onNext(date)
+      }
+      return Disposables.create()
+    }
+
+    let endDateSignal = Observable<Date>.create { observer in
+      observer.onNext(endDateRow.date)
+      endDateRow.onDateChanged { date in
+        observer.onNext(date)
+      }
+      return Disposables.create()
+    }
+
+    Observable
+      .combineLatest(startDateSignal, endDateSignal) {
+        FeedChartParameters(startDate: $0, endDate: $1)
+      }
+      .bindTo(self.viewModel.updateParameters)
+      .addDisposableTo(self.disposeBag)
   }
 
   private func setupBindings() {
-    typealias ChartLimitData = (Date, Date, TimeInterval)
+    self.viewModel.dataPoints
+      .drive(onNext: { [weak self] dataPoints in
+        guard let strongSelf = self else { return }
 
-    let dateDifference: Observable<DateComponents> = self.timeSegmentedControl.rx.value
-      .map { value in
-        var dateComponents = DateComponents()
+        let chartView = strongSelf.chartRow.cell.chartView
 
-        switch value {
-        case 0: // 1 hour
-          dateComponents.hour = -1
-        case 1: // 8 hours
-          dateComponents.hour = -8
-        case 2: // Day
-          dateComponents.day = -1
-        case 3: // Month
-          dateComponents.month = -1
-        case 4: // Year
-          dateComponents.year = -1
-        default:
-          break
+        guard let data = chartView.data,
+          let dataSet = data.getDataSetByIndex(0) else {
+            return
         }
 
-        return dateComponents
-      }
-      .shareReplay(1)
+        data.xVals = []
+        dataSet.clear()
 
-    let chartWidth = self.chartView.rx.observe(CGRect.self, "bounds")
-      .map { $0 ?? CGRect() }
-      .shareReplay(1)
+        for (i, point) in dataPoints.enumerated() {
+          data.addXValue("\(point.time.timeIntervalSince1970)")
 
-    let timer = Observable.combineLatest(dateDifference, chartWidth) { ($0, $1) }
-      .map { dateComponents, chartBounds in
-        let calendar = Calendar.current
-        let endDate = Date()
-        let startDate = calendar.date(byAdding: dateComponents, to: endDate) ?? endDate
-        let timeRange = endDate.timeIntervalSince(startDate)
-        let interval = ceil(timeRange / Double(chartBounds.width))
-        return (startDate, endDate, interval)
-      }
-      .flatMapLatest { limitData -> Observable<ChartLimitData> in
-        Observable.interval(limitData.2, scheduler: MainScheduler.instance)
-          .startWith(0)
-          .map { _ in limitData }
-      }
+          let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
+          data.addEntry(yDataEntry, dataSetIndex: 0)
+        }
 
-    let visible = self.visible.asObservable()
-
-    Observable.combineLatest(timer, visible) { ($0, $1) }
-      .filter { $0.1 == true }
-      .map { $0.0 }
-      .flatMapLatest { [weak self] (startDate, endDate, interval) -> Observable<[DataPoint]> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.viewModel.fetchData(at: startDate, until: endDate, interval: Int(interval))
-      }
-      .observeOn(MainScheduler.instance)
-      .subscribe(
-        onNext: { [weak self] dataPoints in
-          guard let strongSelf = self else { return }
-
-          guard let data = strongSelf.chartView.data,
-            let dataSet = data.getDataSetByIndex(0) else {
-              return
-          }
-
-          data.xVals = []
-          dataSet.clear()
-
-          for (i, point) in dataPoints.enumerated() {
-            data.addXValue("\(point.time.timeIntervalSince1970)")
-
-            let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
-            data.addEntry(yDataEntry, dataSetIndex: 0)
-          }
-
-          data.notifyDataChanged()
-          strongSelf.chartView.notifyDataSetChanged()
-        },
-        onError: { (error) in
-          // TODO
+        data.notifyDataChanged()
+        chartView.notifyDataSetChanged()
       })
       .addDisposableTo(self.disposeBag)
   }

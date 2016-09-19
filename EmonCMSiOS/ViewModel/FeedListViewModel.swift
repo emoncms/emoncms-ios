@@ -57,7 +57,7 @@ class FeedListViewModel {
 
   // Inputs
   let active = Variable<Bool>(false)
-  let refresh = PublishSubject<()>()
+  let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
   private(set) var feeds: Driver<[Section]>

@@ -23,6 +23,7 @@
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
+		C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF4131D9042CE00BBF80D /* ChartCell.swift */; };
 		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
@@ -80,6 +81,7 @@
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		C99DF4131D9042CE00BBF80D /* ChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
 		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
@@ -165,6 +167,14 @@
 			path = EmonCMSiOSTests;
 			sourceTree = "<group>";
 		};
+		C99DF4121D9042C300BBF80D /* Custom Former Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C99DF4131D9042CE00BBF80D /* ChartCell.swift */,
+			);
+			path = "Custom Former Cells";
+			sourceTree = "<group>";
+		};
 		C9BB83461D869CB00058C059 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +188,7 @@
 		C9BB83471D869CB00058C059 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				C99DF4121D9042C300BBF80D /* Custom Former Cells */,
 				C9BB83491D869CB00058C059 /* FeedListViewController.swift */,
 				C9BB83581D86B6120058C059 /* FeedChartViewController.swift */,
 				C9BB835A1D86D8770058C059 /* SettingsViewController.swift */,
@@ -498,6 +509,7 @@
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
 				C9BB83591D86B6120058C059 /* FeedChartViewController.swift in Sources */,
 				C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */,
+				C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */,
 				C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */,
 				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* LoginController.swift in Sources */,
