@@ -587,7 +587,7 @@
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOSTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.EmonCMSiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
@@ -603,7 +603,7 @@
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOSTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.EmonCMSiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
@@ -715,7 +715,7 @@
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.EmonCMSiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -731,7 +731,7 @@
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.mjg.EmonCMSiOS;
+				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.EmonCMSiOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
