@@ -87,7 +87,7 @@ class AddAccountViewController: FormViewController {
     self.scanQRRow = scanQRRow
 
     let section = SectionFormer(rowFormer: urlRow, apikeyRow, scanQRRow)
-    former.append(sectionFormer: section)
+    self.former.append(sectionFormer: section)
   }
 
   private func setupBindings() {

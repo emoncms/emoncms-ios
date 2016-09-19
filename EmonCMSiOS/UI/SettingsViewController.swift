@@ -41,7 +41,7 @@ class SettingsViewController: FormViewController {
     }
 
     let section = SectionFormer(rowFormer: logoutRow)
-    former.append(sectionFormer: section)
+    self.former.append(sectionFormer: section)
   }
 
 }
