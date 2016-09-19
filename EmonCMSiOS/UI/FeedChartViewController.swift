@@ -79,7 +79,13 @@ class FeedChartViewController: FormViewController {
     self.chartRow = chartRow
     let chartSection = SectionFormer(rowFormer: chartRow)
 
-    // Options
+    // Date options
+    let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
+      }.configure {
+        $0.segmentTitles = ["Absolute", "Relative", "Relative to now"]
+        $0.selectedIndex = 0
+      }
+
     let dateFormatter = DateFormatter()
     dateFormatter.timeStyle = .short
     dateFormatter.dateStyle = .medium
@@ -102,30 +108,64 @@ class FeedChartViewController: FormViewController {
       }.displayTextFromDate(dateFormatter.string)
     endDateRow.date = Date()
 
-    let optionsSection = SectionFormer(rowFormer: startDateRow, endDateRow)
+    let dateRelativeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
+      }.configure {
+        $0.segmentTitles = ["1h", "8h", "D", "M", "Y"]
+        $0.selectedIndex = 0
+    }
+
+    let optionsSection = SectionFormer(rowFormer: dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
 
     self.former.append(sectionFormer: chartSection, optionsSection)
+    self.former.reload()
 
-    let startDateSignal = Observable<Date>.create { observer in
-      observer.onNext(startDateRow.date)
-      startDateRow.onDateChanged { date in
-        observer.onNext(date)
+    let dateRangeTypeSignal = RowFormer.rx_observable(dateRangeTypeRow.onSegmentSelected)
+      .map { $0.0 }
+      .startWith(dateRangeTypeRow.selectedIndex)
+    let startDateSignal = RowFormer.rx_observable(startDateRow.onDateChanged)
+      .startWith(startDateRow.date)
+      .shareReplay(1)
+    let endDateSignal = RowFormer.rx_observable(endDateRow.onDateChanged)
+      .startWith(endDateRow.date)
+      .shareReplay(1)
+    let dateRelativeSignal = RowFormer.rx_observable(dateRelativeRow.onSegmentSelected)
+      .map { $0.0 }
+      .startWith(dateRelativeRow.selectedIndex)
+      .map { segment -> TimeInterval in
+        switch segment {
+        case 0:
+          return 1 * 3600
+        case 1:
+          return 8 * 3600
+        case 2:
+          return 24 * 3600
+        case 3:
+          return 30 * 24 * 3600
+        case 4:
+          return 365 * 24 * 3600
+        default:
+          return 0
+        }
       }
-      return Disposables.create()
+      .shareReplay(1)
+
+    let dateRangeSignal = Observable
+      .combineLatest(dateRangeTypeSignal, startDateSignal, endDateSignal, dateRelativeSignal) {
+        dateRangeType, startDate, endDate, dateRelative -> FeedChartParameters.DateRangeType in
+        switch dateRangeType {
+        case 0:
+          return .absolute(startDate, endDate)
+        case 1:
+          return .relative(endDate, dateRelative)
+        case 2:
+          return .relativeToNow(dateRelative)
+        default:
+          return .absolute(startDate, endDate)
+        }
     }
 
-    let endDateSignal = Observable<Date>.create { observer in
-      observer.onNext(endDateRow.date)
-      endDateRow.onDateChanged { date in
-        observer.onNext(date)
-      }
-      return Disposables.create()
-    }
-
-    Observable
-      .combineLatest(startDateSignal, endDateSignal) {
-        FeedChartParameters(startDate: $0, endDate: $1)
-      }
+    dateRangeSignal
+      .map { FeedChartParameters(dateRange: $0) }
       .bindTo(self.viewModel.updateParameters)
       .addDisposableTo(self.disposeBag)
   }

@@ -12,8 +12,37 @@ import RxSwift
 import RxCocoa
 
 struct FeedChartParameters {
-  let startDate: Date
-  let endDate: Date
+
+  enum DateRangeType {
+    case absolute(Date, Date)
+    case relative(Date, TimeInterval)
+    case relativeToNow(TimeInterval)
+
+    func startDate() -> Date {
+      switch self {
+      case .absolute(let startDate, _):
+        return startDate
+      case .relative(let endDate, let interval):
+        return endDate - interval
+      case .relativeToNow(let interval):
+        return Date() - interval
+      }
+    }
+
+    func endDate() -> Date {
+      switch self {
+      case .absolute(_, let endDate):
+        return endDate
+      case .relative(let endDate, _):
+        return endDate
+      case .relativeToNow(_):
+        return Date()
+      }
+    }
+  }
+
+  let dateRange: DateRangeType
+
 }
 
 class FeedChartViewModel {
@@ -51,8 +80,10 @@ class FeedChartViewModel {
       .flatMapLatest { [weak self] data -> Observable<[DataPoint]> in
         guard let strongSelf = self else { return Observable.empty() }
 
-        let interval = Int(data.endDate.timeIntervalSince(data.startDate) / 500)
-        return strongSelf.api.feedData(strongSelf.account, id: strongSelf.feed.id, at: data.startDate, until: data.endDate, interval: interval)
+        let startDate = data.dateRange.startDate()
+        let endDate = data.dateRange.endDate()
+        let interval = Int(endDate.timeIntervalSince(startDate) / 500)
+        return strongSelf.api.feedData(strongSelf.account, id: strongSelf.feed.id, at: startDate, until: endDate, interval: interval)
           .catchErrorJustReturn([])
       }
       .asDriver(onErrorJustReturn: [])
