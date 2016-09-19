@@ -122,6 +122,25 @@ class FeedChartViewController: FormViewController {
     let dateRangeTypeSignal = RowFormer.rx_observable(dateRangeTypeRow.onSegmentSelected)
       .map { $0.0 }
       .startWith(dateRangeTypeRow.selectedIndex)
+      .do(onNext: { s in
+        switch s {
+        case 0:
+          startDateRow.enabled = true
+          endDateRow.enabled = true
+          dateRelativeRow.enabled = false
+        case 1:
+          startDateRow.enabled = false
+          endDateRow.enabled = true
+          dateRelativeRow.enabled = true
+        case 2:
+          startDateRow.enabled = false
+          endDateRow.enabled = false
+          dateRelativeRow.enabled = true
+        default:
+          break
+        }
+      })
+      .shareReplay(1)
     let startDateSignal = RowFormer.rx_observable(startDateRow.onDateChanged)
       .startWith(startDateRow.date)
       .shareReplay(1)
