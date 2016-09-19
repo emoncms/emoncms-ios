@@ -21,6 +21,8 @@
 		C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppProtocols.swift */; };
 		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
+		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
+		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
 		C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83491D869CB00058C059 /* FeedListViewController.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
@@ -31,7 +33,6 @@
 		C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */; };
 		C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */; };
 		C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83611D873E130058C059 /* FeedListViewModel.swift */; };
-		C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83631D8743530058C059 /* FeedViewModel.swift */; };
 		C9BB83671D87F52E0058C059 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83661D87F52E0058C059 /* MainController.swift */; };
 		C9BB83691D87F5630058C059 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* LoginController.swift */; };
 		C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */; };
@@ -77,6 +78,8 @@
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
+		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C9BB83491D869CB00058C059 /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
@@ -87,7 +90,6 @@
 		C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
 		C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountQRViewController.swift; sourceTree = "<group>"; };
 		C9BB83611D873E130058C059 /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
-		C9BB83631D8743530058C059 /* FeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
 		C9BB83661D87F52E0058C059 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C9BB83681D87F5630058C059 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 		C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewModel.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				C906B4541D8B0316007FE19A /* ChartXAxisDateFormatter.swift */,
 				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
 				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
+				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -212,7 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				C9BB83611D873E130058C059 /* FeedListViewModel.swift */,
-				C9BB83631D8743530058C059 /* FeedViewModel.swift */,
+				C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */,
 				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
 				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
 				C92010EF1D89F2E600C9974B /* AppListViewModel.swift */,
@@ -492,7 +495,6 @@
 				C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */,
 				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
 				C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */,
-				C9BB83641D8743530058C059 /* FeedViewModel.swift in Sources */,
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
 				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
 				C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */,
@@ -505,10 +507,12 @@
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
+				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
 				C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* Account.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C92010F21D89F34500C9974B /* AppListViewController.swift in Sources */,
+				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,

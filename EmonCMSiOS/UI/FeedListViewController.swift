@@ -32,11 +32,21 @@ class FeedListViewController: UITableViewController {
     self.setupBindings()
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.viewModel.active.value = true
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    self.viewModel.active.value = false
+  }
+
   private func setupDataSource() {
     self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
       let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath)
-      cell.textLabel?.text = item.name.value
-      cell.detailTextLabel?.text = "\(item.value.value)"
+      cell.textLabel?.text = item.name
+      cell.detailTextLabel?.text = item.value
       return cell
     }
 
@@ -48,7 +58,6 @@ class FeedListViewController: UITableViewController {
     self.tableView.dataSource = nil
 
     self.viewModel.feeds
-      .asDriver()
       .drive(self.tableView.rx.items(dataSource: self.dataSource))
       .addDisposableTo(self.disposeBag)
   }
@@ -56,27 +65,11 @@ class FeedListViewController: UITableViewController {
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
 
-    let initial = Observable.just(())
-    let refresh = refreshControl.rx.controlEvent(.valueChanged).becomeVoid()
+    refreshControl.rx.controlEvent(.valueChanged)
+      .bindTo(self.viewModel.refresh)
+      .addDisposableTo(self.disposeBag)
 
-    let refreshDriver = Observable.of(initial, refresh)
-      .merge()
-      .asDriver(onErrorJustReturn: ())
-
-    let dataDriver = refreshDriver.asObservable()
-      .flatMapLatest { [weak self] _ -> Observable<()> in
-        guard let strongSelf = self else { return Observable.just(()) }
-        return strongSelf.viewModel.update()
-          .concat(Observable.just(()))
-      }
-      .asDriver(onErrorJustReturn: ())
-
-    Observable.of(
-      refreshDriver.asObservable().map { _ in true },
-      dataDriver.asObservable().map { _ in false }
-      )
-      .merge()
-      .asDriver(onErrorJustReturn: false)
+    self.viewModel.isRefreshing
       .drive(refreshControl.rx.refreshing)
       .addDisposableTo(self.disposeBag)
   }
@@ -89,8 +82,9 @@ extension FeedListViewController {
     if segue.identifier == Segues.showFeed.rawValue {
       let feedViewController = segue.destination as! FeedViewController
       let selectedIndexPath = self.tableView.indexPathForSelectedRow!
-      let feedViewModel = self.dataSource[selectedIndexPath]
-      feedViewController.viewModel = feedViewModel
+      let item = self.dataSource[selectedIndexPath]
+      let viewModel = self.viewModel.feedChartViewModel(forItem: item)
+      feedViewController.viewModel = viewModel
     }
   }
 

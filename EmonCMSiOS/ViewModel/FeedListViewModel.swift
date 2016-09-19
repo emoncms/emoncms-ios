@@ -9,6 +9,7 @@
 import Foundation
 
 import RxSwift
+import RxCocoa
 import RxDataSources
 import Realm
 import RealmSwift
@@ -16,17 +17,33 @@ import RxRealm
 
 class FeedListViewModel {
 
+  struct FeedListItem {
+    fileprivate let feed: Feed
+
+    var name: String {
+      return self.feed.name
+    }
+
+    var value: String {
+      return self.feed.value.prettyFormat()
+    }
+
+    init(feed: Feed) {
+      self.feed = feed
+    }
+  }
+
   struct Section: SectionModelType {
     private(set) var header: String
-    private(set) var items: [FeedViewModel]
+    private(set) var items: [FeedListItem]
 
-    init(header: String, items: [FeedViewModel]) {
+    init(header: String, items: [FeedListItem]) {
       self.header = header
       self.items = items
     }
 
-    typealias Item = FeedViewModel
-    init(original: Section, items: [FeedViewModel]) {
+    typealias Item = FeedListItem
+    init(original: Section, items: [FeedListItem]) {
       self = original
       self.items = items
     }
@@ -38,31 +55,54 @@ class FeedListViewModel {
 
   private let disposeBag = DisposeBag()
 
-  let feeds = Variable<[Section]>([])
+  // Inputs
+  let active = Variable<Bool>(false)
+  let refresh = PublishSubject<()>()
+
+  // Outputs
+  private(set) var feeds: Driver<[Section]>
+  private(set) var isRefreshing: Driver<Bool>
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()
 
-    self.realm.objects(Feed.self)
+    self.feeds = Driver.never()
+    self.isRefreshing = Driver.never()
+
+    self.feeds = self.realm.objects(Feed.self)
       .asObservableArray()
       .map(self.feedsToSections)
-      .bindTo(self.feeds)
+      .asDriver(onErrorJustReturn: [])
+
+    let isRefreshing = ActivityIndicator()
+    self.isRefreshing = isRefreshing.asDriver()
+
+    let becameActive = self.active.asObservable()
+      .filter { $0 == true }
+      .distinctUntilChanged()
+      .becomeVoid()
+
+    Observable.of(self.refresh, becameActive)
+      .merge()
+      .flatMapLatest { [weak self] () -> Observable<()> in
+        guard let strongSelf = self else { return Observable.empty() }
+        return strongSelf.api.feedList(account)
+          .map(strongSelf.saveFeeds)
+          .trackActivity(isRefreshing)
+      }
+      .subscribe()
       .addDisposableTo(self.disposeBag)
   }
 
-  func update() -> Observable<()> {
-    return self.api.feedList(account)
-      .do(onNext: { [weak self] feeds in
-        guard let strongSelf = self else { return }
-        try strongSelf.realm.write {
-          for feed in feeds {
-            strongSelf.realm.add(feed, update: true)
-          }
-        }
-      })
-      .becomeVoidAndIgnoreElements()
+  private func saveFeeds(_ feeds: [Feed]) throws {
+    let realm = self.realm
+    try realm.write {
+      for feed in feeds {
+        realm.add(feed, update: true)
+      }
+    }
   }
 
   private func feedsToSections(_ feeds: [Feed]) -> [Section] {
@@ -81,11 +121,17 @@ class FeedListViewModel {
     for section in sectionBuilder.keys.sorted(by: <) {
       let sortedSectionFeeds = sectionBuilder[section]!
         .sorted(by: { $0.name < $1.name })
-        .map { FeedViewModel(account: self.account, api: self.api, feed: $0) }
+        .map { feed in
+          return FeedListItem(feed: feed)
+        }
       sections.append(Section(header: section, items: sortedSectionFeeds))
     }
 
     return sections
+  }
+
+  func feedChartViewModel(forItem item: FeedListItem) -> FeedChartViewModel {
+    return FeedChartViewModel(account: self.account, api: self.api, feed: item.feed)
   }
 
 }

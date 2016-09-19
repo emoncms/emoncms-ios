@@ -13,7 +13,7 @@ import Charts
 
 class FeedViewController: UIViewController {
 
-  var viewModel: FeedViewModel!
+  var viewModel: FeedChartViewModel!
 
   @IBOutlet var chartView: LineChartView!
   @IBOutlet var timeSegmentedControl: UISegmentedControl!
@@ -25,7 +25,6 @@ class FeedViewController: UIViewController {
     super.viewDidLoad()
 
     self.viewModel.name
-      .asDriver()
       .drive(self.rx.title)
       .addDisposableTo(self.disposeBag)
 
@@ -60,7 +59,7 @@ class FeedViewController: UIViewController {
     yAxis.drawGridLinesEnabled = false
     yAxis.labelPosition = .outsideChart
 
-    let dataSet = LineChartDataSet(yVals: nil, label: self.viewModel.name.value)
+    let dataSet = LineChartDataSet(yVals: nil, label: nil)
     dataSet.valueTextColor = .lightGray
     dataSet.fillColor = .black
     dataSet.setColor(.black)
