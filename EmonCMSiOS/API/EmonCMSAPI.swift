@@ -69,13 +69,6 @@ class EmonCMSAPI {
         }
       }
 
-      let realm = account.createRealm()
-      try realm.write {
-        for feed in feeds {
-          realm.add(feed, update: true)
-        }
-      }
-
       return feeds
     }
   }
@@ -90,11 +83,6 @@ class EmonCMSAPI {
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
           throw EmonCMSAPIError.InvalidResponse
-      }
-
-      let realm = account.createRealm()
-      try realm.write {
-        realm.add(feed, update: true)
       }
 
       return feed

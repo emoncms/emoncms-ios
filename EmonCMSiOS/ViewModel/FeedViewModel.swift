@@ -46,6 +46,12 @@ class FeedViewModel {
 
   func update() -> Observable<()> {
     return self.api.feedFields(self.account, id: self.feed.id)
+      .do(onNext: { [weak self] feed in
+        guard let strongSelf = self else { return }
+        try strongSelf.realm.write {
+          strongSelf.realm.add(feed, update: true)
+        }
+      })
       .becomeVoidAndIgnoreElements()
   }
 
