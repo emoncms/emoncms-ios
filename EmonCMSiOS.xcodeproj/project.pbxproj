@@ -28,7 +28,7 @@
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
 		C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
-		C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83581D86B6120058C059 /* FeedViewController.swift */; };
+		C9BB83591D86B6120058C059 /* FeedChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83581D86B6120058C059 /* FeedChartViewController.swift */; };
 		C9BB835B1D86D8770058C059 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835A1D86D8770058C059 /* SettingsViewController.swift */; };
 		C9BB835D1D86D9660058C059 /* AddAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */; };
 		C9BB835F1D86E1AC0058C059 /* AddAccountQRViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */; };
@@ -85,7 +85,7 @@
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
 		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatHelpers.swift; sourceTree = "<group>"; };
-		C9BB83581D86B6120058C059 /* FeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
+		C9BB83581D86B6120058C059 /* FeedChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewController.swift; sourceTree = "<group>"; };
 		C9BB835A1D86D8770058C059 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewController.swift; sourceTree = "<group>"; };
 		C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountQRViewController.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				C9BB83491D869CB00058C059 /* FeedListViewController.swift */,
-				C9BB83581D86B6120058C059 /* FeedViewController.swift */,
+				C9BB83581D86B6120058C059 /* FeedChartViewController.swift */,
 				C9BB835A1D86D8770058C059 /* SettingsViewController.swift */,
 				C9BB835C1D86D9660058C059 /* AddAccountViewController.swift */,
 				C9BB835E1D86E1AC0058C059 /* AddAccountQRViewController.swift */,
@@ -496,7 +496,7 @@
 				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
 				C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */,
 				C9BB834B1D869CB00058C059 /* FeedListViewController.swift in Sources */,
-				C9BB83591D86B6120058C059 /* FeedViewController.swift in Sources */,
+				C9BB83591D86B6120058C059 /* FeedChartViewController.swift in Sources */,
 				C9BB83701D88450D0058C059 /* ScreenshotViewController.swift in Sources */,
 				C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */,
 				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,

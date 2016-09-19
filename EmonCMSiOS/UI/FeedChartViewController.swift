@@ -1,5 +1,5 @@
 //
-//  FeedViewController.swift
+//  FeedChartViewController.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 12/09/2016.
@@ -11,7 +11,7 @@ import UIKit
 import RxSwift
 import Charts
 
-class FeedViewController: UIViewController {
+class FeedChartViewController: UIViewController {
 
   var viewModel: FeedChartViewModel!
 
@@ -43,7 +43,6 @@ class FeedViewController: UIViewController {
   }
 
   private func setupChart() {
-    self.chartView.delegate = self
     self.chartView.dragEnabled = false
     self.chartView.descriptionText = ""
     self.chartView.drawGridBackgroundEnabled = false
@@ -154,11 +153,5 @@ class FeedViewController: UIViewController {
       })
       .addDisposableTo(self.disposeBag)
   }
-
-}
-
-extension FeedViewController: ChartViewDelegate {
-
-  // TODO: Handle panning, etc
 
 }

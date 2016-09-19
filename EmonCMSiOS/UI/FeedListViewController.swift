@@ -80,7 +80,7 @@ extension FeedListViewController {
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.showFeed.rawValue {
-      let feedViewController = segue.destination as! FeedViewController
+      let feedViewController = segue.destination as! FeedChartViewController
       let selectedIndexPath = self.tableView.indexPathForSelectedRow!
       let item = self.dataSource[selectedIndexPath]
       let viewModel = self.viewModel.feedChartViewModel(forItem: item)
