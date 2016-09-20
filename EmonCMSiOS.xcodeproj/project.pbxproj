@@ -45,6 +45,10 @@
 		C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BD1D91730100BC302C /* FeedListViewController.swift */; };
 		C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */; };
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
+		C9C240C81D91734300BC302C /* ChartListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C71D91734300BC302C /* ChartListViewController.swift */; };
+		C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C91D9173E700BC302C /* ChartListViewModel.swift */; };
+		C9C240CC1D91742D00BC302C /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CB1D91742D00BC302C /* Chart.swift */; };
+		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		D0D2080C98138B924898A4D9 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -107,6 +111,10 @@
 		C9C240BD1D91730100BC302C /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotViewController.swift; sourceTree = "<group>"; };
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		C9C240C71D91734300BC302C /* ChartListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartListViewController.swift; sourceTree = "<group>"; };
+		C9C240C91D9173E700BC302C /* ChartListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartListViewModel.swift; sourceTree = "<group>"; };
+		C9C240CB1D91742D00BC302C /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
+		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -182,7 +190,9 @@
 			children = (
 				C9BB834C1D869CC80058C059 /* Account.swift */,
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
+				C9C240CB1D91742D00BC302C /* Chart.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
+				C9C240CD1D917CA500BC302C /* DateRange.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -224,6 +234,7 @@
 			children = (
 				C9BB83611D873E130058C059 /* FeedListViewModel.swift */,
 				C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */,
+				C9C240C91D9173E700BC302C /* ChartListViewModel.swift */,
 				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
 				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
 				C92010EF1D89F2E600C9974B /* AppListViewModel.swift */,
@@ -291,6 +302,7 @@
 				C9C240BD1D91730100BC302C /* FeedListViewController.swift */,
 				C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */,
 				C9C240BF1D91730100BC302C /* SettingsViewController.swift */,
+				C9C240C71D91734300BC302C /* ChartListViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -519,6 +531,7 @@
 				C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */,
 				C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
+				C9C240C81D91734300BC302C /* ChartListViewController.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
 				C9C240C01D91730100BC302C /* AddAccountQRViewController.swift in Sources */,
 				C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */,
@@ -540,8 +553,11 @@
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
+				C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
+				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
+				C9C240CC1D91742D00BC302C /* Chart.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartXAxisDateFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,

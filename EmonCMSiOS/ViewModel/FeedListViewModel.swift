@@ -89,6 +89,7 @@ class FeedListViewModel {
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.api.feedList(account)
           .map(strongSelf.saveFeeds)
+          .catchErrorJustReturn(())
           .trackActivity(isRefreshing)
       }
       .subscribe()
@@ -142,7 +143,11 @@ class FeedListViewModel {
   }
 
   func feedChartViewModel(forItem item: FeedListItem) -> FeedChartViewModel {
-    return FeedChartViewModel(account: self.account, api: self.api, feed: item.feed)
+    let feed = item.feed
+    let chart = Chart()
+    chart.name = feed.name
+    chart.feed = feed.id
+    return FeedChartViewModel(account: self.account, api: self.api, chart: chart)
   }
 
 }

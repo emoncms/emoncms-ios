@@ -27,6 +27,8 @@ class FeedChartViewController: FormViewController {
       .drive(self.rx.title)
       .addDisposableTo(self.disposeBag)
 
+    self.tableView.refreshControl = UIRefreshControl()
+
     self.setupFormer()
     self.setupBindings()
   }
@@ -42,7 +44,17 @@ class FeedChartViewController: FormViewController {
   }
 
   private func setupFormer() {
-    // Chart
+    let chartRow = self.chartFormerSection()
+    self.chartRow = chartRow
+
+    let dateOptionsRows = self.dateOptionsFormerSection()
+    self.bindDateRangeSectionRows(dateOptionsRows)
+    let (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow) = dateOptionsRows
+
+    self.former.append(sectionFormer: SectionFormer(rowFormer: chartRow), SectionFormer(rowFormer: dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow))
+  }
+
+  private func chartFormerSection() -> CustomRowFormer<ChartCell<LineChartView>> {
     let chartRow = CustomRowFormer<ChartCell<LineChartView>>(instantiateType: .Class) {
       $0.chartView.dragEnabled = false
       $0.chartView.pinchZoomEnabled = false
@@ -76,14 +88,27 @@ class FeedChartViewController: FormViewController {
         $0.rowHeight = 250
     }
 
-    self.chartRow = chartRow
-    let chartSection = SectionFormer(rowFormer: chartRow)
+    return chartRow
+  }
 
-    // Date options
+  typealias DateOptionsRowTypes = (SegmentedRowFormer<FormSegmentedCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, SegmentedRowFormer<FormSegmentedCell>)
+
+  private func dateOptionsFormerSection() -> DateOptionsRowTypes {
+    let startDateRange = self.viewModel.dateRange.value
+
     let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
       }.configure {
         $0.segmentTitles = ["Absolute", "Relative", "Relative to now"]
-        $0.selectedIndex = 0
+        let selectedIndex: Int
+        switch startDateRange {
+        case .absolute(_, _):
+          selectedIndex = 0
+        case .relative(_, _):
+          selectedIndex = 1
+        case .relativeToNow(_):
+          selectedIndex = 2
+        }
+        $0.selectedIndex = selectedIndex
       }
 
     let dateFormatter = DateFormatter()
@@ -97,7 +122,7 @@ class FeedChartViewController: FormViewController {
       }.inlineCellSetup {
         $0.datePicker.datePickerMode = .dateAndTime
       }.displayTextFromDate(dateFormatter.string)
-    startDateRow.date = Date() - (8 * 60 * 60)
+    startDateRow.date = startDateRange.startDate()
 
     let endDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
       $0.titleLabel.text = "End"
@@ -106,7 +131,7 @@ class FeedChartViewController: FormViewController {
       }.inlineCellSetup {
         $0.datePicker.datePickerMode = .dateAndTime
       }.displayTextFromDate(dateFormatter.string)
-    endDateRow.date = Date()
+    endDateRow.date = startDateRange.endDate()
 
     let dateRelativeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
       }.configure {
@@ -114,10 +139,11 @@ class FeedChartViewController: FormViewController {
         $0.selectedIndex = 0
     }
 
-    let optionsSection = SectionFormer(rowFormer: dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
+    return (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
+  }
 
-    self.former.append(sectionFormer: chartSection, optionsSection)
-    self.former.reload()
+  private func bindDateRangeSectionRows(_ rows: DateOptionsRowTypes) {
+    let (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow) = rows
 
     let dateRangeTypeSignal = RowFormer.rx_observable(dateRangeTypeRow.onSegmentSelected)
       .map { $0.0 }
@@ -170,26 +196,34 @@ class FeedChartViewController: FormViewController {
 
     let dateRangeSignal = Observable
       .combineLatest(dateRangeTypeSignal, startDateSignal, endDateSignal, dateRelativeSignal) {
-        dateRangeType, startDate, endDate, dateRelative -> FeedChartParameters.DateRangeType in
+        dateRangeType, startDate, endDate, dateRelative -> DateRange in
         switch dateRangeType {
-        case 0:
-          return .absolute(startDate, endDate)
         case 1:
           return .relative(endDate, dateRelative)
         case 2:
           return .relativeToNow(dateRelative)
+        /*case 0:*/
         default:
           return .absolute(startDate, endDate)
         }
     }
 
     dateRangeSignal
-      .map { FeedChartParameters(dateRange: $0) }
-      .bindTo(self.viewModel.updateParameters)
+      .bindTo(self.viewModel.dateRange)
       .addDisposableTo(self.disposeBag)
   }
 
   private func setupBindings() {
+    let refreshControl = self.tableView.refreshControl!
+
+    refreshControl.rx.controlEvent(.valueChanged)
+      .bindTo(self.viewModel.refresh)
+      .addDisposableTo(self.disposeBag)
+
+    self.viewModel.isRefreshing
+      .drive(refreshControl.rx.refreshing)
+      .addDisposableTo(self.disposeBag)
+
     self.viewModel.dataPoints
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
