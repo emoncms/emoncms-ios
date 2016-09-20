@@ -96,10 +96,12 @@ class AddAccountQRViewController: UIViewController {
 
   private func askForCameraPermission() {
     AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (enabled) in
-      if enabled {
-        self.setupAVStack()
-      } else {
-        self.presentCameraRequiredDialog()
+      DispatchQueue.main.async {
+        if enabled {
+          self.setupAVStack()
+        } else {
+          self.presentCameraRequiredDialog()
+        }
       }
     }
   }
