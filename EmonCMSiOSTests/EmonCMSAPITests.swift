@@ -162,6 +162,38 @@ class EmonCMSAPITests: QuickSpec {
       }
     }
 
+    describe("extractAPIDetailsFromURLString") {
+      it("should work for a correct url") {
+        let url = "https://emoncms.org/app?readkey=1a101b101c101d101e101f101a101b10#myelectric"
+        let result = EmonCMSAPI.extractAPIDetailsFromURLString(url)
+        expect(result).notTo(beNil())
+        expect(result!.host).to(equal("https://emoncms.org"))
+        expect(result!.apikey).to(equal("1a101b101c101d101e101f101a101b10"))
+      }
+
+      it("should work for a correct url where emoncms is not at the root") {
+        let url = "https://emoncms.org/notatroot/app?readkey=1a101b101c101d101e101f101a101b10#myelectric"
+        let result = EmonCMSAPI.extractAPIDetailsFromURLString(url)
+        expect(result).notTo(beNil())
+        expect(result!.host).to(equal("https://emoncms.org/notatroot"))
+        expect(result!.apikey).to(equal("1a101b101c101d101e101f101a101b10"))
+      }
+
+      it("should work for a correct url where /app is in the path") {
+        let url = "https://emoncms.org/something/app/app?readkey=1a101b101c101d101e101f101a101b10#myelectric"
+        let result = EmonCMSAPI.extractAPIDetailsFromURLString(url)
+        expect(result).notTo(beNil())
+        expect(result!.host).to(equal("https://emoncms.org/something/app"))
+        expect(result!.apikey).to(equal("1a101b101c101d101e101f101a101b10"))
+      }
+
+      it("should fail when the url is malformed") {
+        let url = "https://www.google.com"
+        let result = EmonCMSAPI.extractAPIDetailsFromURLString(url)
+        expect(result).to(beNil())
+      }
+    }
+
   }
 
 }

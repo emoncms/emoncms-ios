@@ -189,4 +189,18 @@ class EmonCMSAPI {
     }
   }
 
+  class func extractAPIDetailsFromURLString(_ url: String) -> (host: String, apikey: String)? {
+    do {
+      let regex = try NSRegularExpression(pattern: "^(http[s]?://.*)/app\\?[readkey=]+=([^&]+)#myelectric", options: [])
+      let nsStringUrl = url as NSString
+      let matches = regex.matches(in: url, options: [], range: NSMakeRange(0, nsStringUrl.length))
+      if let match = matches.first, match.numberOfRanges == 3 {
+        let host = nsStringUrl.substring(with: match.rangeAt(1))
+        let apikey = nsStringUrl.substring(with: match.rangeAt(2))
+        return (host: host, apikey: apikey)
+      }
+    } catch {}
+    return nil
+  }
+
 }
