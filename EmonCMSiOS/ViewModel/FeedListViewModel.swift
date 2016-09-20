@@ -107,20 +107,32 @@ class FeedListViewModel {
 
   private func feedsToSections(_ feeds: [Feed]) -> [Section] {
     var sectionBuilder: [String:[Feed]] = [:]
+    var keys: [String] = []
     for feed in feeds {
       let sectionFeeds: [Feed]
       if let existingFeeds = sectionBuilder[feed.tag] {
         sectionFeeds = existingFeeds
       } else {
         sectionFeeds = []
+
+        // Using `.sort` on either `keys` or the feed arrays inside `sectionBuilder` is causing
+        // a compiler linker error. It's a compiler/linker bug. So we have to work around it for now.
+        var indexToAdd = 0
+        let keyToAdd = feed.tag
+        for (i, key) in keys.enumerated() {
+          if key > keyToAdd {
+            indexToAdd = i
+            break
+          }
+        }
+        keys.insert(keyToAdd, at: indexToAdd)
       }
       sectionBuilder[feed.tag] = sectionFeeds + [feed]
     }
 
     var sections: [Section] = []
-    for section in sectionBuilder.keys.sorted(by: <) {
+    for section in keys {
       let feedListItems = sectionBuilder[section]!
-        .sorted(by: { $0.name < $1.name })
         .map { feed in
           return FeedListItem(feed: feed)
         }
