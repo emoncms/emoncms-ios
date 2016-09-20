@@ -141,26 +141,14 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
         return
     }
 
-    guard let url = URLComponents(string: string),
-      let queryItems = url.queryItems
-      else {
-        print("No query parameters")
-        return
+    guard let result = EmonCMSAPI.extractAPIDetailsFromURLString(string) else {
+      return
     }
 
-    var apikey: String? = nil
-    for item in queryItems {
-      if item.name == "readkey" {
-        apikey = item.value
-      }
-    }
-
-    if let apikey = apikey, let scheme = url.scheme, let host = url.host {
-      let account = Account(uuid: UUID(), url: scheme + "://" + host, apikey: apikey)
-      DispatchQueue.main.async {
-        self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
-      }
+    let account = Account(uuid: UUID(), url: result.host, apikey: result.apikey)
+    DispatchQueue.main.async {
+      self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
     }
   }
-  
+
 }
