@@ -21,8 +21,8 @@ class Chart: Object {
   }
 
   private dynamic var dateRangeRaw: Int = 0
-  private dynamic var startDate: Date = Date()
-  private dynamic var endDate: Date = Date() - (60 * 60)
+  private dynamic var startDate: Date = Date() - (60 * 60)
+  private dynamic var endDate: Date = Date()
   private dynamic var dateInterval: TimeInterval = 0
   var dateRange: DateRange {
     get {
