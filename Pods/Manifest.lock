@@ -4,22 +4,22 @@ PODS:
     - Charts/Core (= 2.2.5)
   - Charts/Core (2.2.5)
   - Former (1.4.0)
-  - Locksmith (2.0.8)
+  - Locksmith (3.0.0)
   - Nimble (5.0.0-alpha.30p1)
   - Quick (0.9.3)
-  - Realm (1.0.2):
-    - Realm/Headers (= 1.0.2)
-  - Realm/Headers (1.0.2)
-  - RealmSwift (1.0.2):
-    - Realm (= 1.0.2)
+  - Realm (1.1.0):
+    - Realm/Headers (= 1.1.0)
+  - Realm/Headers (1.1.0)
+  - RealmSwift (1.1.0):
+    - Realm (= 1.1.0)
   - RxCocoa (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
   - RxDataSources (1.0.0.beta.1):
     - RxCocoa (~> 3.0.0.alpha.1)
     - RxSwift (~> 3.0.0.alpha.1)
-  - RxRealm (0.1.7):
-    - RealmSwift (~> 1.0)
-    - RxSwift
+  - RxRealm (0.2.3):
+    - RealmSwift (~> 1.1)
+    - RxSwift (~> 3.0.0-beta.1)
   - RxSwift (3.0.0-beta.1)
   - RxTests (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
@@ -28,14 +28,14 @@ DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `Swift-3.0`)
   - Former (from `git@github.com:mattjgalloway/Former.git`, branch `swift3`)
-  - Locksmith (from `https://github.com/fedetrim/Locksmith.git`, branch `swift-3.0`)
+  - Locksmith (~> 3.0)
   - Nimble (from `https://github.com/Quick/Nimble.git`, branch `master`)
   - Quick (from `https://github.com/Quick/Quick.git`, branch `swift-3.0`)
-  - Realm (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
-  - RealmSwift (from `https://github.com/realm/realm-cocoa.git`, branch `master`)
+  - Realm (~> 1.1)
+  - RealmSwift (~> 1.1)
   - RxCocoa (~> 3.0.0-beta.1)
   - RxDataSources (~> 1.0.0-beta.1)
-  - RxRealm (from `https://github.com/ewerx/RxRealm.git`, branch `swift-3.0`)
+  - RxRealm (~> 0.2)
   - RxSwift (~> 3.0.0-beta.1)
   - RxTests (~> 3.0.0-beta.1)
 
@@ -46,26 +46,12 @@ EXTERNAL SOURCES:
   Former:
     :branch: swift3
     :git: git@github.com:mattjgalloway/Former.git
-  Locksmith:
-    :branch: swift-3.0
-    :git: https://github.com/fedetrim/Locksmith.git
   Nimble:
     :branch: master
     :git: https://github.com/Quick/Nimble.git
   Quick:
     :branch: swift-3.0
     :git: https://github.com/Quick/Quick.git
-  Realm:
-    :branch: master
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: 'true'
-  RealmSwift:
-    :branch: master
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: 'true'
-  RxRealm:
-    :branch: swift-3.0
-    :git: https://github.com/ewerx/RxRealm.git
 
 CHECKOUT OPTIONS:
   Charts:
@@ -74,42 +60,28 @@ CHECKOUT OPTIONS:
   Former:
     :commit: 16c3471a1f1f0484c062e0ab3b06f17e4dd74a4f
     :git: git@github.com:mattjgalloway/Former.git
-  Locksmith:
-    :commit: 23c4eff1bfb197c48ba4bac8821cac6dc8f1657a
-    :git: https://github.com/fedetrim/Locksmith.git
   Nimble:
     :commit: 197a46a5892340a2badc70af7f669b6aa4c8afa9
     :git: https://github.com/Quick/Nimble.git
   Quick:
     :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
     :git: https://github.com/Quick/Quick.git
-  Realm:
-    :commit: 41db543ae102fef9eef133cd4d5bb095eedec697
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: 'true'
-  RealmSwift:
-    :commit: 41db543ae102fef9eef133cd4d5bb095eedec697
-    :git: https://github.com/realm/realm-cocoa.git
-    :submodules: 'true'
-  RxRealm:
-    :commit: b48155c8309efb7e53579bc8fc2e18c7570d3a3b
-    :git: https://github.com/ewerx/RxRealm.git
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
   Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
   Former: 98a7915b1b2383270edfaee9eed785df4a259048
-  Locksmith: a8ed41ac4c06506ea8cb199d8ec8a8d3d108eb2a
+  Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
   Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
-  Realm: 2948cfa3a05b7acc446abc4c124d443df646c8de
-  RealmSwift: 4816c8608630a9a00bba6d726bb30b4bab6dd6bf
+  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
+  RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxDataSources: b2f3d80aeb9de4faeebc5e05e2fd975cadd6e308
-  RxRealm: 417fe938e693a032e114d5f7a8eacb27cb6721cd
+  RxRealm: 56fb63ead229e0a568f6014f81a0530f74cd8bfa
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
 
-PODFILE CHECKSUM: ebb7d1b53303cd57cdbf5e308ebd4849e5cc44ee
+PODFILE CHECKSUM: e6a54044416fa8d986357061fe5606ebfa371275
 
 COCOAPODS: 1.1.0.rc.2

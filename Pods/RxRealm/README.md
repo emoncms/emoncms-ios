@@ -9,6 +9,8 @@
 
 This library is a thin wrapper around __RealmSwift__.
 
+**NB**: Currently this library uses the latest beta of RxSwift 3.0.0, latest beta of CocoaPods, and RealmSwift 1.1 - mind that some of these are pre-release software.
+
 ### Observing collections
 
 RxRealm adds to `Results`, `List`, `LinkingObjects` and `AnyRealmCollection` these methods:
@@ -18,7 +20,7 @@ RxRealm adds to `Results`, `List`, `LinkingObjects` and `AnyRealmCollection` the
 
 ```swift
 let realm = try! Realm()
-realm.objects(Lap).asObservable()
+realm.objects(Lap.self).asObservable()
   .map {laps in "\(laps.count) laps"}
   .subscribeNext { text  in
     print(text)
@@ -30,7 +32,7 @@ realm.objects(Lap).asObservable()
 
 ```swift
 let realm = try! Realm()
-realm.objects(Lap).asObservableArray()
+realm.objects(Lap.self).asObservableArray()
   .map {array in
     return array.prefix(3) //slice of first 3 items
   }
@@ -44,7 +46,7 @@ realm.objects(Lap).asObservableArray()
 
 ```swift
 let realm = try! Realm()
-realm.objects(Lap).asObservableChangeset()
+realm.objects(Lap.self).asObservableChangeset()
   .subscribeNext {result, changes in
     if let changes = changes {
 	  //it's an update
@@ -63,14 +65,14 @@ realm.objects(Lap).asObservableChangeset()
 
 ### Write transactions
 
-#### rx_add()
+#### rx.add()
 
 __write to existing realm reference)__ You can add newly created objects to a realm that you already have initialized:
 
 ```swift
 let realm = try! Realm()
 [Message("hello"), Message("world")].toObservable()
-  .subscribe(realm.rx_add())
+  .subscribe(realm.rx.add())
 ```
 
 Be careful, this will retain your realm until the `Observable` completes or errors out.
@@ -80,7 +82,7 @@ __write to the default realm)__ You can leave it to RxRealm to grab the default 
 ```swift
 [Message("hello"), Message("world")].toObservable()
   .observeOn(  ..you can switch threads if you want )
-  .subscribe(Realm.rx_add())
+  .subscribe(Realm.rx.add())
 ```
 
 __write to a specific realm)__ If you want to switch threads and don't use the default realm, provide a `Realm.Configuration`:
@@ -91,7 +93,7 @@ var conf = Realm.Configuration()
 
 [Message("hello"), Message("world")].toObservable()
   .observeOn(  ..you can switch threads if you want )
-  .subscribe(Realm.rx_add(conf))
+  .subscribe(Realm.rx.add(conf))
 ```
 
 If you want to create yourself the Realm on a different thread than the subscription you can do that too (allows you to error handle):
@@ -113,7 +115,7 @@ __delete from existing realm reference)__ Delete objects from existing realm ref
 
 ```swift
 let realm = try! Realm()
-realm.objects(Messages).asObservable()
+realm.objects(Messages.self).asObservable()
   .subscribe(realm.rx_delete())
 ```
 

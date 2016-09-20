@@ -71,8 +71,7 @@ class FeedListViewModel {
     self.feeds = Driver.never()
     self.isRefreshing = Driver.never()
 
-    self.feeds = self.realm.objects(Feed.self)
-      .asObservableArray()
+    self.feeds = Observable.arrayFrom(self.realm.objects(Feed.self))
       .map(self.feedsToSections)
       .asDriver(onErrorJustReturn: [])
 
