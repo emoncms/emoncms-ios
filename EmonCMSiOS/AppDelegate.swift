@@ -13,12 +13,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   let mainController: MainController
 
+  private static func isRunningTests() -> Bool {
+    return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+  }
+
   override init() {
     self.mainController = MainController()
     super.init()
   }
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
+    guard !AppDelegate.isRunningTests() else { return true }
     self.mainController.loadUserInterface()
     return true
   }
