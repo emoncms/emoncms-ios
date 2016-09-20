@@ -119,12 +119,12 @@ class FeedListViewModel {
 
     var sections: [Section] = []
     for section in sectionBuilder.keys.sorted(by: <) {
-      let sortedSectionFeeds = sectionBuilder[section]!
+      let feedListItems = sectionBuilder[section]!
         .sorted(by: { $0.name < $1.name })
         .map { feed in
           return FeedListItem(feed: feed)
         }
-      sections.append(Section(header: section, items: sortedSectionFeeds))
+      sections.append(Section(header: section, items: feedListItems))
     }
 
     return sections
