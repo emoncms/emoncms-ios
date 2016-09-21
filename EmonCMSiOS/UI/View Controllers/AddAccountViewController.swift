@@ -99,22 +99,23 @@ class AddAccountViewController: FormViewController {
     Observable
       .combineLatest(self.navigationItem.rightBarButtonItem!.rx.tap, self.viewModel.canSave().asObservable()) { $1 }
       .filter { $0 == true }
-      .flatMapLatest { [weak self] _ -> Observable<Account> in
-        guard let strongSelf = self else { return Observable.never() }
+      .flatMapLatest { [weak self] _ -> Observable<()> in
+        guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.viewModel.validate()
+          .observeOn(MainScheduler.instance)
+          .map { [weak self] account in
+            guard let strongSelf = self else { return }
+            strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+          }
+          .catchError { [weak self] _ in
+            guard let strongSelf = self else { return Observable.empty() }
+            let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            strongSelf.present(alert, animated: true, completion: nil)
+            return Observable.empty()
+          }
       }
-      .observeOn(MainScheduler.instance)
-      .subscribe(
-        onNext: { [weak self] account in
-          guard let strongSelf = self else { return }
-          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
-        },
-        onError: { [weak self] _ in
-          guard let strongSelf = self else { return }
-          let alert = UIAlertController(title: "Error", message: "Couldn't talk to Emoncms. Are the credentials correct?", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
-        })
+      .subscribe()
       .addDisposableTo(self.disposeBag)
   }
 
