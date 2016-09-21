@@ -19,7 +19,13 @@ struct Account {
 
   private func realmConfiguration() -> Realm.Configuration {
     let fileURL = URL(fileURLWithPath: RLMRealmPathForFile(self.uuid.uuidString + ".realm"), isDirectory: false)
-    let config = Realm.Configuration(fileURL: fileURL)
+    var config = Realm.Configuration(fileURL: fileURL)
+
+
+    //FIXME
+    config.deleteRealmIfMigrationNeeded = true
+
+
     return config
   }
 
