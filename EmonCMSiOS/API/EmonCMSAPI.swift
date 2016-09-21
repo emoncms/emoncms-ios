@@ -26,11 +26,10 @@ class EmonCMSAPI {
   }
 
   private class func buildURL(_ account: Account, path: String, queryItems: [String:String] = [:]) throws -> URL {
-    guard var urlBuilder = URLComponents(string: account.url) else {
+    let fullUrl = account.url + "/feed/" + path + ".json"
+    guard var urlBuilder = URLComponents(string: fullUrl) else {
       throw EmonCMSAPIError.FailedToCreateURL
     }
-
-    urlBuilder.path = "/feed/" + path + ".json"
 
     var allQueryItems = queryItems
     allQueryItems["apikey"] = account.apikey
