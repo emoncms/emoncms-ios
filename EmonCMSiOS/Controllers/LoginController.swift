@@ -68,7 +68,7 @@ class LoginController {
   }
 
   func logout() throws {
-    guard let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue) else {
+    guard let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue) else {
       throw LoginControllerError.Generic
     }
     do {
