@@ -15,15 +15,15 @@ class AppListViewModel {
   private let account: Account
   private let api: EmonCMSAPI
 
-  struct App {
+  struct ListItem {
     let name: String
     let storyboardIdentifier: String
     let viewModelGenerator: () -> AppViewModel
   }
 
-  var apps: Observable<[App]> {
+  var apps: Observable<[ListItem]> {
     return Observable.just([
-      App(name: "My Electric", storyboardIdentifier: "myElectric") {
+      ListItem(name: "My Electric", storyboardIdentifier: "myElectric") {
         return MyElectricAppViewModel(account: self.account, api: self.api)
       }
     ])

@@ -51,7 +51,7 @@ class FeedListViewController: UITableViewController {
     }
 
     self.dataSource.titleForHeaderInSection = { (ds, index) in
-      return ds.sectionModels[index].header
+      return ds.sectionModels[index].model
     }
 
     self.tableView.delegate = nil

@@ -17,37 +17,13 @@ import RxRealm
 
 class FeedListViewModel {
 
-  struct FeedListItem {
-    fileprivate let feed: Feed
-
-    var name: String {
-      return self.feed.name
-    }
-
-    var value: String {
-      return self.feed.value.prettyFormat()
-    }
-
-    init(feed: Feed) {
-      self.feed = feed
-    }
+  struct ListItem {
+    let feedId: String
+    let name: String
+    let value: String
   }
 
-  struct Section: SectionModelType {
-    private(set) var header: String
-    private(set) var items: [FeedListItem]
-
-    init(header: String, items: [FeedListItem]) {
-      self.header = header
-      self.items = items
-    }
-
-    typealias Item = FeedListItem
-    init(original: Section, items: [FeedListItem]) {
-      self = original
-      self.items = items
-    }
-  }
+  typealias Section = SectionModel<String, ListItem>
 
   private let account: Account
   private let api: EmonCMSAPI
@@ -88,7 +64,7 @@ class FeedListViewModel {
       .flatMapLatest { [weak self] () -> Observable<()> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.api.feedList(account)
-          .map(strongSelf.saveFeeds)
+          .flatMap(strongSelf.saveFeeds)
           .catchErrorJustReturn(())
           .trackActivity(isRefreshing)
       }
@@ -96,12 +72,20 @@ class FeedListViewModel {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func saveFeeds(_ feeds: [Feed]) throws {
+  private func saveFeeds(_ feeds: [Feed]) -> Observable<()> {
     let realm = self.realm
-    try realm.write {
-      for feed in feeds {
-        realm.add(feed, update: true)
+    return Observable.create() { observer in
+      do {
+        try realm.write {
+          realm.add(feeds, update: true)
+        }
+        observer.onNext(())
+        observer.onCompleted()
+      } catch {
+        observer.onError(error)
       }
+
+      return Disposables.create()
     }
   }
 
@@ -132,22 +116,18 @@ class FeedListViewModel {
 
     var sections: [Section] = []
     for section in keys {
-      let feedListItems = sectionBuilder[section]!
+      let items = sectionBuilder[section]!
         .map { feed in
-          return FeedListItem(feed: feed)
+          return ListItem(feedId: feed.id, name: feed.name, value: feed.value.prettyFormat())
         }
-      sections.append(Section(header: section, items: feedListItems))
+      sections.append(Section(model: section, items: items))
     }
 
     return sections
   }
 
-  func feedChartViewModel(forItem item: FeedListItem) -> FeedChartViewModel {
-    let feed = item.feed
-    let chart = Chart()
-    chart.name = feed.name
-    chart.feed = feed.id
-    return FeedChartViewModel(account: self.account, api: self.api, chart: chart)
+  func feedChartViewModel(forItem item: ListItem) -> FeedChartViewModel {
+    return FeedChartViewModel(account: self.account, api: self.api, feedId: item.feedId)!
   }
 
 }

@@ -36,7 +36,7 @@ class AppListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
 
     self.tableView.rx
-      .modelSelected(AppListViewModel.App.self)
+      .modelSelected(AppListViewModel.ListItem.self)
       .subscribe(onNext: { [weak self] (app) in
         guard let strongSelf = self else { return }
         strongSelf.present(app: app)
@@ -44,7 +44,7 @@ class AppListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func present(app: AppListViewModel.App) {
+  private func present(app: AppListViewModel.ListItem) {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: app.storyboardIdentifier)
     if let appVC = viewController as? AppViewController {

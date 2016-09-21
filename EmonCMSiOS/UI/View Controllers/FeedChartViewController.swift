@@ -24,10 +24,13 @@ class FeedChartViewController: FormViewController {
     super.viewDidLoad()
 
     self.viewModel.name
+      .asDriver()
       .drive(self.rx.title)
       .addDisposableTo(self.disposeBag)
 
     self.tableView.refreshControl = UIRefreshControl()
+
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
 
     self.setupFormer()
     self.setupBindings()
@@ -95,18 +98,19 @@ class FeedChartViewController: FormViewController {
 
   private func dateOptionsFormerSection() -> DateOptionsRowTypes {
     let startDateRange = self.viewModel.dateRange.value
+    let (startDate, endDate) = startDateRange.calculateDates()
 
-    let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
+    let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() {
+      $0.titleLabel.text = "Time range type"
+      $0.titleLabel.font = .boldSystemFont(ofSize: 15)
       }.configure {
-        $0.segmentTitles = ["Absolute", "Relative", "Relative to now"]
+        $0.segmentTitles = ["Absolute", "Relative"]
         let selectedIndex: Int
         switch startDateRange {
         case .absolute(_, _):
           selectedIndex = 0
-        case .relative(_, _):
+        case .relative(_):
           selectedIndex = 1
-        case .relativeToNow(_):
-          selectedIndex = 2
         }
         $0.selectedIndex = selectedIndex
       }
@@ -122,7 +126,7 @@ class FeedChartViewController: FormViewController {
       }.inlineCellSetup {
         $0.datePicker.datePickerMode = .dateAndTime
       }.displayTextFromDate(dateFormatter.string)
-    startDateRow.date = startDateRange.startDate()
+    startDateRow.date = startDate
 
     let endDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
       $0.titleLabel.text = "End"
@@ -131,12 +135,32 @@ class FeedChartViewController: FormViewController {
       }.inlineCellSetup {
         $0.datePicker.datePickerMode = .dateAndTime
       }.displayTextFromDate(dateFormatter.string)
-    endDateRow.date = startDateRange.endDate()
+    endDateRow.date = endDate
 
-    let dateRelativeRow = SegmentedRowFormer<FormSegmentedCell>() { _ in
+    let dateRelativeRow = SegmentedRowFormer<FormSegmentedCell>() {
+      $0.titleLabel.text = "Relative time"
+      $0.titleLabel.font = .boldSystemFont(ofSize: 15)
       }.configure {
         $0.segmentTitles = ["1h", "8h", "D", "M", "Y"]
-        $0.selectedIndex = 0
+        let selectedIndex: Int
+        switch startDateRange {
+        case .relative(let relativeTime):
+          switch relativeTime {
+          case .hour1:
+            selectedIndex = 0
+          case .hour8:
+            selectedIndex = 1
+          case .day:
+            selectedIndex = 2
+          case .month:
+            selectedIndex = 3
+          case .year:
+            selectedIndex = 4
+          }
+        default:
+          selectedIndex = 0
+        }
+        $0.selectedIndex = selectedIndex
     }
 
     return (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
@@ -156,10 +180,6 @@ class FeedChartViewController: FormViewController {
           dateRelativeRow.enabled = false
         case 1:
           startDateRow.enabled = false
-          endDateRow.enabled = true
-          dateRelativeRow.enabled = true
-        case 2:
-          startDateRow.enabled = false
           endDateRow.enabled = false
           dateRelativeRow.enabled = true
         default:
@@ -176,22 +196,6 @@ class FeedChartViewController: FormViewController {
     let dateRelativeSignal = RowFormer.rx_observable(dateRelativeRow.onSegmentSelected)
       .map { $0.0 }
       .startWith(dateRelativeRow.selectedIndex)
-      .map { segment -> TimeInterval in
-        switch segment {
-        case 0:
-          return 1 * 3600
-        case 1:
-          return 8 * 3600
-        case 2:
-          return 24 * 3600
-        case 3:
-          return 30 * 24 * 3600
-        case 4:
-          return 365 * 24 * 3600
-        default:
-          return 0
-        }
-      }
       .shareReplay(1)
 
     let dateRangeSignal = Observable
@@ -199,9 +203,8 @@ class FeedChartViewController: FormViewController {
         dateRangeType, startDate, endDate, dateRelative -> DateRange in
         switch dateRangeType {
         case 1:
-          return .relative(endDate, dateRelative)
-        case 2:
-          return .relativeToNow(dateRelative)
+          let relativeTime = DateRange.RelativeTime(rawValue: dateRelative) ?? .hour1
+          return .relative(relativeTime)
         /*case 0:*/
         default:
           return .absolute(startDate, endDate)
@@ -248,6 +251,18 @@ class FeedChartViewController: FormViewController {
         data.notifyDataChanged()
         chartView.notifyDataSetChanged()
       })
+      .addDisposableTo(self.disposeBag)
+
+    let rightBarButton = self.navigationItem.rightBarButtonItem!
+
+    rightBarButton.rx.tap
+      .flatMap { [weak self] () -> Observable<()> in
+        guard let strongSelf = self else { return Observable.empty() }
+
+        return strongSelf.viewModel.save()
+          .catchErrorJustReturn(())
+      }
+      .subscribe()
       .addDisposableTo(self.disposeBag)
   }
 

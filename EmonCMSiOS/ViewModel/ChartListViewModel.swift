@@ -17,17 +17,12 @@ import RxRealm
 
 class ChartListViewModel {
 
-  struct ChartListItem {
-    fileprivate let chart: Chart
-
-    var name: String {
-      return self.chart.name
-    }
-
-    init(chart: Chart) {
-      self.chart = chart
-    }
+  struct ListItem {
+    let chartId: String
+    let name: String
   }
+
+  typealias Section = SectionModel<String, ListItem>
 
   private let account: Account
   private let api: EmonCMSAPI
@@ -38,7 +33,7 @@ class ChartListViewModel {
   // Inputs
 
   // Outputs
-  private(set) var charts: Driver<[ChartListItem]>
+  private(set) var charts: Driver<[ListItem]>
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
@@ -49,17 +44,32 @@ class ChartListViewModel {
 
     self.charts = Observable.arrayFrom(self.realm.objects(Chart.self))
       .map {
-        $0.map { ChartListItem(chart: $0) }
+        $0.map { ListItem(chartId: $0.uuid, name: $0.name) }
       }
       .asDriver(onErrorJustReturn: [])
   }
 
-  private func chartsToItems(_ charts: [Chart]) -> [ChartListItem] {
-    return charts.map { ChartListItem(chart: $0) }
+  func feedChartViewModel(forItem item: ListItem) -> FeedChartViewModel {
+    return FeedChartViewModel(account: self.account, api: self.api, chartId: item.chartId)!
   }
 
-  func feedChartViewModel(forItem item: ChartListItem) -> FeedChartViewModel {
-    return FeedChartViewModel(account: self.account, api: self.api, chart: item.chart)
+  func deleteChart(withId id: String) -> Observable<()> {
+    let realm = self.realm
+    return Observable.create() { observer in
+      do {
+        if let chart = realm.object(ofType: Chart.self, forPrimaryKey: id) {
+          try realm.write {
+            realm.delete(chart)
+          }
+        }
+        observer.onNext(())
+        observer.onCompleted()
+      } catch {
+        observer.onError(error)
+      }
+
+      return Disposables.create()
+    }
   }
 
 }

@@ -47,8 +47,9 @@
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240C81D91734300BC302C /* ChartListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C71D91734300BC302C /* ChartListViewController.swift */; };
 		C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C91D9173E700BC302C /* ChartListViewModel.swift */; };
-		C9C240CC1D91742D00BC302C /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CB1D91742D00BC302C /* Chart.swift */; };
+		C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CB1D91742D00BC302C /* ChartDataSet.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
+		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 		D0D2080C98138B924898A4D9 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8705F7B448C6891E79D7ADF7 /* Pods_EmonCMSiOS.framework */; };
 /* End PBXBuildFile section */
 
@@ -113,8 +114,9 @@
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240C71D91734300BC302C /* ChartListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartListViewController.swift; sourceTree = "<group>"; };
 		C9C240C91D9173E700BC302C /* ChartListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartListViewModel.swift; sourceTree = "<group>"; };
-		C9C240CB1D91742D00BC302C /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
+		C9C240CB1D91742D00BC302C /* ChartDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSet.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
+		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,7 +192,8 @@
 			children = (
 				C9BB834C1D869CC80058C059 /* Account.swift */,
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
-				C9C240CB1D91742D00BC302C /* Chart.swift */,
+				C9F53E351D9297FD00E9724D /* Chart.swift */,
+				C9C240CB1D91742D00BC302C /* ChartDataSet.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
 				C9C240CD1D917CA500BC302C /* DateRange.swift */,
 			);
@@ -557,7 +560,8 @@
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
-				C9C240CC1D91742D00BC302C /* Chart.swift in Sources */,
+				C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */,
+				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartXAxisDateFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,

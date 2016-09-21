@@ -9,29 +9,43 @@
 import Foundation
 
 enum DateRange {
-  case absolute(Date, Date)
-  case relative(Date, TimeInterval)
-  case relativeToNow(TimeInterval)
-
-  func startDate() -> Date {
-    switch self {
-    case .absolute(let startDate, _):
-      return startDate
-    case .relative(let endDate, let interval):
-      return endDate - interval
-    case .relativeToNow(let interval):
-      return Date() - interval
-    }
+  enum RelativeTime: Int {
+    case hour1
+    case hour8
+    case day
+    case month
+    case year
   }
 
-  func endDate() -> Date {
+  case relative(RelativeTime)
+  case absolute(Date, Date)
+
+  func calculateDates() -> (Date, Date) {
     switch self {
-    case .absolute(_, let endDate):
-      return endDate
-    case .relative(let endDate, _):
-      return endDate
-    case .relativeToNow(_):
-      return Date()
+    case .relative(let relative):
+      let endDate = Date()
+
+      var dateComponents = DateComponents()
+      switch relative {
+      case .hour1:
+        dateComponents.hour = -1
+      case .hour8:
+        dateComponents.hour = -8
+      case .day:
+        dateComponents.day = -1
+      case .month:
+        dateComponents.month = -1
+      case .year:
+        dateComponents.year = -1
+      }
+
+      let calendar = Calendar.current
+      let startDate = calendar.date(byAdding: dateComponents, to: endDate)!
+
+      return (startDate, endDate)
+
+    case .absolute(let startDate, let endDate):
+      return (startDate, endDate)
     }
   }
 }
