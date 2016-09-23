@@ -1,5 +1,4 @@
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '10.0'
 use_frameworks!
 
 def shared_pods
@@ -10,6 +9,7 @@ def shared_pods
 end
 
 target 'EmonCMSiOS' do
+    platform :ios, '10.0'
     shared_pods
 
     pod 'Alamofire', '~> 4.0'
@@ -28,9 +28,14 @@ target 'EmonCMSiOS' do
 end
 
 target 'EmonCMSiOSTests' do
+    platform :ios, '10.0'
     shared_pods
     pod 'Quick', :git => 'https://github.com/Quick/Quick.git', branch: 'swift-3.0'
     pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', branch: 'master'
     pod 'RxTests', '~> 3.0.0-beta.1'
 end
 
+target 'EmonCMSWatch Extension' do
+    platform :watchos, '2.0'
+    shared_pods
+end

@@ -1,0 +1,6 @@
+framework module Pods_EmonCMSWatch_Extension {
+  umbrella header "Pods-EmonCMSWatch Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}
