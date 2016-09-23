@@ -9,7 +9,6 @@
 import WatchKit
 import Foundation
 
-
 class FeedsInterfaceController: WKInterfaceController {
 
   @IBOutlet var feedsTable: WKInterfaceTable!
