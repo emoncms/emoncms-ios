@@ -21,12 +21,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     handler(nil)
   }
 
-  func getTimelineEndDate(for complication: CLKComplication, withHandler handler: @escaping (Date?) -> Void) {
-    handler(nil)
-  }
-
   func getPrivacyBehavior(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationPrivacyBehavior) -> Void) {
-    handler(.showOnLockScreen)
+    handler(.hideOnLockScreen)
   }
 
   // MARK: - Timeline Population
@@ -36,10 +32,6 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
   }
 
   func getTimelineEntries(for complication: CLKComplication, before date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
-    handler(nil)
-  }
-
-  func getTimelineEntries(for complication: CLKComplication, after date: Date, limit: Int, withHandler handler: @escaping ([CLKComplicationTimelineEntry]?) -> Void) {
     handler(nil)
   }
 

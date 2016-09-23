@@ -256,8 +256,8 @@
 			isa = PBXGroup;
 			children = (
 				C93C929A1D95C0E1009FE70D /* ComplicationController.swift */,
-				C93C929B1D95C0E1009FE70D /* FeedRowController.swift */,
 				C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */,
+				C93C929B1D95C0E1009FE70D /* FeedRowController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
