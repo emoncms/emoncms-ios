@@ -2,4 +2,4 @@
 
 set -e
 
-xcodebuild -workspace EmonCMSiOS.xcworkspace -scheme EmonCMSiOS -sdk iphonesimulator -destination "name=iPhone SE" test | xcpretty && exit ${PIPESTATUS[0]}
+xcodebuild -workspace EmonCMSiOS.xcworkspace -scheme EmonCMSiOS -destination "platform=iOS Simulator,name=iPhone SE" clean test | xcpretty && exit ${PIPESTATUS[0]}
