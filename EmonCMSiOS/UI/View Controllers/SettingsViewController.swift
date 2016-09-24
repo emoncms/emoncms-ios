@@ -9,6 +9,8 @@
 import UIKit
 
 import Former
+import RxSwift
+import RxCocoa
 
 protocol SettingsViewControllerDelegate: class {
 
@@ -22,12 +24,27 @@ class SettingsViewController: FormViewController {
 
   weak var delegate: SettingsViewControllerDelegate?
 
+  private var watchFeedRow: InlinePickerRowFormer<FormInlinePickerCell, SettingsViewModel.FeedListItem>!
+
+  private let disposeBag = DisposeBag()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
     self.title = "Settings"
 
     self.setupFormer()
+    self.setupBindings()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.viewModel.active.value = true
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    self.viewModel.active.value = false
   }
 
   private func setupFormer() {
@@ -40,8 +57,59 @@ class SettingsViewController: FormViewController {
         strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
     }
 
-    let section = SectionFormer(rowFormer: logoutRow)
-    self.former.append(sectionFormer: section)
+    let logoutSection = SectionFormer(rowFormer: logoutRow)
+
+    let watchFeedRow = InlinePickerRowFormer<FormInlinePickerCell, SettingsViewModel.FeedListItem>() {
+      $0.titleLabel.text = "Complication feed"
+    }
+    self.watchFeedRow = watchFeedRow
+
+    let watchHeader = LabelViewFormer<FormLabelHeaderView>() { _ in
+      }.configure {
+        $0.viewHeight = 44
+        $0.text = "Apple Watch"
+    }
+
+    let watchSection = SectionFormer(rowFormer: watchFeedRow)
+      .set(headerViewFormer: watchHeader)
+
+    self.former.append(sectionFormer: logoutSection, watchSection)
+  }
+
+  private func setupBindings() {
+    self.viewModel.feeds
+      .startWith([])
+      .drive(onNext: { [weak self] feeds in
+        guard let strongSelf = self else { return }
+
+        strongSelf.watchFeedRow.update { row in
+          let selectedFeedId = strongSelf.viewModel.watchFeed.value?.feedId ?? "-1"
+          var selectedIndex = 0
+          var pickerItems: [InlinePickerItem<SettingsViewModel.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
+          for (i, feed) in feeds.enumerated() {
+            if feed.feedId == selectedFeedId {
+              selectedIndex = i + 1
+            }
+            pickerItems.append(InlinePickerItem(title: "(\(feed.feedId)) \(feed.name)", value: feed))
+          }
+          row.pickerItems = pickerItems
+          row.selectedRow = selectedIndex
+        }
+        })
+      .addDisposableTo(self.disposeBag)
+
+    Observable<SettingsViewModel.FeedListItem?>.create { observer in
+      let row = self.watchFeedRow
+      row?.onValueChanged { item in
+        if let value = item.value {
+          observer.onNext(value)
+        }
+      }
+      return Disposables.create()
+    }
+      .debug()
+      .bindTo(self.viewModel.watchFeed)
+      .addDisposableTo(self.disposeBag)
   }
 
 }
