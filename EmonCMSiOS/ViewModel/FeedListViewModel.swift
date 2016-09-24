@@ -55,8 +55,8 @@ class FeedListViewModel {
     self.isRefreshing = isRefreshing.asDriver()
 
     let becameActive = self.active.asObservable()
-      .filter { $0 == true }
       .distinctUntilChanged()
+      .filter { $0 == true }
       .becomeVoid()
 
     Observable.of(self.refresh, becameActive)
