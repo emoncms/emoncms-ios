@@ -13,12 +13,10 @@ class FeedRowController: NSObject {
   @IBOutlet var nameLabel: WKInterfaceLabel!
   @IBOutlet var valueLabel: WKInterfaceLabel!
 
-  var feed: FeedViewModel? {
+  var listItem: FeedListViewModel.ListItem? {
     didSet {
-      if let feed = feed {
-        self.nameLabel.setText(feed.name)
-        self.valueLabel.setText(feed.value)
-      }
+      self.nameLabel.setText(listItem?.name ?? "")
+      self.valueLabel.setText(listItem?.value ?? "")
     }
   }
 

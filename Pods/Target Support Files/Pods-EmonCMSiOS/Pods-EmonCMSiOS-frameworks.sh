@@ -84,26 +84,26 @@ strip_invalid_archs() {
 
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Former/Former.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Locksmith/Locksmith.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Locksmith-iOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-iOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-iOS/RealmSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxCocoa-iOS/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxDataSources/RxDataSources.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/RxRealm/RxRealm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RxRealm-iOS/RxRealm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift-iOS/RxSwift.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "$BUILT_PRODUCTS_DIR/Alamofire/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Alamofire-iOS/Alamofire.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Charts/Charts.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Former/Former.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/Locksmith/Locksmith.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/Locksmith-iOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-iOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-iOS/RealmSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxCocoa-iOS/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxDataSources/RxDataSources.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/RxRealm/RxRealm.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/RxRealm-iOS/RxRealm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift-iOS/RxSwift.framework"
 fi

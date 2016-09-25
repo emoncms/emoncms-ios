@@ -1,8 +1,8 @@
 //
-//  SettingsViewModel.swift
+//  FeedViewModel.swift
 //  EmonCMSiOS
 //
-//  Created by Matt Galloway on 13/09/2016.
+//  Created by Matt Galloway on 23/09/2016.
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
@@ -11,77 +11,60 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RealmSwift
-import WatchConnectivity
+import RxRealm
 
-class SettingsViewModel {
+class FeedListViewModel {
 
-  struct FeedListItem {
+  struct ListItem {
     let feedId: String
     let name: String
+    let value: String
   }
 
   private let account: Account
   private let api: EmonCMSAPI
-  private let watchController: WatchController
   private let realm: Realm
 
   private let disposeBag = DisposeBag()
 
   // Inputs
   let active = Variable<Bool>(false)
-  let refreshFeeds = ReplaySubject<()>.create(bufferSize: 1)
-  let watchFeed = Variable<FeedListItem?>(nil)
+  let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
-  private(set) var feeds: Driver<[FeedListItem]>
-  private(set) var isRefreshingFeeds: Driver<Bool>
-  var showWatchSection: Bool {
-    return true
-    // TODO: Remove when finished testing
-//    return self.watchController.isPaired && self.watchController.isWatchAppInstalled
-  }
+  private(set) var feeds: Driver<[ListItem]>
+  private(set) var isRefreshing: Driver<Bool>
 
-  init(account: Account, api: EmonCMSAPI, watchController: WatchController) {
+  init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
-    self.watchController = watchController
     self.realm = account.createRealm()
 
     self.feeds = Driver.never()
-    self.isRefreshingFeeds = Driver.never()
+    self.isRefreshing = Driver.never()
 
     self.feeds = Observable.arrayFrom(self.realm.objects(Feed.self))
       .map(self.feedsToListItems)
       .asDriver(onErrorJustReturn: [])
 
-    let isRefreshingFeeds = ActivityIndicator()
-    self.isRefreshingFeeds = isRefreshingFeeds.asDriver()
+    let isRefreshing = ActivityIndicator()
+    self.isRefreshing = isRefreshing.asDriver()
 
     let becameActive = self.active.asObservable()
       .distinctUntilChanged()
       .filter { $0 == true }
       .becomeVoid()
 
-    Observable.of(self.refreshFeeds, becameActive)
+    Observable.of(self.refresh, becameActive)
       .merge()
       .flatMapLatest { [weak self] () -> Observable<()> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.api.feedList(account)
           .flatMap(strongSelf.saveFeeds)
           .catchErrorJustReturn(())
-          .trackActivity(isRefreshingFeeds)
+          .trackActivity(isRefreshing)
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
-
-    if let feedId = self.watchController.complicationFeedId.value {
-      self.watchFeed.value = FeedListItem(feedId: feedId, name: "")
-    }
-
-    self.watchFeed
-      .asDriver()
-      .map { $0?.feedId }
-      .drive(self.watchController.complicationFeedId)
       .addDisposableTo(self.disposeBag)
   }
 
@@ -102,11 +85,11 @@ class SettingsViewModel {
     }
   }
 
-  private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {
+  private func feedsToListItems(_ feeds: [Feed]) -> [ListItem] {
     let sortedFeedItems = feeds.sorted {
       $0.name < $1.name
       }.map {
-        FeedListItem(feedId: $0.id, name: $0.name)
+        ListItem(feedId: $0.id, name: $0.name, value: $0.value.prettyFormat())
     }
     return sortedFeedItems
   }

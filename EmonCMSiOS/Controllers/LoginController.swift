@@ -9,13 +9,7 @@
 import Foundation
 import Locksmith
 
-protocol LoginControllerDelegate: class {
-
-}
-
 class LoginController {
-
-  weak var delegate: LoginControllerDelegate?
 
   enum LoginControllerError: Error {
     case Generic
@@ -34,17 +28,20 @@ class LoginController {
   }
 
   private func loadAccount() {
+    // For the madness below, see https://gist.github.com/mattjgalloway/6b46ae89f6603cdd64c49f38e07221b5
     guard
-    let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue),
-    let accountUUIDString = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue),
-    let accountUUID = UUID(uuidString: accountUUIDString)
-    else { return }
+      let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue),
+      1 == 1, // WAT watchOS
+      let accountUUIDString = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue),
+      1 == 1, // WAT watchOS
+      let accountUUID = UUID(uuidString: accountUUIDString),
+      1 == 1 // WAT watchOS
+      else { return }
 
-    guard let data = Locksmith.loadDataForUserAccount(userAccount: accountUUIDString),
+    guard
+      let data = Locksmith.loadDataForUserAccount(userAccount: accountUUIDString),
       let apikey = data["apikey"] as? String
-      else {
-        return
-    }
+      else { return }
 
     let account = Account(uuid: accountUUID, url: accountURL, apikey: apikey)
     self.account = account

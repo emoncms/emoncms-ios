@@ -24,7 +24,24 @@
 		C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929A1D95C0E1009FE70D /* ComplicationController.swift */; };
 		C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929B1D95C0E1009FE70D /* FeedRowController.swift */; };
 		C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */; };
-		C93C92A21D95C0FD009FE70D /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92A11D95C0FD009FE70D /* FeedViewModel.swift */; };
+		C93C92A51D970D89009FE70D /* WatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92A41D970D89009FE70D /* WatchController.swift */; };
+		C93C92AC1D981515009FE70D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
+		C93C92AD1D981522009FE70D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
+		C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
+		C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
+		C93C92B01D98152F009FE70D /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
+		C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
+		C93C92B31D98196C009FE70D /* WatchConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* WatchConstants.swift */; };
+		C93C92B41D9819B3009FE70D /* WatchConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* WatchConstants.swift */; };
+		C93C92B61D981CAE009FE70D /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B51D981CAE009FE70D /* MainController.swift */; };
+		C93C92B81D981DA4009FE70D /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */; };
+		C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* RxOperators.swift */; };
+		C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
+		C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
+		C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* LoginController.swift */; };
+		C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */; };
+		C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
@@ -134,7 +151,13 @@
 		C93C929A1D95C0E1009FE70D /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
 		C93C929B1D95C0E1009FE70D /* FeedRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRowController.swift; sourceTree = "<group>"; };
 		C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsInterfaceController.swift; sourceTree = "<group>"; };
-		C93C92A11D95C0FD009FE70D /* FeedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		C93C92A41D970D89009FE70D /* WatchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchController.swift; sourceTree = "<group>"; };
+		C93C92B21D98196C009FE70D /* WatchConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConstants.swift; sourceTree = "<group>"; };
+		C93C92B51D981CAE009FE70D /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
+		C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViewModel.swift; sourceTree = "<group>"; };
+		C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequiredInterfaceController.swift; sourceTree = "<group>"; };
+		C93C92C21D98672D009FE70D /* EmonCMSWatch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EmonCMSWatch Extension.entitlements"; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -256,8 +279,10 @@
 			isa = PBXGroup;
 			children = (
 				C93C929A1D95C0E1009FE70D /* ComplicationController.swift */,
+				C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */,
 				C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */,
 				C93C929B1D95C0E1009FE70D /* FeedRowController.swift */,
+				C93C92B51D981CAE009FE70D /* MainController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -265,7 +290,8 @@
 		C93C929D1D95C0E1009FE70D /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C93C92A11D95C0FD009FE70D /* FeedViewModel.swift */,
+				C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */,
+				C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -323,12 +349,13 @@
 		C9BB83551D86B19C0058C059 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
 				C906B4541D8B0316007FE19A /* ChartXAxisDateFormatter.swift */,
+				C957CCED1D9086E40039D707 /* Charts+Rx.swift */,
+				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
 				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
 				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
 				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
-				C957CCED1D9086E40039D707 /* Charts+Rx.swift */,
+				C93C92B21D98196C009FE70D /* WatchConstants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -351,6 +378,7 @@
 			children = (
 				C9BB83661D87F52E0058C059 /* MainController.swift */,
 				C9BB83681D87F5630058C059 /* LoginController.swift */,
+				C93C92A41D970D89009FE70D /* WatchController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -428,6 +456,7 @@
 		C9D692271D95B55B00E0B249 /* EmonCMSWatch Extension */ = {
 			isa = PBXGroup;
 			children = (
+				C93C92C21D98672D009FE70D /* EmonCMSWatch Extension.entitlements */,
 				C93C92991D95C0E1009FE70D /* Controllers */,
 				C93C929D1D95C0E1009FE70D /* ViewModel */,
 				C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */,
@@ -556,6 +585,11 @@
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = KGUUH6BP8Y;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -799,7 +833,9 @@
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
+				C93C92A51D970D89009FE70D /* WatchController.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
+				C93C92B31D98196C009FE70D /* WatchConstants.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
@@ -813,11 +849,26 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C93C92A21D95C0FD009FE70D /* FeedViewModel.swift in Sources */,
+				C93C92AC1D981515009FE70D /* Feed.swift in Sources */,
+				C93C92B81D981DA4009FE70D /* FeedListViewModel.swift in Sources */,
 				C9D6922B1D95B55B00E0B249 /* ExtensionDelegate.swift in Sources */,
+				C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */,
+				C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */,
+				C93C92B41D9819B3009FE70D /* WatchConstants.swift in Sources */,
+				C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */,
 				C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */,
+				C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */,
 				C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */,
+				C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */,
+				C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */,
 				C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */,
+				C93C92B01D98152F009FE70D /* AlamofireHTTPRequestProvider.swift in Sources */,
+				C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */,
+				C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */,
+				C93C92AD1D981522009FE70D /* Account.swift in Sources */,
+				C93C92B61D981CAE009FE70D /* MainController.swift in Sources */,
+				C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */,
+				C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1083,6 +1134,7 @@
 			baseConfigurationReference = EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "EmonCMSWatch Extension/EmonCMSWatch Extension.entitlements";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = "EmonCMSWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1101,6 +1153,7 @@
 			baseConfigurationReference = ACFF4FEDDBF5BF5145039E6D /* Pods-EmonCMSWatch Extension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_ENTITLEMENTS = "EmonCMSWatch Extension/EmonCMSWatch Extension.entitlements";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
 				INFOPLIST_FILE = "EmonCMSWatch Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";

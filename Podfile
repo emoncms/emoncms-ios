@@ -6,6 +6,8 @@ def shared_pods
     pod 'RxCocoa', '~> 3.0.0-beta.1'
     pod 'Realm', '~> 1.1'
     pod 'RealmSwift', '~> 1.1'
+#    pod 'RxRealm', '~> 0.2'
+    pod 'RxRealm', :git => 'https://github.com/mattjgalloway/RxRealm.git', branch: 'master'
 end
 
 target 'EmonCMSiOS' do
@@ -23,13 +25,12 @@ target 'EmonCMSiOS' do
 
 #    pod 'Former', :git => 'https://github.com/ra1028/Former.git', branch: 'master'
     pod 'Former', :git => 'git@github.com:mattjgalloway/Former.git', branch: 'swift3'
-
-    pod 'RxRealm', '~> 0.2'
 end
 
 target 'EmonCMSiOSTests' do
     platform :ios, '10.0'
     shared_pods
+
     pod 'Quick', :git => 'https://github.com/Quick/Quick.git', branch: 'swift-3.0'
     pod 'Nimble', :git => 'https://github.com/Quick/Nimble.git', branch: 'master'
     pod 'RxTests', '~> 3.0.0-beta.1'
@@ -38,4 +39,7 @@ end
 target 'EmonCMSWatch Extension' do
     platform :watchos, '2.0'
     shared_pods
+
+    pod 'Alamofire', '~> 4.0'
+    pod 'Locksmith', '~> 3.0'
 end

@@ -7,8 +7,18 @@
 //
 
 import ClockKit
+import WatchKit
 
 class ComplicationController: NSObject, CLKComplicationDataSource {
+
+  let mainController: MainController
+
+  override init() {
+    let extensionDelegate = WKExtension.shared().delegate! as! ExtensionDelegate
+    self.mainController = extensionDelegate.mainController
+
+    super.init()
+  }
 
   func getSupportedTimeTravelDirections(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimeTravelDirections) -> Void) {
     handler([])
@@ -19,16 +29,17 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
   }
 
   func getCurrentTimelineEntry(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTimelineEntry?) -> Void) {
-    let template = self.template(for: complication, feed: FeedViewModel())
+    let viewModel = self.mainController.complicationViewModel()
+    let template = self.template(for: complication, feed: viewModel.currentFeedData())
     handler(CLKComplicationTimelineEntry(date: Date(), complicationTemplate: template))
   }
 
   func getLocalizableSampleTemplate(for complication: CLKComplication, withHandler handler: @escaping (CLKComplicationTemplate?) -> Void) {
-    let template = self.template(for: complication, feed: FeedViewModel())
+    let template = self.template(for: complication, feed: ComplicationViewModel.placeholderFeedData())
     handler(template)
   }
 
-  private func template(for complication: CLKComplication, feed: FeedViewModel) -> CLKComplicationTemplate {
+  private func template(for complication: CLKComplication, feed: ComplicationViewModel.FeedData) -> CLKComplicationTemplate {
     let template: CLKComplicationTemplate
 
     let name = CLKSimpleTextProvider(text: feed.name)

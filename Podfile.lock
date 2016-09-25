@@ -35,7 +35,7 @@ DEPENDENCIES:
   - RealmSwift (~> 1.1)
   - RxCocoa (~> 3.0.0-beta.1)
   - RxDataSources (~> 1.0.0-beta.1)
-  - RxRealm (~> 0.2)
+  - RxRealm (from `https://github.com/mattjgalloway/RxRealm.git`, branch `master`)
   - RxSwift (~> 3.0.0-beta.1)
   - RxTests (~> 3.0.0-beta.1)
 
@@ -52,6 +52,9 @@ EXTERNAL SOURCES:
   Quick:
     :branch: swift-3.0
     :git: https://github.com/Quick/Quick.git
+  RxRealm:
+    :branch: master
+    :git: https://github.com/mattjgalloway/RxRealm.git
 
 CHECKOUT OPTIONS:
   Charts:
@@ -66,6 +69,9 @@ CHECKOUT OPTIONS:
   Quick:
     :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
     :git: https://github.com/Quick/Quick.git
+  RxRealm:
+    :commit: 1a82a0f0da1e03e07ac4e9e3893530b80088b635
+    :git: https://github.com/mattjgalloway/RxRealm.git
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
@@ -78,10 +84,10 @@ SPEC CHECKSUMS:
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
   RxDataSources: b2f3d80aeb9de4faeebc5e05e2fd975cadd6e308
-  RxRealm: 56fb63ead229e0a568f6014f81a0530f74cd8bfa
+  RxRealm: 9b562a61b2e592fb06445f506d6f138cbfe4d676
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
 
-PODFILE CHECKSUM: d6aa486b4611eadcfaae0e7aa62be835b3d46f90
+PODFILE CHECKSUM: 346db6278855209ec8cda15d6591dae69ea7b77a
 
 COCOAPODS: 1.1.0.rc.2

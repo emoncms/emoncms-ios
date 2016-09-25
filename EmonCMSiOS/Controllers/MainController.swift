@@ -8,12 +8,13 @@
 
 import UIKit
 
-class MainController {
+final class MainController {
 
-  let window: UIWindow
-  let requestProvider: AlamofireHTTPRequestProvider
-  let api: EmonCMSAPI
-  let loginController: LoginController
+  private let window: UIWindow
+  private let requestProvider: AlamofireHTTPRequestProvider
+  private let api: EmonCMSAPI
+  private let loginController: LoginController
+  private let watchController: WatchController
 
   fileprivate var addAccountViewStack: UINavigationController?
   fileprivate var mainViewStack: UITabBarController?
@@ -23,7 +24,9 @@ class MainController {
     self.requestProvider = AlamofireHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
-    self.loginController.delegate = self
+    self.watchController = WatchController(loginController: self.loginController)
+
+    self.watchController.initialise()
   }
 
   func loadUserInterface() {
@@ -82,7 +85,7 @@ class MainController {
     let settingsNavController = tabBarViewControllers[2] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.delegate = self
-    settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api)
+    settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api, watchController: self.watchController)
 
     self.window.rootViewController = rootViewController
 
@@ -131,9 +134,5 @@ extension MainController: SettingsViewControllerDelegate {
   func settingsViewControllerDidRequestLogout(controller: SettingsViewController) {
     self.logout()
   }
-
-}
-
-extension MainController: LoginControllerDelegate {
 
 }

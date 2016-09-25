@@ -10,7 +10,15 @@ import WatchKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
+  let mainController: MainController
+
+  override init() {
+    self.mainController = MainController()
+    super.init()
+  }
+
   func applicationDidFinishLaunching() {
+    self.mainController.applicationDidFinishLaunching()
   }
 
   func handle(_ backgroundTasks: Set<WKRefreshBackgroundTask>) {
