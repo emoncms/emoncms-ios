@@ -29,13 +29,14 @@ class LoginController {
 
   private func loadAccount() {
     // For the madness below, see https://gist.github.com/mattjgalloway/6b46ae89f6603cdd64c49f38e07221b5
+
+    let _accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue)
+    let _accountUUIDString = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue)
+
     guard
-      let accountURL = UserDefaults.standard.string(forKey: UserDefaultKeys.accountURL.rawValue),
-      1 == 1, // WAT watchOS
-      let accountUUIDString = UserDefaults.standard.string(forKey: UserDefaultKeys.accountUUID.rawValue),
-      1 == 1, // WAT watchOS
-      let accountUUID = UUID(uuidString: accountUUIDString),
-      1 == 1 // WAT watchOS
+      let accountURL = _accountURL,
+      let accountUUIDString = _accountUUIDString,
+      let accountUUID = UUID(uuidString: accountUUIDString)
       else { return }
 
     guard
