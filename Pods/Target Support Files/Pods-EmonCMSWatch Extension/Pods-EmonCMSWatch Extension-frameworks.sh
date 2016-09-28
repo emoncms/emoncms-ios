@@ -85,6 +85,7 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-watchOS/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack-watchOS/CocoaLumberjack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith-watchOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-watchOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-watchOS/RealmSwift.framework"
@@ -94,6 +95,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-watchOS/Alamofire.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack-watchOS/CocoaLumberjack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith-watchOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-watchOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-watchOS/RealmSwift.framework"

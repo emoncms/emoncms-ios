@@ -67,16 +67,17 @@ class MyElectricAppViewController: UIViewController, AppViewController {
             return
         }
 
-        data.xVals = []
         dataSet.clear()
 
-        for (i, point) in dataPoints.enumerated() {
-          data.addXValue("\(point.time.timeIntervalSince1970)")
+        for point in dataPoints {
+          let x = point.time.timeIntervalSince1970
+          let y = point.value
 
-          let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
+          let yDataEntry = ChartDataEntry(x: x, y: y)
           data.addEntry(yDataEntry, dataSetIndex: 0)
         }
 
+        dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
         strongSelf.lineChart.notifyDataSetChanged()
         })
@@ -92,25 +93,21 @@ class MyElectricAppViewController: UIViewController, AppViewController {
             return
         }
 
-        data.xVals = []
         dataSet.clear()
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "eeeee"
-
-        for (i, point) in dataPoints.enumerated() {
+        for point in dataPoints {
           // We minus 1 day here, because we want the date to represent the previous day.
           // For example:
           //   [0].time is Thursday midnight, [1].time is Friday midnight.
           //   [1].value - [0].value means kWh consumed on Thursday.
-          let time = point.time - 86400
-          data.addXValue(dateFormatter.string(from: time))
+          let x = point.time.timeIntervalSince1970 - 86400
+          let y = point.value
 
-          let yDataEntry = BarChartDataEntry(value: point.value, xIndex: i)
+          let yDataEntry = BarChartDataEntry(x: x, y: y)
           data.addEntry(yDataEntry, dataSetIndex: 0)
         }
 
+        dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
         strongSelf.barChart.notifyDataSetChanged()
         })
@@ -134,7 +131,7 @@ extension MyElectricAppViewController {
     lineChart.drawGridBackgroundEnabled = false
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
-    lineChart.descriptionText = ""
+    lineChart.chartDescription = nil
     lineChart.noDataText = ""
 
     let xAxis = lineChart.xAxis
@@ -143,8 +140,7 @@ extension MyElectricAppViewController {
     xAxis.drawLabelsEnabled = true
     xAxis.labelPosition = .bottom
     xAxis.labelTextColor = .white
-    xAxis.spaceBetweenLabels = 0
-    xAxis.valueFormatter = ChartXAxisDateFormatter(formatString: "HH:mm")
+    xAxis.valueFormatter = ChartDateValueFormatter(formatString: "HH:mm")
 
     let yAxis = lineChart.leftAxis
     yAxis.labelPosition = .insideChart
@@ -176,7 +172,7 @@ extension MyElectricAppViewController {
     barChart.legend.enabled = false
     barChart.leftAxis.enabled = false
     barChart.rightAxis.enabled = false
-    barChart.descriptionText = ""
+    barChart.chartDescription = nil
     barChart.noDataText = ""
     barChart.isUserInteractionEnabled = false
     barChart.extraBottomOffset = 2
@@ -185,12 +181,12 @@ extension MyElectricAppViewController {
     let xAxis = barChart.xAxis
     xAxis.labelPosition = .bottomInside
     xAxis.labelTextColor = .white
-    xAxis.setLabelsToSkip(0)
+    xAxis.valueFormatter = ChartDateValueFormatter(formatString: "eeeee")
     xAxis.drawGridLinesEnabled = false
     xAxis.drawAxisLineEnabled = false
     xAxis.drawLabelsEnabled = true
 
-    let dataSet = BarChartDataSet(yVals: nil, label: "kWh")
+    let dataSet = BarChartDataSet(values: nil, label: "kWh")
     dataSet.setColor(EmonCMSColors.Chart.Blue)
     dataSet.valueTextColor = .white
 

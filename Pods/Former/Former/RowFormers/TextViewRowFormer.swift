@@ -14,21 +14,21 @@ public protocol TextViewFormableRow: FormableRow {
     func formTextView() -> UITextView
 }
 
-public class TextViewRowFormer<T: UITableViewCell>
+open class TextViewRowFormer<T: UITableViewCell>
 : BaseRowFormer<T>, Formable where T: TextViewFormableRow {
     
     // MARK: Public
     
-    override public var canBecomeEditing: Bool {
+    override open var canBecomeEditing: Bool {
         return enabled
     }
     
-    public var text: String?
-    public var placeholder: String?
-    public var attributedPlaceholder: NSAttributedString?
-    public var textDisabledColor: UIColor? = .lightGray
-    public var titleDisabledColor: UIColor? = .lightGray
-    public var titleEditingColor: UIColor?
+    open var text: String?
+    open var placeholder: String?
+    open var attributedPlaceholder: NSAttributedString?
+    open var textDisabledColor: UIColor? = .lightGray
+    open var titleDisabledColor: UIColor? = .lightGray
+    open var titleEditingColor: UIColor?
     
     public required init(instantiateType: Former.InstantiateType = .Class, cellSetup: ((T) -> Void)? = nil) {
         super.init(instantiateType: instantiateType, cellSetup: cellSetup)
@@ -44,16 +44,16 @@ public class TextViewRowFormer<T: UITableViewCell>
         return self
     }
     
-    public override func initialized() {
+    open override func initialized() {
         super.initialized()
         rowHeight = 110
     }
     
-    public override func cellInitialized(_ cell: T) {
+    open override func cellInitialized(_ cell: T) {
         cell.formTextView().delegate = observer
     }
     
-    public override func update() {
+    open override func update() {
         super.update()
         
         cell.selectionStyle = .none
@@ -152,9 +152,6 @@ NSObject, UITextViewDelegate where T: TextViewFormableRow {
     fileprivate dynamic func textViewDidChange(_ textView: UITextView) {
         guard let textViewRowFormer = textViewRowFormer else { return }
         if textViewRowFormer.enabled {
-            if UIDevice.current.systemVersion.compare("8.0.0", options: .numeric) == .orderedAscending {
-                textView.scrollRangeToVisible(textView.selectedRange)
-            }
             let text = textView.text ?? ""
             textViewRowFormer.text = text
             textViewRowFormer.onTextChanged?(text)

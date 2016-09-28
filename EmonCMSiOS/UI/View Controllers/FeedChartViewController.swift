@@ -62,7 +62,7 @@ class FeedChartViewController: FormViewController {
       $0.chartView.dragEnabled = false
       $0.chartView.pinchZoomEnabled = false
       $0.chartView.setScaleEnabled(false)
-      $0.chartView.descriptionText = ""
+      $0.chartView.chartDescription = nil
       $0.chartView.drawGridBackgroundEnabled = false
       $0.chartView.legend.enabled = false
       $0.chartView.rightAxis.enabled = false
@@ -70,13 +70,13 @@ class FeedChartViewController: FormViewController {
       let xAxis = $0.chartView.xAxis
       xAxis.drawGridLinesEnabled = false
       xAxis.labelPosition = .bottom
-      xAxis.valueFormatter = ChartXAxisDateFormatter()
+      xAxis.valueFormatter = ChartDateValueFormatter()
 
       let yAxis = $0.chartView.leftAxis
       yAxis.drawGridLinesEnabled = false
       yAxis.labelPosition = .outsideChart
 
-      let dataSet = LineChartDataSet(yVals: nil, label: nil)
+      let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
       dataSet.valueTextColor = .lightGray
       dataSet.fillColor = .black
       dataSet.setColor(.black)
@@ -238,16 +238,17 @@ class FeedChartViewController: FormViewController {
             return
         }
 
-        data.xVals = []
         dataSet.clear()
 
-        for (i, point) in dataPoints.enumerated() {
-          data.addXValue("\(point.time.timeIntervalSince1970)")
+        for point in dataPoints {
+          let x = point.time.timeIntervalSince1970
+          let y = point.value
 
-          let yDataEntry = ChartDataEntry(value: point.value, xIndex: i)
+          let yDataEntry = ChartDataEntry(x: x, y: y)
           data.addEntry(yDataEntry, dataSetIndex: 0)
         }
 
+        dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
         chartView.notifyDataSetChanged()
       })

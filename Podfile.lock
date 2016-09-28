@@ -1,12 +1,20 @@
 PODS:
   - Alamofire (4.0.0)
-  - Charts (2.2.5):
-    - Charts/Core (= 2.2.5)
-  - Charts/Core (2.2.5)
-  - Former (1.4.0)
+  - Charts (3.0.0):
+    - Charts/Core (= 3.0.0)
+  - Charts/Core (3.0.0)
+  - CocoaLumberjack (3.0.0):
+    - CocoaLumberjack/Default (= 3.0.0)
+    - CocoaLumberjack/Extensions (= 3.0.0)
+  - CocoaLumberjack/Core (3.0.0)
+  - CocoaLumberjack/Default (3.0.0):
+    - CocoaLumberjack/Core
+  - CocoaLumberjack/Extensions (3.0.0):
+    - CocoaLumberjack/Default
+  - Former (1.5.0)
   - Locksmith (3.0.0)
-  - Nimble (5.0.0-alpha.30p1)
-  - Quick (0.9.3)
+  - Nimble (5.0.0)
+  - Quick (0.10.0)
   - Realm (1.1.0):
     - Realm/Headers (= 1.1.0)
   - Realm/Headers (1.1.0)
@@ -26,11 +34,12 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
-  - Charts (from `https://github.com/danielgindi/Charts.git`, branch `Swift-3.0`)
-  - Former (from `git@github.com:mattjgalloway/Former.git`, branch `swift3`)
+  - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
+  - CocoaLumberjack (~> 3.0)
+  - Former (~> 1.5)
   - Locksmith (~> 3.0)
-  - Nimble (from `https://github.com/Quick/Nimble.git`, branch `master`)
-  - Quick (from `https://github.com/Quick/Quick.git`, branch `swift-3.0`)
+  - Nimble (~> 5.0)
+  - Quick (~> 0.10)
   - Realm (~> 1.1)
   - RealmSwift (~> 1.1)
   - RxCocoa (~> 3.0.0-beta.1)
@@ -41,45 +50,28 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Charts:
-    :branch: Swift-3.0
-    :git: https://github.com/danielgindi/Charts.git
-  Former:
-    :branch: swift3
-    :git: git@github.com:mattjgalloway/Former.git
-  Nimble:
     :branch: master
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :branch: swift-3.0
-    :git: https://github.com/Quick/Quick.git
+    :git: https://github.com/danielgindi/Charts.git
   RxRealm:
     :branch: master
     :git: https://github.com/mattjgalloway/RxRealm.git
 
 CHECKOUT OPTIONS:
   Charts:
-    :commit: 2dd22b903a78d0d34d07ef71728c41ac22f6a114
+    :commit: 55405033684cda362ba2a1b839335dd8b3ba5395
     :git: https://github.com/danielgindi/Charts.git
-  Former:
-    :commit: 16c3471a1f1f0484c062e0ab3b06f17e4dd74a4f
-    :git: git@github.com:mattjgalloway/Former.git
-  Nimble:
-    :commit: 197a46a5892340a2badc70af7f669b6aa4c8afa9
-    :git: https://github.com/Quick/Nimble.git
-  Quick:
-    :commit: 8f2bc636ecfa2cc20696f62548b38d4ab943e299
-    :git: https://github.com/Quick/Quick.git
   RxRealm:
     :commit: 1a82a0f0da1e03e07ac4e9e3893530b80088b635
     :git: https://github.com/mattjgalloway/RxRealm.git
 
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
-  Charts: b48fcc8d7190de910ff9e9748f5360c8ea7856e5
-  Former: 98a7915b1b2383270edfaee9eed785df4a259048
+  Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
+  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
+  Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
-  Nimble: c5b995b4cd57789ec44b0cfb79640fc00e61a8c7
-  Quick: 31fb576b6cbb6b028cc5e0016e4366accbb346f5
+  Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
+  Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
   Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
   RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
@@ -88,6 +80,6 @@ SPEC CHECKSUMS:
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
 
-PODFILE CHECKSUM: 346db6278855209ec8cda15d6591dae69ea7b77a
+PODFILE CHECKSUM: 2ca76cc97749ec1cb6a6e8b65cbd381e2154dd38
 
 COCOAPODS: 1.1.0.rc.2

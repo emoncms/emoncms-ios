@@ -1,6 +1,6 @@
 {
   "name": "Charts",
-  "version": "2.2.5",
+  "version": "3.0.0",
   "summary": "Charts is a powerful & easy to use chart library for iOS, tvOS and OSX (and Android)",
   "homepage": "https://github.com/danielgindi/Charts",
   "license": {
@@ -18,24 +18,23 @@
   },
   "source": {
     "git": "https://github.com/danielgindi/Charts.git",
-    "tag": "v2.2.5"
+    "tag": "v3.0.0"
   },
   "default_subspecs": "Core",
-  "prepare_command": "sed -i '' -e 's/import Charts//g' ChartsRealm/Classes/**/*.swift",
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "Charts/Classes/**/*.swift"
+      "source_files": "Source/Charts/**/*.swift"
     },
     {
       "name": "Realm",
-      "source_files": "ChartsRealm/Classes/**/*.swift",
+      "source_files": "Source/ChartsRealm/**/*.swift",
       "dependencies": {
         "Charts/Core": [
 
         ],
         "RealmSwift": [
-          "~> 0.97"
+          "~> 1.1"
         ]
       }
     }
