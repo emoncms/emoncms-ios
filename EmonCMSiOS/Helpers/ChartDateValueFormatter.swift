@@ -12,30 +12,65 @@ import Charts
 
 class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
+  enum FormatType {
+    case auto
+    case format(String)
+    case formatter(DateFormatter)
+  }
+
   private let dateFormatter: DateFormatter
+  private let autoUpdateFormat: Bool
 
   static let posixLocale = Locale(identifier: "en_US_POSIX")
 
-  init(dateFormatter: DateFormatter) {
+  private var dateRange: TimeInterval? {
+    didSet {
+      if oldValue != dateRange {
+        self.updateAutoFormat()
+      }
+    }
+  }
+
+  init(_ type: FormatType) {
+    let dateFormatter: DateFormatter
+    switch type {
+    case .auto:
+      dateFormatter = DateFormatter()
+      self.autoUpdateFormat = true
+    case .format(let formatString):
+      dateFormatter = DateFormatter()
+      dateFormatter.locale = ChartDateValueFormatter.posixLocale
+      dateFormatter.dateFormat = formatString
+      self.autoUpdateFormat = false
+    case .formatter(let formatter):
+      dateFormatter = formatter
+      self.autoUpdateFormat = false
+    }
     self.dateFormatter = dateFormatter
+
     super.init()
   }
 
-  convenience init(formatString: String) {
-    let dateFormatter = DateFormatter()
-    dateFormatter.locale = ChartDateValueFormatter.posixLocale
-    dateFormatter.dateFormat = formatString
-    self.init(dateFormatter: dateFormatter)
+  convenience override init() {
+    self.init(.auto)
   }
 
-  convenience override init() {
-    let dateFormatter = DateFormatter()
-    dateFormatter.timeStyle = .short
-    dateFormatter.dateStyle = .none
-    self.init(dateFormatter: dateFormatter)
+  private func updateAutoFormat() {
+    guard self.autoUpdateFormat else { return }
+
+    let range = self.dateRange ?? 0
+
+    if range < 86400 {
+      dateFormatter.timeStyle = .short
+      dateFormatter.dateStyle = .none
+    } else {
+      dateFormatter.timeStyle = .none
+      dateFormatter.dateStyle = .short
+    }
   }
 
   func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    self.dateRange = axis?.axisRange
     let date = Date(timeIntervalSince1970: value)
     return self.dateFormatter.string(from: date)
   }

@@ -140,7 +140,7 @@ extension MyElectricAppViewController {
     xAxis.drawLabelsEnabled = true
     xAxis.labelPosition = .bottom
     xAxis.labelTextColor = .white
-    xAxis.valueFormatter = ChartDateValueFormatter(formatString: "HH:mm")
+    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
 
     let yAxis = lineChart.leftAxis
     yAxis.labelPosition = .insideChart
@@ -181,7 +181,7 @@ extension MyElectricAppViewController {
     let xAxis = barChart.xAxis
     xAxis.labelPosition = .bottomInside
     xAxis.labelTextColor = .white
-    xAxis.valueFormatter = ChartDateValueFormatter(formatString: "eeeee")
+    xAxis.valueFormatter = ChartDateValueFormatter(.format("eeeee"))
     xAxis.drawGridLinesEnabled = false
     xAxis.drawAxisLineEnabled = false
     xAxis.drawLabelsEnabled = true

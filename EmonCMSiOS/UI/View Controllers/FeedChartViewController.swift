@@ -70,7 +70,7 @@ class FeedChartViewController: FormViewController {
       let xAxis = $0.chartView.xAxis
       xAxis.drawGridLinesEnabled = false
       xAxis.labelPosition = .bottom
-      xAxis.valueFormatter = ChartDateValueFormatter()
+      xAxis.valueFormatter = ChartDateValueFormatter(.auto)
 
       let yAxis = $0.chartView.leftAxis
       yAxis.drawGridLinesEnabled = false
