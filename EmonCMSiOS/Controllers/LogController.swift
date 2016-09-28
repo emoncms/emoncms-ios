@@ -51,6 +51,8 @@ class LogController {
   private let fileManager: FileManager
   fileprivate let logDirectory: URL
 
+  private static let FileName: String = "log.txt"
+
   private init() {
     self.initialised = false
     self.fileManager = FileManager()
@@ -61,7 +63,7 @@ class LogController {
   }
 
   fileprivate var mainLogFile: URL {
-    return self.logDirectory.appendingPathComponent("log.txt")
+    return self.logDirectory.appendingPathComponent(LogController.FileName)
   }
 
   private func internalSetup() {
@@ -87,6 +89,24 @@ class LogController {
     self.internalSetup()
     self.initialised = true
     AppLog.logAppDetails()
+  }
+
+  var logFiles: [URL] {
+    guard self.initialised else { return [] }
+
+    let directory = self.logDirectory
+    guard let enumerator = self.fileManager.enumerator(at: directory, includingPropertiesForKeys: nil, options: [], errorHandler: nil) else {
+      return []
+    }
+
+    var fileUrls: [URL] = []
+    for case let file as URL in enumerator {
+      if file.lastPathComponent.hasPrefix(LogController.FileName) {
+        fileUrls.append(file)
+      }
+    }
+
+    return fileUrls
   }
 
 }

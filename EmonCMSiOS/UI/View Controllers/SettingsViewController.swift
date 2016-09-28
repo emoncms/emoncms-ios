@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MessageUI
 
 import Former
 import RxSwift
@@ -57,6 +58,7 @@ class SettingsViewController: FormViewController {
       }.onSelected { [weak self] _ in
         guard let strongSelf = self else { return }
         strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
+        strongSelf.former.deselect(animated: true)
     }
 
     let logoutSection = SectionFormer(rowFormer: logoutRow)
@@ -78,6 +80,27 @@ class SettingsViewController: FormViewController {
         .set(headerViewFormer: watchHeader)
       sections.append(watchSection)
     }
+
+    let feedbackRow = LabelRowFormer<FormLabelCell>() {
+      $0.accessoryType = .disclosureIndicator
+      }.configure {
+        $0.text = "Send Feedback"
+      }.onSelected { [weak self] _ in
+        guard let strongSelf = self else { return }
+        strongSelf.sendFeedback()
+        strongSelf.former.deselect(animated: true)
+    }
+
+    let detailsFooter = LabelViewFormer<FormLabelFooterView>() { _ in
+      }.configure {
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+        $0.text = "App Version: \(appVersion) (\(buildNumber))"
+    }
+
+    let detailsSection = SectionFormer(rowFormer: feedbackRow)
+      .set(footerViewFormer: detailsFooter)
+    sections.append(detailsSection)
 
     self.former.add(sectionFormers: sections)
   }
@@ -117,6 +140,40 @@ class SettingsViewController: FormViewController {
         .bindTo(self.viewModel.watchFeed)
         .addDisposableTo(self.disposeBag)
     }
+  }
+
+  private func sendFeedback() {
+    guard MFMailComposeViewController.canSendMail() else {
+      let alert = UIAlertController.init(title: "Can't send mail", message: "To send feedback you need to be able to send email from this device. Please ensure you have an email account set up.", preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+      self.present(alert, animated: true, completion: nil)
+      return
+    }
+
+    let mailComposer = MFMailComposeViewController()
+    mailComposer.mailComposeDelegate = self
+    mailComposer.setToRecipients(["matt@swipestack.com"])
+    mailComposer.setSubject("Emoncms iOS feedback")
+    mailComposer.setMessageBody("Please enter your feedback below:\n\n", isHTML: false)
+
+    for file in LogController.shared.logFiles {
+      do {
+        let data = try Data.init(contentsOf: file)
+        mailComposer.addAttachmentData(data, mimeType: "text/plain", fileName: file.lastPathComponent)
+      } catch {
+        AppLog.error("Failed to read log file at \(file).")
+      }
+    }
+
+    self.present(mailComposer, animated: true, completion: nil)
+  }
+
+}
+
+extension SettingsViewController: MFMailComposeViewControllerDelegate {
+
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    self.dismiss(animated: true, completion: nil)
   }
 
 }
