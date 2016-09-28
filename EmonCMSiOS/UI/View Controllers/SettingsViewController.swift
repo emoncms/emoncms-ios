@@ -61,7 +61,25 @@ class SettingsViewController: FormViewController {
         strongSelf.former.deselect(animated: true)
     }
 
-    let logoutSection = SectionFormer(rowFormer: logoutRow)
+    let feedbackRow = LabelRowFormer<FormLabelCell>() {
+      $0.accessoryType = .disclosureIndicator
+      }.configure {
+        $0.text = "Send Feedback"
+      }.onSelected { [weak self] _ in
+        guard let strongSelf = self else { return }
+        strongSelf.sendFeedback()
+        strongSelf.former.deselect(animated: true)
+    }
+
+    let detailsFooter = LabelViewFormer<FormLabelFooterView>() { _ in
+      }.configure {
+        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
+        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
+        $0.text = "App Version: \(appVersion) (\(buildNumber))"
+    }
+
+    let logoutSection = SectionFormer(rowFormer: logoutRow, feedbackRow)
+      .set(footerViewFormer: detailsFooter)
     sections.append(logoutSection)
 
     if self.viewModel.showWatchSection {
@@ -80,27 +98,6 @@ class SettingsViewController: FormViewController {
         .set(headerViewFormer: watchHeader)
       sections.append(watchSection)
     }
-
-    let feedbackRow = LabelRowFormer<FormLabelCell>() {
-      $0.accessoryType = .disclosureIndicator
-      }.configure {
-        $0.text = "Send Feedback"
-      }.onSelected { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.sendFeedback()
-        strongSelf.former.deselect(animated: true)
-    }
-
-    let detailsFooter = LabelViewFormer<FormLabelFooterView>() { _ in
-      }.configure {
-        let appVersion = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "?"
-        let buildNumber = Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "?"
-        $0.text = "App Version: \(appVersion) (\(buildNumber))"
-    }
-
-    let detailsSection = SectionFormer(rowFormer: feedbackRow)
-      .set(footerViewFormer: detailsFooter)
-    sections.append(detailsSection)
 
     self.former.add(sectionFormers: sections)
   }
