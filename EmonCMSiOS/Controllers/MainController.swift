@@ -8,6 +8,9 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class MainController {
 
   private let window: UIWindow
@@ -19,6 +22,8 @@ final class MainController {
   fileprivate var addAccountViewStack: UINavigationController?
   fileprivate var mainViewStack: UITabBarController?
 
+  private var disposeBag = DisposeBag()
+
   init() {
     self.window = UIWindow()
     self.requestProvider = AlamofireHTTPRequestProvider()
@@ -29,19 +34,30 @@ final class MainController {
     self.watchController.initialise()
   }
 
-  func loadUserInterface() {
-    if self.loginController.account != nil {
-      self.loadMainUI()
-    } else {
-      self.loadAddAccountUI()
-    }
+  func initialise() {
+    let disposeBag = DisposeBag()
+
+    self.loginController.account
+      .asDriver(onErrorJustReturn: nil)
+      .drive(onNext: { [weak self] in
+        guard let strongSelf = self else { return }
+
+        if let account = $0 {
+          strongSelf.loadMainUI(forAccount: account)
+        } else {
+          strongSelf.loadAddAccountUI()
+        }
+      })
+      .addDisposableTo(disposeBag)
+
+    self.disposeBag = disposeBag
+
     self.window.makeKeyAndVisible()
   }
 
   func login(withAccount account: Account) {
     do {
       try self.loginController.login(withAccount: account)
-      self.loadMainUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Login failed. Please try again.", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -52,7 +68,6 @@ final class MainController {
   func logout() {
     do {
       try self.loginController.logout()
-      self.loadAddAccountUI()
     } catch {
       let alert = UIAlertController(title: "Error", message: "Logout failed. Please try again.", preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -60,12 +75,7 @@ final class MainController {
     }
   }
 
-  private func loadMainUI() {
-    guard let account = self.loginController.account else {
-      AppLog.error("Tried to load main UI, but no account set yet!")
-      return
-    }
-
+  private func loadMainUI(forAccount account: Account) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let rootViewController = storyboard.instantiateInitialViewController() as! UITabBarController
     self.mainViewStack = rootViewController

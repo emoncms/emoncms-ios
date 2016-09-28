@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -> Bool {
     guard !AppDelegate.isRunningTests() else { return true }
-    self.mainController.loadUserInterface()
+    self.mainController.initialise()
     return true
   }
 

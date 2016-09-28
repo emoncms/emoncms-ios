@@ -42,3 +42,13 @@ struct Account {
   }
 
 }
+
+extension Account: Equatable {
+
+  static func ==(lhs: Account, rhs: Account) -> Bool {
+    return lhs.uuid == rhs.uuid &&
+      lhs.url == rhs.url &&
+      lhs.apikey == rhs.apikey
+  }
+
+}

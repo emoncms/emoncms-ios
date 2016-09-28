@@ -10,11 +10,18 @@ import Foundation
 import WatchKit
 import WatchConnectivity
 
+import RxSwift
+import RxCocoa
+
 final class MainController: NSObject {
 
   private let requestProvider: AlamofireHTTPRequestProvider
   private let api: EmonCMSAPI
-  let loginController: LoginController
+  private let loginController: LoginController
+
+  let complicationViewModel: ComplicationViewModel
+
+  private var disposeBag = DisposeBag()
 
   private enum InterfaceIdentifiers: String {
     case loginRequiredInterface
@@ -25,6 +32,7 @@ final class MainController: NSObject {
     self.requestProvider = AlamofireHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
+    self.complicationViewModel = ComplicationViewModel(loginController: self.loginController)
 
     super.init()
 
@@ -35,10 +43,6 @@ final class MainController: NSObject {
     }
   }
 
-  func complicationViewModel() -> ComplicationViewModel {
-    return ComplicationViewModel(account: self.loginController.account)
-  }
-
   func applicationDidFinishLaunching() {
     self.initialiseUI()
   }
@@ -47,22 +51,33 @@ final class MainController: NSObject {
     // Check that we have a UI. If not, don't bother doing anything just yet. We will when the app launches int the foreground.
     guard WKExtension.shared().applicationState == .active else { return }
 
-    if let account = self.loginController.account {
-      let name = InterfaceIdentifiers.feedsInterface.rawValue
-      let viewModel = FeedListViewModel(account: account, api: self.api)
-      WKInterfaceController.reloadRootControllers(withNames: [name], contexts: [viewModel])
-    } else {
-      let name = InterfaceIdentifiers.loginRequiredInterface.rawValue
-      WKInterfaceController.reloadRootControllers(withNames: [name], contexts: nil)
-    }
+    let disposeBag = DisposeBag()
+
+    self.loginController.account
+      .asDriver(onErrorJustReturn: nil)
+      .drive(onNext: { [weak self] in
+        guard let strongSelf = self else { return }
+
+        if let account = $0 {
+          let name = InterfaceIdentifiers.feedsInterface.rawValue
+          let viewModel = FeedListViewModel(account: account, api: strongSelf.api)
+          WKInterfaceController.reloadRootControllers(withNames: [name], contexts: [viewModel])
+        } else {
+          let name = InterfaceIdentifiers.loginRequiredInterface.rawValue
+          WKInterfaceController.reloadRootControllers(withNames: [name], contexts: nil)
+        }
+      })
+      .addDisposableTo(disposeBag)
+
+    self.disposeBag = disposeBag
   }
 
   fileprivate func updateFromApplicationContext(_ applicationContext: [String:Any]) {
     if
-      let uuidString = applicationContext[WatchConstants.ApplicationContextKeys.accountUUID.rawValue] as? String,
+      let uuidString = applicationContext[SharedConstants.ApplicationContextKeys.accountUUID.rawValue] as? String,
       let uuid = UUID(uuidString: uuidString),
-      let url = applicationContext[WatchConstants.ApplicationContextKeys.accountURL.rawValue] as? String,
-      let apikey = applicationContext[WatchConstants.ApplicationContextKeys.accountApiKey.rawValue] as? String
+      let url = applicationContext[SharedConstants.ApplicationContextKeys.accountURL.rawValue] as? String,
+      let apikey = applicationContext[SharedConstants.ApplicationContextKeys.accountApiKey.rawValue] as? String
     {
       do {
         let account = Account(uuid: uuid, url: url, apikey: apikey)
@@ -70,11 +85,16 @@ final class MainController: NSObject {
       } catch {
         AppLog.error("Error logging in on watch: \(error)")
       }
+    } else {
+      do {
+        try self.loginController.logout()
+      } catch {
+        AppLog.error("Error logging out on watch: \(error)")
+      }
     }
 
-    DispatchQueue.main.async {
-      self.initialiseUI()
-    }
+    let complicationFeedId = applicationContext[SharedConstants.ApplicationContextKeys.complicationFeedId.rawValue] as? String ?? ""
+    self.complicationViewModel.feedId.value = complicationFeedId
   }
 
 }

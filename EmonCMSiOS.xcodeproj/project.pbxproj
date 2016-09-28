@@ -31,8 +31,8 @@
 		C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C93C92B01D98152F009FE70D /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
 		C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
-		C93C92B31D98196C009FE70D /* WatchConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* WatchConstants.swift */; };
-		C93C92B41D9819B3009FE70D /* WatchConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* WatchConstants.swift */; };
+		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
+		C93C92B41D9819B3009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C93C92B61D981CAE009FE70D /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B51D981CAE009FE70D /* MainController.swift */; };
 		C93C92B81D981DA4009FE70D /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */; };
 		C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* RxOperators.swift */; };
@@ -154,7 +154,7 @@
 		C93C929B1D95C0E1009FE70D /* FeedRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRowController.swift; sourceTree = "<group>"; };
 		C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsInterfaceController.swift; sourceTree = "<group>"; };
 		C93C92A41D970D89009FE70D /* WatchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchController.swift; sourceTree = "<group>"; };
-		C93C92B21D98196C009FE70D /* WatchConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConstants.swift; sourceTree = "<group>"; };
+		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C93C92B51D981CAE009FE70D /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
 		C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViewModel.swift; sourceTree = "<group>"; };
@@ -358,7 +358,7 @@
 				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
 				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
 				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
-				C93C92B21D98196C009FE70D /* WatchConstants.swift */,
+				C93C92B21D98196C009FE70D /* SharedConstants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -840,7 +840,7 @@
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C93C92A51D970D89009FE70D /* WatchController.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
-				C93C92B31D98196C009FE70D /* WatchConstants.swift in Sources */,
+				C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
@@ -859,7 +859,7 @@
 				C9D6922B1D95B55B00E0B249 /* ExtensionDelegate.swift in Sources */,
 				C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */,
 				C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */,
-				C93C92B41D9819B3009FE70D /* WatchConstants.swift in Sources */,
+				C93C92B41D9819B3009FE70D /* SharedConstants.swift in Sources */,
 				C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */,
 				C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */,
 				C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */,

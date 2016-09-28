@@ -20,10 +20,6 @@ class WatchController: NSObject {
   // Inputs
   let complicationFeedId = Variable<String?>(nil)
 
-  private enum UserDefaultKeys: String {
-    case complicationFeedId
-  }
-
   var isPaired: Bool {
     let session = WCSession.default()
     if session.activationState == .activated {
@@ -61,49 +57,50 @@ class WatchController: NSObject {
   private func setupBindings() {
     guard WCSession.isSupported() else { return }
 
-    if let complicationFeedId = UserDefaults.standard.string(forKey: UserDefaultKeys.complicationFeedId.rawValue) {
+    if let complicationFeedId = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue) {
       self.complicationFeedId.value = complicationFeedId
     }
 
     self.complicationFeedId
       .asObservable()
-      .subscribe(onNext: { [weak self] feedId in
-        guard let strongSelf = self else { return }
+      .subscribe(onNext: { feedId in
         if let feedId = feedId {
-          UserDefaults.standard.set(feedId, forKey: UserDefaultKeys.complicationFeedId.rawValue)
+          UserDefaults.standard.set(feedId, forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue)
         } else {
-          UserDefaults.standard.removeObject(forKey: UserDefaultKeys.complicationFeedId.rawValue)
+          UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue)
         }
-        strongSelf.pushApplicationContextToWatch()
       })
       .addDisposableTo(self.disposeBag)
-  }
 
-  private func applicationContext() -> [String:Any] {
-    var result: [String:Any] = [:]
+    let applicationContext: Observable<[String:Any]> = Observable
+      .combineLatest(self.complicationFeedId.asObservable(), self.loginController.account) { complicationFeedId, account in
+        var result: [String:Any] = [:]
+        result[SharedConstants.ApplicationContextKeys.complicationFeedId.rawValue] = complicationFeedId
+        if let account = account {
+          result[SharedConstants.ApplicationContextKeys.accountUUID.rawValue] = account.uuid.uuidString
+          result[SharedConstants.ApplicationContextKeys.accountURL.rawValue] = account.url
+          result[SharedConstants.ApplicationContextKeys.accountApiKey.rawValue] = account.apikey
+        }
+        return result
+      }
 
-    if let complicationFeedId = UserDefaults.standard.string(forKey: UserDefaultKeys.complicationFeedId.rawValue) {
-      result[WatchConstants.ApplicationContextKeys.complicationFeedId.rawValue] = complicationFeedId
-    }
+    let watchSessionState = WCSession.default().rx.observe(WCSessionActivationState.self, "activationState")
+      .distinctUntilChanged { $0 == $1 }
+      .filter { $0 == .activated }
 
-    if let account = self.loginController.account {
-      result[WatchConstants.ApplicationContextKeys.accountUUID.rawValue] = account.uuid.uuidString
-      result[WatchConstants.ApplicationContextKeys.accountURL.rawValue] = account.url
-      result[WatchConstants.ApplicationContextKeys.accountApiKey.rawValue] = account.apikey
-    }
-
-    return result
-  }
-
-  fileprivate func pushApplicationContextToWatch() {
-    let session = WCSession.default()
-    guard session.activationState == .activated else { return }
-
-    do {
-      try session.updateApplicationContext(self.applicationContext())
-    } catch {
-      AppLog.error("Failed to update watch application context: \(error)")
-    }
+    Observable
+      .combineLatest(applicationContext, watchSessionState) { applicationContext, _ in
+        return applicationContext
+      }
+      .subscribe(onNext: { applicationContext in
+        do {
+          let session = WCSession.default()
+          try session.updateApplicationContext(applicationContext)
+        } catch {
+          AppLog.error("Failed to update watch application context: \(error)")
+        }
+      })
+      .addDisposableTo(self.disposeBag)
   }
 
 }
@@ -113,8 +110,6 @@ extension WatchController: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Swift.Error?) {
     if let error = error {
       AppLog.error("Watch session activation failed: \(error)")
-    } else {
-      self.pushApplicationContextToWatch()
     }
   }
 
