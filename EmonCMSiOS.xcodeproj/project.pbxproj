@@ -73,6 +73,7 @@
 		C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C91D9173E700BC302C /* ChartListViewModel.swift */; };
 		C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CB1D91742D00BC302C /* ChartDataSet.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
+		C9C8F0AB1D9BF55F001628DC /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
 		C9D6921B1D95B55B00E0B249 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9D692191D95B55B00E0B249 /* Interface.storyboard */; };
 		C9D6921D1D95B55B00E0B249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D6921C1D95B55B00E0B249 /* Assets.xcassets */; };
 		C9D692241D95B55B00E0B249 /* EmonCMSWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C9D692231D95B55B00E0B249 /* EmonCMSWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -862,6 +863,7 @@
 				C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */,
 				C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */,
 				C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */,
+				C9C8F0AB1D9BF55F001628DC /* LogController.swift in Sources */,
 				C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */,
 				C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */,
 				C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */,

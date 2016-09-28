@@ -68,7 +68,7 @@ final class MainController: NSObject {
         let account = Account(uuid: uuid, url: url, apikey: apikey)
         try self.loginController.login(withAccount: account)
       } catch {
-        print("Error logging in on watch: \(error)")
+        AppLog.error("Error logging in on watch: \(error)")
       }
     }
 
@@ -83,7 +83,7 @@ extension MainController: WCSessionDelegate {
 
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Swift.Error?) {
     if let error = error {
-      print("Watch session activation failed: \(error)")
+      AppLog.error("Watch session activation failed: \(error)")
     }
   }
 

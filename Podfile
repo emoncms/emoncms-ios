@@ -10,7 +10,7 @@ end
 
 def shared_app_pods
     pod 'Alamofire', '~> 4.0'
-    pod 'CocoaLumberjack', '~> 3.0'
+    pod 'XCGLogger', '~> 4.0'
     pod 'Locksmith', '~> 3.0'
 #    pod 'RxRealm', '~> 0.2'
     pod 'RxRealm', :git => 'https://github.com/mattjgalloway/RxRealm.git', branch: 'master'

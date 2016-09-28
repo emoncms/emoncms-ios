@@ -90,7 +90,7 @@ class AddAccountQRViewController: UIViewController {
       self.captureSession = captureSession
       captureSession.startRunning()
     } catch {
-      print("Error setting up AV stack: \(error)")
+      AppLog.error("Error setting up AV stack: \(error)")
     }
   }
 

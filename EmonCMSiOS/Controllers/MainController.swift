@@ -62,7 +62,7 @@ final class MainController {
 
   private func loadMainUI() {
     guard let account = self.loginController.account else {
-      print("Tried to load main UI, but no account set yet!")
+      AppLog.error("Tried to load main UI, but no account set yet!")
       return
     }
 

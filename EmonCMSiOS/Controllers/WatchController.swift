@@ -102,7 +102,7 @@ class WatchController: NSObject {
     do {
       try session.updateApplicationContext(self.applicationContext())
     } catch {
-      print("Failed to update watch application context: \(error)")
+      AppLog.error("Failed to update watch application context: \(error)")
     }
   }
 
@@ -112,7 +112,7 @@ extension WatchController: WCSessionDelegate {
 
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Swift.Error?) {
     if let error = error {
-      print("Watch session activation failed: \(error)")
+      AppLog.error("Watch session activation failed: \(error)")
     } else {
       self.pushApplicationContextToWatch()
     }

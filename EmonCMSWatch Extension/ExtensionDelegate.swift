@@ -13,6 +13,7 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
   let mainController: MainController
 
   override init() {
+    LogController.shared.initialise()
     self.mainController = MainController()
     super.init()
   }

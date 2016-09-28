@@ -85,21 +85,21 @@ strip_invalid_archs() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-watchOS/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack-watchOS/CocoaLumberjack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith-watchOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-watchOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-watchOS/RealmSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxCocoa-watchOS/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxRealm-watchOS/RxRealm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift-watchOS/RxSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XCGLogger-watchOS/XCGLogger.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "$BUILT_PRODUCTS_DIR/Alamofire-watchOS/Alamofire.framework"
-  install_framework "$BUILT_PRODUCTS_DIR/CocoaLumberjack-watchOS/CocoaLumberjack.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Locksmith-watchOS/Locksmith.framework"
   install_framework "$BUILT_PRODUCTS_DIR/Realm-watchOS/Realm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RealmSwift-watchOS/RealmSwift.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxCocoa-watchOS/RxCocoa.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxRealm-watchOS/RxRealm.framework"
   install_framework "$BUILT_PRODUCTS_DIR/RxSwift-watchOS/RxSwift.framework"
+  install_framework "$BUILT_PRODUCTS_DIR/XCGLogger-watchOS/XCGLogger.framework"
 fi

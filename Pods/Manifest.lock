@@ -3,14 +3,6 @@ PODS:
   - Charts (3.0.0):
     - Charts/Core (= 3.0.0)
   - Charts/Core (3.0.0)
-  - CocoaLumberjack (3.0.0):
-    - CocoaLumberjack/Default (= 3.0.0)
-    - CocoaLumberjack/Extensions (= 3.0.0)
-  - CocoaLumberjack/Core (3.0.0)
-  - CocoaLumberjack/Default (3.0.0):
-    - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (3.0.0):
-    - CocoaLumberjack/Default
   - Former (1.5.0)
   - Locksmith (3.0.0)
   - Nimble (5.0.0)
@@ -31,11 +23,13 @@ PODS:
   - RxSwift (3.0.0-beta.1)
   - RxTests (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
+  - XCGLogger (4.0.0):
+    - XCGLogger/Core (= 4.0.0)
+  - XCGLogger/Core (4.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
-  - CocoaLumberjack (~> 3.0)
   - Former (~> 1.5)
   - Locksmith (~> 3.0)
   - Nimble (~> 5.0)
@@ -47,6 +41,7 @@ DEPENDENCIES:
   - RxRealm (from `https://github.com/mattjgalloway/RxRealm.git`, branch `master`)
   - RxSwift (~> 3.0.0-beta.1)
   - RxTests (~> 3.0.0-beta.1)
+  - XCGLogger (~> 4.0)
 
 EXTERNAL SOURCES:
   Charts:
@@ -67,7 +62,6 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
   Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
-  CocoaLumberjack: c823149bccc5519a9447aeb433be7b1212a7d6a5
   Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
@@ -79,7 +73,8 @@ SPEC CHECKSUMS:
   RxRealm: 9b562a61b2e592fb06445f506d6f138cbfe4d676
   RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
+  XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 2ca76cc97749ec1cb6a6e8b65cbd381e2154dd38
+PODFILE CHECKSUM: 2b685612ba10181f296f2af11a49100fd495dee5
 
 COCOAPODS: 1.1.0.rc.2

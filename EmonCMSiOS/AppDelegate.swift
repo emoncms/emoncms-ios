@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   override init() {
+    LogController.shared.initialise()
     self.mainController = MainController()
     super.init()
   }
