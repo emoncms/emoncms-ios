@@ -16,6 +16,7 @@ class WatchController: NSObject {
   private let loginController: LoginController
 
   private let disposeBag = DisposeBag()
+  private var applicationContextDisposable: Disposable?
 
   // Inputs
   let complicationFeedId = Variable<String?>(nil)
@@ -71,6 +72,10 @@ class WatchController: NSObject {
         }
       })
       .addDisposableTo(self.disposeBag)
+  }
+
+  fileprivate func setupApplicationContextBinding() {
+    guard WCSession.isSupported() else { return }
 
     let applicationContext: Observable<[String:Any]> = Observable
       .combineLatest(self.complicationFeedId.asObservable(), self.loginController.account) { complicationFeedId, account in
@@ -82,13 +87,13 @@ class WatchController: NSObject {
           result[SharedConstants.ApplicationContextKeys.accountApiKey.rawValue] = account.apikey
         }
         return result
-      }
+    }
 
     let watchSessionState = WCSession.default().rx.observe(WCSessionActivationState.self, "activationState")
       .distinctUntilChanged { $0 == $1 }
       .filter { $0 == .activated }
 
-    Observable
+    self.applicationContextDisposable = Observable
       .combineLatest(applicationContext, watchSessionState) { applicationContext, _ in
         return applicationContext
       }
@@ -100,7 +105,6 @@ class WatchController: NSObject {
           AppLog.error("Failed to update watch application context: \(error)")
         }
       })
-      .addDisposableTo(self.disposeBag)
   }
 
 }
@@ -110,6 +114,8 @@ extension WatchController: WCSessionDelegate {
   func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Swift.Error?) {
     if let error = error {
       AppLog.error("Watch session activation failed: \(error)")
+    } else {
+      self.setupApplicationContextBinding()
     }
   }
 
