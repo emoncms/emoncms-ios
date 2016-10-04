@@ -7,6 +7,7 @@
 //
 
 import WatchKit
+import ClockKit
 
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
 
@@ -28,6 +29,10 @@ class ExtensionDelegate: NSObject, WKExtensionDelegate {
       // Use a switch statement to check the task type
       switch task {
       case let backgroundTask as WKApplicationRefreshBackgroundTask:
+        let complicationServer = CLKComplicationServer.sharedInstance()
+        for complication in complicationServer.activeComplications ?? [] {
+          complicationServer.extendTimeline(for: complication)
+        }
         // Be sure to complete the background task once you’re done.
         backgroundTask.setTaskCompleted()
       case let snapshotTask as WKSnapshotRefreshBackgroundTask:

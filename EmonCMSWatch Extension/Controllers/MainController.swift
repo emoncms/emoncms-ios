@@ -48,9 +48,6 @@ final class MainController: NSObject {
   }
 
   private func initialiseUI() {
-    // Check that we have a UI. If not, don't bother doing anything just yet. We will when the app launches int the foreground.
-    guard WKExtension.shared().applicationState == .active else { return }
-
     let disposeBag = DisposeBag()
 
     self.loginController.account

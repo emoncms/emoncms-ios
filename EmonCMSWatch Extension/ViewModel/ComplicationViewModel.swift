@@ -8,6 +8,7 @@
 
 import Foundation
 import ClockKit
+import WatchKit
 
 import RxSwift
 import RxCocoa
@@ -80,7 +81,7 @@ class ComplicationViewModel {
       .skip(1)
       .subscribe(onNext: { [weak self] _ in
         guard let strongSelf = self else { return }
-        strongSelf.forceComplicationDataUpdate()
+        strongSelf.scheduleBackgroundUpdate()
       })
       .addDisposableTo(self.disposeBag)
   }
@@ -89,13 +90,8 @@ class ComplicationViewModel {
     return FeedData(name: "use", value: "892")
   }
 
-  private func forceComplicationDataUpdate() {
-    let server = CLKComplicationServer.sharedInstance()
-    if let activeComplications = server.activeComplications {
-      for complication in activeComplications {
-        server.extendTimeline(for: complication)
-      }
-    }
+  private func scheduleBackgroundUpdate() {
+    WKExtension.shared().scheduleBackgroundRefresh(withPreferredDate: Date(), userInfo: nil) { _ in () }
   }
 
 }
