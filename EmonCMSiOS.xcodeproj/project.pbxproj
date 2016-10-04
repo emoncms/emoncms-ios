@@ -12,7 +12,6 @@
 		725EB1AF8874C66259D6499F /* Pods_EmonCMSWatch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5242184EE98DEE83793B01 /* Pods_EmonCMSWatch_Extension.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
-		C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
 		C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
 		C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* RxOperators.swift */; };
@@ -29,7 +28,6 @@
 		C93C92AD1D981522009FE70D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
-		C93C92B01D98152F009FE70D /* AlamofireHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */; };
 		C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C93C92B41D9819B3009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
@@ -80,6 +78,10 @@
 		C9D6922B1D95B55B00E0B249 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */; };
 		C9D6922F1D95B55B00E0B249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D6922E1D95B55B00E0B249 /* Assets.xcassets */; };
 		C9D692331D95B55B00E0B249 /* EmonCMSWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C9D692171D95B55B00E0B249 /* EmonCMSWatch.app */; };
+		C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
+		C9D9CA0E1DA3B06F0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
+		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
+		C9D9CA111DA3B5450087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -141,7 +143,6 @@
 		ACFF4FEDDBF5BF5145039E6D /* Pods-EmonCMSWatch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.release.xcconfig"; sourceTree = "<group>"; };
 		C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequestProvider.swift; sourceTree = "<group>"; };
-		C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlamofireHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDateValueFormatter.swift; sourceTree = "<group>"; };
 		C906B4561D8B045F007FE19A /* EmonCMSColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSColors.swift; sourceTree = "<group>"; };
 		C91CC3441D8CAE1E0048A356 /* RxOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RxOperators.swift; sourceTree = "<group>"; };
@@ -204,6 +205,8 @@
 		C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		C9D6922E1D95B55B00E0B249 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C9D692301D95B55B00E0B249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9D9CA0C1DA3B06C0087754A /* BackendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendController.swift; sourceTree = "<group>"; };
+		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -344,7 +347,7 @@
 			children = (
 				C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */,
 				C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */,
-				C906B4521D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift */,
+				C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				C9BB83681D87F5630058C059 /* LoginController.swift */,
 				C93C92A41D970D89009FE70D /* WatchController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
+				C9D9CA0C1DA3B06C0087754A /* BackendController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -810,7 +814,6 @@
 			files = (
 				C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */,
 				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
-				C906B4531D8AD325007FE19A /* AlamofireHTTPRequestProvider.swift in Sources */,
 				C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
 				C9C240C81D91734300BC302C /* ChartListViewController.swift in Sources */,
@@ -822,6 +825,7 @@
 				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* LoginController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
+				C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */,
 				C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */,
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
@@ -847,6 +851,7 @@
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
+				C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -868,10 +873,11 @@
 				C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */,
 				C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */,
 				C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */,
-				C93C92B01D98152F009FE70D /* AlamofireHTTPRequestProvider.swift in Sources */,
 				C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */,
 				C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */,
 				C93C92AD1D981522009FE70D /* Account.swift in Sources */,
+				C9D9CA0E1DA3B06F0087754A /* BackendController.swift in Sources */,
+				C9D9CA111DA3B5450087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
 				C93C92B61D981CAE009FE70D /* MainController.swift in Sources */,
 				C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */,
 				C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */,

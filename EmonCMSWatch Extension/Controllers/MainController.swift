@@ -15,7 +15,7 @@ import RxCocoa
 
 final class MainController: NSObject {
 
-  private let requestProvider: AlamofireHTTPRequestProvider
+  private let requestProvider: NSURLSessionHTTPRequestProvider
   private let api: EmonCMSAPI
   private let loginController: LoginController
 
@@ -29,7 +29,7 @@ final class MainController: NSObject {
   }
 
   override init() {
-    self.requestProvider = AlamofireHTTPRequestProvider()
+    self.requestProvider = NSURLSessionHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
     self.complicationViewModel = ComplicationViewModel(loginController: self.loginController)

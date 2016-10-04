@@ -14,7 +14,7 @@ import RxCocoa
 final class MainController {
 
   private let window: UIWindow
-  private let requestProvider: AlamofireHTTPRequestProvider
+  private let requestProvider: NSURLSessionHTTPRequestProvider
   private let api: EmonCMSAPI
   private let loginController: LoginController
   private let watchController: WatchController
@@ -26,7 +26,7 @@ final class MainController {
 
   init() {
     self.window = UIWindow()
-    self.requestProvider = AlamofireHTTPRequestProvider()
+    self.requestProvider = NSURLSessionHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
     self.watchController = WatchController(loginController: self.loginController)

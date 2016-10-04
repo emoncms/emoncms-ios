@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (4.0.0)
   - Charts (3.0.0):
     - Charts/Core (= 3.0.0)
   - Charts/Core (3.0.0)
@@ -28,7 +27,6 @@ PODS:
   - XCGLogger/Core (4.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
   - Former (~> 1.5)
   - Locksmith (~> 3.0)
@@ -60,7 +58,6 @@ CHECKOUT OPTIONS:
     :git: https://github.com/mattjgalloway/RxRealm.git
 
 SPEC CHECKSUMS:
-  Alamofire: fef59f00388f267e52d9b432aa5d93dc97190f14
   Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
   Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
@@ -75,6 +72,6 @@ SPEC CHECKSUMS:
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 2b685612ba10181f296f2af11a49100fd495dee5
+PODFILE CHECKSUM: d7e07e21943fef4bcf8e6f49240b6c4023b93828
 
 COCOAPODS: 1.1.0.rc.2

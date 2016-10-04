@@ -64,6 +64,7 @@ class FeedListViewModel {
       .flatMapLatest { [weak self] () -> Observable<()> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.api.feedList(account)
+          .observeOn(MainScheduler.asyncInstance)
           .flatMap(strongSelf.saveFeeds)
           .catchErrorJustReturn(())
           .trackActivity(isRefreshing)

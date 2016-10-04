@@ -9,7 +9,6 @@ def shared_pods
 end
 
 def shared_app_pods
-    pod 'Alamofire', '~> 4.0'
     pod 'XCGLogger', '~> 4.0'
     pod 'Locksmith', '~> 3.0'
 #    pod 'RxRealm', '~> 0.2'

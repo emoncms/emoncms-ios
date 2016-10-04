@@ -102,7 +102,7 @@ class AddAccountViewController: FormViewController {
       .flatMapLatest { [weak self] _ -> Observable<()> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.viewModel.validate()
-          .observeOn(MainScheduler.instance)
+          .observeOn(MainScheduler.asyncInstance)
           .map { [weak self] account in
             guard let strongSelf = self else { return }
             strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
