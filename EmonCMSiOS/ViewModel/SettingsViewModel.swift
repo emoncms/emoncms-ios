@@ -36,9 +36,7 @@ class SettingsViewModel {
   private(set) var feeds: Driver<[FeedListItem]>
   private(set) var isRefreshingFeeds: Driver<Bool>
   var showWatchSection: Bool {
-    return true
-    // TODO: Remove when finished testing
-//    return self.watchController.isPaired && self.watchController.isWatchAppInstalled
+    return self.watchController.isPaired && self.watchController.isWatchAppInstalled
   }
 
   init(account: Account, api: EmonCMSAPI, watchController: WatchController) {
