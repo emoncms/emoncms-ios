@@ -9,16 +9,22 @@
 import Foundation
 
 import RxSwift
+import RxCocoa
 
 class MyElectricAppViewModel: AppViewModel {
+
+  typealias MyElectricData = (powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
   private let account: Account
   private let api: EmonCMSAPI
 
-  let powerNow = Variable<Double>(0)
-  let usageToday = Variable<Double>(0)
-  let lineChartData = Variable<[DataPoint]>([])
-  let barChartData = Variable<[DataPoint]>([])
+  // Inputs
+  let active = Variable<Bool>(false)
+  let refresh = ReplaySubject<()>.create(bufferSize: 1)
+
+  // Outputs
+  private(set) var data: Driver<MyElectricData>
+  private(set) var isRefreshing: Driver<Bool>
 
   private var useFeedId: String?
   private var useKwhFeedId: String?
@@ -31,9 +37,40 @@ class MyElectricAppViewModel: AppViewModel {
     // TODO: These need to be found and set!
     self.useFeedId = "2"
     self.useKwhFeedId = "3"
+
+    self.data = Driver.empty()
+
+    let isRefreshing = ActivityIndicator()
+    self.isRefreshing = isRefreshing.asDriver()
+
+    let becameActive = self.active.asObservable()
+      .filter { $0 == true }
+      .distinctUntilChanged()
+      .becomeVoid()
+
+    let refreshSignal = Observable.of(self.refresh, becameActive)
+      .merge()
+
+    self.data = refreshSignal
+      .flatMapLatest { [weak self] () -> Observable<MyElectricData> in
+        guard let strongSelf = self else { return Observable.empty() }
+        return strongSelf.update()
+          .trackActivity(isRefreshing)
+      }
+      .asDriver(onErrorJustReturn: MyElectricData(powerNow: 0.0, usageToday: 0.0, lineChartData: [], barChartData: []))
   }
 
-  func updatePowerAndUsage() -> Observable<()> {
+  private func update() -> Observable<MyElectricData> {
+    return Observable.zip(self.fetchPowerNowAndUsageToday(), self.fetchLineChartHistory(), self.fetchBarChartHistory()) {
+      (powerNowAndUsageToday, lineChartData, barChartData) in
+      return MyElectricData(powerNow: powerNowAndUsageToday.0,
+                            usageToday: powerNowAndUsageToday.1,
+                            lineChartData: lineChartData,
+                            barChartData: barChartData)
+    }
+  }
+
+  private func fetchPowerNowAndUsageToday() -> Observable<(Double, Double)> {
     guard let useFeedId = self.useFeedId, let useKwhFeedId = self.useKwhFeedId else {
       return Observable.empty()
     }
@@ -56,37 +93,11 @@ class MyElectricAppViewModel: AppViewModel {
 
     let feedValuesSignal = self.api.feedValue(self.account, ids: [useFeedId, useKwhFeedId])
 
-    return Observable.zip(startOfDayKwhSignal, feedValuesSignal) { [weak self] (startOfDayUsage, feedValues) in
-        guard let strongSelf = self else { return }
+    return Observable.zip(startOfDayKwhSignal, feedValuesSignal) { (startOfDayUsage, feedValues) in
+      guard let use = feedValues[useFeedId], let useKwh = feedValues[useKwhFeedId] else { return (0.0, 0.0) }
 
-        guard let use = feedValues[useFeedId], let useKwh = feedValues[useKwhFeedId] else { return }
-
-        strongSelf.powerNow.value = use
-        strongSelf.usageToday.value = useKwh - startOfDayUsage.value
-
-        return ()
-      }
-      .becomeVoidAndIgnoreElements()
-  }
-
-  func updateChartData() -> Observable<()> {
-    let lineChart = self.fetchLineChartHistory()
-      .do(onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-
-        strongSelf.lineChartData.value = data
-        })
-
-    let barChart = self.fetchBarChartHistory()
-      .do(onNext: { [weak self] data in
-        guard let strongSelf = self else { return }
-
-        strongSelf.barChartData.value = data
-        })
-
-    return Observable.of(lineChart, barChart)
-      .merge()
-      .becomeVoidAndIgnoreElements()
+      return (use, useKwh - startOfDayUsage.value)
+    }
   }
 
   private func fetchLineChartHistory() -> Observable<[DataPoint]> {

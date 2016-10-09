@@ -39,26 +39,33 @@ class MyElectricAppViewController: UIViewController, AppViewController {
 
     self.setupCharts()
     self.setupBindings()
+  }
 
-    self.viewModel.updatePowerAndUsage().subscribe().addDisposableTo(self.disposeBag)
-    self.viewModel.updateChartData().subscribe().addDisposableTo(self.disposeBag)
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.viewModel.active.value = true
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(true)
+    self.viewModel.active.value = false
   }
 
   private func setupBindings() {
-    self.viewModel.powerNow
-      .asDriver()
+    self.viewModel.data
+      .map { $0.powerNow }
       .map { $0.prettyFormat() + "W" }
       .drive(self.powerLabel.rx.text)
       .addDisposableTo(self.disposeBag)
 
-    self.viewModel.usageToday
-      .asDriver()
+    self.viewModel.data
+      .map { $0.usageToday }
       .map { $0.prettyFormat() + "kWh" }
       .drive(self.usageTodayLabel.rx.text)
       .addDisposableTo(self.disposeBag)
 
-    self.viewModel.lineChartData
-      .asDriver()
+    self.viewModel.data
+      .map { $0.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
 
@@ -83,8 +90,8 @@ class MyElectricAppViewController: UIViewController, AppViewController {
         })
       .addDisposableTo(self.disposeBag)
 
-    self.viewModel.barChartData
-      .asDriver()
+    self.viewModel.data
+      .map { $0.barChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
 
