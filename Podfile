@@ -2,8 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 def shared_pods
-    pod 'RxSwift', '~> 3.0.0-beta.1'
-    pod 'RxCocoa', '~> 3.0.0-beta.1'
+    pod 'RxSwift', '~> 3.0.0-beta.2'
+    pod 'RxCocoa', '~> 3.0.0-beta.2'
     pod 'Realm', '~> 1.1'
     pod 'RealmSwift', '~> 1.1'
 end

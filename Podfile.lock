@@ -11,15 +11,15 @@ PODS:
   - Realm/Headers (1.1.0)
   - RealmSwift (1.1.0):
     - Realm (= 1.1.0)
-  - RxCocoa (3.0.0-beta.1):
-    - RxSwift (~> 3.0.0-beta.1)
+  - RxCocoa (3.0.0-beta.2):
+    - RxSwift (~> 3.0.0-beta.2)
   - RxDataSources (1.0.0.beta.1):
     - RxCocoa (~> 3.0.0.alpha.1)
     - RxSwift (~> 3.0.0.alpha.1)
   - RxRealm (0.2.3):
     - RealmSwift (~> 1.1)
     - RxSwift (~> 3.0.0-beta.1)
-  - RxSwift (3.0.0-beta.1)
+  - RxSwift (3.0.0-beta.2)
   - RxTests (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
   - XCGLogger (4.0.0):
@@ -34,10 +34,10 @@ DEPENDENCIES:
   - Quick (~> 0.10)
   - Realm (~> 1.1)
   - RealmSwift (~> 1.1)
-  - RxCocoa (~> 3.0.0-beta.1)
+  - RxCocoa (~> 3.0.0-beta.2)
   - RxDataSources (~> 1.0.0-beta.1)
   - RxRealm (from `https://github.com/mattjgalloway/RxRealm.git`, branch `master`)
-  - RxSwift (~> 3.0.0-beta.1)
+  - RxSwift (~> 3.0.0-beta.2)
   - RxTests (~> 3.0.0-beta.1)
   - XCGLogger (~> 4.0)
 
@@ -65,13 +65,13 @@ SPEC CHECKSUMS:
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
   Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
   RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
-  RxCocoa: 8cecf331302b8ae5381bbab1bccba4ede2eae6a8
+  RxCocoa: 1dd105d8a4e18034ccd7bd6d136445363ce67c8e
   RxDataSources: b2f3d80aeb9de4faeebc5e05e2fd975cadd6e308
   RxRealm: 9b562a61b2e592fb06445f506d6f138cbfe4d676
-  RxSwift: 0823e8d7969c23bfa9ddfb2afa4881e424a1a710
+  RxSwift: 0ea939d7d97cb70657190ffde8dc2a9b455778fc
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 593334c51eb6f349d7ff299d870196c3da631b24
+PODFILE CHECKSUM: dd57bc59e3d542998faebbda33c5baf5ea89093f
 
 COCOAPODS: 1.1.0.rc.2
