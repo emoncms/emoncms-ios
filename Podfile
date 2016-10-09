@@ -35,6 +35,12 @@ target 'EmonCMSiOSTests' do
     pod 'RxTests', '~> 3.0.0-beta.1'
 end
 
+target 'EmonCMSToday' do
+    platform :ios, '10.0'
+    shared_pods
+    shared_app_pods
+end
+
 target 'EmonCMSWatch Extension' do
     platform :watchos, '2.0'
     shared_pods
