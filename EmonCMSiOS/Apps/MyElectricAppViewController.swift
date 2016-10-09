@@ -103,11 +103,8 @@ class MyElectricAppViewController: UIViewController, AppViewController {
         dataSet.clear()
 
         for point in dataPoints {
-          // We minus 1 day here, because we want the date to represent the previous day.
-          // For example:
-          //   [0].time is Thursday midnight, [1].time is Friday midnight.
-          //   [1].value - [0].value means kWh consumed on Thursday.
-          let x = point.time.timeIntervalSince1970 - 86400
+          // 'x' here means the offset in days from 'today'
+          let x = floor(point.time.timeIntervalSinceNow / 86400)
           let y = point.value
 
           let yDataEntry = BarChartDataEntry(x: x, y: y)
@@ -188,10 +185,12 @@ extension MyElectricAppViewController {
     let xAxis = barChart.xAxis
     xAxis.labelPosition = .bottomInside
     xAxis.labelTextColor = .white
-    xAxis.valueFormatter = ChartDateValueFormatter(.format("eeeee"))
+    xAxis.valueFormatter = DayRelativeToTodayValueFormatter()
     xAxis.drawGridLinesEnabled = false
     xAxis.drawAxisLineEnabled = false
     xAxis.drawLabelsEnabled = true
+    xAxis.granularity = 1
+    xAxis.labelCount = 14
 
     let dataSet = BarChartDataSet(values: [BarChartDataEntry(x: 0, y: 0)], label: "kWh")
     dataSet.setColor(EmonCMSColors.Chart.Blue)

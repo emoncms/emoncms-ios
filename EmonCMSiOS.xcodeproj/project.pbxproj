@@ -47,6 +47,7 @@
 		C97284D91DA594C20010C7B7 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284D81DA594C20010C7B7 /* TodayViewController.swift */; };
 		C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */; };
 		C97284E01DA594C20010C7B7 /* EmonCMSToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
@@ -197,6 +198,7 @@
 		C97284DB1DA594C20010C7B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		C97284DD1DA594C20010C7B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C97284E51DA595400010C7B7 /* EmonCMSToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSToday.entitlements; sourceTree = "<group>"; };
+		C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayRelativeToTodayValueFormatter.swift; sourceTree = "<group>"; };
 		C9921AF41D9BBCEE003353A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 			isa = PBXGroup;
 			children = (
 				C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */,
+				C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */,
 				C957CCED1D9086E40039D707 /* Charts+Rx.swift */,
 				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
 				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
@@ -958,6 +961,7 @@
 				C9C240C81D91734300BC302C /* ChartListViewController.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
 				C9C240C01D91730100BC302C /* AddAccountQRViewController.swift in Sources */,
+				C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */,
 				C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */,
 				C9C240C31D91730100BC302C /* FeedChartViewController.swift in Sources */,
 				C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */,
