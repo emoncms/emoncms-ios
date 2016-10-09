@@ -43,12 +43,19 @@ class MyElectricAppViewModel: AppViewModel {
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
 
-    let becameActive = self.active.asObservable()
+    let timerIfActive = self.active.asObservable()
       .distinctUntilChanged()
-      .filter { $0 == true }
-      .becomeVoid()
+      .flatMapLatest { active -> Observable<()> in
+        if (active) {
+          return Observable<Int>.interval(10.0, scheduler: MainScheduler.asyncInstance)
+            .becomeVoid()
+            .startWith(())
+        } else {
+          return Observable.never()
+        }
+      }
 
-    let refreshSignal = Observable.of(self.refresh, becameActive)
+    let refreshSignal = Observable.of(self.refresh, timerIfActive)
       .merge()
 
     self.data = refreshSignal
