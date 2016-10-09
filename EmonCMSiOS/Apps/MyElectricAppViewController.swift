@@ -149,7 +149,7 @@ extension MyElectricAppViewController {
     yAxis.drawAxisLineEnabled = false
     yAxis.labelTextColor = .white
 
-    let dataSet = LineChartDataSet()
+    let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
     dataSet.setColor(EmonCMSColors.Chart.Blue)
     dataSet.fillColor = EmonCMSColors.Chart.Blue
     dataSet.valueTextColor = .white
@@ -186,7 +186,7 @@ extension MyElectricAppViewController {
     xAxis.drawAxisLineEnabled = false
     xAxis.drawLabelsEnabled = true
 
-    let dataSet = BarChartDataSet(values: nil, label: "kWh")
+    let dataSet = BarChartDataSet(values: [BarChartDataEntry(x: 0, y: 0)], label: "kWh")
     dataSet.setColor(EmonCMSColors.Chart.Blue)
     dataSet.valueTextColor = .white
 
