@@ -4,15 +4,14 @@ use_frameworks!
 def shared_pods
     pod 'RxSwift', '~> 3.0.0-beta.2'
     pod 'RxCocoa', '~> 3.0.0-beta.2'
-    pod 'Realm', '~> 1.1'
-    pod 'RealmSwift', '~> 1.1'
+    pod 'Realm', '~> 2.0'
+    pod 'RealmSwift', '~> 2.0'
 end
 
 def shared_app_pods
     pod 'XCGLogger', '~> 4.0'
     pod 'Locksmith', '~> 3.0'
-#    pod 'RxRealm', '~> 0.2'
-    pod 'RxRealm', :git => 'https://github.com/mattjgalloway/RxRealm.git', branch: 'master'
+    pod 'RxRealm', '~> 0.2'
 end
 
 target 'EmonCMSiOS' do

@@ -6,19 +6,19 @@ PODS:
   - Locksmith (3.0.0)
   - Nimble (5.0.0)
   - Quick (0.10.0)
-  - Realm (1.1.0):
-    - Realm/Headers (= 1.1.0)
-  - Realm/Headers (1.1.0)
-  - RealmSwift (1.1.0):
-    - Realm (= 1.1.0)
+  - Realm (2.0.2):
+    - Realm/Headers (= 2.0.2)
+  - Realm/Headers (2.0.2)
+  - RealmSwift (2.0.2):
+    - Realm (= 2.0.2)
   - RxCocoa (3.0.0-beta.2):
     - RxSwift (~> 3.0.0-beta.2)
   - RxDataSources (1.0.0.beta.1):
     - RxCocoa (~> 3.0.0.alpha.1)
     - RxSwift (~> 3.0.0.alpha.1)
-  - RxRealm (0.2.3):
-    - RealmSwift (~> 1.1)
-    - RxSwift (~> 3.0.0-beta.1)
+  - RxRealm (0.2.6):
+    - RealmSwift (~> 2.0)
+    - RxSwift (~> 3.0.0-beta.2)
   - RxSwift (3.0.0-beta.2)
   - RxTests (3.0.0-beta.1):
     - RxSwift (~> 3.0.0-beta.1)
@@ -32,11 +32,11 @@ DEPENDENCIES:
   - Locksmith (~> 3.0)
   - Nimble (~> 5.0)
   - Quick (~> 0.10)
-  - Realm (~> 1.1)
-  - RealmSwift (~> 1.1)
+  - Realm (~> 2.0)
+  - RealmSwift (~> 2.0)
   - RxCocoa (~> 3.0.0-beta.2)
   - RxDataSources (~> 1.0.0-beta.1)
-  - RxRealm (from `https://github.com/mattjgalloway/RxRealm.git`, branch `master`)
+  - RxRealm (~> 0.2)
   - RxSwift (~> 3.0.0-beta.2)
   - RxTests (~> 3.0.0-beta.1)
   - XCGLogger (~> 4.0)
@@ -45,17 +45,11 @@ EXTERNAL SOURCES:
   Charts:
     :branch: master
     :git: https://github.com/danielgindi/Charts.git
-  RxRealm:
-    :branch: master
-    :git: https://github.com/mattjgalloway/RxRealm.git
 
 CHECKOUT OPTIONS:
   Charts:
     :commit: 55405033684cda362ba2a1b839335dd8b3ba5395
     :git: https://github.com/danielgindi/Charts.git
-  RxRealm:
-    :commit: 1a82a0f0da1e03e07ac4e9e3893530b80088b635
-    :git: https://github.com/mattjgalloway/RxRealm.git
 
 SPEC CHECKSUMS:
   Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
@@ -63,15 +57,15 @@ SPEC CHECKSUMS:
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
-  Realm: ceecf1a4540c4ce9efe196fe73fa9855bce05bd8
-  RealmSwift: 838058b2db95b12cb86bd0cf209df642c33fb60a
+  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
+  RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
   RxCocoa: 1dd105d8a4e18034ccd7bd6d136445363ce67c8e
   RxDataSources: b2f3d80aeb9de4faeebc5e05e2fd975cadd6e308
-  RxRealm: 9b562a61b2e592fb06445f506d6f138cbfe4d676
+  RxRealm: 29adf87a3cdbf228c7eec2e58749e3f7c63647fb
   RxSwift: 0ea939d7d97cb70657190ffde8dc2a9b455778fc
   RxTests: 819cbca750007349f03cfdb89bc07d412f67ab96
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: dd57bc59e3d542998faebbda33c5baf5ea89093f
+PODFILE CHECKSUM: dbaa556988cafde4da06be7bd4b29b0e48d10af1
 
 COCOAPODS: 1.1.0.rc.2

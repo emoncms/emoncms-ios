@@ -30,8 +30,12 @@
 
 #include "util/format.hpp"
 
-#include <realm/commit_log.hpp>
+#include <realm/history.hpp>
 #include <realm/util/scope_exit.hpp>
+
+#if REALM_ENABLE_SYNC
+#include <realm/sync/history.hpp>
+#endif
 
 using namespace realm;
 using namespace realm::_impl;
@@ -144,16 +148,34 @@ void Realm::open_with_config(const Config& config,
             read_only_group = std::make_unique<Group>(config.path, config.encryption_key.data(), Group::mode_ReadOnly);
         }
         else {
-            history = realm::make_client_history(config.path, config.encryption_key.data());
-            SharedGroup::DurabilityLevel durability = config.in_memory ? SharedGroup::durability_MemOnly :
-                                                                           SharedGroup::durability_Full;
-            shared_group = std::make_unique<SharedGroup>(*history, durability, config.encryption_key.data(), !config.disable_format_upgrade,
-                                                         [&](int from_version, int to_version) {
+            // FIXME: The SharedGroup constructor, when called below, will
+            // throw a C++ exception if server_synchronization_mode is
+            // inconsistent with the accessed Realm file. This exception
+            // probably has to be transmuted to an NSError.
+            bool server_synchronization_mode = bool(config.sync_config);
+            if (server_synchronization_mode) {
+#if REALM_ENABLE_SYNC
+                history = realm::sync::make_sync_history(config.path);
+#else
+                REALM_TERMINATE("Realm was not built with sync enabled");
+#endif
+            }
+            else {
+                history = realm::make_in_realm_history(config.path);
+            }
+
+            SharedGroupOptions options;
+            options.durability = config.in_memory ? SharedGroupOptions::Durability::MemOnly :
+                                                    SharedGroupOptions::Durability::Full;
+            options.encryption_key = config.encryption_key.data();
+            options.allow_file_format_upgrade = !config.disable_format_upgrade;
+            options.upgrade_callback = [&](int from_version, int to_version) {
                 if (realm) {
                     realm->upgrade_initial_version = from_version;
                     realm->upgrade_final_version = to_version;
                 }
-            });
+            };
+            shared_group = std::make_unique<SharedGroup>(*history, options);
         }
     }
     catch (...) {
@@ -175,6 +197,13 @@ Group& Realm::read_group()
         add_schema_change_handler();
     }
     return *m_group;
+}
+
+void Realm::Internal::begin_read(Realm& realm, VersionID version_id)
+{
+    REALM_ASSERT(!realm.m_group);
+    realm.m_group = &const_cast<Group&>(realm.m_shared_group->begin_read(version_id));
+    realm.add_schema_change_handler();
 }
 
 SharedRealm Realm::get_shared_realm(Config config)
@@ -338,6 +367,7 @@ void Realm::add_schema_change_handler()
             auto required_changes = m_schema.compare(new_schema);
             ObjectStore::verify_valid_additive_changes(required_changes);
             m_schema.copy_table_columns_from(new_schema);
+            m_coordinator->update_schema(m_schema, m_schema_version);
         });
     }
 }
@@ -396,7 +426,7 @@ void Realm::commit_transaction()
     }
 
     transaction::commit(*m_shared_group, m_binding_context.get());
-    m_coordinator->send_commit_notifications();
+    m_coordinator->send_commit_notifications(*this);
 }
 
 void Realm::cancel_transaction()
@@ -562,7 +592,7 @@ util::Optional<int> Realm::file_format_upgraded_from_version() const
 
 Realm::HandoverPackage::HandoverPackage(HandoverPackage&&) = default;
 Realm::HandoverPackage& Realm::HandoverPackage::operator=(HandoverPackage&&) = default;
-Realm::HandoverPackage::VersionID::VersionID() : VersionID(SharedGroup::VersionID()) { };
+Realm::HandoverPackage::VersionID::VersionID() : VersionID(SharedGroup::VersionID()) { }
 
 // Precondition: `m_version` is not greater than `new_version`
 // Postcondition: `m_version` is equal to `new_version`
@@ -640,6 +670,7 @@ std::vector<AnyThreadConfined> Realm::accept_handover(Realm::HandoverPackage han
     if (!m_group) {
         // A read transaction doesn't yet exist, so create at the handover version
         m_group = &const_cast<Group&>(m_shared_group->begin_read(handover.m_version_id));
+        add_schema_change_handler();
     }
     else {
         auto current_version = m_shared_group->get_version_of_current_transaction();
