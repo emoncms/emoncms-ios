@@ -97,7 +97,7 @@ class SettingsViewModel {
       }
 
       return Disposables.create()
-    }
+    }.subscribeOn(MainScheduler.asyncInstance)
   }
 
   private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {
