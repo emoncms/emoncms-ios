@@ -44,8 +44,8 @@ class MyElectricAppViewModel: AppViewModel {
     self.isRefreshing = isRefreshing.asDriver()
 
     let becameActive = self.active.asObservable()
-      .filter { $0 == true }
       .distinctUntilChanged()
+      .filter { $0 == true }
       .becomeVoid()
 
     let refreshSignal = Observable.of(self.refresh, becameActive)
