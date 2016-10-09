@@ -30,8 +30,6 @@ class FeedChartViewController: FormViewController {
 
     self.tableView.refreshControl = UIRefreshControl()
 
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
-
     self.setupFormer()
     self.setupBindings()
   }
@@ -252,32 +250,6 @@ class FeedChartViewController: FormViewController {
         data.notifyDataChanged()
         chartView.notifyDataSetChanged()
       })
-      .addDisposableTo(self.disposeBag)
-
-    let rightBarButton = self.navigationItem.rightBarButtonItem!
-
-    rightBarButton.rx.tap
-      .flatMap { [weak self] () -> Observable<()> in
-        guard let strongSelf = self else { return Observable.empty() }
-
-        return strongSelf.viewModel.save()
-          .do(onNext: { [weak self] in
-            let alert = UIAlertController(title: "Chart Saved", message: "This chart has been saved.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-              self?.dismiss(animated: true, completion: nil)
-            }))
-            self?.present(alert, animated: true, completion: nil)
-          })
-          .catchError { error in
-            let alert = UIAlertController(title: "Failure", message: "Failed to save chart. Please try again.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
-              self?.dismiss(animated: true, completion: nil)
-              }))
-            self?.present(alert, animated: true, completion: nil)
-            return Observable.just(())
-          }
-      }
-      .subscribe()
       .addDisposableTo(self.disposeBag)
   }
 

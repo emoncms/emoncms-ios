@@ -88,9 +88,9 @@ final class MainController {
     let feedListViewController = feedListNavController.topViewController! as! FeedListViewController
     feedListViewController.viewModel = FeedListViewModel(account: account, api: self.api)
 
-    let chartListNavController = tabBarViewControllers[1] as! UINavigationController
-    let chartListViewController = chartListNavController.topViewController! as! ChartListViewController
-    chartListViewController.viewModel = ChartListViewModel(account: account, api: self.api)
+    let appListNavController = tabBarViewControllers[1] as! UINavigationController
+    let appListViewController = appListNavController.topViewController! as! AppListViewController
+    appListViewController.viewModel = AppListViewModel(account: account, api: self.api)
 
     let settingsNavController = tabBarViewControllers[2] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
