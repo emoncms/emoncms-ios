@@ -31,7 +31,7 @@ target 'EmonCMSiOSTests' do
 
     pod 'Quick', '~> 0.10'
     pod 'Nimble', '~> 5.0'
-    pod 'RxTests', '~> 3.0.0-beta.1'
+    pod 'RxTests', '~> 3.0.0-beta.2'
 end
 
 target 'EmonCMSToday' do
