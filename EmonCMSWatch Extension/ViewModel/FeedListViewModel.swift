@@ -24,6 +24,7 @@ class FeedListViewModel {
   private let account: Account
   private let api: EmonCMSAPI
   private let realm: Realm
+  private let feedUpdateHelper: FeedUpdateHelper
 
   private let disposeBag = DisposeBag()
 
@@ -39,6 +40,7 @@ class FeedListViewModel {
     self.account = account
     self.api = api
     self.realm = account.createRealm()
+    self.feedUpdateHelper = FeedUpdateHelper(account: account, api: api)
 
     self.feeds = Driver.never()
     self.isRefreshing = Driver.never()
@@ -59,31 +61,12 @@ class FeedListViewModel {
       .merge()
       .flatMapLatest { [weak self] () -> Observable<()> in
         guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.api.feedList(account)
-          .observeOn(MainScheduler.asyncInstance)
-          .flatMap(strongSelf.saveFeeds)
+        return strongSelf.feedUpdateHelper.updateFeeds()
           .catchErrorJustReturn(())
           .trackActivity(isRefreshing)
       }
       .subscribe()
       .addDisposableTo(self.disposeBag)
-  }
-
-  private func saveFeeds(_ feeds: [Feed]) -> Observable<()> {
-    let realm = self.realm
-    return Observable.create() { observer in
-      do {
-        try realm.write {
-          realm.add(feeds, update: true)
-        }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
-      }
-
-      return Disposables.create()
-    }
   }
 
   private func feedsToListItems(_ feeds: [Feed]) -> [ListItem] {
