@@ -95,7 +95,7 @@ final class MainController {
     let settingsNavController = tabBarViewControllers[2] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.delegate = self
-    settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api, watchController: self.watchController)
+    settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api)
 
     self.window.rootViewController = rootViewController
 

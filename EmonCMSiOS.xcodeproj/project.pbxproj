@@ -39,7 +39,6 @@
 		C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
 		C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
 		C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* LoginController.swift */; };
-		C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */; };
 		C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
@@ -190,7 +189,6 @@
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C93C92B51D981CAE009FE70D /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
-		C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationViewModel.swift; sourceTree = "<group>"; };
 		C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequiredInterfaceController.swift; sourceTree = "<group>"; };
 		C93C92C21D98672D009FE70D /* EmonCMSWatch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EmonCMSWatch Extension.entitlements"; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -355,7 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */,
-				C93C92BE1D9859BA009FE70D /* ComplicationViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1031,7 +1028,6 @@
 				C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */,
 				C9C8F0AB1D9BF55F001628DC /* LogController.swift in Sources */,
 				C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */,
-				C93C92BF1D9859BA009FE70D /* ComplicationViewModel.swift in Sources */,
 				C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */,
 				C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */,
 				C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */,

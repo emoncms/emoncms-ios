@@ -14,13 +14,11 @@ struct SharedConstants {
     case accountUUID
     case accountURL
     case accountApiKey
-    case complicationFeedId
   }
 
   enum UserDefaultsKeys: String {
     case accountURL
     case accountUUID
-    case complicationFeedId
   }
 
 }

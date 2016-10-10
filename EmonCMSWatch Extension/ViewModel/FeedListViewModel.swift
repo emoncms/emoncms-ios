@@ -70,12 +70,23 @@ class FeedListViewModel {
   }
 
   private func feedsToListItems(_ feeds: [Feed]) -> [ListItem] {
-    let sortedFeedItems = feeds.sorted {
-      $0.name < $1.name
-      }.map {
-        ListItem(feedId: $0.id, name: $0.name, value: $0.value.prettyFormat())
+    var sortedFeeds: [Feed] = []
+    for feed in feeds {
+      // Using `.sort` here is causing a compiler linker error. It's a compiler/linker bug.
+      // So we have to work around it for now.
+      var indexToAdd = 0
+      for (i, otherFeed) in sortedFeeds.enumerated() {
+        if feed.name > otherFeed.name {
+          indexToAdd = i
+          break
+        }
+      }
+      sortedFeeds.insert(feed, at: indexToAdd)
     }
-    return sortedFeedItems
+
+    return sortedFeeds.map {
+      ListItem(feedId: $0.id, name: $0.name, value: $0.value.prettyFormat())
+    }
   }
 
 }

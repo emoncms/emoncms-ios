@@ -18,9 +18,6 @@ class WatchController: NSObject {
   private let disposeBag = DisposeBag()
   private var applicationContextDisposable: Disposable?
 
-  // Inputs
-  let complicationFeedId = Variable<String?>(nil)
-
   var isPaired: Bool {
     let session = WCSession.default()
     if session.activationState == .activated {
@@ -44,7 +41,6 @@ class WatchController: NSObject {
 
   func initialise() {
     self.setupWatchSession()
-    self.setupBindings()
   }
 
   private func setupWatchSession() {
@@ -55,32 +51,12 @@ class WatchController: NSObject {
     }
   }
 
-  private func setupBindings() {
-    guard WCSession.isSupported() else { return }
-
-    if let complicationFeedId = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue) {
-      self.complicationFeedId.value = complicationFeedId
-    }
-
-    self.complicationFeedId
-      .asObservable()
-      .subscribe(onNext: { feedId in
-        if let feedId = feedId {
-          UserDefaults.standard.set(feedId, forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue)
-        } else {
-          UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.complicationFeedId.rawValue)
-        }
-      })
-      .addDisposableTo(self.disposeBag)
-  }
-
   fileprivate func setupApplicationContextBinding() {
     guard WCSession.isSupported() else { return }
 
-    let applicationContext: Observable<[String:Any]> = Observable
-      .combineLatest(self.complicationFeedId.asObservable(), self.loginController.account) { complicationFeedId, account in
+    let applicationContext: Observable<[String:Any]> = self.loginController.account
+      .map { account in
         var result: [String:Any] = [:]
-        result[SharedConstants.ApplicationContextKeys.complicationFeedId.rawValue] = complicationFeedId
         if let account = account {
           result[SharedConstants.ApplicationContextKeys.accountUUID.rawValue] = account.uuid.uuidString
           result[SharedConstants.ApplicationContextKeys.accountURL.rawValue] = account.url

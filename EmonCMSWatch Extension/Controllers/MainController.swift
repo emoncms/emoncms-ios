@@ -19,8 +19,6 @@ final class MainController: NSObject {
   private let api: EmonCMSAPI
   private let loginController: LoginController
 
-  let complicationViewModel: ComplicationViewModel
-
   private var disposeBag = DisposeBag()
 
   private enum InterfaceIdentifiers: String {
@@ -32,7 +30,6 @@ final class MainController: NSObject {
     self.requestProvider = NSURLSessionHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
-    self.complicationViewModel = ComplicationViewModel(loginController: self.loginController)
 
     super.init()
 
@@ -89,9 +86,6 @@ final class MainController: NSObject {
         AppLog.error("Error logging out on watch: \(error)")
       }
     }
-
-    let complicationFeedId = applicationContext[SharedConstants.ApplicationContextKeys.complicationFeedId.rawValue] as? String ?? ""
-    self.complicationViewModel.feedId.value = complicationFeedId
   }
 
 }
