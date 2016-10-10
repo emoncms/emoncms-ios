@@ -30,10 +30,10 @@ extension Feed {
     guard let id = json["id"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }
-    guard let timeString = json["time"] as? String,
-      let timeDouble = Double(timeString) else { return nil }
-    guard let valueString = json["value"] as? String,
-      let value = Double(valueString) else { return nil }
+    guard let timeAny = json["time"],
+      let timeDouble = Double(timeAny) else { return nil }
+    guard let valueAny = json["value"],
+      let value = Double(valueAny) else { return nil }
 
     let time = Date(timeIntervalSince1970: timeDouble)
 
@@ -45,6 +45,25 @@ extension Feed {
     feed.value = value
 
     return feed
+  }
+
+}
+
+extension Double {
+
+  init?(_ value: Any) {
+    switch value {
+    case let double as Double:
+      self.init(double)
+    case let float as Float:
+      self.init(float)
+    case let int as Int:
+      self.init(int)
+    case let string as String:
+      self.init(string)
+    default:
+      return nil
+    }
   }
 
 }
