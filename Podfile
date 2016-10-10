@@ -39,9 +39,3 @@ target 'EmonCMSToday' do
     shared_pods
     shared_app_pods
 end
-
-target 'EmonCMSWatch Extension' do
-    platform :watchos, '2.0'
-    shared_pods
-    shared_app_pods
-end

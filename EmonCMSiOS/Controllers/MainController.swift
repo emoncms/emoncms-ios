@@ -17,7 +17,6 @@ final class MainController {
   private let requestProvider: NSURLSessionHTTPRequestProvider
   private let api: EmonCMSAPI
   private let loginController: LoginController
-  private let watchController: WatchController
 
   fileprivate var addAccountViewStack: UINavigationController?
   fileprivate var mainViewStack: UITabBarController?
@@ -29,9 +28,6 @@ final class MainController {
     self.requestProvider = NSURLSessionHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
     self.loginController = LoginController()
-    self.watchController = WatchController(loginController: self.loginController)
-
-    self.watchController.initialise()
   }
 
   func initialise() {

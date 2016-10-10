@@ -11,7 +11,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 import RealmSwift
-import WatchConnectivity
 
 class SettingsViewModel {
 

@@ -10,7 +10,6 @@
 		137CAC94091722C8E32766A0 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */; };
 		23D228C7361341470A951F9E /* Pods_EmonCMSToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */; };
 		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
-		725EB1AF8874C66259D6499F /* Pods_EmonCMSWatch_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8F5242184EE98DEE83793B01 /* Pods_EmonCMSWatch_Extension.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
@@ -21,25 +20,7 @@
 		C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */; };
 		C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppProtocols.swift */; };
 		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
-		C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929A1D95C0E1009FE70D /* ComplicationController.swift */; };
-		C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929B1D95C0E1009FE70D /* FeedRowController.swift */; };
-		C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */; };
-		C93C92A51D970D89009FE70D /* WatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92A41D970D89009FE70D /* WatchController.swift */; };
-		C93C92AC1D981515009FE70D /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
-		C93C92AD1D981522009FE70D /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
-		C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
-		C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
-		C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
-		C93C92B41D9819B3009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
-		C93C92B61D981CAE009FE70D /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B51D981CAE009FE70D /* MainController.swift */; };
-		C93C92B81D981DA4009FE70D /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */; };
-		C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* RxOperators.swift */; };
-		C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
-		C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
-		C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
-		C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* LoginController.swift */; };
-		C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
 		C97284D61DA594C20010C7B7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
@@ -51,7 +32,6 @@
 		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
 		C97284F31DABB1EA0010C7B7 /* MyElectricAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */; };
 		C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */; };
-		C97284F81DAC21320010C7B7 /* FeedUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
@@ -81,17 +61,8 @@
 		C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240C91D9173E700BC302C /* ChartListViewModel.swift */; };
 		C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CB1D91742D00BC302C /* ChartDataSet.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
-		C9C8F0AB1D9BF55F001628DC /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
-		C9D6921B1D95B55B00E0B249 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C9D692191D95B55B00E0B249 /* Interface.storyboard */; };
-		C9D6921D1D95B55B00E0B249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D6921C1D95B55B00E0B249 /* Assets.xcassets */; };
-		C9D692241D95B55B00E0B249 /* EmonCMSWatch Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C9D692231D95B55B00E0B249 /* EmonCMSWatch Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C9D6922B1D95B55B00E0B249 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */; };
-		C9D6922F1D95B55B00E0B249 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C9D6922E1D95B55B00E0B249 /* Assets.xcassets */; };
-		C9D692331D95B55B00E0B249 /* EmonCMSWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C9D692171D95B55B00E0B249 /* EmonCMSWatch.app */; };
 		C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
-		C9D9CA0E1DA3B06F0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
-		C9D9CA111DA3B5450087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -110,20 +81,6 @@
 			remoteGlobalIDString = C97284D31DA594C20010C7B7;
 			remoteInfo = EmonCMSToday;
 		};
-		C9D692251D95B55B00E0B249 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9D692221D95B55B00E0B249;
-			remoteInfo = "EmonCMSWatch Extension";
-		};
-		C9D692311D95B55B00E0B249 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C9D692161D95B55B00E0B249;
-			remoteInfo = EmonCMSWatch;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -138,24 +95,12 @@
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9D692391D95B55B00E0B249 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				C9D692241D95B55B00E0B249 /* EmonCMSWatch Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C9D6923B1D95B55B00E0B249 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
 			dstSubfolderSpec = 16;
 			files = (
-				C9D692331D95B55B00E0B249 /* EmonCMSWatch.app in Embed Watch Content */,
 			);
 			name = "Embed Watch Content";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,15 +127,7 @@
 		C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewModel.swift; sourceTree = "<group>"; };
 		C92010FB1D89FD7300C9974B /* AppProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppProtocols.swift; sourceTree = "<group>"; };
 		C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewController.swift; sourceTree = "<group>"; };
-		C93C929A1D95C0E1009FE70D /* ComplicationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
-		C93C929B1D95C0E1009FE70D /* FeedRowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedRowController.swift; sourceTree = "<group>"; };
-		C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedsInterfaceController.swift; sourceTree = "<group>"; };
-		C93C92A41D970D89009FE70D /* WatchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchController.swift; sourceTree = "<group>"; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
-		C93C92B51D981CAE009FE70D /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
-		C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
-		C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRequiredInterfaceController.swift; sourceTree = "<group>"; };
-		C93C92C21D98672D009FE70D /* EmonCMSWatch Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "EmonCMSWatch Extension.entitlements"; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -238,14 +175,6 @@
 		C9C240C91D9173E700BC302C /* ChartListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartListViewModel.swift; sourceTree = "<group>"; };
 		C9C240CB1D91742D00BC302C /* ChartDataSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSet.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
-		C9D692171D95B55B00E0B249 /* EmonCMSWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmonCMSWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9D6921A1D95B55B00E0B249 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
-		C9D6921C1D95B55B00E0B249 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C9D6921E1D95B55B00E0B249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C9D692231D95B55B00E0B249 /* EmonCMSWatch Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "EmonCMSWatch Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
-		C9D6922E1D95B55B00E0B249 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C9D692301D95B55B00E0B249 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C9D9CA0C1DA3B06C0087754A /* BackendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendController.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
@@ -255,13 +184,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		009C1B6B4D9D11C03F7DF06C /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C95640A71D8A9C7D003B9757 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -284,14 +206,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				137CAC94091722C8E32766A0 /* Pods_EmonCMSiOS.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9D692201D95B55B00E0B249 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				725EB1AF8874C66259D6499F /* Pods_EmonCMSWatch_Extension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,26 +249,6 @@
 				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
 			);
 			path = Apps;
-			sourceTree = "<group>";
-		};
-		C93C92991D95C0E1009FE70D /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C93C929A1D95C0E1009FE70D /* ComplicationController.swift */,
-				C93C92C01D98640E009FE70D /* LoginRequiredInterfaceController.swift */,
-				C93C929C1D95C0E1009FE70D /* FeedsInterfaceController.swift */,
-				C93C929B1D95C0E1009FE70D /* FeedRowController.swift */,
-				C93C92B51D981CAE009FE70D /* MainController.swift */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		C93C929D1D95C0E1009FE70D /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				C93C92B71D981DA4009FE70D /* FeedListViewModel.swift */,
-			);
-			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
@@ -453,7 +347,6 @@
 			children = (
 				C9BB83661D87F52E0058C059 /* MainController.swift */,
 				C9BB83681D87F5630058C059 /* LoginController.swift */,
-				C93C92A41D970D89009FE70D /* WatchController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
 				C9D9CA0C1DA3B06C0087754A /* BackendController.swift */,
 			);
@@ -465,8 +358,6 @@
 			children = (
 				C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */,
 				C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */,
-				C9D692181D95B55B00E0B249 /* EmonCMSWatch */,
-				C9D692271D95B55B00E0B249 /* EmonCMSWatch Extension */,
 				C97284D71DA594C20010C7B7 /* EmonCMSToday */,
 				C9C041981D85F7D600E3CEC4 /* Products */,
 				7DD291A48ED452A793DCA3EE /* Pods */,
@@ -479,8 +370,6 @@
 			children = (
 				C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */,
 				C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */,
-				C9D692171D95B55B00E0B249 /* EmonCMSWatch.app */,
-				C9D692231D95B55B00E0B249 /* EmonCMSWatch Extension.appex */,
 				C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */,
 			);
 			name = Products;
@@ -520,29 +409,6 @@
 				C9C240C71D91734300BC302C /* ChartListViewController.swift */,
 			);
 			path = "View Controllers";
-			sourceTree = "<group>";
-		};
-		C9D692181D95B55B00E0B249 /* EmonCMSWatch */ = {
-			isa = PBXGroup;
-			children = (
-				C9D692191D95B55B00E0B249 /* Interface.storyboard */,
-				C9D6921C1D95B55B00E0B249 /* Assets.xcassets */,
-				C9D6921E1D95B55B00E0B249 /* Info.plist */,
-			);
-			path = EmonCMSWatch;
-			sourceTree = "<group>";
-		};
-		C9D692271D95B55B00E0B249 /* EmonCMSWatch Extension */ = {
-			isa = PBXGroup;
-			children = (
-				C93C92C21D98672D009FE70D /* EmonCMSWatch Extension.entitlements */,
-				C93C92991D95C0E1009FE70D /* Controllers */,
-				C93C929D1D95C0E1009FE70D /* ViewModel */,
-				C9D6922A1D95B55B00E0B249 /* ExtensionDelegate.swift */,
-				C9D6922E1D95B55B00E0B249 /* Assets.xcassets */,
-				C9D692301D95B55B00E0B249 /* Info.plist */,
-			);
-			path = "EmonCMSWatch Extension";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -604,51 +470,12 @@
 			buildRules = (
 			);
 			dependencies = (
-				C9D692321D95B55B00E0B249 /* PBXTargetDependency */,
 				C97284DF1DA594C20010C7B7 /* PBXTargetDependency */,
 			);
 			name = EmonCMSiOS;
 			productName = EmonCMSiOS;
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
 			productType = "com.apple.product-type.application";
-		};
-		C9D692161D95B55B00E0B249 /* EmonCMSWatch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9D6923A1D95B55B00E0B249 /* Build configuration list for PBXNativeTarget "EmonCMSWatch" */;
-			buildPhases = (
-				C9D692151D95B55B00E0B249 /* Resources */,
-				C9D692391D95B55B00E0B249 /* Embed App Extensions */,
-				009C1B6B4D9D11C03F7DF06C /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C9D692261D95B55B00E0B249 /* PBXTargetDependency */,
-			);
-			name = EmonCMSWatch;
-			productName = EmonCMSWatch;
-			productReference = C9D692171D95B55B00E0B249 /* EmonCMSWatch.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		C9D692221D95B55B00E0B249 /* EmonCMSWatch Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C9D692381D95B55B00E0B249 /* Build configuration list for PBXNativeTarget "EmonCMSWatch Extension" */;
-			buildPhases = (
-				ED8836476CD7DED8F717DA1B /* [CP] Check Pods Manifest.lock */,
-				C9D6921F1D95B55B00E0B249 /* Sources */,
-				C9D692201D95B55B00E0B249 /* Frameworks */,
-				C9D692211D95B55B00E0B249 /* Resources */,
-				F0A3AA205BFB597F40BAADF5 /* [CP] Embed Pods Frameworks */,
-				0E93879F71851C3376C00143 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "EmonCMSWatch Extension";
-			productName = "EmonCMSWatch Extension";
-			productReference = C9D692231D95B55B00E0B249 /* EmonCMSWatch Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -689,21 +516,6 @@
 							};
 						};
 					};
-					C9D692161D95B55B00E0B249 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = KGUUH6BP8Y;
-						ProvisioningStyle = Automatic;
-					};
-					C9D692221D95B55B00E0B249 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = KGUUH6BP8Y;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.Keychain = {
-								enabled = 1;
-							};
-						};
-					};
 				};
 			};
 			buildConfigurationList = C9C041921D85F7D600E3CEC4 /* Build configuration list for PBXProject "EmonCMSiOS" */;
@@ -721,8 +533,6 @@
 			targets = (
 				C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */,
 				C95640A91D8A9C7D003B9757 /* EmonCMSiOSTests */,
-				C9D692161D95B55B00E0B249 /* EmonCMSWatch */,
-				C9D692221D95B55B00E0B249 /* EmonCMSWatch Extension */,
 				C97284D31DA594C20010C7B7 /* EmonCMSToday */,
 			);
 		};
@@ -755,41 +565,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C9D692151D95B55B00E0B249 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9D6921D1D95B55B00E0B249 /* Assets.xcassets in Resources */,
-				C9D6921B1D95B55B00E0B249 /* Interface.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9D692211D95B55B00E0B249 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C9D6922F1D95B55B00E0B249 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0E93879F71851C3376C00143 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		112FC92F2DAC62F3FC48D59A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -910,36 +688,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		ED8836476CD7DED8F717DA1B /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F0A3AA205BFB597F40BAADF5 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -998,7 +746,6 @@
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9C240CA1D9173E700BC302C /* ChartListViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
-				C93C92A51D970D89009FE70D /* WatchController.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
 				C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
@@ -1009,35 +756,6 @@
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
 				C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C9D6921F1D95B55B00E0B249 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C93C92AC1D981515009FE70D /* Feed.swift in Sources */,
-				C93C92B81D981DA4009FE70D /* FeedListViewModel.swift in Sources */,
-				C9D6922B1D95B55B00E0B249 /* ExtensionDelegate.swift in Sources */,
-				C93C92BC1D981DFC009FE70D /* FormatHelpers.swift in Sources */,
-				C93C92C11D98640E009FE70D /* LoginRequiredInterfaceController.swift in Sources */,
-				C97284F81DAC21320010C7B7 /* FeedUpdateHelper.swift in Sources */,
-				C93C92B41D9819B3009FE70D /* SharedConstants.swift in Sources */,
-				C93C92AF1D98152F009FE70D /* HTTPRequestProvider.swift in Sources */,
-				C93C92A01D95C0E1009FE70D /* FeedsInterfaceController.swift in Sources */,
-				C93C92B11D98172E009FE70D /* DataPoint.swift in Sources */,
-				C9C8F0AB1D9BF55F001628DC /* LogController.swift in Sources */,
-				C93C929E1D95C0E1009FE70D /* ComplicationController.swift in Sources */,
-				C93C92B91D981DF1009FE70D /* RxOperators.swift in Sources */,
-				C93C929F1D95C0E1009FE70D /* FeedRowController.swift in Sources */,
-				C93C92BA1D981DF5009FE70D /* ActivityIndicator.swift in Sources */,
-				C93C92BD1D98572B009FE70D /* LoginController.swift in Sources */,
-				C93C92AD1D981522009FE70D /* Account.swift in Sources */,
-				C9D9CA0E1DA3B06F0087754A /* BackendController.swift in Sources */,
-				C9D9CA111DA3B5450087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
-				C93C92B61D981CAE009FE70D /* MainController.swift in Sources */,
-				C93C92AE1D98152F009FE70D /* EmonCMSAPI.swift in Sources */,
-				C93C92BB1D981DF7009FE70D /* EmonCMSColors.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1053,16 +771,6 @@
 			isa = PBXTargetDependency;
 			target = C97284D31DA594C20010C7B7 /* EmonCMSToday */;
 			targetProxy = C97284DE1DA594C20010C7B7 /* PBXContainerItemProxy */;
-		};
-		C9D692261D95B55B00E0B249 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C9D692221D95B55B00E0B249 /* EmonCMSWatch Extension */;
-			targetProxy = C9D692251D95B55B00E0B249 /* PBXContainerItemProxy */;
-		};
-		C9D692321D95B55B00E0B249 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C9D692161D95B55B00E0B249 /* EmonCMSWatch */;
-			targetProxy = C9D692311D95B55B00E0B249 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1097,14 +805,6 @@
 				C9C041A41D85F7D600E3CEC4 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-		C9D692191D95B55B00E0B249 /* Interface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C9D6921A1D95B55B00E0B249 /* Base */,
-			);
-			name = Interface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1305,80 +1005,6 @@
 			};
 			name = Release;
 		};
-		C9D692341D95B55B00E0B249 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				IBSC_MODULE = EmonCMSWatch_Extension;
-				INFOPLIST_FILE = EmonCMSWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
-			};
-			name = Debug;
-		};
-		C9D692351D95B55B00E0B249 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				IBSC_MODULE = EmonCMSWatch_Extension;
-				INFOPLIST_FILE = EmonCMSWatch/Info.plist;
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
-			};
-			name = Release;
-		};
-		C9D692361D95B55B00E0B249 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "EmonCMSWatch Extension/EmonCMSWatch Extension.entitlements";
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				INFOPLIST_FILE = "EmonCMSWatch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
-			};
-			name = Debug;
-		};
-		C9D692371D95B55B00E0B249 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ACFF4FEDDBF5BF5145039E6D /* Pods-EmonCMSWatch Extension.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CODE_SIGN_ENTITLEMENTS = "EmonCMSWatch Extension/EmonCMSWatch Extension.entitlements";
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				INFOPLIST_FILE = "EmonCMSWatch Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 3.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1414,24 +1040,6 @@
 			buildConfigurations = (
 				C9C041AA1D85F7D600E3CEC4 /* Debug */,
 				C9C041AB1D85F7D600E3CEC4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C9D692381D95B55B00E0B249 /* Build configuration list for PBXNativeTarget "EmonCMSWatch Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9D692361D95B55B00E0B249 /* Debug */,
-				C9D692371D95B55B00E0B249 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C9D6923A1D95B55B00E0B249 /* Build configuration list for PBXNativeTarget "EmonCMSWatch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C9D692341D95B55B00E0B249 /* Debug */,
-				C9D692351D95B55B00E0B249 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

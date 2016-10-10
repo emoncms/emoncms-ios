@@ -1,6 +1,0 @@
-framework module RxRealm {
-  umbrella header "RxRealm-watchOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
