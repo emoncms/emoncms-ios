@@ -25,7 +25,7 @@ class SettingsViewController: FormViewController {
 
   weak var delegate: SettingsViewControllerDelegate?
 
-  private var watchFeedRow: InlinePickerRowFormer<FormInlinePickerCell, SettingsViewModel.FeedListItem>!
+  private var watchFeedRow: InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>!
 
   private let disposeBag = DisposeBag()
 
@@ -83,7 +83,7 @@ class SettingsViewController: FormViewController {
     sections.append(logoutSection)
 
     if self.viewModel.showWatchSection {
-      let watchFeedRow = InlinePickerRowFormer<FormInlinePickerCell, SettingsViewModel.FeedListItem>() {
+      let watchFeedRow = InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>() {
         $0.titleLabel.text = "Complication feed"
       }
       self.watchFeedRow = watchFeedRow
@@ -104,7 +104,7 @@ class SettingsViewController: FormViewController {
 
   private func setupBindings() {
     if self.viewModel.showWatchSection {
-      self.viewModel.feeds
+      self.viewModel.feedList.feeds
         .startWith([])
         .drive(onNext: { [weak self] feeds in
           guard let strongSelf = self else { return }
@@ -112,7 +112,7 @@ class SettingsViewController: FormViewController {
           strongSelf.watchFeedRow.update { row in
             let selectedFeedId = strongSelf.viewModel.watchFeed.value?.feedId ?? "-1"
             var selectedIndex = 0
-            var pickerItems: [InlinePickerItem<SettingsViewModel.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
+            var pickerItems: [InlinePickerItem<FeedListHelper.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
             for (i, feed) in feeds.enumerated() {
               if feed.feedId == selectedFeedId {
                 selectedIndex = i + 1
@@ -125,7 +125,7 @@ class SettingsViewController: FormViewController {
           })
         .addDisposableTo(self.disposeBag)
 
-      Observable<SettingsViewModel.FeedListItem?>.create { observer in
+      Observable<FeedListHelper.FeedListItem?>.create { observer in
         let row = self.watchFeedRow
         row?.onValueChanged { item in
           if let value = item.value {

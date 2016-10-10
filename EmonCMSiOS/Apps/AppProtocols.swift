@@ -8,11 +8,15 @@
 
 import Foundation
 
-protocol AppViewModel {}
+struct AppConfigField {
 
-protocol AppViewController: class {
+  enum FieldType {
+    case string
+    case feed
+  }
 
-  // TODO: There must be a better way to do this. Perhaps with an `associatedtype`?
-  var genericViewModel: AppViewModel! { get set }
+  let id: String
+  let name: String
+  let type: FieldType
 
 }

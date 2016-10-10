@@ -57,7 +57,8 @@ class ChartListViewController: UITableViewController {
   }
 
   private func setupBindings() {
-    self.tableView.rx.itemDeleted
+    self.tableView.rx
+      .itemDeleted
       .map { [unowned self] in
         let item: ChartListViewModel.ListItem = try! self.tableView.rx.model($0)
         return item.chartId

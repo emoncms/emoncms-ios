@@ -10,38 +10,53 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import RealmSwift
 
-class MyElectricAppViewModel: AppViewModel {
+class MyElectricAppViewModel {
 
   typealias MyElectricData = (powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
   private let account: Account
   private let api: EmonCMSAPI
+  fileprivate let realm: Realm
+  fileprivate let appData: MyElectricAppData
 
   // Inputs
   let active = Variable<Bool>(false)
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
+  private(set) var title: Driver<String>
   private(set) var data: Driver<MyElectricData>
   private(set) var isRefreshing: Driver<Bool>
+  private(set) var isReady: Driver<Bool>
 
-  private var useFeedId: String?
-  private var useKwhFeedId: String?
   private var startOfDayKwh: DataPoint?
 
-  init(account: Account, api: EmonCMSAPI) {
+  init(account: Account, api: EmonCMSAPI, appDataId: String) {
     self.account = account
     self.api = api
+    self.realm = account.createRealm()
+    self.appData = self.realm.object(ofType: MyElectricAppData.self, forPrimaryKey: appDataId)!
 
-    // TODO: These need to be found and set!
-    self.useFeedId = "2"
-    self.useKwhFeedId = "3"
-
+    self.title = Driver.empty()
     self.data = Driver.empty()
+    self.isReady = Driver.empty()
+
+    self.title = self.appData.rx
+      .observe(String.self, "name")
+      .map { $0 ?? "" }
+      .asDriver(onErrorJustReturn: "")
 
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
+
+    self.isReady = Observable.combineLatest(
+      self.appData.rx.observe(String.self, #keyPath(MyElectricAppData.useFeedId)),
+      self.appData.rx.observe(String.self, #keyPath(MyElectricAppData.kwhFeedId))) {
+        $0 != nil && $1 != nil
+      }
+      .asDriver(onErrorJustReturn: false)
 
     let timerIfActive = self.active.asObservable()
       .distinctUntilChanged()
@@ -55,7 +70,15 @@ class MyElectricAppViewModel: AppViewModel {
         }
       }
 
-    let refreshSignal = Observable.of(self.refresh, timerIfActive)
+    let feedsChangedSignal = Observable.combineLatest(self.appData.rx.observe(String.self, "useFeedId"), self.appData.rx.observe(String.self, "kwhFeedId")) {
+        ($0, $1)
+      }
+      .distinctUntilChanged {
+        $0.0 == $1.0 && $0.1 == $1.1
+      }
+      .becomeVoid()
+
+    let refreshSignal = Observable.of(self.refresh, timerIfActive, feedsChangedSignal)
       .merge()
 
     self.data = refreshSignal
@@ -65,6 +88,10 @@ class MyElectricAppViewModel: AppViewModel {
           .trackActivity(isRefreshing)
       }
       .asDriver(onErrorJustReturn: MyElectricData(powerNow: 0.0, usageToday: 0.0, lineChartData: [], barChartData: []))
+  }
+
+  func feedListHelper() -> FeedListHelper {
+    return FeedListHelper(account: self.account, api: self.api)
   }
 
   private func update() -> Observable<MyElectricData> {
@@ -78,7 +105,7 @@ class MyElectricAppViewModel: AppViewModel {
   }
 
   private func fetchPowerNowAndUsageToday() -> Observable<(Double, Double)> {
-    guard let useFeedId = self.useFeedId, let useKwhFeedId = self.useKwhFeedId else {
+    guard let useFeedId = self.appData.useFeedId, let kwhFeedId = self.appData.kwhFeedId else {
       return Observable.empty()
     }
 
@@ -90,7 +117,7 @@ class MyElectricAppViewModel: AppViewModel {
     if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
       startOfDayKwhSignal = Observable.just(startOfDayKwh)
     } else {
-      startOfDayKwhSignal = self.api.feedData(self.account, id: useKwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
+      startOfDayKwhSignal = self.api.feedData(self.account, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
         .map { $0[0] }
         .do(onNext: { [weak self] in
           guard let strongSelf = self else { return }
@@ -98,17 +125,17 @@ class MyElectricAppViewModel: AppViewModel {
         })
     }
 
-    let feedValuesSignal = self.api.feedValue(self.account, ids: [useFeedId, useKwhFeedId])
+    let feedValuesSignal = self.api.feedValue(self.account, ids: [useFeedId, kwhFeedId])
 
     return Observable.zip(startOfDayKwhSignal, feedValuesSignal) { (startOfDayUsage, feedValues) in
-      guard let use = feedValues[useFeedId], let useKwh = feedValues[useKwhFeedId] else { return (0.0, 0.0) }
+      guard let use = feedValues[useFeedId], let useKwh = feedValues[kwhFeedId] else { return (0.0, 0.0) }
 
       return (use, useKwh - startOfDayUsage.value)
     }
   }
 
   private func fetchLineChartHistory() -> Observable<[DataPoint]> {
-    guard let useFeedId = self.useFeedId else {
+    guard let useFeedId = self.appData.useFeedId else {
       return Observable.empty()
     }
 
@@ -120,7 +147,7 @@ class MyElectricAppViewModel: AppViewModel {
   }
 
   private func fetchBarChartHistory() -> Observable<[DataPoint]> {
-    guard let useKwhFeedId = self.useKwhFeedId else {
+    guard let kwhFeedId = self.appData.kwhFeedId else {
       return Observable.empty()
     }
 
@@ -128,7 +155,7 @@ class MyElectricAppViewModel: AppViewModel {
     let endTime = Date()
     let startTime = endTime - Double(daysToDisplay * 86400)
 
-    return self.api.feedDataDaily(self.account, id: useKwhFeedId, at: startTime, until: endTime)
+    return self.api.feedDataDaily(self.account, id: kwhFeedId, at: startTime, until: endTime)
       .map { dataPoints in
         guard dataPoints.count > 1 else { return [] }
 
@@ -143,6 +170,57 @@ class MyElectricAppViewModel: AppViewModel {
 
         return newDataPoints
       }
+  }
+
+}
+
+extension MyElectricAppViewModel {
+
+  private enum ConfigKeys: String {
+    case name
+    case useFeedId
+    case kwhFeedId
+  }
+
+  func configFields() -> [AppConfigField] {
+    let fields = [
+      AppConfigField(id: "name", name: "Name", type: .string),
+      AppConfigField(id: "useFeedId", name: "Use Feed", type: .feed),
+      AppConfigField(id: "kwhFeedId", name: "kWh Feed", type: .feed),
+    ]
+    return fields
+  }
+
+  func configData() -> [String:Any] {
+    var data: [String:Any] = [:]
+
+    data[ConfigKeys.name.rawValue] = self.appData.name
+    if let feedId = self.appData.useFeedId {
+      data[ConfigKeys.useFeedId.rawValue] = feedId
+    }
+    if let feedId = self.appData.kwhFeedId {
+      data[ConfigKeys.kwhFeedId.rawValue] = feedId
+    }
+
+    return data
+  }
+
+  func updateWithConfigData(_ data: [String:Any]) {
+    do {
+      try self.realm.write {
+        if let name = data[ConfigKeys.name.rawValue] as? String {
+          self.appData.name = name
+        }
+        if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
+          self.appData.useFeedId = feedId
+        }
+        if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
+          self.appData.kwhFeedId = feedId
+        }
+      }
+    } catch {
+      AppLog.error("Failed to save app data: \(error)")
+    }
   }
 
 }

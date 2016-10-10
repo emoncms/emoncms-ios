@@ -48,6 +48,9 @@
 		C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */; };
 		C97284E01DA594C20010C7B7 /* EmonCMSToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
+		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
+		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
+		C97284F31DABB1EA0010C7B7 /* MyElectricAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
@@ -199,6 +202,9 @@
 		C97284DD1DA594C20010C7B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C97284E51DA595400010C7B7 /* EmonCMSToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSToday.entitlements; sourceTree = "<group>"; };
 		C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayRelativeToTodayValueFormatter.swift; sourceTree = "<group>"; };
+		C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelper.swift; sourceTree = "<group>"; };
+		C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigViewController.swift; sourceTree = "<group>"; };
+		C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppData.swift; sourceTree = "<group>"; };
 		C9921AF41D9BBCEE003353A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -324,6 +330,8 @@
 				C92010FB1D89FD7300C9974B /* AppProtocols.swift */,
 				C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */,
 				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
+				C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */,
+				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -434,6 +442,7 @@
 				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
 				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
 				C92010EF1D89F2E600C9974B /* AppListViewModel.swift */,
+				C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -966,6 +975,7 @@
 				C9C240C31D91730100BC302C /* FeedChartViewController.swift in Sources */,
 				C92010FC1D89FD7300C9974B /* AppProtocols.swift in Sources */,
 				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
+				C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* LoginController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
 				C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */,
@@ -975,6 +985,7 @@
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
+				C97284F31DABB1EA0010C7B7 /* MyElectricAppData.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
 				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,
@@ -991,6 +1002,7 @@
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
+				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,

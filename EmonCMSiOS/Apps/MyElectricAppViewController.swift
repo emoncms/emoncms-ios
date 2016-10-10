@@ -12,18 +12,9 @@ import RxSwift
 import RxCocoa
 import Charts
 
-class MyElectricAppViewController: UIViewController, AppViewController {
+class MyElectricAppViewController: UIViewController {
 
   var viewModel: MyElectricAppViewModel!
-
-  var genericViewModel: AppViewModel! {
-    get {
-      return self.viewModel
-    }
-    set(vm) {
-      self.viewModel = vm as! MyElectricAppViewModel
-    }
-  }
 
   @IBOutlet private var powerLabel: UILabel!
   @IBOutlet private var usageTodayLabel: UILabel!
@@ -35,7 +26,7 @@ class MyElectricAppViewController: UIViewController, AppViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.title = "My Electric"
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
 
     self.setupCharts()
     self.setupBindings()
@@ -52,6 +43,10 @@ class MyElectricAppViewController: UIViewController, AppViewController {
   }
 
   private func setupBindings() {
+    self.viewModel.title
+      .drive(self.rx.title)
+      .addDisposableTo(self.disposeBag)
+
     self.viewModel.data
       .map { $0.powerNow }
       .map { $0.prettyFormat() + "W" }
@@ -116,6 +111,20 @@ class MyElectricAppViewController: UIViewController, AppViewController {
         strongSelf.barChart.notifyDataSetChanged()
         })
       .addDisposableTo(self.disposeBag)
+
+    let rightBarButtonItem = self.navigationItem.rightBarButtonItem!
+    rightBarButtonItem.rx.tap
+      .subscribe(onNext: { [weak self] in
+        guard let strongSelf = self else { return }
+
+        let fields = strongSelf.viewModel.configFields()
+        let data = strongSelf.viewModel.configData()
+        let configViewController = AppConfigViewController(fields: fields, data: data, feedListHelper: strongSelf.viewModel.feedListHelper())
+        configViewController.delegate = strongSelf
+        let navController = UINavigationController(rootViewController: configViewController)
+        strongSelf.present(navController, animated: true, completion: nil)
+      })
+      .addDisposableTo(self.disposeBag)
   }
 
 }
@@ -143,20 +152,21 @@ extension MyElectricAppViewController {
     xAxis.drawGridLinesEnabled = false
     xAxis.drawLabelsEnabled = true
     xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .white
+    xAxis.labelTextColor = .black
     xAxis.valueFormatter = ChartDateValueFormatter(.auto)
+    xAxis.granularity = 3600
 
     let yAxis = lineChart.leftAxis
     yAxis.labelPosition = .insideChart
     yAxis.drawTopYLabelEntryEnabled = false
     yAxis.drawGridLinesEnabled = false
     yAxis.drawAxisLineEnabled = false
-    yAxis.labelTextColor = .white
+    yAxis.labelTextColor = .black
 
     let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
     dataSet.setColor(EmonCMSColors.Chart.Blue)
     dataSet.fillColor = EmonCMSColors.Chart.Blue
-    dataSet.valueTextColor = .white
+    dataSet.valueTextColor = .black
     dataSet.drawFilledEnabled = true
     dataSet.drawCirclesEnabled = false
     dataSet.drawValuesEnabled = false
@@ -194,11 +204,24 @@ extension MyElectricAppViewController {
 
     let dataSet = BarChartDataSet(values: [BarChartDataEntry(x: 0, y: 0)], label: "kWh")
     dataSet.setColor(EmonCMSColors.Chart.Blue)
-    dataSet.valueTextColor = .white
+    dataSet.valueTextColor = .black
 
     let data = BarChartData()
     data.addDataSet(dataSet)
     barChart.data = data
+  }
+
+}
+
+extension MyElectricAppViewController: AppConfigViewControllerDelegate {
+
+  func appConfigViewControllerDidCancel(_ viewController: AppConfigViewController) {
+    self.dismiss(animated: true, completion: nil)
+  }
+
+  func appConfigViewController(_ viewController: AppConfigViewController, didFinishWithData data: [String : Any]) {
+    self.viewModel.updateWithConfigData(data)
+    self.dismiss(animated: true, completion: nil)
   }
 
 }
