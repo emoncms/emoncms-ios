@@ -82,7 +82,7 @@ class MyElectricAppViewModel {
       .merge()
 
     self.data = refreshSignal
-      .flatMapLatest { [weak self] () -> Observable<MyElectricData> in
+      .flatMapFirst { [weak self] () -> Observable<MyElectricData> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.update()
           .trackActivity(isRefreshing)
