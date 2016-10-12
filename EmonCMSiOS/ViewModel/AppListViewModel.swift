@@ -15,12 +15,12 @@ import RxDataSources
 
 class AppListViewModel {
 
-  struct AppListItem {
+  struct ListItem {
     let appId: String
     let name: String
   }
 
-  typealias Section = SectionModel<String, AppListItem>
+  typealias Section = SectionModel<String, ListItem>
 
   private let account: Account
   private let api: EmonCMSAPI
@@ -31,7 +31,7 @@ class AppListViewModel {
   // Inputs
 
   // Outputs
-  private(set) var apps: Driver<[AppListItem]>
+  private(set) var apps: Driver<[ListItem]>
 
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
@@ -51,11 +51,11 @@ class AppListViewModel {
       .asDriver(onErrorJustReturn: [])
   }
 
-  private func appsToListItems(_ apps: [MyElectricAppData]) -> [AppListItem] {
+  private func appsToListItems(_ apps: [MyElectricAppData]) -> [ListItem] {
     let sortedListItems = apps.sorted {
       $0.name < $1.name
       }.map {
-        AppListItem(appId: $0.uuid, name: $0.name)
+        ListItem(appId: $0.uuid, name: $0.name)
     }
     return sortedListItems
   }

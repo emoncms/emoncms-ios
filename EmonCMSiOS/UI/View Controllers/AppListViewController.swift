@@ -55,7 +55,7 @@ class AppListViewController: UITableViewController {
 
   private func setupBindings() {
     self.tableView.rx
-      .modelSelected(AppListViewModel.AppListItem.self)
+      .modelSelected(AppListViewModel.ListItem.self)
       .subscribe(onNext: { [unowned self] in
         self.present(app: $0)
       })
@@ -64,7 +64,7 @@ class AppListViewController: UITableViewController {
     self.tableView.rx
       .itemDeleted
       .map { [unowned self] in
-        let item: AppListViewModel.AppListItem = try! self.tableView.rx.model($0)
+        let item: AppListViewModel.ListItem = try! self.tableView.rx.model($0)
         return item.appId
       }
       .flatMap { [unowned self] in
@@ -84,7 +84,7 @@ class AppListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func present(app: AppListViewModel.AppListItem) {
+  private func present(app: AppListViewModel.ListItem) {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: "myElectric")
     if let appVC = viewController as? MyElectricAppViewController {
