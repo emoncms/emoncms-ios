@@ -46,18 +46,18 @@ class AppListViewModel {
       _ = self.addApp().subscribe()
     }
 
-    self.apps = Observable.arrayFrom(self.realm.objects(MyElectricAppData.self))
+    let appQuery = self.realm.objects(MyElectricAppData.self)
+      .sorted(byProperty: #keyPath(MyElectricAppData.name), ascending: true)
+    self.apps = Observable.arrayFrom(appQuery)
       .map(self.appsToListItems)
       .asDriver(onErrorJustReturn: [])
   }
 
   private func appsToListItems(_ apps: [MyElectricAppData]) -> [ListItem] {
-    let sortedListItems = apps.sorted {
-      $0.name < $1.name
-      }.map {
-        ListItem(appId: $0.uuid, name: $0.name)
+    let listItems = apps.map {
+      ListItem(appId: $0.uuid, name: $0.name)
     }
-    return sortedListItems
+    return listItems
   }
 
   func viewModelForApp(withId id: String) -> MyElectricAppViewModel {
