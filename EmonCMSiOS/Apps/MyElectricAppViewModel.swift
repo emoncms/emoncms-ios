@@ -23,7 +23,6 @@ class MyElectricAppViewModel {
 
   // Inputs
   let active = Variable<Bool>(false)
-  let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
   private(set) var title: Driver<String>
@@ -76,9 +75,10 @@ class MyElectricAppViewModel {
       .distinctUntilChanged {
         $0.0 == $1.0 && $0.1 == $1.1
       }
+      .skip(1) // Skip 1 because we only want to be notified when this changes after the first time the signal is created
       .becomeVoid()
 
-    let refreshSignal = Observable.of(self.refresh, timerIfActive, feedsChangedSignal)
+    let refreshSignal = Observable.of(timerIfActive, feedsChangedSignal)
       .merge()
 
     self.data = refreshSignal
