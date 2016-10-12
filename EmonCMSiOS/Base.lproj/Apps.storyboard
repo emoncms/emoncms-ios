@@ -76,12 +76,32 @@
                                     <constraint firstItem="Mdt-tH-Uhq" firstAttribute="top" secondItem="LEY-qk-qub" secondAttribute="bottom" constant="8" id="zak-C8-sAm"/>
                                 </constraints>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wp3-8u-qEg">
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecl-1d-C7C">
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="ecl-1d-C7C" firstAttribute="centerY" secondItem="Wp3-8u-qEg" secondAttribute="centerY" id="DDS-wm-TgF"/>
+                                    <constraint firstItem="ecl-1d-C7C" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Wp3-8u-qEg" secondAttribute="leading" constant="10" id="FX2-3w-11d"/>
+                                    <constraint firstItem="ecl-1d-C7C" firstAttribute="centerX" secondItem="Wp3-8u-qEg" secondAttribute="centerX" id="a6h-Dt-eqd"/>
+                                    <constraint firstItem="ecl-1d-C7C" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="Wp3-8u-qEg" secondAttribute="trailing" constant="-10" id="aNs-E6-dAR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="MkX-D2-g1x" secondAttribute="trailing" id="EYL-J9-Fcm"/>
                             <constraint firstItem="sz5-M0-ZJI" firstAttribute="top" secondItem="MkX-D2-g1x" secondAttribute="bottom" id="Gpg-tV-ord"/>
                             <constraint firstItem="MkX-D2-g1x" firstAttribute="leading" secondItem="VTd-Pe-WWb" secondAttribute="leading" id="QwA-bg-KKl"/>
+                            <constraint firstAttribute="trailing" secondItem="Wp3-8u-qEg" secondAttribute="trailing" id="b0r-Xm-qlv"/>
+                            <constraint firstItem="sz5-M0-ZJI" firstAttribute="top" secondItem="Wp3-8u-qEg" secondAttribute="bottom" id="lHd-Eu-2BX"/>
+                            <constraint firstItem="Wp3-8u-qEg" firstAttribute="leading" secondItem="VTd-Pe-WWb" secondAttribute="leading" id="nUU-8Y-UPj"/>
+                            <constraint firstItem="Wp3-8u-qEg" firstAttribute="top" secondItem="lFc-NX-UCK" secondAttribute="bottom" id="qvk-ST-ik8"/>
                             <constraint firstItem="MkX-D2-g1x" firstAttribute="top" secondItem="lFc-NX-UCK" secondAttribute="bottom" id="twf-Cq-ufM"/>
                         </constraints>
                     </view>
@@ -89,6 +109,7 @@
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="barChart" destination="u3y-mo-Cjj" id="H5Y-8O-IJq"/>
+                        <outlet property="configureView" destination="Wp3-8u-qEg" id="gZY-Zi-upE"/>
                         <outlet property="lineChart" destination="Fdg-ew-n0d" id="TDT-KV-nEZ"/>
                         <outlet property="mainView" destination="MkX-D2-g1x" id="gk3-TD-iYU"/>
                         <outlet property="powerLabel" destination="Mdt-tH-Uhq" id="wFK-Xx-zjL"/>

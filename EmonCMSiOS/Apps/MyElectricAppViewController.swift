@@ -23,6 +23,8 @@ class MyElectricAppViewController: UIViewController {
   @IBOutlet fileprivate var lineChart: LineChartView!
   @IBOutlet fileprivate var barChart: BarChartView!
 
+  @IBOutlet private var configureView: UIView!
+
   private let disposeBag = DisposeBag()
 
   override func viewDidLoad() {
@@ -118,10 +120,12 @@ class MyElectricAppViewController: UIViewController {
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.isReady
-      .drive(onNext: { [weak self] ready in
-        guard let strongSelf = self else { return }
-        strongSelf.mainView.isHidden = !ready
-        })
+      .map { !$0 }
+      .drive(self.mainView.rx.hidden)
+      .addDisposableTo(self.disposeBag)
+
+    self.viewModel.isReady
+      .drive(self.configureView.rx.hidden)
       .addDisposableTo(self.disposeBag)
   }
 
