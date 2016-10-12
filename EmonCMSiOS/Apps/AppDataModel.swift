@@ -1,5 +1,5 @@
 //
-//  AppProtocols.swift
+//  AppDataModel.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 14/09/2016.
