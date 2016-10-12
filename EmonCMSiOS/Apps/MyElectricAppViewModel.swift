@@ -12,7 +12,13 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-class MyElectricAppViewModel {
+final class MyElectricAppViewModel {
+
+  enum MyElectricAppError: Error {
+    case generic
+    case notConfigured
+    case updateFailed
+  }
 
   typealias MyElectricData = (powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
@@ -29,8 +35,10 @@ class MyElectricAppViewModel {
   private(set) var data: Driver<MyElectricData>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
+  private(set) var errors: Driver<MyElectricAppError>
 
   private var startOfDayKwh: DataPoint?
+  private let errorsSubject = PublishSubject<MyElectricAppError>()
 
   init(account: Account, api: EmonCMSAPI, appDataId: String) {
     self.account = account
@@ -41,6 +49,7 @@ class MyElectricAppViewModel {
     self.title = Driver.empty()
     self.data = Driver.empty()
     self.isReady = Driver.empty()
+    self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic)
 
     self.title = self.appData.rx
       .observe(String.self, "name")
@@ -85,6 +94,11 @@ class MyElectricAppViewModel {
       .flatMapFirst { [weak self] () -> Observable<MyElectricData> in
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.update()
+          .catchError { [weak self] error in
+            let typedError = error as? MyElectricAppError ?? .generic
+            self?.errorsSubject.onNext(typedError)
+            return Observable.empty()
+          }
           .trackActivity(isRefreshing)
       }
       .asDriver(onErrorJustReturn: MyElectricData(powerNow: 0.0, usageToday: 0.0, lineChartData: [], barChartData: []))
@@ -95,7 +109,15 @@ class MyElectricAppViewModel {
   }
 
   private func update() -> Observable<MyElectricData> {
-    return Observable.zip(self.fetchPowerNowAndUsageToday(), self.fetchLineChartHistory(), self.fetchBarChartHistory()) {
+    guard let useFeedId = self.appData.useFeedId, let kwhFeedId = self.appData.kwhFeedId else {
+      return Observable.error(MyElectricAppError.notConfigured)
+    }
+
+    return Observable.zip(
+      self.fetchPowerNowAndUsageToday(useFeedId: useFeedId, kwhFeedId: kwhFeedId),
+      self.fetchLineChartHistory(useFeedId: useFeedId),
+      self.fetchBarChartHistory(kwhFeedId: kwhFeedId))
+    {
       (powerNowAndUsageToday, lineChartData, barChartData) in
       return MyElectricData(powerNow: powerNowAndUsageToday.0,
                             usageToday: powerNowAndUsageToday.1,
@@ -104,11 +126,7 @@ class MyElectricAppViewModel {
     }
   }
 
-  private func fetchPowerNowAndUsageToday() -> Observable<(Double, Double)> {
-    guard let useFeedId = self.appData.useFeedId, let kwhFeedId = self.appData.kwhFeedId else {
-      return Observable.empty()
-    }
-
+  private func fetchPowerNowAndUsageToday(useFeedId: String, kwhFeedId: String) -> Observable<(Double, Double)> {
     let calendar = Calendar.current
     let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
     let midnightToday = calendar.date(from: dateComponents)!
@@ -134,11 +152,7 @@ class MyElectricAppViewModel {
     }
   }
 
-  private func fetchLineChartHistory() -> Observable<[DataPoint]> {
-    guard let useFeedId = self.appData.useFeedId else {
-      return Observable.empty()
-    }
-
+  private func fetchLineChartHistory(useFeedId: String) -> Observable<[DataPoint]> {
     let endTime = Date()
     let startTime = endTime - (60 * 60 * 8)
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
@@ -146,11 +160,7 @@ class MyElectricAppViewModel {
     return self.api.feedData(self.account, id: useFeedId, at: startTime, until: endTime, interval: interval)
   }
 
-  private func fetchBarChartHistory() -> Observable<[DataPoint]> {
-    guard let kwhFeedId = self.appData.kwhFeedId else {
-      return Observable.empty()
-    }
-
+  private func fetchBarChartHistory(kwhFeedId: String) -> Observable<[DataPoint]> {
     let daysToDisplay = 15 // Needs to be 1 more than we actually want to ensure we get the right data
     let endTime = Date()
     let startTime = endTime - Double(daysToDisplay * 86400)
