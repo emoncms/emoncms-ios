@@ -64,7 +64,7 @@ class AppListViewModel {
     return MyElectricAppViewModel(account: self.account, api: self.api, appDataId: id)
   }
 
-  func addApp() -> Observable<()> {
+  func addApp() -> Observable<MyElectricAppData> {
     let realm = self.realm
     return Observable.create() { observer in
       do {
@@ -72,7 +72,7 @@ class AppListViewModel {
         try realm.write {
           realm.add(app, update: true)
         }
-        observer.onNext(())
+        observer.onNext(app)
         observer.onCompleted()
       } catch {
         observer.onError(error)

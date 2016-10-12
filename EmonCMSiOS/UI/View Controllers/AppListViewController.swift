@@ -57,7 +57,7 @@ class AppListViewController: UITableViewController {
     self.tableView.rx
       .modelSelected(AppListViewModel.ListItem.self)
       .subscribe(onNext: { [unowned self] in
-        self.present(app: $0)
+        self.presentApp(withId: $0.appId)
       })
       .addDisposableTo(self.disposeBag)
 
@@ -78,17 +78,22 @@ class AppListViewController: UITableViewController {
     rightBarButtonItem.rx.tap
       .flatMapLatest { [unowned self] in
         self.viewModel.addApp()
+          .do(onNext: { [weak self] app in
+            guard let strongSelf = self else { return }
+            strongSelf.presentApp(withId: app.uuid)
+          })
+          .becomeVoid()
           .catchErrorJustReturn(())
       }
       .subscribe()
       .addDisposableTo(self.disposeBag)
   }
 
-  private func present(app: AppListViewModel.ListItem) {
+  private func presentApp(withId appId: String) {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: "myElectric")
     if let appVC = viewController as? MyElectricAppViewController {
-      let viewModel = self.viewModel.viewModelForApp(withId: app.appId)
+      let viewModel = self.viewModel.viewModelForApp(withId: appId)
       appVC.viewModel = viewModel
     }
     self.navigationController?.pushViewController(viewController, animated: true)
