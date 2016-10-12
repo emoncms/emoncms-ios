@@ -80,7 +80,7 @@ class AppListViewController: UITableViewController {
         self.viewModel.addApp()
           .do(onNext: { [weak self] app in
             guard let strongSelf = self else { return }
-            strongSelf.presentApp(withId: app.uuid)
+            strongSelf.presentApp(withId: app.uuid, showConfigure: true)
           })
           .becomeVoid()
           .catchErrorJustReturn(())
@@ -89,12 +89,13 @@ class AppListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func presentApp(withId appId: String) {
+  private func presentApp(withId appId: String, showConfigure: Bool = false) {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: "myElectric")
     if let appVC = viewController as? MyElectricAppViewController {
       let viewModel = self.viewModel.viewModelForApp(withId: appId)
       appVC.viewModel = viewModel
+      appVC.showConfigureOnAppear = showConfigure
     }
     self.navigationController?.pushViewController(viewController, animated: true)
   }

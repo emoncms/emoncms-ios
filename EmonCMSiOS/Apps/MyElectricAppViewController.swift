@@ -15,6 +15,7 @@ import Charts
 class MyElectricAppViewController: UIViewController {
 
   var viewModel: MyElectricAppViewModel!
+  var showConfigureOnAppear: Bool = false
 
   @IBOutlet private var powerLabel: UILabel!
   @IBOutlet private var usageTodayLabel: UILabel!
@@ -34,6 +35,10 @@ class MyElectricAppViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.viewModel.active.value = true
+    if self.showConfigureOnAppear {
+      self.showConfigureOnAppear = false
+      self.showConfigure()
+    }
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -117,16 +122,19 @@ class MyElectricAppViewController: UIViewController {
     rightBarButtonItem.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let strongSelf = self else { return }
-
-        let fields = strongSelf.viewModel.configFields()
-        let data = strongSelf.viewModel.configData()
-        let configViewController = AppConfigViewController(fields: fields, data: data, feedListHelper: strongSelf.viewModel.feedListHelper())
-        configViewController.delegate = strongSelf
-        let navController = UINavigationController(rootViewController: configViewController)
-        strongSelf.present(navController, animated: true, completion: nil)
+        strongSelf.showConfigure()
         })
       .addDisposableTo(self.disposeBag)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
+  }
+
+  private func showConfigure() {
+    let fields = self.viewModel.configFields()
+    let data = self.viewModel.configData()
+    let configViewController = AppConfigViewController(fields: fields, data: data, feedListHelper: self.viewModel.feedListHelper())
+    configViewController.delegate = self
+    let navController = UINavigationController(rootViewController: configViewController)
+    self.present(navController, animated: true, completion: nil)
   }
 
 }
