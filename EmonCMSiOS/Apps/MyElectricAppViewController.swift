@@ -26,10 +26,9 @@ class MyElectricAppViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
-
     self.setupCharts()
     self.setupBindings()
+    self.setupNavigation()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -111,8 +110,10 @@ class MyElectricAppViewController: UIViewController {
         strongSelf.barChart.notifyDataSetChanged()
         })
       .addDisposableTo(self.disposeBag)
+  }
 
-    let rightBarButtonItem = self.navigationItem.rightBarButtonItem!
+  private func setupNavigation() {
+    let rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
     rightBarButtonItem.rx.tap
       .subscribe(onNext: { [weak self] in
         guard let strongSelf = self else { return }
@@ -123,8 +124,9 @@ class MyElectricAppViewController: UIViewController {
         configViewController.delegate = strongSelf
         let navController = UINavigationController(rootViewController: configViewController)
         strongSelf.present(navController, animated: true, completion: nil)
-      })
+        })
       .addDisposableTo(self.disposeBag)
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
 }
