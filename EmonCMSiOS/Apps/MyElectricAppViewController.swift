@@ -17,6 +17,7 @@ class MyElectricAppViewController: UIViewController {
   var viewModel: MyElectricAppViewModel!
   var showConfigureOnAppear: Bool = false
 
+  @IBOutlet private var mainView: UIView!
   @IBOutlet private var powerLabel: UILabel!
   @IBOutlet private var usageTodayLabel: UILabel!
   @IBOutlet fileprivate var lineChart: LineChartView!
@@ -113,6 +114,13 @@ class MyElectricAppViewController: UIViewController {
         dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
         strongSelf.barChart.notifyDataSetChanged()
+        })
+      .addDisposableTo(self.disposeBag)
+
+    self.viewModel.isReady
+      .drive(onNext: { [weak self] ready in
+        guard let strongSelf = self else { return }
+        strongSelf.mainView.isHidden = !ready
         })
       .addDisposableTo(self.disposeBag)
   }
