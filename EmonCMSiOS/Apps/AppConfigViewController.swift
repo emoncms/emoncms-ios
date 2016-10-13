@@ -118,17 +118,19 @@ class AppConfigViewController: FormViewController {
         })
       .addDisposableTo(self.disposeBag)
 
-    Observable<FeedListHelper.FeedListItem>.create { observer in
-      row.onValueChanged { item in
-        if let value = item.value {
-          observer.onNext(value)
+    Observable<FeedListHelper.FeedListItem?>.create { observer in
+        row.onValueChanged { item in
+          observer.onNext(item.value)
         }
-      }
-      return Disposables.create()
+        return Disposables.create()
       }
       .subscribe(onNext: { [weak self] in
         guard let strongSelf = self else { return }
-        strongSelf.data[field.id] = $0.feedId
+        if let item = $0 {
+          strongSelf.data[field.id] = item.feedId
+        } else {
+          strongSelf.data.removeValue(forKey: field.id)
+        }
       })
       .addDisposableTo(self.disposeBag)
   }
@@ -144,17 +146,36 @@ class AppConfigViewController: FormViewController {
 
     Observable.of(cancelTap, saveTap)
       .merge()
-      .flatMap { [weak self] save -> Observable<String?> in
+      .flatMapLatest { [weak self] save -> Observable<String?> in
         guard let strongSelf = self else { return Observable.just(nil) }
+
         if save {
           return strongSelf.viewModel.updateWithConfigData(strongSelf.data)
             .map { $0 as String? }
+            .catchError { [weak self] error in
+              guard let strongSelf = self else { return Observable.never() }
+
+              let message: String
+              if let error = error as? MyElectricAppConfigViewModel.SaveError {
+                switch error {
+                case .missingFields(let fields):
+                  let fieldsText = fields.map { $0.name }.joined(separator: "\n")
+                  message = "Missing fields:\n\(fieldsText)"
+                }
+              } else {
+                message = "An unknown error occurred."
+                AppLog.error("Unknown error saving app config data: \(error)")
+              }
+
+              let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+              alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+              
+              strongSelf.present(alert, animated: true, completion: nil)
+              
+              return Observable.never()
+          }
         }
         return Observable.just(nil)
-      }
-      .catchError { error in
-        AppLog.error("Error saving app config data: \(error)")
-        return Observable.empty()
       }
       .subscribe(self.finishedSubject)
       .addDisposableTo(self.disposeBag)

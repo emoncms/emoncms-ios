@@ -13,6 +13,10 @@ import RealmSwift
 
 final class MyElectricAppConfigViewModel {
 
+  enum SaveError: Error {
+    case missingFields([AppConfigField])
+  }
+
   private let account: Account
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -65,27 +69,39 @@ final class MyElectricAppConfigViewModel {
     return Observable.create { [weak self] observer in
       guard let strongSelf = self else { return Disposables.create() }
 
-      do {
-        let appData = strongSelf.appData
-        try strongSelf.realm.write {
-          if let name = data[ConfigKeys.name.rawValue] as? String {
-            appData.name = name
-          }
-          if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
-            appData.useFeedId = feedId
-          }
-          if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
-            appData.kwhFeedId = feedId
-          }
-
-          if appData.realm == nil {
-            strongSelf.realm.add(appData)
-          }
+      // Validate first
+      var missingFields: [AppConfigField] = []
+      for field in strongSelf.configFields() where field.optional == false {
+        if data[field.id] == nil {
+          missingFields.append(field)
         }
-        observer.onNext(strongSelf.appData.uuid)
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
+      }
+
+      if missingFields.count > 0 {
+        observer.onError(SaveError.missingFields(missingFields))
+      } else {
+        do {
+          let appData = strongSelf.appData
+          try strongSelf.realm.write {
+            if let name = data[ConfigKeys.name.rawValue] as? String {
+              appData.name = name
+            }
+            if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
+              appData.useFeedId = feedId
+            }
+            if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
+              appData.kwhFeedId = feedId
+            }
+
+            if appData.realm == nil {
+              strongSelf.realm.add(appData)
+            }
+          }
+          observer.onNext(strongSelf.appData.uuid)
+          observer.onCompleted()
+        } catch {
+          observer.onError(error)
+        }
       }
 
       return Disposables.create()
