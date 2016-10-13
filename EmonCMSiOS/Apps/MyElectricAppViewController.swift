@@ -65,25 +65,7 @@ class MyElectricAppViewController: UIViewController {
       .map { $0.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
-
-        guard let data = strongSelf.lineChart.data,
-          let dataSet = data.getDataSetByIndex(0) else {
-            return
-        }
-
-        dataSet.clear()
-
-        for point in dataPoints {
-          let x = point.time.timeIntervalSince1970
-          let y = point.value
-
-          let yDataEntry = ChartDataEntry(x: x, y: y)
-          data.addEntry(yDataEntry, dataSetIndex: 0)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-        strongSelf.lineChart.notifyDataSetChanged()
+        strongSelf.updateLineChartData(dataPoints)
         })
       .addDisposableTo(self.disposeBag)
 
@@ -91,26 +73,7 @@ class MyElectricAppViewController: UIViewController {
       .map { $0.barChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
-
-        guard let data = strongSelf.barChart.data,
-          let dataSet = data.getDataSetByIndex(0) else {
-            return
-        }
-
-        dataSet.clear()
-
-        for point in dataPoints {
-          // 'x' here means the offset in days from 'today'
-          let x = floor(point.time.timeIntervalSinceNow / 86400)
-          let y = point.value
-
-          let yDataEntry = BarChartDataEntry(x: x, y: y)
-          data.addEntry(yDataEntry, dataSetIndex: 0)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-        strongSelf.barChart.notifyDataSetChanged()
+        strongSelf.updateBarChartData(dataPoints)
         })
       .addDisposableTo(self.disposeBag)
 
@@ -181,17 +144,7 @@ extension MyElectricAppViewController {
     yAxis.drawAxisLineEnabled = false
     yAxis.labelTextColor = .black
 
-    let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
-    dataSet.setColor(EmonCMSColors.Chart.Blue)
-    dataSet.fillColor = EmonCMSColors.Chart.Blue
-    dataSet.valueTextColor = .black
-    dataSet.drawFilledEnabled = true
-    dataSet.drawCirclesEnabled = false
-    dataSet.drawValuesEnabled = false
-    dataSet.highlightEnabled = false
-
     let data = LineChartData()
-    data.addDataSet(dataSet)
     lineChart.data = data
   }
 
@@ -220,13 +173,78 @@ extension MyElectricAppViewController {
     xAxis.granularity = 1
     xAxis.labelCount = 14
 
-    let dataSet = BarChartDataSet(values: [BarChartDataEntry(x: 0, y: 0)], label: "kWh")
-    dataSet.setColor(EmonCMSColors.Chart.Blue)
-    dataSet.valueTextColor = .black
-
     let data = BarChartData()
-    data.addDataSet(dataSet)
     barChart.data = data
+  }
+
+  fileprivate func updateLineChartData(_ dataPoints: [DataPoint]) {
+    guard let data = self.lineChart.data else { return }
+
+    var entries: [ChartDataEntry] = []
+    for point in dataPoints {
+      let x = point.time.timeIntervalSince1970
+      let y = point.value
+
+      let yDataEntry = ChartDataEntry(x: x, y: y)
+      entries.append(yDataEntry)
+    }
+
+    let dataSet: IChartDataSet
+    if let ds = data.getDataSetByIndex(0) {
+      ds.clear()
+      for entry in entries {
+        _ = ds.addEntry(entry)
+      }
+      dataSet = ds
+    } else {
+      let ds = LineChartDataSet(values: entries, label: nil)
+      ds.setColor(EmonCMSColors.Chart.Blue)
+      ds.fillColor = EmonCMSColors.Chart.Blue
+      ds.valueTextColor = .black
+      ds.drawFilledEnabled = true
+      ds.drawCirclesEnabled = false
+      ds.drawValuesEnabled = false
+      ds.highlightEnabled = false
+      data.addDataSet(ds)
+      dataSet = ds
+    }
+
+    dataSet.notifyDataSetChanged()
+    data.notifyDataChanged()
+    self.lineChart.notifyDataSetChanged()
+  }
+
+  fileprivate func updateBarChartData(_ dataPoints: [DataPoint]) {
+    guard let data = self.barChart.data else { return }
+
+    var entries: [ChartDataEntry] = []
+    for point in dataPoints {
+      // 'x' here means the offset in days from 'today'
+      let x = floor(point.time.timeIntervalSinceNow / 86400)
+      let y = point.value
+
+      let yDataEntry = BarChartDataEntry(x: x, y: y)
+      entries.append(yDataEntry)
+    }
+
+    let dataSet: IChartDataSet
+    if let ds = data.getDataSetByIndex(0) {
+      ds.clear()
+      for entry in entries {
+        _ = ds.addEntry(entry)
+      }
+      dataSet = ds
+    } else {
+      let ds = BarChartDataSet(values: entries, label: "kWh")
+      ds.setColor(EmonCMSColors.Chart.Blue)
+      ds.valueTextColor = .black
+      data.addDataSet(ds)
+      dataSet = ds
+    }
+
+    dataSet.notifyDataSetChanged()
+    data.notifyDataChanged()
+    self.barChart.notifyDataSetChanged()
   }
 
 }
