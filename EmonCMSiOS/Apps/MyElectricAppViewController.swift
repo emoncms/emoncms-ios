@@ -127,25 +127,22 @@ class MyElectricAppViewController: UIViewController {
   private func setupNavigation() {
     let rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
     rightBarButtonItem.rx.tap
-      .subscribe(onNext: { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.showConfigure()
-        })
-      .addDisposableTo(self.disposeBag)
-    self.navigationItem.rightBarButtonItem = rightBarButtonItem
-  }
+      .flatMap { [weak self] _ -> Driver<String?> in
+        guard let strongSelf = self else { return Driver.empty() }
 
-  private func showConfigure() {
-    let configViewController = AppConfigViewController()
-    configViewController.viewModel = self.viewModel.configViewModel()
-    configViewController.finished
-      .drive(onCompleted: { [weak self] in
+        let configViewController = AppConfigViewController()
+        configViewController.viewModel = strongSelf.viewModel.configViewModel()
+        let navController = UINavigationController(rootViewController: configViewController)
+        strongSelf.present(navController, animated: true, completion: nil)
+
+        return configViewController.finished
+      }
+      .subscribe(onNext: { [weak self] _ in
         guard let strongSelf = self else { return }
         strongSelf.dismiss(animated: true, completion: nil)
         })
       .addDisposableTo(self.disposeBag)
-    let navController = UINavigationController(rootViewController: configViewController)
-    self.present(navController, animated: true, completion: nil)
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
 }
