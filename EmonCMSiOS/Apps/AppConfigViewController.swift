@@ -32,11 +32,8 @@ class AppConfigViewController: FormViewController {
 
     self.title = "Configure"
 
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
-
     self.setupFormer()
-    self.setupBindings()
+    self.setupNavigation()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -136,11 +133,13 @@ class AppConfigViewController: FormViewController {
       .addDisposableTo(self.disposeBag)
   }
 
-  private func setupBindings() {
-    let leftBarButtonItem = self.navigationItem.leftBarButtonItem!
+  private func setupNavigation() {
+    let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem
     let cancelTap = leftBarButtonItem.rx.tap.map { false }
 
-    let rightBarButtonItem = self.navigationItem.rightBarButtonItem!
+    let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem
     let saveTap = rightBarButtonItem.rx.tap.map { true }
 
     Observable.of(cancelTap, saveTap)
