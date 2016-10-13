@@ -23,6 +23,7 @@
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
+		C96233FB1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */; };
 		C97284D61DA594C20010C7B7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
 		C97284D91DA594C20010C7B7 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284D81DA594C20010C7B7 /* TodayViewController.swift */; };
 		C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */; };
@@ -132,6 +133,7 @@
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C957CCED1D9086E40039D707 /* Charts+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Charts+Rx.swift"; sourceTree = "<group>"; };
+		C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppConfigViewModel.swift; sourceTree = "<group>"; };
 		C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97284D51DA594C20010C7B7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		C97284D81DA594C20010C7B7 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				C92010FB1D89FD7300C9974B /* AppDataModel.swift */,
 				C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */,
 				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
+				C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */,
 				C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */,
 				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
 			);
@@ -741,6 +744,7 @@
 				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* Account.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
+				C96233FB1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,

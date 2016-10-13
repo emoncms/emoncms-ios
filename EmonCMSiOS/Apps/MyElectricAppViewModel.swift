@@ -24,8 +24,8 @@ final class MyElectricAppViewModel {
 
   private let account: Account
   private let api: EmonCMSAPI
-  fileprivate let realm: Realm
-  fileprivate let appData: MyElectricAppData
+  private let realm: Realm
+  private let appData: MyElectricAppData
 
   // Inputs
   let active = Variable<Bool>(false)
@@ -104,8 +104,8 @@ final class MyElectricAppViewModel {
       .asDriver(onErrorJustReturn: MyElectricData(powerNow: 0.0, usageToday: 0.0, lineChartData: [], barChartData: []))
   }
 
-  func feedListHelper() -> FeedListHelper {
-    return FeedListHelper(account: self.account, api: self.api)
+  func configViewModel() -> MyElectricAppConfigViewModel {
+    return MyElectricAppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid)
   }
 
   private func update() -> Observable<MyElectricData> {
@@ -180,57 +180,6 @@ final class MyElectricAppViewModel {
 
         return newDataPoints
       }
-  }
-
-}
-
-extension MyElectricAppViewModel {
-
-  private enum ConfigKeys: String {
-    case name
-    case useFeedId
-    case kwhFeedId
-  }
-
-  func configFields() -> [AppConfigField] {
-    let fields = [
-      AppConfigField(id: "name", name: "Name", type: .string),
-      AppConfigField(id: "useFeedId", name: "Use Feed", type: .feed),
-      AppConfigField(id: "kwhFeedId", name: "kWh Feed", type: .feed),
-    ]
-    return fields
-  }
-
-  func configData() -> [String:Any] {
-    var data: [String:Any] = [:]
-
-    data[ConfigKeys.name.rawValue] = self.appData.name
-    if let feedId = self.appData.useFeedId {
-      data[ConfigKeys.useFeedId.rawValue] = feedId
-    }
-    if let feedId = self.appData.kwhFeedId {
-      data[ConfigKeys.kwhFeedId.rawValue] = feedId
-    }
-
-    return data
-  }
-
-  func updateWithConfigData(_ data: [String:Any]) {
-    do {
-      try self.realm.write {
-        if let name = data[ConfigKeys.name.rawValue] as? String {
-          self.appData.name = name
-        }
-        if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
-          self.appData.useFeedId = feedId
-        }
-        if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
-          self.appData.kwhFeedId = feedId
-        }
-      }
-    } catch {
-      AppLog.error("Failed to save app data: \(error)")
-    }
   }
 
 }

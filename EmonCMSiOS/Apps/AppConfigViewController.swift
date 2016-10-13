@@ -12,36 +12,23 @@ import Former
 import RxSwift
 import RxCocoa
 
-protocol AppConfigViewControllerDelegate: class {
-
-  func appConfigViewControllerDidCancel(_ viewController: AppConfigViewController)
-  func appConfigViewController(_ viewController: AppConfigViewController, didFinishWithData data: [String:Any])
-
-}
-
 class AppConfigViewController: FormViewController {
 
-  weak var delegate: AppConfigViewControllerDelegate?
+  var viewModel: MyElectricAppConfigViewModel!
 
-  private let fields: [AppConfigField]
-  private var data: [String:Any]
-  private let feedListHelper: FeedListHelper
+  lazy var finished: Driver<String?> = {
+    return self.finishedSubject.asDriver(onErrorJustReturn: nil)
+  }()
+  private var finishedSubject = PublishSubject<String?>()
+
+  private var data: [String:Any] = [:]
 
   private let disposeBag = DisposeBag()
 
-  init(fields: [AppConfigField], data: [String:Any], feedListHelper: FeedListHelper) {
-    self.fields = fields
-    self.data = data
-    self.feedListHelper = feedListHelper
-    super.init(nibName: nil, bundle: nil)
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("Not implemented")
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    self.data = self.viewModel.configData()
 
     self.title = "Configure"
 
@@ -54,13 +41,13 @@ class AppConfigViewController: FormViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.feedListHelper.refresh.onNext(())
+    self.viewModel.feedListHelper.refresh.onNext(())
   }
 
   private func setupFormer() {
     var rows: [RowFormer] = []
 
-    for field in self.fields {
+    for field in self.viewModel.configFields() {
       let row: RowFormer
 
       switch field.type {
@@ -93,7 +80,7 @@ class AppConfigViewController: FormViewController {
   }
 
   private func setupFeedListBindings(forRow row: InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>, fieldId: String) {
-    self.feedListHelper.feeds
+    self.viewModel.feedListHelper.feeds
       .startWith([])
       .drive(onNext: { [weak self] feeds in
         guard let strongSelf = self else { return }
@@ -131,19 +118,26 @@ class AppConfigViewController: FormViewController {
 
   private func setupBindings() {
     let leftBarButtonItem = self.navigationItem.leftBarButtonItem!
-    leftBarButtonItem.rx.tap
-      .subscribe(onNext: { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.delegate?.appConfigViewControllerDidCancel(strongSelf)
-        })
-      .addDisposableTo(self.disposeBag)
+    let cancelTap = leftBarButtonItem.rx.tap.map { false }
 
     let rightBarButtonItem = self.navigationItem.rightBarButtonItem!
-    rightBarButtonItem.rx.tap
-      .subscribe(onNext: { [weak self] in
-        guard let strongSelf = self else { return }
-        strongSelf.delegate?.appConfigViewController(strongSelf, didFinishWithData: strongSelf.data)
-        })
+    let saveTap = rightBarButtonItem.rx.tap.map { true }
+
+    Observable.of(cancelTap, saveTap)
+      .merge()
+      .flatMap { [weak self] save -> Observable<String?> in
+        guard let strongSelf = self else { return Observable.just(nil) }
+        if save {
+          return strongSelf.viewModel.updateWithConfigData(strongSelf.data)
+            .map { $0 as String? }
+        }
+        return Observable.just(nil)
+      }
+      .catchError { error in
+        AppLog.error("Error saving app config data: \(error)")
+        return Observable.empty()
+      }
+      .subscribe(self.finishedSubject)
       .addDisposableTo(self.disposeBag)
   }
 

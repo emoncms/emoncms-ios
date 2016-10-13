@@ -24,11 +24,9 @@ class AppListViewController: UITableViewController {
 
     self.title = "Apps"
 
-    self.navigationItem.leftBarButtonItem = self.editButtonItem
-    self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
-
     self.setupDataSource()
     self.setupBindings()
+    self.setupNavigation()
   }
 
   private func setupDataSource() {
@@ -73,29 +71,43 @@ class AppListViewController: UITableViewController {
       }
       .subscribe()
       .addDisposableTo(self.disposeBag)
-
-    let rightBarButtonItem = self.navigationItem.rightBarButtonItem!
-    rightBarButtonItem.rx.tap
-      .flatMapLatest { [unowned self] in
-        self.viewModel.addApp()
-          .do(onNext: { [weak self] app in
-            guard let strongSelf = self else { return }
-            strongSelf.presentApp(withId: app.uuid, showConfigure: true)
-          })
-          .becomeVoid()
-          .catchErrorJustReturn(())
-      }
-      .subscribe()
-      .addDisposableTo(self.disposeBag)
   }
 
-  private func presentApp(withId appId: String, showConfigure: Bool = false) {
+  private func setupNavigation() {
+    self.navigationItem.leftBarButtonItem = self.editButtonItem
+
+    let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
+    rightBarButtonItem.rx.tap
+      .flatMapLatest { [weak self] () -> Driver<String?> in
+        guard let strongSelf = self else { return Driver.empty() }
+
+        let viewModel = strongSelf.viewModel.newAppConfigViewModel()
+        let viewController = AppConfigViewController()
+        viewController.viewModel = viewModel
+        let navController = UINavigationController(rootViewController: viewController)
+
+        strongSelf.present(navController, animated: true, completion: nil)
+
+        return viewController.finished
+      }
+      .subscribe(onNext: { [weak self] appDataId in
+        guard let strongSelf = self else { return }
+        strongSelf.dismiss(animated: true) {
+          if let appDataId = appDataId {
+            strongSelf.presentApp(withId: appDataId)
+          }
+        }
+      })
+      .addDisposableTo(self.disposeBag)
+    self.navigationItem.rightBarButtonItem = rightBarButtonItem
+  }
+
+  private func presentApp(withId appId: String) {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let viewController = storyboard.instantiateViewController(withIdentifier: "myElectric")
     if let appVC = viewController as? MyElectricAppViewController {
       let viewModel = self.viewModel.viewModelForApp(withId: appId)
       appVC.viewModel = viewModel
-      appVC.showConfigureOnAppear = showConfigure
     }
     self.navigationController?.pushViewController(viewController, animated: true)
   }

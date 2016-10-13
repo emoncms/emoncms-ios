@@ -15,7 +15,6 @@ import Charts
 class MyElectricAppViewController: UIViewController {
 
   var viewModel: MyElectricAppViewModel!
-  var showConfigureOnAppear: Bool = false
 
   @IBOutlet private var mainView: UIView!
   @IBOutlet private var powerLabel: UILabel!
@@ -38,10 +37,6 @@ class MyElectricAppViewController: UIViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.viewModel.active.value = true
-    if self.showConfigureOnAppear {
-      self.showConfigureOnAppear = false
-      self.showConfigure()
-    }
   }
 
   override func viewDidDisappear(_ animated: Bool) {
@@ -141,10 +136,14 @@ class MyElectricAppViewController: UIViewController {
   }
 
   private func showConfigure() {
-    let fields = self.viewModel.configFields()
-    let data = self.viewModel.configData()
-    let configViewController = AppConfigViewController(fields: fields, data: data, feedListHelper: self.viewModel.feedListHelper())
-    configViewController.delegate = self
+    let configViewController = AppConfigViewController()
+    configViewController.viewModel = self.viewModel.configViewModel()
+    configViewController.finished
+      .drive(onCompleted: { [weak self] in
+        guard let strongSelf = self else { return }
+        strongSelf.dismiss(animated: true, completion: nil)
+        })
+      .addDisposableTo(self.disposeBag)
     let navController = UINavigationController(rootViewController: configViewController)
     self.present(navController, animated: true, completion: nil)
   }
@@ -231,19 +230,6 @@ extension MyElectricAppViewController {
     let data = BarChartData()
     data.addDataSet(dataSet)
     barChart.data = data
-  }
-
-}
-
-extension MyElectricAppViewController: AppConfigViewControllerDelegate {
-
-  func appConfigViewControllerDidCancel(_ viewController: AppConfigViewController) {
-    self.dismiss(animated: true, completion: nil)
-  }
-
-  func appConfigViewController(_ viewController: AppConfigViewController, didFinishWithData data: [String : Any]) {
-    self.viewModel.updateWithConfigData(data)
-    self.dismiss(animated: true, completion: nil)
   }
 
 }

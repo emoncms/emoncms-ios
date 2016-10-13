@@ -40,12 +40,6 @@ class AppListViewModel {
 
     self.apps = Driver.never()
 
-    // Create first MyElectric app if you don't have one already
-    let apps = self.realm.objects(MyElectricAppData.self)
-    if apps.count == 0 {
-      _ = self.addApp().subscribe()
-    }
-
     let appQuery = self.realm.objects(MyElectricAppData.self)
       .sorted(byProperty: #keyPath(MyElectricAppData.name), ascending: true)
     self.apps = Observable.arrayFrom(appQuery)
@@ -64,22 +58,8 @@ class AppListViewModel {
     return MyElectricAppViewModel(account: self.account, api: self.api, appDataId: id)
   }
 
-  func addApp() -> Observable<MyElectricAppData> {
-    let realm = self.realm
-    return Observable.create() { observer in
-      do {
-        let app = MyElectricAppData()
-        try realm.write {
-          realm.add(app, update: true)
-        }
-        observer.onNext(app)
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
-      }
-
-      return Disposables.create()
-    }
+  func newAppConfigViewModel() -> MyElectricAppConfigViewModel {
+    return MyElectricAppConfigViewModel(account: self.account, api: self.api, appDataId: nil)
   }
 
   func deleteApp(withId id: String) -> Observable<()> {
