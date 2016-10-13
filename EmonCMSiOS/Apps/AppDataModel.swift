@@ -8,15 +8,28 @@
 
 import Foundation
 
-struct AppConfigField {
+protocol AppConfigField {
 
-  enum FieldType {
-    case string
-    case feed
-  }
+  var id: String { get }
+  var name: String { get }
+  var optional: Bool { get }
+
+}
+
+struct AppConfigFieldString: AppConfigField {
 
   let id: String
   let name: String
-  let type: FieldType
+  let optional: Bool
+
+}
+
+struct AppConfigFieldFeed: AppConfigField {
+
+  let id: String
+  let name: String
+  let optional: Bool
+
+  let defaultName: String
 
 }

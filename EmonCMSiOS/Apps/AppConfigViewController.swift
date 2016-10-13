@@ -48,10 +48,10 @@ class AppConfigViewController: FormViewController {
     var rows: [RowFormer] = []
 
     for field in self.viewModel.configFields() {
-      let row: RowFormer
+      let row: RowFormer?
 
-      switch field.type {
-      case .string:
+      switch field {
+      case _ as AppConfigFieldString:
         let textFieldRow = TextFieldRowFormer<FormTextFieldCell>() {
           $0.titleLabel.text = field.name
           $0.textField.textAlignment = .right
@@ -64,39 +64,59 @@ class AppConfigViewController: FormViewController {
             strongSelf.data[field.id] = text
         }
         row = textFieldRow
-      case .feed:
+      case let feedField as AppConfigFieldFeed:
         let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>() {
           $0.titleLabel.text = field.name
         }
-        self.setupFeedListBindings(forRow: inlinePickerRow, fieldId: field.id)
+        self.setupFeedListBindings(forRow: inlinePickerRow, field: feedField)
         row = inlinePickerRow
+      default:
+        AppLog.error("Unhandled app config type: \(field)")
+        row = nil
       }
 
-      rows.append(row)
+      if let row = row {
+        rows.append(row)
+      }
     }
 
     let section = SectionFormer(rowFormers: rows)
     self.former.add(sectionFormers: [section])
   }
 
-  private func setupFeedListBindings(forRow row: InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>, fieldId: String) {
+  private func setupFeedListBindings(forRow row: InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>, field: AppConfigFieldFeed) {
     self.viewModel.feedListHelper.feeds
       .startWith([])
       .drive(onNext: { [weak self] feeds in
         guard let strongSelf = self else { return }
 
         row.update { row in
-          let selectedFeedId = (strongSelf.data[fieldId] as? String) ?? "-1"
+          var selectedFeedId: String? = strongSelf.data[field.id] as? String
+
           var selectedIndex = 0
           var pickerItems: [InlinePickerItem<FeedListHelper.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
           for (i, feed) in feeds.enumerated() {
-            if feed.feedId == selectedFeedId {
-              selectedIndex = i + 1
+            if let selectedFeedId = selectedFeedId {
+              if feed.feedId == selectedFeedId {
+                selectedIndex = i + 1
+              }
+            } else {
+              if feed.name == field.defaultName {
+                selectedIndex = i + 1
+                selectedFeedId = feed.feedId
+              }
             }
             pickerItems.append(InlinePickerItem(title: "(\(feed.feedId)) \(feed.name)", value: feed))
           }
+
           row.pickerItems = pickerItems
           row.selectedRow = selectedIndex
+
+          if selectedIndex > 0 {
+            strongSelf.data[field.id] = selectedFeedId
+          } else {
+            strongSelf.data.removeValue(forKey: field.id)
+          }
         }
         })
       .addDisposableTo(self.disposeBag)
@@ -111,7 +131,7 @@ class AppConfigViewController: FormViewController {
       }
       .subscribe(onNext: { [weak self] in
         guard let strongSelf = self else { return }
-        strongSelf.data[fieldId] = $0.feedId
+        strongSelf.data[field.id] = $0.feedId
       })
       .addDisposableTo(self.disposeBag)
   }
