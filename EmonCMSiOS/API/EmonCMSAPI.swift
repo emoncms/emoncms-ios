@@ -50,6 +50,9 @@ class EmonCMSAPI {
     }
 
     return self.requestProvider.request(url: url)
+      .do(onError: { error in
+        AppLog.info("Network request error: \(error)")
+      })
   }
 
   func feedList(_ account: Account) -> Observable<[Feed]> {
