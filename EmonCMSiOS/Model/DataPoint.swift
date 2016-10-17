@@ -17,11 +17,13 @@ struct DataPoint {
 
 extension DataPoint {
 
-  static func from(dataArray: [Double]) -> DataPoint? {
-    guard dataArray.count == 2 else { return nil }
+  static func from(json: [Any]) -> DataPoint? {
+    guard json.count == 2 else { return nil }
 
-    let time = Date(timeIntervalSince1970: Double(dataArray[0]) / 1000)
-    let value = Double(dataArray[1])
+    guard let timeDouble = Double(json[0]) else { return nil }
+    guard let value = Double(json[1]) else { return nil }
+
+    let time = Date(timeIntervalSince1970: timeDouble / 1000)
 
     return DataPoint(time: time, value: value)
   }

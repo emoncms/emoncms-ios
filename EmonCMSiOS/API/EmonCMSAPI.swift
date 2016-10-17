@@ -114,7 +114,7 @@ class EmonCMSAPI {
       guard let typedDataPoint = dataPointJson as? [Double] else {
         continue
       }
-      if let dataPoint = DataPoint.from(dataArray: typedDataPoint) {
+      if let dataPoint = DataPoint.from(json: typedDataPoint) {
         dataPoints.append(dataPoint)
       }
     }

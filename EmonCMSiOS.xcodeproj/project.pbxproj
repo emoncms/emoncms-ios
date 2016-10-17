@@ -24,6 +24,7 @@
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
 		C96233FB1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */; };
+		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
 		C97284D61DA594C20010C7B7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
 		C97284D91DA594C20010C7B7 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284D81DA594C20010C7B7 /* TodayViewController.swift */; };
 		C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */; };
@@ -134,6 +135,7 @@
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C957CCED1D9086E40039D707 /* Charts+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Charts+Rx.swift"; sourceTree = "<group>"; };
 		C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppConfigViewModel.swift; sourceTree = "<group>"; };
+		C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Emoncms.swift"; sourceTree = "<group>"; };
 		C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97284D51DA594C20010C7B7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		C97284D81DA594C20010C7B7 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
 				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
 				C93C92B21D98196C009FE70D /* SharedConstants.swift */,
+				C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -752,6 +755,7 @@
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
 				C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */,
+				C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9C240CC1D91742D00BC302C /* ChartDataSet.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
