@@ -95,6 +95,7 @@ final class MyElectricAppViewModel {
         guard let strongSelf = self else { return Observable.empty() }
         return strongSelf.update()
           .catchError { [weak self] error in
+            AppLog.error("Failed to update: \(error)")
             let typedError = error as? MyElectricAppError ?? .generic
             self?.errorsSubject.onNext(typedError)
             return Observable.empty()
