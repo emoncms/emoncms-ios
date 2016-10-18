@@ -1,4 +1,7 @@
 PODS:
+  - Action (2.0.0-beta.1):
+    - RxCocoa
+    - RxSwift
   - Charts (3.0.0):
     - Charts/Core (= 3.0.0)
   - Charts/Core (3.0.0)
@@ -27,6 +30,7 @@ PODS:
   - XCGLogger/Core (4.0.0)
 
 DEPENDENCIES:
+  - Action (~> 2.0.0-beta.1)
   - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
   - Former (~> 1.5)
   - Locksmith (~> 3.0)
@@ -52,6 +56,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/danielgindi/Charts.git
 
 SPEC CHECKSUMS:
+  Action: 13a8e52481834751caf428bcf6c527e3db2aefc7
   Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
   Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
@@ -66,6 +71,6 @@ SPEC CHECKSUMS:
   RxTests: 9b696439878a1c7653bb55853af027fc261d0635
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: fe37d8adb90bd376514c3ed9e09320038f23138c
+PODFILE CHECKSUM: 9e514ddc580b8819001875c9f6a5968c9c0a3ab5
 
 COCOAPODS: 1.1.0.rc.2

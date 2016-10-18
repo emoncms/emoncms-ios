@@ -9,6 +9,7 @@
 import UIKit
 
 import RxSwift
+import Action
 import Former
 
 protocol AddAccountViewControllerDelegate: class {
@@ -91,50 +92,42 @@ class AddAccountViewController: FormViewController {
   }
 
   private func setupBindings() {
-    self.viewModel.canSave()
-      .asDriver(onErrorJustReturn: false)
-      .drive(self.navigationItem.rightBarButtonItem!.rx.enabled)
-      .addDisposableTo(self.disposeBag)
+    let action = CocoaAction(enabledIf: self.viewModel.canSave()) { [weak self] _ -> Observable<Void> in
+      guard let strongSelf = self else { return Observable.empty() }
 
-    Observable
-      .combineLatest(self.navigationItem.rightBarButtonItem!.rx.tap, self.viewModel.canSave().asObservable()) { $1 }
-      .filter { $0 == true }
-      .flatMapLatest { [weak self] _ -> Observable<()> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.viewModel.validate()
-          .observeOn(MainScheduler.asyncInstance)
-          .do(onNext: { [weak self] account in
-            guard let strongSelf = self else { return }
-            strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+      return strongSelf.viewModel.validate()
+        .observeOn(MainScheduler.asyncInstance)
+        .do(onNext: { [weak self] account in
+          guard let strongSelf = self else { return }
+          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
           })
-          .catchError { [weak self] error in
-            guard let strongSelf = self else { return Observable.empty() }
+        .catchError { [weak self] error in
+          guard let strongSelf = self else { return Observable.empty() }
 
-            AppLog.info("Login failed: \(error)")
+          AppLog.info("Login failed: \(error)")
 
-            let message: String
-            if let error = error as? AddAccountViewModel.AddAccountError {
-              switch error {
-              case .httpsRequired:
-                message = "HTTPS is required."
-              case .invalidCredentials:
-                message = "The credentials are invalid."
-              case .networkFailed:
-                message = "The connection failed. Please try again."
-              }
-            } else {
-              message = "An unknown error ocurred."
+          let message: String
+          if let error = error as? AddAccountViewModel.AddAccountError {
+            switch error {
+            case .httpsRequired:
+              message = "HTTPS is required."
+            case .invalidCredentials:
+              message = "The credentials are invalid."
+            case .networkFailed:
+              message = "The connection failed. Please try again."
             }
-
-            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            strongSelf.present(alert, animated: true, completion: nil)
-            return Observable.empty()
+          } else {
+            message = "An unknown error ocurred."
           }
-          .becomeVoid()
-      }
-      .subscribe()
-      .addDisposableTo(self.disposeBag)
+
+          let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+          strongSelf.present(alert, animated: true, completion: nil)
+          return Observable.empty()
+        }
+        .becomeVoid()
+    }
+    self.navigationItem.rightBarButtonItem!.rx_action = action
   }
 
   private func presentScanQR() {
