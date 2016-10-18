@@ -13,7 +13,9 @@ import RxSwift
 class AddAccountViewModel {
 
   enum AddAccountError: Error {
-    case IncorrectCredentials
+    case httpsRequired
+    case networkFailed
+    case invalidCredentials
   }
 
   let api: EmonCMSAPI
@@ -34,11 +36,27 @@ class AddAccountViewModel {
   }
 
   func validate() -> Observable<Account> {
-    let account = Account(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
+    let url = self.url.value
+    if !url.hasPrefix("https") {
+      return Observable.error(AddAccountError.httpsRequired)
+    }
+
+    let account = Account(uuid: UUID(), url: url, apikey: self.apikey.value)
     return self.api.feedList(account)
-      .catchError { (_) -> Observable<[Feed]> in
-        // TODO: Probably check what the actual error is here. If it's a network error, we could have a different error thrown
-        throw AddAccountError.IncorrectCredentials
+      .catchError { error -> Observable<[Feed]> in
+        let returnError: AddAccountError
+        if let error = error as? EmonCMSAPI.EmonCMSAPIError {
+          switch error {
+          case .invalidCredentials:
+            returnError = .invalidCredentials
+          default:
+            returnError = .networkFailed
+          }
+        } else {
+          returnError = .networkFailed
+        }
+
+        return Observable.error(returnError)
       }
       .map { _ in
         return account

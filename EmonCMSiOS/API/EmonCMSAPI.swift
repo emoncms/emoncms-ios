@@ -14,10 +14,11 @@ class EmonCMSAPI {
 
   private let requestProvider: HTTPRequestProvider
 
-  private enum EmonCMSAPIError: Error {
-    case FailedToCreateURL
-    case RequestFailed
-    case InvalidResponse
+  enum EmonCMSAPIError: Error {
+    case failedToCreateURL
+    case requestFailed
+    case invalidCredentials
+    case invalidResponse
   }
 
   init(requestProvider: HTTPRequestProvider) {
@@ -27,7 +28,7 @@ class EmonCMSAPI {
   private class func buildURL(_ account: Account, path: String, queryItems: [String:String] = [:]) throws -> URL {
     let fullUrl = account.url + "/feed/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
-      throw EmonCMSAPIError.FailedToCreateURL
+      throw EmonCMSAPIError.failedToCreateURL
     }
 
     var allQueryItems = queryItems
@@ -37,7 +38,7 @@ class EmonCMSAPI {
     if let url = urlBuilder.url {
       return url
     } else {
-      throw EmonCMSAPIError.FailedToCreateURL
+      throw EmonCMSAPIError.failedToCreateURL
     }
   }
 
@@ -50,16 +51,34 @@ class EmonCMSAPI {
     }
 
     return self.requestProvider.request(url: url)
-      .do(onError: { error in
+      .catchError { error -> Observable<Data> in
         AppLog.info("Network request error: \(error)")
-      })
+
+        let returnError: EmonCMSAPIError
+        if let error = error as? HTTPRequestProviderError {
+          switch error {
+          case .httpError(let code):
+            if code == 401 {
+              returnError = .invalidCredentials
+            } else {
+              returnError = .requestFailed
+            }
+          case .networkError, .unknown:
+            returnError = .requestFailed
+          }
+        } else {
+          returnError = .requestFailed
+        }
+
+        return Observable.error(returnError)
+      }
   }
 
   func feedList(_ account: Account) -> Observable<[Feed]> {
     return self.request(account, path: "list").map { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
-        throw EmonCMSAPIError.InvalidResponse
+        throw EmonCMSAPIError.invalidResponse
       }
 
       var feeds: [Feed] = []
@@ -83,7 +102,7 @@ class EmonCMSAPI {
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
-          throw EmonCMSAPIError.InvalidResponse
+          throw EmonCMSAPIError.invalidResponse
       }
 
       return feed
@@ -99,7 +118,7 @@ class EmonCMSAPI {
     return self.request(account, path: "get", queryItems: queryItems).map { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = json as? String else {
-          throw EmonCMSAPIError.InvalidResponse
+          throw EmonCMSAPIError.invalidResponse
       }
 
       return value
@@ -109,7 +128,7 @@ class EmonCMSAPI {
   private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
       let dataPointsJson = json as? [Any] else {
-        throw EmonCMSAPIError.InvalidResponse
+        throw EmonCMSAPIError.invalidResponse
     }
 
     var dataPoints: [DataPoint] = []
@@ -158,7 +177,7 @@ class EmonCMSAPI {
     return self.request(account, path: "value", queryItems: queryItems).map { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = Double(json) else {
-          throw EmonCMSAPIError.InvalidResponse
+          throw EmonCMSAPIError.invalidResponse
       }
 
       return value
@@ -173,13 +192,13 @@ class EmonCMSAPI {
     return self.request(account, path: "fetch", queryItems: queryItems).map { resultData -> [String:Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let array = json as? [Any] else {
-          throw EmonCMSAPIError.InvalidResponse
+          throw EmonCMSAPIError.invalidResponse
       }
 
       var results: [String:Double] = [:]
       for (id, valueAny) in zip(ids, array) {
         guard let value = Double(valueAny) else {
-            throw EmonCMSAPIError.InvalidResponse
+            throw EmonCMSAPIError.invalidResponse
         }
 
         results[id] = value

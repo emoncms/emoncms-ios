@@ -10,6 +10,12 @@ import Foundation
 
 import RxSwift
 
+enum HTTPRequestProviderError: Error {
+  case unknown
+  case networkError
+  case httpError(code: Int)
+}
+
 protocol HTTPRequestProvider {
 
   func request(url: URL) -> Observable<Data>

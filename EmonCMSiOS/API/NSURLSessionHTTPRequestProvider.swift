@@ -13,10 +13,6 @@ import RxCocoa
 
 final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
 
-  enum NSURLSessionHTTPRequestProviderError: Error {
-    case RequestFailed
-  }
-
   private let session: URLSession
 
   init() {
@@ -27,6 +23,23 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
 
   func request(url: URL) -> Observable<Data> {
     return self.session.rx.data(URLRequest(url: url))
+      .catchError { error -> Observable<Data> in
+        let returnError: HTTPRequestProviderError
+        if let error = error as? RxCocoaURLError {
+          switch error {
+          case .httpRequestFailed(let response, _):
+            returnError = .httpError(code: response.statusCode)
+          case .nonHTTPResponse(_):
+            returnError = .networkError
+          case .unknown, .deserializationError(_):
+            returnError = .unknown
+          }
+        } else {
+          returnError = .unknown
+        }
+
+        return Observable.error(returnError)
+      }
   }
 
 }
