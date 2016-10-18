@@ -88,32 +88,37 @@ class AppConfigViewController: FormViewController {
         guard let strongSelf = self else { return }
 
         row.update { row in
-          var selectedFeedId: String? = strongSelf.data[field.id] as? String
-
-          var selectedIndex = 0
           var pickerItems: [InlinePickerItem<FeedListHelper.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
-          for (i, feed) in feeds.enumerated() {
-            if let selectedFeedId = selectedFeedId {
-              if feed.feedId == selectedFeedId {
-                selectedIndex = i + 1
+          var selectedIndex = 0
+
+          if feeds.count > 0 {
+            var selectedFeedId: String? = strongSelf.data[field.id] as? String
+            for (i, feed) in feeds.enumerated() {
+              if let selectedFeedId = selectedFeedId {
+                // If we have a selected feed, see if this is it
+                if feed.feedId == selectedFeedId {
+                  selectedIndex = i + 1
+                }
+              } else {
+                // If we don't have a selected feed, see if this is the default feed, by name
+                if feed.name == field.defaultName {
+                  selectedIndex = i + 1
+                  selectedFeedId = feed.feedId
+                }
               }
-            } else {
-              if feed.name == field.defaultName {
-                selectedIndex = i + 1
-                selectedFeedId = feed.feedId
-              }
+
+              pickerItems.append(InlinePickerItem(title: "(\(feed.feedId)) \(feed.name)", value: feed))
             }
-            pickerItems.append(InlinePickerItem(title: "(\(feed.feedId)) \(feed.name)", value: feed))
+
+            if selectedIndex > 0 {
+              strongSelf.data[field.id] = selectedFeedId
+            } else {
+              strongSelf.data.removeValue(forKey: field.id)
+            }
           }
 
           row.pickerItems = pickerItems
           row.selectedRow = selectedIndex
-
-          if selectedIndex > 0 {
-            strongSelf.data[field.id] = selectedFeedId
-          } else {
-            strongSelf.data.removeValue(forKey: field.id)
-          }
         }
         })
       .addDisposableTo(self.disposeBag)
