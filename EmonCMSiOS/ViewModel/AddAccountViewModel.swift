@@ -29,7 +29,8 @@ class AddAccountViewModel {
     return Observable
       .combineLatest(self.url.asObservable(), self.apikey.asObservable()) { url, apikey in
         return !url.isEmpty && !apikey.isEmpty
-    }
+      }
+      .distinctUntilChanged()
   }
 
   func validate() -> Observable<Account> {
