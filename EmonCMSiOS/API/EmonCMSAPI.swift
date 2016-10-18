@@ -157,8 +157,7 @@ class EmonCMSAPI {
 
     return self.request(account, path: "value", queryItems: queryItems).map { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
-        let string = json as? String,
-        let value = Double(string) else {
+        let value = Double(json) else {
           throw EmonCMSAPIError.InvalidResponse
       }
 
@@ -179,8 +178,7 @@ class EmonCMSAPI {
 
       var results: [String:Double] = [:]
       for (id, valueAny) in zip(ids, array) {
-        guard let valueString = valueAny as? String,
-          let value = Double(valueString) else {
+        guard let value = Double(valueAny) else {
             throw EmonCMSAPIError.InvalidResponse
         }
 
