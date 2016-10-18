@@ -9,7 +9,7 @@
 import Quick
 import Nimble
 import RxSwift
-import RxTests
+import RxTest
 @testable import EmonCMSiOS
 
 class EmonCMSAPITests: QuickSpec {

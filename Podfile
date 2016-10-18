@@ -2,8 +2,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 use_frameworks!
 
 def shared_pods
-    pod 'RxSwift', '~> 3.0.0-beta.2'
-    pod 'RxCocoa', '~> 3.0.0-beta.2'
+    pod 'RxSwift', '~> 3.0.0-rc.1'
+    pod 'RxCocoa', '~> 3.0.0-rc.1'
     pod 'Realm', '~> 2.0'
     pod 'RealmSwift', '~> 2.0'
 end
@@ -32,7 +32,7 @@ target 'EmonCMSiOSTests' do
 
     pod 'Quick', '~> 0.10'
     pod 'Nimble', '~> 5.0'
-    pod 'RxTests', '~> 3.0.0-beta.2'
+    pod 'RxTest', '~> 3.0.0-rc.1'
 end
 
 target 'EmonCMSToday' do
