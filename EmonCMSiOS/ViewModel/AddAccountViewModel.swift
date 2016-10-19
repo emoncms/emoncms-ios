@@ -36,12 +36,7 @@ class AddAccountViewModel {
   }
 
   func validate() -> Observable<Account> {
-    let url = self.url.value
-    if !url.hasPrefix("https") {
-      return Observable.error(AddAccountError.httpsRequired)
-    }
-
-    let account = Account(uuid: UUID(), url: url, apikey: self.apikey.value)
+    let account = Account(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
     return self.api.feedList(account)
       .catchError { error -> Observable<[Feed]> in
         let returnError: AddAccountError
@@ -49,6 +44,8 @@ class AddAccountViewModel {
           switch error {
           case .invalidCredentials:
             returnError = .invalidCredentials
+          case .atsFailed:
+            returnError = .httpsRequired
           default:
             returnError = .networkFailed
           }

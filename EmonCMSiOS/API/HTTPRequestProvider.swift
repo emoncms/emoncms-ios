@@ -13,6 +13,7 @@ import RxSwift
 enum HTTPRequestProviderError: Error {
   case unknown
   case networkError
+  case atsFailed
   case httpError(code: Int)
 }
 

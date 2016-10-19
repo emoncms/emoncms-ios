@@ -17,6 +17,7 @@ class EmonCMSAPI {
   enum EmonCMSAPIError: Error {
     case failedToCreateURL
     case requestFailed
+    case atsFailed
     case invalidCredentials
     case invalidResponse
   }
@@ -63,6 +64,8 @@ class EmonCMSAPI {
             } else {
               returnError = .requestFailed
             }
+          case .atsFailed:
+            returnError = .atsFailed
           case .networkError, .unknown:
             returnError = .requestFailed
           }

@@ -35,7 +35,12 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
             returnError = .unknown
           }
         } else {
-          returnError = .unknown
+          let nsError = error as NSError
+          if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorAppTransportSecurityRequiresSecureConnection {
+            returnError = .atsFailed
+          } else {
+            returnError = .unknown
+          }
         }
 
         return Observable.error(returnError)
