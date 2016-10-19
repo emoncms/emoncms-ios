@@ -38,6 +38,7 @@
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
 		C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF4131D9042CE00BBF80D /* ChartCell.swift */; };
+		C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */; };
 		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
@@ -151,6 +152,7 @@
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C99DF4131D9042CE00BBF80D /* ChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
+		C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewModelTests.swift; sourceTree = "<group>"; };
 		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
 		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
@@ -260,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
+				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
 			);
@@ -702,6 +705,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
+				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
