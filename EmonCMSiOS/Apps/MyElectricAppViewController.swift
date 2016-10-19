@@ -140,6 +140,7 @@ extension MyElectricAppViewController {
     let yAxis = lineChart.leftAxis
     yAxis.labelPosition = .insideChart
     yAxis.drawTopYLabelEntryEnabled = false
+    yAxis.drawZeroLineEnabled = true
     yAxis.drawGridLinesEnabled = false
     yAxis.drawAxisLineEnabled = false
     yAxis.labelTextColor = .black
