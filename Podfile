@@ -21,8 +21,7 @@ target 'EmonCMSiOS' do
 
     pod 'RxDataSources', '~> 1.0.0-beta.1'
     pod 'Action', '~> 2.0.0-beta.1'
-    pod 'Charts', :git => 'https://github.com/danielgindi/Charts.git', branch: 'master'
-#    pod 'Charts/Realm', :git => 'https://github.com/danielgindi/Charts.git', branch: 'master'
+    pod 'Charts', '~> 3.0'
     pod 'Former', '~> 1.5'
 end
 

@@ -31,7 +31,7 @@ PODS:
 
 DEPENDENCIES:
   - Action (~> 2.0.0-beta.1)
-  - Charts (from `https://github.com/danielgindi/Charts.git`, branch `master`)
+  - Charts (~> 3.0)
   - Former (~> 1.5)
   - Locksmith (~> 3.0)
   - Nimble (~> 5.0)
@@ -45,19 +45,9 @@ DEPENDENCIES:
   - RxTest (~> 3.0.0-rc.1)
   - XCGLogger (~> 4.0)
 
-EXTERNAL SOURCES:
-  Charts:
-    :branch: master
-    :git: https://github.com/danielgindi/Charts.git
-
-CHECKOUT OPTIONS:
-  Charts:
-    :commit: 5cdc3bd027b084f68fb9c940b0f214c6f21ed94b
-    :git: https://github.com/danielgindi/Charts.git
-
 SPEC CHECKSUMS:
   Action: 13a8e52481834751caf428bcf6c527e3db2aefc7
-  Charts: 3f0da988b104c8e5f069fcef55da699f597dac67
+  Charts: beb341928d2135613b4325a6c6aff9f2f6de895e
   Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
@@ -71,6 +61,6 @@ SPEC CHECKSUMS:
   RxTest: e7044409e1db9d2a4968ede599909c7a41539256
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: 8b4868b7efc19f1cbb45cf7e88edda53eb868598
+PODFILE CHECKSUM: 477658d8c522d2d4a22c9cac4d93fb3826f1b39d
 
 COCOAPODS: 1.1.0
