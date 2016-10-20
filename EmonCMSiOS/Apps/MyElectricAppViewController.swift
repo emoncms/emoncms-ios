@@ -212,7 +212,6 @@ extension MyElectricAppViewController {
 
         dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
-        self.lineChart.notifyDataSetChanged()
       } else {
         let dataSet = LineChartDataSet(values: entries, label: nil)
         dataSet.setColor(EmonCMSColors.Chart.Blue)
@@ -232,6 +231,8 @@ extension MyElectricAppViewController {
     } else {
       self.lineChart.data = nil
     }
+
+    self.lineChart.notifyDataSetChanged()
   }
 
   fileprivate func updateBarChartData(_ dataPoints: [DataPoint]?) {
@@ -256,7 +257,6 @@ extension MyElectricAppViewController {
 
         dataSet.notifyDataSetChanged()
         data.notifyDataChanged()
-        self.barChart.notifyDataSetChanged()
       } else {
         let dataSet = BarChartDataSet(values: entries, label: "kWh")
         dataSet.setColor(EmonCMSColors.Chart.Blue)
@@ -270,6 +270,8 @@ extension MyElectricAppViewController {
     } else {
       self.barChart.data = nil
     }
+
+    self.barChart.notifyDataSetChanged()
   }
 
 }
