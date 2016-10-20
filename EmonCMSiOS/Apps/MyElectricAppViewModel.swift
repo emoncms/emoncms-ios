@@ -17,6 +17,7 @@ final class MyElectricAppViewModel {
   enum MyElectricAppError: Error {
     case generic
     case notConfigured
+    case initialFailed
     case updateFailed
   }
 
@@ -68,15 +69,14 @@ final class MyElectricAppViewModel {
 
     let timerIfActive = self.active.asObservable()
       .distinctUntilChanged()
-      .flatMapLatest { active -> Observable<()> in
+      .flatMapLatest { active -> Observable<Int> in
         if (active) {
           return Observable<Int>.interval(10.0, scheduler: MainScheduler.asyncInstance)
-            .becomeVoid()
-            .startWith(())
         } else {
           return Observable.never()
         }
       }
+      .becomeVoid()
 
     let feedsChangedSignal = Observable.combineLatest(self.appData.rx.observe(String.self, "useFeedId"), self.appData.rx.observe(String.self, "kwhFeedId")) {
         ($0, $1)
@@ -88,25 +88,28 @@ final class MyElectricAppViewModel {
 
     let refreshSignal = Observable.of(
         timerIfActive.map { false },
-        feedsChangedSignal.skip(1).map { true }
+        feedsChangedSignal.map { true }
       )
       .merge()
 
     self.data = refreshSignal
-      .flatMapFirst { [weak self] refresh -> Observable<MyElectricData?> in
+      .flatMapFirst { [weak self] isFirst -> Observable<MyElectricData?> in
         guard let strongSelf = self else { return Observable.empty() }
 
         let update: Observable<MyElectricData?> = strongSelf.update()
           .catchError { [weak self] error in
             AppLog.error("Failed to update: \(error)")
-            let typedError = error as? MyElectricAppError ?? .generic
+            var typedError = error as? MyElectricAppError ?? .generic
+            if typedError == .updateFailed && isFirst {
+              typedError = .initialFailed
+            }
             self?.errorsSubject.onNext(typedError)
             return Observable.empty()
           }
           .map { $0 }
           .trackActivity(isRefreshing)
 
-        if refresh {
+        if isFirst {
           return Observable<MyElectricData?>.just(nil)
             .concat(update)
         } else {
@@ -136,6 +139,9 @@ final class MyElectricAppViewModel {
                             usageToday: powerNowAndUsageToday.1,
                             lineChartData: lineChartData,
                             barChartData: barChartData)
+    }
+    .catchError { _ in
+      return Observable.error(MyElectricAppError.updateFailed)
     }
   }
 
