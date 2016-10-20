@@ -93,15 +93,16 @@ final class MainController {
     settingsViewController.delegate = self
     settingsViewController.viewModel = SettingsViewModel(account: account, api: self.api)
 
-    self.window.rootViewController = rootViewController
-
     if let vc = self.addAccountViewStack {
       let screenshotViewController = ScreenshotViewController(viewToScreenshot: vc.view)
+      self.window.rootViewController = rootViewController
       rootViewController.present(screenshotViewController, animated: false) {
         rootViewController.dismiss(animated: true) {
           self.addAccountViewStack = nil
         }
       }
+    } else {
+      self.window.rootViewController = rootViewController
     }
   }
 
