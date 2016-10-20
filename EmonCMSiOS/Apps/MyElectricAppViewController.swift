@@ -50,19 +50,35 @@ class MyElectricAppViewController: UIViewController {
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.data
-      .map { $0.powerNow }
-      .map { $0.prettyFormat() + "W" }
+      .map { $0?.powerNow }
+      .map {
+        let value: String
+        if let powerNow = $0 {
+          value = powerNow.prettyFormat()
+        } else {
+          value = "- "
+        }
+        return value + "W"
+      }
       .drive(self.powerLabel.rx.text)
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.data
-      .map { $0.usageToday }
-      .map { $0.prettyFormat() + "kWh" }
+      .map { $0?.usageToday }
+      .map {
+        let value: String
+        if let usageToday = $0 {
+          value = usageToday.prettyFormat()
+        } else {
+          value = "- "
+        }
+        return value + "kWh"
+      }
       .drive(self.usageTodayLabel.rx.text)
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.data
-      .map { $0.lineChartData }
+      .map { $0?.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
         strongSelf.updateLineChartData(dataPoints)
@@ -70,7 +86,7 @@ class MyElectricAppViewController: UIViewController {
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.data
-      .map { $0.barChartData }
+      .map { $0?.barChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
         strongSelf.updateBarChartData(dataPoints)
@@ -126,7 +142,8 @@ extension MyElectricAppViewController {
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
     lineChart.chartDescription = nil
-    lineChart.noDataText = ""
+    lineChart.noDataText = "Loading data..."
+    lineChart.noDataTextColor = .black
     lineChart.isUserInteractionEnabled = false
 
     let xAxis = lineChart.xAxis
@@ -145,9 +162,6 @@ extension MyElectricAppViewController {
     yAxis.drawGridLinesEnabled = false
     yAxis.drawAxisLineEnabled = false
     yAxis.labelTextColor = .black
-
-    let data = LineChartData()
-    lineChart.data = data
   }
 
   fileprivate func setupBarChart() {
@@ -160,7 +174,8 @@ extension MyElectricAppViewController {
     barChart.leftAxis.enabled = false
     barChart.rightAxis.enabled = false
     barChart.chartDescription = nil
-    barChart.noDataText = ""
+    barChart.noDataText = "Loading data..."
+    barChart.noDataTextColor = .black
     barChart.isUserInteractionEnabled = false
     barChart.extraBottomOffset = 2
     barChart.drawValueAboveBarEnabled = true
@@ -174,80 +189,87 @@ extension MyElectricAppViewController {
     xAxis.drawLabelsEnabled = true
     xAxis.granularity = 1
     xAxis.labelCount = 14
-
-    let data = BarChartData()
-    barChart.data = data
   }
 
-  fileprivate func updateLineChartData(_ dataPoints: [DataPoint]) {
-    guard let data = self.lineChart.data else { return }
+  fileprivate func updateLineChartData(_ dataPoints: [DataPoint]?) {
+    if let dataPoints = dataPoints {
+      var entries: [ChartDataEntry] = []
+      for point in dataPoints {
+        let x = point.time.timeIntervalSince1970
+        let y = point.value
 
-    var entries: [ChartDataEntry] = []
-    for point in dataPoints {
-      let x = point.time.timeIntervalSince1970
-      let y = point.value
-
-      let yDataEntry = ChartDataEntry(x: x, y: y)
-      entries.append(yDataEntry)
-    }
-
-    let dataSet: IChartDataSet
-    if let ds = data.getDataSetByIndex(0) {
-      ds.clear()
-      for entry in entries {
-        _ = ds.addEntry(entry)
+        let yDataEntry = ChartDataEntry(x: x, y: y)
+        entries.append(yDataEntry)
       }
-      dataSet = ds
-    } else {
-      let ds = LineChartDataSet(values: entries, label: nil)
-      ds.setColor(EmonCMSColors.Chart.Blue)
-      ds.fillColor = EmonCMSColors.Chart.Blue
-      ds.valueTextColor = .black
-      ds.drawFilledEnabled = true
-      ds.drawCirclesEnabled = false
-      ds.drawValuesEnabled = false
-      ds.highlightEnabled = false
-      ds.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-      data.addDataSet(ds)
-      dataSet = ds
-    }
 
-    dataSet.notifyDataSetChanged()
-    data.notifyDataChanged()
-    self.lineChart.notifyDataSetChanged()
+      if let data = self.lineChart.data,
+        let dataSet = data.getDataSetByIndex(0)
+      {
+        dataSet.clear()
+        for entry in entries {
+          _ = dataSet.addEntry(entry)
+        }
+
+        dataSet.notifyDataSetChanged()
+        data.notifyDataChanged()
+        self.lineChart.notifyDataSetChanged()
+      } else {
+        let dataSet = LineChartDataSet(values: entries, label: nil)
+        dataSet.setColor(EmonCMSColors.Chart.Blue)
+        dataSet.fillColor = EmonCMSColors.Chart.Blue
+        dataSet.valueTextColor = .black
+        dataSet.drawFilledEnabled = true
+        dataSet.drawCirclesEnabled = false
+        dataSet.drawValuesEnabled = false
+        dataSet.highlightEnabled = false
+        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+
+        let data = LineChartData()
+        data.addDataSet(dataSet)
+
+        self.lineChart.data = data
+      }
+    } else {
+      self.lineChart.data = nil
+    }
   }
 
-  fileprivate func updateBarChartData(_ dataPoints: [DataPoint]) {
-    guard let data = self.barChart.data else { return }
+  fileprivate func updateBarChartData(_ dataPoints: [DataPoint]?) {
+    if let dataPoints = dataPoints {
+      var entries: [ChartDataEntry] = []
+      for point in dataPoints {
+        // 'x' here means the offset in days from 'today'
+        let x = floor(point.time.timeIntervalSinceNow / 86400)
+        let y = point.value
 
-    var entries: [ChartDataEntry] = []
-    for point in dataPoints {
-      // 'x' here means the offset in days from 'today'
-      let x = floor(point.time.timeIntervalSinceNow / 86400)
-      let y = point.value
-
-      let yDataEntry = BarChartDataEntry(x: x, y: y)
-      entries.append(yDataEntry)
-    }
-
-    let dataSet: IChartDataSet
-    if let ds = data.getDataSetByIndex(0) {
-      ds.clear()
-      for entry in entries {
-        _ = ds.addEntry(entry)
+        let yDataEntry = BarChartDataEntry(x: x, y: y)
+        entries.append(yDataEntry)
       }
-      dataSet = ds
-    } else {
-      let ds = BarChartDataSet(values: entries, label: "kWh")
-      ds.setColor(EmonCMSColors.Chart.Blue)
-      ds.valueTextColor = .black
-      data.addDataSet(ds)
-      dataSet = ds
-    }
 
-    dataSet.notifyDataSetChanged()
-    data.notifyDataChanged()
-    self.barChart.notifyDataSetChanged()
+      if let data = self.barChart.data,
+        let dataSet = data.getDataSetByIndex(0)
+      {
+        dataSet.clear()
+        for entry in entries {
+          _ = dataSet.addEntry(entry)
+        }
+
+        dataSet.notifyDataSetChanged()
+        data.notifyDataChanged()
+        self.barChart.notifyDataSetChanged()
+      } else {
+        let dataSet = BarChartDataSet(values: entries, label: "kWh")
+        dataSet.setColor(EmonCMSColors.Chart.Blue)
+        dataSet.valueTextColor = .black
+
+        let data = BarChartData()
+        data.addDataSet(dataSet)
+
+        self.barChart.data = data
+      }
+    } else {
+      self.barChart.data = nil
+    }
   }
 
 }

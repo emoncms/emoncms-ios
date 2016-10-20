@@ -32,7 +32,7 @@ final class MyElectricAppViewModel {
 
   // Outputs
   private(set) var title: Driver<String>
-  private(set) var data: Driver<MyElectricData>
+  private(set) var data: Driver<MyElectricData?>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
   private(set) var errors: Driver<MyElectricAppError>
@@ -102,7 +102,9 @@ final class MyElectricAppViewModel {
           }
           .trackActivity(isRefreshing)
       }
-      .asDriver(onErrorJustReturn: MyElectricData(powerNow: 0.0, usageToday: 0.0, lineChartData: [], barChartData: []))
+      .map { $0 }
+      .startWith(nil)
+      .asDriver(onErrorJustReturn: nil)
   }
 
   func configViewModel() -> MyElectricAppConfigViewModel {
