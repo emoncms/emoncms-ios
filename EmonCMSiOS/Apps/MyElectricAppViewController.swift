@@ -127,6 +127,7 @@ extension MyElectricAppViewController {
     lineChart.rightAxis.enabled = false
     lineChart.chartDescription = nil
     lineChart.noDataText = ""
+    lineChart.isUserInteractionEnabled = false
 
     let xAxis = lineChart.xAxis
     xAxis.drawAxisLineEnabled = false
