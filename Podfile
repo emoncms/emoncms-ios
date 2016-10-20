@@ -19,7 +19,7 @@ target 'EmonCMSiOS' do
     shared_pods
     shared_app_pods
 
-    pod 'RxDataSources', '~> 1.0.0-beta.1'
+    pod 'RxDataSources', '~> 1.0.0-rc.2'
     pod 'Action', '~> 2.0.0-beta.1'
     pod 'Charts', '~> 3.0'
     pod 'Former', '~> 1.5'
