@@ -207,6 +207,7 @@ extension MyElectricAppViewController {
       ds.drawCirclesEnabled = false
       ds.drawValuesEnabled = false
       ds.highlightEnabled = false
+      ds.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
       data.addDataSet(ds)
       dataSet = ds
     }
