@@ -84,25 +84,35 @@ final class MyElectricAppViewModel {
       .distinctUntilChanged {
         $0.0 == $1.0 && $0.1 == $1.1
       }
-      .skip(1) // Skip 1 because we only want to be notified when this changes after the first time the signal is created
       .becomeVoid()
 
-    let refreshSignal = Observable.of(timerIfActive, feedsChangedSignal)
+    let refreshSignal = Observable.of(
+        timerIfActive.map { false },
+        feedsChangedSignal.skip(1).map { true }
+      )
       .merge()
 
     self.data = refreshSignal
-      .flatMapFirst { [weak self] () -> Observable<MyElectricData> in
+      .flatMapFirst { [weak self] refresh -> Observable<MyElectricData?> in
         guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.update()
+
+        let update: Observable<MyElectricData?> = strongSelf.update()
           .catchError { [weak self] error in
             AppLog.error("Failed to update: \(error)")
             let typedError = error as? MyElectricAppError ?? .generic
             self?.errorsSubject.onNext(typedError)
             return Observable.empty()
           }
+          .map { $0 }
           .trackActivity(isRefreshing)
+
+        if refresh {
+          return Observable<MyElectricData?>.just(nil)
+            .concat(update)
+        } else {
+          return update
+        }
       }
-      .map { $0 }
       .startWith(nil)
       .asDriver(onErrorJustReturn: nil)
   }
