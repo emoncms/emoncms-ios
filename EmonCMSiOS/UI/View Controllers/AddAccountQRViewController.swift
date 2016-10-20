@@ -20,8 +20,9 @@ class AddAccountQRViewController: UIViewController {
 
   @IBOutlet var playerLayerView: UIView!
 
-  var captureSession: AVCaptureSession?
-  var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+  private var captureSession: AVCaptureSession?
+  private var videoPreviewLayer: AVCaptureVideoPreviewLayer?
+  fileprivate var foundAccount = false
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -128,6 +129,8 @@ class AddAccountQRViewController: UIViewController {
 extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
   func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+    guard self.foundAccount == false else { return }
+
     guard let metadataObjects = metadataObjects,
       metadataObjects.count > 0
       else {
@@ -145,8 +148,9 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
       return
     }
 
-    let account = Account(uuid: UUID(), url: result.host, apikey: result.apikey)
+    self.foundAccount = true
     DispatchQueue.main.async {
+      let account = Account(uuid: UUID(), url: result.host, apikey: result.apikey)
       self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
     }
   }
