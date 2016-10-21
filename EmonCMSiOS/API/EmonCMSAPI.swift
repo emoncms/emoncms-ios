@@ -149,8 +149,8 @@ class EmonCMSAPI {
   func feedData(_ account: Account, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
-      "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
-      "end": "\(Int(endTime.timeIntervalSince1970 * 1000))",
+      "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
+      "end": "\(UInt64(endTime.timeIntervalSince1970 * 1000))",
       "interval": "\(interval)"
     ]
 
@@ -162,8 +162,8 @@ class EmonCMSAPI {
   func feedDataDaily(_ account: Account, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
-      "start": "\(Int(startTime.timeIntervalSince1970 * 1000))",
-      "end": "\(Int(endTime.timeIntervalSince1970 * 1000))",
+      "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
+      "end": "\(UInt64(endTime.timeIntervalSince1970 * 1000))",
       "mode": "daily"
     ]
 
