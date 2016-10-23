@@ -14,7 +14,7 @@
   - [x] Scan QR code
 - [x] Data caching
 - [ ] Apps
-  - [ ] My Electric app
+  - [x] My Electric app
   - [ ] My Solar PV app
 - [ ] watchOS app
 - [ ] Today extension
