@@ -16,6 +16,7 @@
 - [ ] Apps
   - [x] My Electric app
   - [ ] My Solar PV app
+- [ ] Multi-account
 - [ ] watchOS app
 - [ ] Today extension
 - [ ] tvOS app
