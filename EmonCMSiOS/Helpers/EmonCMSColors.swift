@@ -16,6 +16,8 @@ struct EmonCMSColors {
     static let DarkBlue = UIColor(hexString: "0779c1")
   }
 
+  static let ErrorRed = UIColor(hexString: "e24522")
+
 }
 
 extension UIColor {

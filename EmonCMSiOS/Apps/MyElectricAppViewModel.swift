@@ -21,7 +21,7 @@ final class MyElectricAppViewModel {
     case updateFailed
   }
 
-  typealias MyElectricData = (powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
+  typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
   private let account: Account
   private let api: EmonCMSAPI
@@ -135,7 +135,8 @@ final class MyElectricAppViewModel {
       self.fetchBarChartHistory(kwhFeedId: kwhFeedId))
     {
       (powerNowAndUsageToday, lineChartData, barChartData) in
-      return MyElectricData(powerNow: powerNowAndUsageToday.0,
+      return MyElectricData(updateTime: Date(),
+                            powerNow: powerNowAndUsageToday.0,
                             usageToday: powerNowAndUsageToday.1,
                             lineChartData: lineChartData,
                             barChartData: barChartData)
