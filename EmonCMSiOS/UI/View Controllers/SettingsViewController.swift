@@ -54,8 +54,20 @@ class SettingsViewController: FormViewController {
         $0.text = "Logout"
       }.onSelected { [weak self] _ in
         guard let strongSelf = self else { return }
-        strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
-        strongSelf.former.deselect(animated: true)
+        let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
+          strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
+          strongSelf.former.deselect(animated: true)
+          if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
+            strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
+          }
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+          if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
+            strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
+          }
+        }))
+        strongSelf.present(actionSheet, animated: true, completion: nil)
     }
 
     let feedbackRow = LabelRowFormer<FormLabelCell>() {
