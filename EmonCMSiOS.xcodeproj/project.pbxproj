@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		137CAC94091722C8E32766A0 /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */; };
-		23D228C7361341470A951F9E /* Pods_EmonCMSToday.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */; };
 		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
@@ -25,10 +24,6 @@
 		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
 		C96233FB1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
-		C97284D61DA594C20010C7B7 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
-		C97284D91DA594C20010C7B7 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284D81DA594C20010C7B7 /* TodayViewController.swift */; };
-		C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */; };
-		C97284E01DA594C20010C7B7 /* EmonCMSToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
 		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
 		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
@@ -77,13 +72,6 @@
 			remoteGlobalIDString = C9C041961D85F7D600E3CEC4;
 			remoteInfo = EmonCMSiOS;
 		};
-		C97284DE1DA594C20010C7B7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C97284D31DA594C20010C7B7;
-			remoteInfo = EmonCMSToday;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,7 +81,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C97284E01DA594C20010C7B7 /* EmonCMSToday.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -137,12 +124,7 @@
 		C957CCED1D9086E40039D707 /* Charts+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Charts+Rx.swift"; sourceTree = "<group>"; };
 		C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppConfigViewModel.swift; sourceTree = "<group>"; };
 		C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Emoncms.swift"; sourceTree = "<group>"; };
-		C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C97284D51DA594C20010C7B7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		C97284D81DA594C20010C7B7 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
-		C97284DB1DA594C20010C7B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
-		C97284DD1DA594C20010C7B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C97284E51DA595400010C7B7 /* EmonCMSToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSToday.entitlements; sourceTree = "<group>"; };
 		C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayRelativeToTodayValueFormatter.swift; sourceTree = "<group>"; };
 		C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelper.swift; sourceTree = "<group>"; };
 		C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigViewController.swift; sourceTree = "<group>"; };
@@ -195,15 +177,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C97284D11DA594C20010C7B7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C97284D61DA594C20010C7B7 /* NotificationCenter.framework in Frameworks */,
-				23D228C7361341470A951F9E /* Pods_EmonCMSToday.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,17 +240,6 @@
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
 			);
 			path = EmonCMSiOSTests;
-			sourceTree = "<group>";
-		};
-		C97284D71DA594C20010C7B7 /* EmonCMSToday */ = {
-			isa = PBXGroup;
-			children = (
-				C97284E51DA595400010C7B7 /* EmonCMSToday.entitlements */,
-				C97284D81DA594C20010C7B7 /* TodayViewController.swift */,
-				C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */,
-				C97284DD1DA594C20010C7B7 /* Info.plist */,
-			);
-			path = EmonCMSToday;
 			sourceTree = "<group>";
 		};
 		C99DF4121D9042C300BBF80D /* Custom Former Cells */ = {
@@ -367,7 +329,6 @@
 			children = (
 				C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */,
 				C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */,
-				C97284D71DA594C20010C7B7 /* EmonCMSToday */,
 				C9C041981D85F7D600E3CEC4 /* Products */,
 				7DD291A48ED452A793DCA3EE /* Pods */,
 				83130A8D04C98BB39AF4F2A0 /* Frameworks */,
@@ -379,7 +340,6 @@
 			children = (
 				C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */,
 				C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */,
-				C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,25 +404,6 @@
 			productReference = C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C97284D31DA594C20010C7B7 /* EmonCMSToday */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C97284E31DA594C20010C7B7 /* Build configuration list for PBXNativeTarget "EmonCMSToday" */;
-			buildPhases = (
-				AA852EEB1497F7A83CD35102 /* [CP] Check Pods Manifest.lock */,
-				C97284D01DA594C20010C7B7 /* Sources */,
-				C97284D11DA594C20010C7B7 /* Frameworks */,
-				C97284D21DA594C20010C7B7 /* Resources */,
-				84206CACC2D6AB0720984521 /* [CP] Copy Pods Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = EmonCMSToday;
-			productName = EmonCMSToday;
-			productReference = C97284D41DA594C20010C7B7 /* EmonCMSToday.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9C041A91D85F7D600E3CEC4 /* Build configuration list for PBXNativeTarget "EmonCMSiOS" */;
@@ -479,7 +420,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				C97284DF1DA594C20010C7B7 /* PBXTargetDependency */,
 			);
 			name = EmonCMSiOS;
 			productName = EmonCMSiOS;
@@ -501,16 +441,6 @@
 						DevelopmentTeam = KGUUH6BP8Y;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C9C041961D85F7D600E3CEC4;
-					};
-					C97284D31DA594C20010C7B7 = {
-						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = KGUUH6BP8Y;
-						ProvisioningStyle = Automatic;
-						SystemCapabilities = {
-							com.apple.ApplicationGroups.iOS = {
-								enabled = 1;
-							};
-						};
 					};
 					C9C041961D85F7D600E3CEC4 = {
 						CreatedOnToolsVersion = 8.0;
@@ -542,7 +472,6 @@
 			targets = (
 				C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */,
 				C95640A91D8A9C7D003B9757 /* EmonCMSiOSTests */,
-				C97284D31DA594C20010C7B7 /* EmonCMSToday */,
 			);
 		};
 /* End PBXProject section */
@@ -552,14 +481,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C97284D21DA594C20010C7B7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C97284DC1DA594C20010C7B7 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -637,36 +558,6 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		84206CACC2D6AB0720984521 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AA852EEB1497F7A83CD35102 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
 		D3C6226F06343FA01F174AF8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -707,14 +598,6 @@
 				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
 				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C97284D01DA594C20010C7B7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C97284D91DA594C20010C7B7 /* TodayViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -779,11 +662,6 @@
 			target = C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */;
 			targetProxy = C95640AF1D8A9C7D003B9757 /* PBXContainerItemProxy */;
 		};
-		C97284DF1DA594C20010C7B7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C97284D31DA594C20010C7B7 /* EmonCMSToday */;
-			targetProxy = C97284DE1DA594C20010C7B7 /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -793,14 +671,6 @@
 				C92010F41D89F6AD00C9974B /* Base */,
 			);
 			name = Apps.storyboard;
-			sourceTree = "<group>";
-		};
-		C97284DA1DA594C20010C7B7 /* MainInterface.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				C97284DB1DA594C20010C7B7 /* Base */,
-			);
-			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 		C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */ = {
@@ -851,38 +721,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
-			};
-			name = Release;
-		};
-		C97284E11DA594C20010C7B7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 73EE7C16F303D6BC48C8C1AC /* Pods-EmonCMSToday.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = EmonCMSToday/EmonCMSToday.entitlements;
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				INFOPLIST_FILE = EmonCMSToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.today;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C97284E21DA594C20010C7B7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = EmonCMSToday/EmonCMSToday.entitlements;
-				DEVELOPMENT_TEAM = KGUUH6BP8Y;
-				INFOPLIST_FILE = EmonCMSToday/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.swipestack.emoncms.today;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -1025,15 +863,6 @@
 			buildConfigurations = (
 				C95640B11D8A9C7D003B9757 /* Debug */,
 				C95640B21D8A9C7D003B9757 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C97284E31DA594C20010C7B7 /* Build configuration list for PBXNativeTarget "EmonCMSToday" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C97284E11DA594C20010C7B7 /* Debug */,
-				C97284E21DA594C20010C7B7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
