@@ -4,11 +4,11 @@
 <dict>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.swipestack.emoncms</string>
+		<string>group.org.openenergymonitor.emoncms</string>
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.swipestack.emoncms</string>
+		<string>$(AppIdentifierPrefix)org.openenergymonitor.emoncms</string>
 	</array>
 </dict>
 </plist>

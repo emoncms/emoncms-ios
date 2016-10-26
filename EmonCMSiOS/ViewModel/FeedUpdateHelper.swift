@@ -21,7 +21,7 @@ final class FeedUpdateHelper {
   init(account: Account, api: EmonCMSAPI) {
     self.account = account
     self.api = api
-    self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "com.swipestack.emoncms.FeedUpdateHelper")
+    self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.FeedUpdateHelper")
   }
 
   func updateFeeds() -> Observable<()> {
