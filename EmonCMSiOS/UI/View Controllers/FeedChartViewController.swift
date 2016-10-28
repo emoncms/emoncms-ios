@@ -23,10 +23,7 @@ final class FeedChartViewController: FormViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.viewModel.name
-      .asDriver()
-      .drive(self.rx.title)
-      .addDisposableTo(self.disposeBag)
+    self.title = "Chart"
 
     self.tableView.refreshControl = UIRefreshControl()
 

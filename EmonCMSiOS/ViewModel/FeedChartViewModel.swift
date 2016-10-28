@@ -10,18 +10,15 @@ import Foundation
 
 import RxSwift
 import RxCocoa
-import RealmSwift
 
 final class FeedChartViewModel {
 
   private let account: Account
   private let api: EmonCMSAPI
-  private let realm: Realm
-  private let chart: Chart
+  private let feedId: String
 
   // Inputs
   let active = Variable<Bool>(false)
-  let name: Variable<String>
   let dateRange: Variable<DateRange>
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
@@ -29,14 +26,12 @@ final class FeedChartViewModel {
   private(set) var dataPoints: Driver<[DataPoint]>
   private(set) var isRefreshing: Driver<Bool>
 
-  private init(account: Account, api: EmonCMSAPI, realm: Realm, chart: Chart) {
+  init(account: Account, api: EmonCMSAPI, feedId: String) {
     self.account = account
     self.api = api
-    self.realm = realm
-    self.chart = chart
+    self.feedId = feedId
 
-    self.name = Variable<String>(chart.name)
-    self.dateRange = Variable<DateRange>(chart.dateRange)
+    self.dateRange = Variable<DateRange>(DateRange.relative(.hour8))
 
     self.dataPoints = Driver.empty()
 
@@ -57,7 +52,7 @@ final class FeedChartViewModel {
       .flatMapLatest { [weak self] dateRange -> Observable<[DataPoint]> in
         guard let strongSelf = self else { return Observable.empty() }
 
-        guard let feedId = strongSelf.chart.dataSets[0].feed?.id else { return Observable.empty() }
+        let feedId = strongSelf.feedId
 
         let (startDate, endDate) = dateRange.calculateDates()
         let interval = Int(endDate.timeIntervalSince(startDate) / 500)
@@ -66,47 +61,6 @@ final class FeedChartViewModel {
           .trackActivity(isRefreshing)
       }
       .asDriver(onErrorJustReturn: [])
-  }
-
-  convenience init?(account: Account, api: EmonCMSAPI, chartId: String) {
-    let realm = account.createRealm()
-    guard let chart = realm.object(ofType: Chart.self, forPrimaryKey: chartId) else {
-      return nil
-    }
-    self.init(account: account, api: api, realm: realm, chart: chart)
-  }
-
-  convenience init?(account: Account, api: EmonCMSAPI, feedId: String) {
-    let realm = account.createRealm()
-    guard let feed = realm.object(ofType: Feed.self, forPrimaryKey: feedId) else {
-      return nil
-    }
-
-    let chart = Chart()
-    chart.name = feed.name
-    let dataSet = ChartDataSet()
-    dataSet.feed = feed
-    chart.dataSets.append(dataSet)
-
-    self.init(account: account, api: api, realm: realm, chart: chart)
-  }
-
-  func save() -> Observable<()> {
-    let realm = self.realm
-    let chart = self.chart
-    return Observable.create({ observer in
-      do {
-        try realm.write {
-          realm.add(chart, update: true)
-        }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
-      }
-
-      return Disposables.create()
-    })
   }
 
 }
