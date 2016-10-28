@@ -223,6 +223,7 @@ final class FeedChartViewController: FormViewController {
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.isRefreshing
+      .throttle(0.3)
       .drive(onNext: { [weak self] refreshing in
         guard let strongSelf = self else { return }
 
