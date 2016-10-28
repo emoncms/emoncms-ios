@@ -16,7 +16,7 @@ protocol AddAccountViewControllerDelegate: class {
   func addAccountViewController(controller: AddAccountViewController, didFinishWithAccount account: Account)
 }
 
-class AddAccountViewController: FormViewController {
+final class AddAccountViewController: FormViewController {
 
   var viewModel: AddAccountViewModel!
 

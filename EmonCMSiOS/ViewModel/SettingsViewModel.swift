@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-class SettingsViewModel {
+final class SettingsViewModel {
 
   private let account: Account
   private let api: EmonCMSAPI

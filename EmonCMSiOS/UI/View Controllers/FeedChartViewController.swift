@@ -12,7 +12,7 @@ import RxSwift
 import Charts
 import Former
 
-class FeedChartViewController: FormViewController {
+final class FeedChartViewController: FormViewController {
 
   var viewModel: FeedChartViewModel!
 

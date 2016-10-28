@@ -15,7 +15,7 @@ import Realm
 import RealmSwift
 import RxRealm
 
-class FeedListViewModel {
+final class FeedListViewModel {
 
   struct ListItem {
     let feedId: String

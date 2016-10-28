@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScreenshotViewController: UIViewController {
+final class ScreenshotViewController: UIViewController {
 
   private var snapshotView: UIView?
 

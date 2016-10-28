@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class ChartListViewController: UITableViewController {
+final class ChartListViewController: UITableViewController {
 
   var viewModel: ChartListViewModel!
 

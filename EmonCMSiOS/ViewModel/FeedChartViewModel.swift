@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-class FeedChartViewModel {
+final class FeedChartViewModel {
 
   private let account: Account
   private let api: EmonCMSAPI

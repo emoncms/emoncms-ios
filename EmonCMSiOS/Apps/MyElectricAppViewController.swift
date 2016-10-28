@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import Charts
 
-class MyElectricAppViewController: UIViewController {
+final class MyElectricAppViewController: UIViewController {
 
   var viewModel: MyElectricAppViewModel!
 

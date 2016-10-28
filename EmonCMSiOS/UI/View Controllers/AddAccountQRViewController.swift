@@ -14,7 +14,7 @@ protocol AddAccountQRViewControllerDelegate: class {
   func addAccountQRViewControllerDidCancel(controller: AddAccountQRViewController)
 }
 
-class AddAccountQRViewController: UIViewController {
+final class AddAccountQRViewController: UIViewController {
 
   weak var delegate: AddAccountQRViewControllerDelegate?
 

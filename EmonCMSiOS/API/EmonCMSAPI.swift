@@ -10,7 +10,7 @@ import Foundation
 
 import RxSwift
 
-class EmonCMSAPI {
+final class EmonCMSAPI {
 
   private let requestProvider: HTTPRequestProvider
 

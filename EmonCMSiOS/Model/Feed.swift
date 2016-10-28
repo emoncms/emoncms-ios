@@ -10,7 +10,7 @@ import Foundation
 
 import RealmSwift
 
-class Feed: Object {
+final class Feed: Object {
 
   dynamic var id: String = ""
   dynamic var name: String = ""

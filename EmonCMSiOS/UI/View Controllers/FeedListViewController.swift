@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-class FeedListViewController: UITableViewController {
+final class FeedListViewController: UITableViewController {
 
   var viewModel: FeedListViewModel!
 

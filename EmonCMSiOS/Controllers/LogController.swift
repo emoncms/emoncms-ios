@@ -43,7 +43,7 @@ let AppLog: XCGLogger = {
   return log
 }()
 
-class LogController {
+final class LogController {
 
   static let shared = LogController()
 

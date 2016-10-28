@@ -10,7 +10,7 @@ import Foundation
 
 import RealmSwift
 
-class ChartDataSet: Object {
+final class ChartDataSet: Object {
 
   dynamic var uuid: String = UUID().uuidString
   private let charts = LinkingObjects(fromType: Chart.self, property: "dataSets")

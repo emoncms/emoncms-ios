@@ -12,7 +12,7 @@ import Former
 import RxSwift
 import RxCocoa
 
-class AppConfigViewController: FormViewController {
+final class AppConfigViewController: FormViewController {
 
   var viewModel: MyElectricAppConfigViewModel!
 

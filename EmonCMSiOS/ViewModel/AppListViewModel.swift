@@ -13,7 +13,7 @@ import RxCocoa
 import RealmSwift
 import RxDataSources
 
-class AppListViewModel {
+final class AppListViewModel {
 
   struct ListItem {
     let appId: String

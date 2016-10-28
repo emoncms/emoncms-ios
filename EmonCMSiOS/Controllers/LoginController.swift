@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import Locksmith
 
-class LoginController {
+final class LoginController {
 
   enum LoginControllerError: Error {
     case Generic

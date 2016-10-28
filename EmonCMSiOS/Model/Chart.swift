@@ -10,7 +10,7 @@ import Foundation
 
 import RealmSwift
 
-class Chart: Object {
+final class Chart: Object {
 
   dynamic var uuid: String = UUID().uuidString
   dynamic var name: String = ""

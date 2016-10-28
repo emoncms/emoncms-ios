@@ -19,7 +19,7 @@ protocol SettingsViewControllerDelegate: class {
 
 }
 
-class SettingsViewController: FormViewController {
+final class SettingsViewController: FormViewController {
 
   var viewModel: SettingsViewModel!
 

@@ -10,7 +10,7 @@ import Foundation
 
 import RxSwift
 
-class AddAccountViewModel {
+final class AddAccountViewModel {
 
   enum AddAccountError: Error {
     case httpsRequired

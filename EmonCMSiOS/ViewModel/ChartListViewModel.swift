@@ -15,7 +15,7 @@ import Realm
 import RealmSwift
 import RxRealm
 
-class ChartListViewModel {
+final class ChartListViewModel {
 
   struct ListItem {
     let chartId: String
