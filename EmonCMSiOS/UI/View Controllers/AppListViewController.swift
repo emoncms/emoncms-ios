@@ -16,6 +16,8 @@ final class AppListViewController: UITableViewController {
 
   var viewModel: AppListViewModel!
 
+  private var emptyLabel: UILabel?
+
   fileprivate let dataSource = RxTableViewSectionedReloadDataSource<AppListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
 
@@ -70,6 +72,63 @@ final class AppListViewController: UITableViewController {
           .catchErrorJustReturn(())
       }
       .subscribe()
+      .addDisposableTo(self.disposeBag)
+
+    self.viewModel.apps
+      .map {
+        $0.count == 0
+      }
+      .drive(onNext: { [weak self] empty in
+        guard let strongSelf = self else { return }
+
+        if empty {
+          let emptyLabel = UILabel(frame: CGRect.zero)
+          emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+          emptyLabel.text = "Tap + to add a new app"
+          emptyLabel.numberOfLines = 0
+          emptyLabel.textColor = .lightGray
+          strongSelf.emptyLabel = emptyLabel
+
+          let tableView = strongSelf.tableView!
+          tableView.addSubview(emptyLabel)
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: tableView,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .leading,
+            relatedBy: .greaterThanOrEqual,
+            toItem: tableView,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 8))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .trailing,
+            relatedBy: .lessThanOrEqual,
+            toItem: tableView,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 8))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: tableView,
+            attribute: .top,
+            multiplier: 1,
+            constant: 44.0 * 1.5))
+        } else {
+          if let emptyLabel = strongSelf.emptyLabel {
+            emptyLabel.removeFromSuperview()
+          }
+        }
+      })
       .addDisposableTo(self.disposeBag)
   }
 
