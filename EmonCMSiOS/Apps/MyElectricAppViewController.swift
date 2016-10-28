@@ -108,6 +108,7 @@ final class MyElectricAppViewController: UIViewController {
     self.viewModel.errors
       .drive(onNext: { [weak self] error in
         guard let strongSelf = self else { return }
+
         switch error {
         case .initialFailed:
           let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.", preferredStyle: .alert)
