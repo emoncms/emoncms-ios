@@ -6,7 +6,7 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 import Former
 import Charts
@@ -14,10 +14,15 @@ import Charts
 final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
 
   let chartView: ChartViewType
+  let spinner: UIActivityIndicatorView
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     self.chartView = ChartViewType()
     chartView.translatesAutoresizingMaskIntoConstraints = false
+
+    self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    spinner.translatesAutoresizingMaskIntoConstraints = false
+    spinner.hidesWhenStopped = true
 
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
@@ -56,6 +61,26 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         relatedBy: .equal,
         toItem: contentView,
         attribute: .right,
+        multiplier: 1,
+        constant: 0))
+
+    contentView.addSubview(spinner)
+    contentView.addConstraint(
+      NSLayoutConstraint(
+        item: spinner,
+        attribute: .centerX,
+        relatedBy: .equal,
+        toItem: contentView,
+        attribute: .centerX,
+        multiplier: 1,
+        constant: 0))
+    contentView.addConstraint(
+      NSLayoutConstraint(
+        item: spinner,
+        attribute: .centerY,
+        relatedBy: .equal,
+        toItem: contentView,
+        attribute: .centerY,
         multiplier: 1,
         constant: 0))
   }

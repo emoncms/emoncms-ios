@@ -222,6 +222,22 @@ final class FeedChartViewController: FormViewController {
       .drive(refreshControl.rx.refreshing)
       .addDisposableTo(self.disposeBag)
 
+    self.viewModel.isRefreshing
+      .drive(onNext: { [weak self] refreshing in
+        guard let strongSelf = self else { return }
+
+        let cell = strongSelf.chartRow.cell
+
+        if refreshing {
+          cell.spinner.startAnimating()
+          cell.chartView.alpha = 0.5
+        } else {
+          cell.spinner.stopAnimating()
+          cell.chartView.alpha = 1.0
+        }
+      })
+      .addDisposableTo(self.disposeBag)
+
     self.viewModel.dataPoints
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
