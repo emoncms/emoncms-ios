@@ -22,10 +22,9 @@ struct Account {
     let fileURL = container.appendingPathComponent(self.uuid.uuidString + ".realm")
     var config = Realm.Configuration(fileURL: fileURL)
 
-
-    //FIXME
+    #if DEBUG
     config.deleteRealmIfMigrationNeeded = true
-
+    #endif
 
     return config
   }
