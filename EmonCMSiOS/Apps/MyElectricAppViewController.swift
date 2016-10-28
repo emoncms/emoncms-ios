@@ -120,40 +120,26 @@ final class MyElectricAppViewController: UIViewController {
       })
       .addDisposableTo(self.disposeBag)
 
-    let errors = self.viewModel.errors.asObservable()
-    let loading = self.viewModel.isRefreshing.asObservable()
-    let updateTime = self.viewModel.data.map { $0?.updateTime }.asObservable()
-    let lastErrorOrNil = Observable.combineLatest(errors, loading) { ($0, $1) }
-      .map { tuple -> MyElectricAppViewModel.MyElectricAppError? in
-        if tuple.1 {
-          return nil
-        } else {
-          return tuple.0
-        }
-      }
-      .startWith(nil)
-
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .none
     dateFormatter.timeStyle = .medium
-    Observable.combineLatest(loading, lastErrorOrNil, updateTime) { ($0, $1, $2) }
-      .subscribe(onNext: { [weak self] (loading: Bool, errorOrNil: MyElectricAppViewModel.MyElectricAppError?, updateTime: Date?) in
+    self.viewModel.bannerBarState
+      .drive(onNext: { [weak self] state in
         guard let strongSelf = self else { return }
 
-        if loading {
+        switch state {
+        case .loading:
           strongSelf.bannerSpinner.startAnimating()
           strongSelf.bannerLabel.text = "Loading"
           strongSelf.bannerView.backgroundColor = UIColor.lightGray
-        } else {
+        case .error(let message):
           strongSelf.bannerSpinner.stopAnimating()
-
-          if errorOrNil != nil {
-            strongSelf.bannerLabel.text = "Error"
-            strongSelf.bannerView.backgroundColor = EmonCMSColors.ErrorRed
-          } else if let updateTime = updateTime {
-            strongSelf.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
-            strongSelf.bannerView.backgroundColor = UIColor.lightGray
-          }
+          strongSelf.bannerLabel.text = message
+          strongSelf.bannerView.backgroundColor = EmonCMSColors.ErrorRed
+        case .loaded(let updateTime):
+          strongSelf.bannerSpinner.stopAnimating()
+          strongSelf.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
+          strongSelf.bannerView.backgroundColor = UIColor.lightGray
         }
       })
       .addDisposableTo(self.disposeBag)

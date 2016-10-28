@@ -21,6 +21,12 @@ final class MyElectricAppViewModel {
     case updateFailed
   }
 
+  enum BannerBarState {
+    case loading
+    case error(String)
+    case loaded(Date)
+  }
+
   typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
   private let account: Account
@@ -37,6 +43,7 @@ final class MyElectricAppViewModel {
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
   private(set) var errors: Driver<MyElectricAppError>
+  private(set) var bannerBarState: Driver<BannerBarState>
 
   private var startOfDayKwh: DataPoint?
   private let errorsSubject = PublishSubject<MyElectricAppError>()
@@ -51,6 +58,7 @@ final class MyElectricAppViewModel {
     self.data = Driver.empty()
     self.isReady = Driver.empty()
     self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic)
+    self.bannerBarState = Driver.empty()
 
     self.title = self.appData.rx
       .observe(String.self, "name")
@@ -118,6 +126,34 @@ final class MyElectricAppViewModel {
       }
       .startWith(nil)
       .asDriver(onErrorJustReturn: nil)
+
+    let errors = self.errors.asObservable()
+    let loading = self.isRefreshing.asObservable()
+    let updateTime = self.data.map { $0?.updateTime }.asObservable()
+    let lastErrorOrNil = Observable.combineLatest(errors, loading) { ($0, $1) }
+      .map { tuple -> MyElectricAppViewModel.MyElectricAppError? in
+        if tuple.1 {
+          return nil
+        } else {
+          return tuple.0
+        }
+      }
+      .startWith(nil)
+
+    self.bannerBarState = Observable.combineLatest(loading, lastErrorOrNil, updateTime) { ($0, $1, $2) }
+      .map { (loading: Bool, error: MyElectricAppError?, updateTime: Date?) -> BannerBarState in
+        if loading {
+          return .loading
+        }
+
+        if let updateTime = updateTime, error == nil {
+          return .loaded(updateTime)
+        }
+
+        // TODO: Could check `error` and return something more helpful
+        return .error("Error")
+      }
+      .asDriver(onErrorJustReturn: .error("Error"))
   }
 
   func configViewModel() -> MyElectricAppConfigViewModel {
