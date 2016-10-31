@@ -46,7 +46,7 @@ final class MyElectricAppConfigViewModel {
   func configFields() -> [AppConfigField] {
     return [
       AppConfigFieldString(id: "name", name: "Name", optional: false),
-      AppConfigFieldFeed(id: "useFeedId", name: "Use Feed", optional: false, defaultName: "use"),
+      AppConfigFieldFeed(id: "useFeedId", name: "Power Feed", optional: false, defaultName: "use"),
       AppConfigFieldFeed(id: "kwhFeedId", name: "kWh Feed", optional: false, defaultName: "use_kwh"),
     ]
   }
