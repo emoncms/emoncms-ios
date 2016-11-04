@@ -107,7 +107,7 @@ final class MyElectricAppViewModel {
         let update: Observable<MyElectricData?> = strongSelf.update()
           .catchError { [weak self] error in
             var typedError = error as? MyElectricAppError ?? .generic("\(error)")
-            if typedError == .updateFailed && isFirst {
+            if typedError == MyElectricAppError.updateFailed && isFirst {
               typedError = .initialFailed
             }
             self?.errorsSubject.onNext(typedError)
