@@ -15,7 +15,7 @@ import RealmSwift
 final class MyElectricAppViewModel {
 
   enum MyElectricAppError: Error {
-    case generic
+    case generic(String)
     case notConfigured
     case initialFailed
     case updateFailed
@@ -57,7 +57,7 @@ final class MyElectricAppViewModel {
     self.title = Driver.empty()
     self.data = Driver.empty()
     self.isReady = Driver.empty()
-    self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic)
+    self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic("Unknown"))
     self.bannerBarState = Driver.empty()
 
     self.title = self.appData.rx
@@ -106,8 +106,7 @@ final class MyElectricAppViewModel {
 
         let update: Observable<MyElectricData?> = strongSelf.update()
           .catchError { [weak self] error in
-            AppLog.error("Failed to update: \(error)")
-            var typedError = error as? MyElectricAppError ?? .generic
+            var typedError = error as? MyElectricAppError ?? .generic("\(error)")
             if typedError == .updateFailed && isFirst {
               typedError = .initialFailed
             }
@@ -177,7 +176,8 @@ final class MyElectricAppViewModel {
                             lineChartData: lineChartData,
                             barChartData: barChartData)
     }
-    .catchError { _ in
+    .catchError { error in
+      AppLog.info("Uodate failed: \(error)")
       return Observable.error(MyElectricAppError.updateFailed)
     }
   }
@@ -192,7 +192,10 @@ final class MyElectricAppViewModel {
       startOfDayKwhSignal = Observable.just(startOfDayKwh)
     } else {
       startOfDayKwhSignal = self.api.feedData(self.account, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
-        .map { $0[0] }
+        .map { dataPoints in
+          guard dataPoints.count > 0 else { throw MyElectricAppError.generic("Start of day data had no data points") }
+          return dataPoints[0]
+        }
         .do(onNext: { [weak self] in
           guard let strongSelf = self else { return }
           strongSelf.startOfDayKwh = $0
