@@ -1,10 +1,8 @@
 # Emoncms for iOS
 
-[![Build Status](https://travis-ci.org/mattjgalloway/emoncms-ios.svg?branch=master)](https://travis-ci.org/mattjgalloway/emoncms-ios) [![codecov](https://codecov.io/gh/mattjgalloway/emoncms-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjgalloway/emoncms-ios)
+[![Build Status](https://travis-ci.org/emoncms/emoncms-ios.svg?branch=master)](https://travis-ci.org/emoncms/emoncms-ios) [![codecov](https://codecov.io/gh/mattjgalloway/emoncms-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjgalloway/emoncms-ios)
 
-**:warning: WORK IN PROGRESS :warning:**
-
-![](images/feedlist.png) ![](images/feedview.png) ![](images/myelectric.png)
+![](images/screen1.png) ![](images/screen2.png) ![](images/screen3.png) ![](images/screen4.png)
 
 ## Todo list
 
