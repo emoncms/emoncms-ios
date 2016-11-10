@@ -22,7 +22,7 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
   }
 
   func request(url: URL) -> Observable<Data> {
-    return self.session.rx.data(URLRequest(url: url))
+    return self.session.rx.data(request: URLRequest(url: url))
       .catchError { error -> Observable<Data> in
         let returnError: HTTPRequestProviderError
         if let error = error as? RxCocoaURLError {

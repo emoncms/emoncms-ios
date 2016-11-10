@@ -64,7 +64,7 @@ final class AppListViewController: UITableViewController {
     self.tableView.rx
       .itemDeleted
       .map { [unowned self] in
-        let item: AppListViewModel.ListItem = try! self.tableView.rx.model($0)
+        let item: AppListViewModel.ListItem = try! self.tableView.rx.model(at: $0)
         return item.appId
       }
       .flatMap { [unowned self] in

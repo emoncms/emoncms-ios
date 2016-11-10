@@ -98,11 +98,11 @@ final class MyElectricAppViewController: UIViewController {
 
     self.viewModel.isReady
       .map { !$0 }
-      .drive(self.mainView.rx.hidden)
+      .drive(self.mainView.rx.isHidden)
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.isReady
-      .drive(self.configureView.rx.hidden)
+      .drive(self.configureView.rx.isHidden)
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.errors

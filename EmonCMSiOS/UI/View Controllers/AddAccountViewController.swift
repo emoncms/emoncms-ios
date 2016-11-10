@@ -127,7 +127,7 @@ final class AddAccountViewController: FormViewController {
         }
         .becomeVoid()
     }
-    self.navigationItem.rightBarButtonItem!.rx_action = action
+    self.navigationItem.rightBarButtonItem!.rx.action = action
   }
 
   private func presentScanQR() {
