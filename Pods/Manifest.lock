@@ -1,36 +1,36 @@
 PODS:
-  - Action (2.0.0-beta.1):
-    - RxCocoa
-    - RxSwift
+  - Action (2.0.0):
+    - RxCocoa (~> 3.0)
+    - RxSwift (~> 3.0)
   - Charts (3.0.0):
     - Charts/Core (= 3.0.0)
   - Charts/Core (3.0.0)
-  - Former (1.5.0)
+  - Former (1.5.1)
   - Locksmith (3.0.0)
-  - Nimble (5.0.0)
+  - Nimble (5.1.1)
   - Quick (0.10.0)
-  - Realm (2.0.2):
-    - Realm/Headers (= 2.0.2)
-  - Realm/Headers (2.0.2)
-  - RealmSwift (2.0.2):
-    - Realm (= 2.0.2)
-  - RxCocoa (3.0.0-rc.1):
-    - RxSwift (~> 3.0.0-rc.1)
-  - RxDataSources (1.0.0-rc.2):
-    - RxCocoa (~> 3.0.0-rc.1)
-    - RxSwift (~> 3.0.0-rc.1)
-  - RxRealm (0.2.6):
+  - Realm (2.0.3):
+    - Realm/Headers (= 2.0.3)
+  - Realm/Headers (2.0.3)
+  - RealmSwift (2.0.3):
+    - Realm (= 2.0.3)
+  - RxCocoa (3.0.1):
+    - RxSwift (~> 3.0)
+  - RxDataSources (1.0.0):
+    - RxCocoa (~> 3.0)
+    - RxSwift (~> 3.0)
+  - RxRealm (0.3.1):
     - RealmSwift (~> 2.0)
-    - RxSwift (~> 3.0.0-beta.2)
-  - RxSwift (3.0.0-rc.1)
-  - RxTest (3.0.0-rc.1):
-    - RxSwift (~> 3.0.0-rc.1)
+    - RxSwift (~> 3.0.0)
+  - RxSwift (3.0.1)
+  - RxTest (3.0.1):
+    - RxSwift (~> 3.0)
   - XCGLogger (4.0.0):
     - XCGLogger/Core (= 4.0.0)
   - XCGLogger/Core (4.0.0)
 
 DEPENDENCIES:
-  - Action (~> 2.0.0-beta.1)
+  - Action (~> 2.0)
   - Charts (~> 3.0)
   - Former (~> 1.5)
   - Locksmith (~> 3.0)
@@ -38,29 +38,29 @@ DEPENDENCIES:
   - Quick (~> 0.10)
   - Realm (~> 2.0)
   - RealmSwift (~> 2.0)
-  - RxCocoa (~> 3.0.0-rc.1)
-  - RxDataSources (~> 1.0.0-rc.2)
+  - RxCocoa (~> 3.0)
+  - RxDataSources (~> 1.0)
   - RxRealm (~> 0.2)
-  - RxSwift (~> 3.0.0-rc.1)
-  - RxTest (~> 3.0.0-rc.1)
+  - RxSwift (~> 3.0)
+  - RxTest (~> 3.0)
   - XCGLogger (~> 4.0)
 
 SPEC CHECKSUMS:
-  Action: 13a8e52481834751caf428bcf6c527e3db2aefc7
+  Action: 0bc7f713038917e2d8b7a0cc71278a79c1db06c1
   Charts: beb341928d2135613b4325a6c6aff9f2f6de895e
-  Former: 8f9f41e51eceb75e47b4275147795ec477b121ec
+  Former: 0b48a812c0d93b092b908d1b0574d0fd95c6b6f9
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
-  Nimble: 56fc9f5020effa2206de22c3dd910f4fb011b92f
+  Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
-  Realm: 0f5a194af0b7e6158b83db41b4ee1a00be7ddf1a
-  RealmSwift: 0eb5070d851cba7c66e841ca756d83609dc78bc8
-  RxCocoa: e72a074a7f38896ec0382d096df5f58df10115c7
-  RxDataSources: f7de4f2a0725332319a4322dd795ae45ce28c529
-  RxRealm: 29adf87a3cdbf228c7eec2e58749e3f7c63647fb
-  RxSwift: d7a3819dd71789c473e3cbf1a0c02d58b2692739
-  RxTest: e7044409e1db9d2a4968ede599909c7a41539256
+  Realm: 5f008bfe3c8c47142eddfc30b8c1584cde22db24
+  RealmSwift: 5afb451f65b682242f272dbb52d5c6f6e343c980
+  RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
+  RxDataSources: 824693e84d00781d0a5e5cedc1ff95ce9250aacd
+  RxRealm: 0965e07d49b8575d16c3a0487c667dfe64ce6a9c
+  RxSwift: af5680055c4ad04480189c52d28385b1029493a6
+  RxTest: 9867e6f3c435af30fbdb44b6d8ec30b78c40b515
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
-PODFILE CHECKSUM: d2cdbe0ff68c76b4fd51b5a17bb2e285f2204bf0
+PODFILE CHECKSUM: 2f2b251cb2c0e1727672a98c9b98ce655a2e3e0c
 
 COCOAPODS: 1.1.0

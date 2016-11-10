@@ -1,6 +1,0 @@
-framework module Pods_EmonCMSToday {
-  umbrella header "Pods-EmonCMSToday-umbrella.h"
-
-  export *
-  module * { export * }
-}
