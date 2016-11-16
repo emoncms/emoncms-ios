@@ -23,6 +23,11 @@ target 'EmonCMSiOS' do
     pod 'Action', '~> 2.0'
     pod 'Charts', '~> 3.0'
     pod 'Former', '~> 1.5'
+
+    post_install do | installer |
+        require 'fileutils'
+        FileUtils.cp_r('Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-acknowledgements.plist', 'EmonCMSiOS/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+    end
 end
 
 target 'EmonCMSiOSTests' do
