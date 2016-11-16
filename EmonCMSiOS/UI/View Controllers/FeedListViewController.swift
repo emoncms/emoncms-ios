@@ -63,7 +63,7 @@ final class FeedListViewController: UITableViewController {
   }
 
   private func setupBindings() {
-    let refreshControl = self.tableView.refreshControl!
+    let refreshControl = self.refreshControl!
 
     refreshControl.rx.controlEvent(.valueChanged)
       .bindTo(self.viewModel.refresh)

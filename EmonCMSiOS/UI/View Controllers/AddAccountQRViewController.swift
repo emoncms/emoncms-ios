@@ -111,7 +111,11 @@ final class AddAccountQRViewController: UIViewController {
     let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
       if let url = URL(string: UIApplicationOpenSettingsURLString) {
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        if #available(iOS 10.0, *) {
+          UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        } else {
+          UIApplication.shared.openURL(url)
+        }
       }
     }))
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
