@@ -28,6 +28,9 @@ final class FeedListViewController: UITableViewController {
 
     self.title = "Feeds"
 
+    self.tableView.estimatedRowHeight = 68.0
+    self.tableView.rowHeight = UITableViewAutomaticDimension
+
     self.setupDataSource()
     self.setupBindings()
   }
@@ -44,9 +47,29 @@ final class FeedListViewController: UITableViewController {
 
   private func setupDataSource() {
     self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
-      let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath)
-      cell.textLabel?.text = item.name
-      cell.detailTextLabel?.text = item.value
+      let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedListCell
+      cell.titleLabel.text = item.name
+      cell.valueLabel.text = item.value
+
+      let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
+      let value: String
+      let colour: UIColor
+      if secondsAgo < 60 {
+        value = "\(secondsAgo) secs"
+        colour = EmonCMSColors.ActivityIndicator.Green
+      } else if secondsAgo < 3600 {
+        value = "\(secondsAgo / 60) mins"
+        colour = EmonCMSColors.ActivityIndicator.Yellow
+      } else if secondsAgo < 86400 {
+        value = "\(secondsAgo / 3600) hours"
+        colour = EmonCMSColors.ActivityIndicator.Orange
+      } else {
+        value = "\(secondsAgo / 86400) days"
+        colour = EmonCMSColors.ActivityIndicator.Red
+      }
+      cell.timeLabel.text = value
+      cell.activityCircle.backgroundColor = colour
+
       return cell
     }
 
@@ -86,6 +109,20 @@ extension FeedListViewController {
       let viewModel = self.viewModel.feedChartViewModel(forItem: item)
       feedViewController.viewModel = viewModel
     }
+  }
+
+}
+
+final class FeedListCell: UITableViewCell {
+
+  @IBOutlet var titleLabel: UILabel!
+  @IBOutlet var valueLabel: UILabel!
+  @IBOutlet var timeLabel: UILabel!
+  @IBOutlet var activityCircle: UIView!
+
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    self.activityCircle.layer.cornerRadius = self.activityCircle.bounds.width / 2
   }
 
 }

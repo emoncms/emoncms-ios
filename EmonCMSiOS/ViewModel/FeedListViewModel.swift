@@ -20,6 +20,7 @@ final class FeedListViewModel {
   struct ListItem {
     let feedId: String
     let name: String
+    let time: Date
     let value: String
   }
 
@@ -89,7 +90,7 @@ final class FeedListViewModel {
     for section in sectionBuilder.keys.sorted() {
       let items = sectionBuilder[section]!
         .map { feed in
-          return ListItem(feedId: feed.id, name: feed.name, value: feed.value.prettyFormat())
+          return ListItem(feedId: feed.id, name: feed.name, time: feed.time, value: feed.value.prettyFormat())
         }
       sections.append(Section(model: section, items: items))
     }

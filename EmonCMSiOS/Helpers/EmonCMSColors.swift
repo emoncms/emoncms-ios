@@ -16,6 +16,13 @@ struct EmonCMSColors {
     static let DarkBlue = UIColor(hexString: "0779c1")
   }
 
+  struct ActivityIndicator {
+    static let Green = UIColor(red: 0.196, green: 0.784, blue: 0.196, alpha: 1.0)
+    static let Yellow = UIColor(red: 0.94, green: 0.71, blue: 0.078, alpha: 1.0)
+    static let Orange = UIColor(red: 1.0, green: 0.49, blue: 0.078, alpha: 1.0)
+    static let Red = UIColor(red: 1.0, green: 0.0, blue: 0.0, alpha: 1.0)
+  }
+
   static let ErrorRed = UIColor(hexString: "e24522")
 
 }
