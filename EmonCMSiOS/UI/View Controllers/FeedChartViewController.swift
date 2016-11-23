@@ -72,6 +72,7 @@ final class FeedChartViewController: FormViewController {
       let yAxis = $0.chartView.leftAxis
       yAxis.drawGridLinesEnabled = false
       yAxis.labelPosition = .outsideChart
+      yAxis.drawZeroLineEnabled = true
 
       let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
       dataSet.valueTextColor = .lightGray
@@ -80,6 +81,7 @@ final class FeedChartViewController: FormViewController {
       dataSet.drawCirclesEnabled = false
       dataSet.drawFilledEnabled = true
       dataSet.drawValuesEnabled = false
+      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
 
       let data = LineChartData()
       data.addDataSet(dataSet)
