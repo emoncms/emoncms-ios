@@ -219,12 +219,12 @@ extension MyElectricAppViewController {
     barChart.noDataText = "Loading data..."
     barChart.noDataTextColor = .black
     barChart.isUserInteractionEnabled = false
-    barChart.extraBottomOffset = 2
+    barChart.extraBottomOffset = 0
     barChart.drawValueAboveBarEnabled = true
 
     let xAxis = barChart.xAxis
-    xAxis.labelPosition = .bottomInside
-    xAxis.labelTextColor = .white
+    xAxis.labelPosition = .bottom
+    xAxis.labelTextColor = .black
     xAxis.valueFormatter = DayRelativeToTodayValueFormatter()
     xAxis.drawGridLinesEnabled = false
     xAxis.drawAxisLineEnabled = false
