@@ -27,7 +27,7 @@ final class EmonCMSAPI {
   }
 
   private class func buildURL(_ account: Account, path: String, queryItems: [String:String] = [:]) throws -> URL {
-    let fullUrl = account.url + "/feed/" + path + ".json"
+    let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
       throw EmonCMSAPIError.failedToCreateURL
     }
@@ -78,7 +78,7 @@ final class EmonCMSAPI {
   }
 
   func feedList(_ account: Account) -> Observable<[Feed]> {
-    return self.request(account, path: "list").map { resultData -> [Feed] in
+    return self.request(account, path: "feed/list").map { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
         throw EmonCMSAPIError.invalidResponse
@@ -101,7 +101,7 @@ final class EmonCMSAPI {
       "id": id
     ]
 
-    return self.request(account, path: "aget", queryItems: queryItems).map { resultData -> Feed in
+    return self.request(account, path: "feed/aget", queryItems: queryItems).map { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
@@ -118,7 +118,7 @@ final class EmonCMSAPI {
       "field": fieldName
     ]
 
-    return self.request(account, path: "get", queryItems: queryItems).map { resultData -> String in
+    return self.request(account, path: "feed/get", queryItems: queryItems).map { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = json as? String else {
           throw EmonCMSAPIError.invalidResponse
@@ -154,7 +154,7 @@ final class EmonCMSAPI {
       "interval": "\(interval)"
     ]
 
-    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [DataPoint] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }
@@ -167,7 +167,7 @@ final class EmonCMSAPI {
       "mode": "daily"
     ]
 
-    return self.request(account, path: "data", queryItems: queryItems).map { resultData -> [DataPoint] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }
@@ -177,7 +177,7 @@ final class EmonCMSAPI {
       "id": id
     ]
 
-    return self.request(account, path: "value", queryItems: queryItems).map { resultData -> Double in
+    return self.request(account, path: "feed/value", queryItems: queryItems).map { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = Double(json) else {
           throw EmonCMSAPIError.invalidResponse
@@ -192,7 +192,7 @@ final class EmonCMSAPI {
       "ids": ids.joined(separator: ",")
     ]
 
-    return self.request(account, path: "fetch", queryItems: queryItems).map { resultData -> [String:Double] in
+    return self.request(account, path: "feed/fetch", queryItems: queryItems).map { resultData -> [String:Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let array = json as? [Any] else {
           throw EmonCMSAPIError.invalidResponse
@@ -207,6 +207,25 @@ final class EmonCMSAPI {
         results[id] = value
       }
       return results
+    }
+  }
+
+  func inputList(_ account: Account) -> Observable<[Input]> {
+    return self.request(account, path: "input/list").map { resultData -> [Input] in
+      guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
+        let json = anyJson as? [Any] else {
+          throw EmonCMSAPIError.invalidResponse
+      }
+
+      var inputs: [Input] = []
+      for i in json {
+        if let inputJson = i as? [String:Any],
+          let input = Input.from(json: inputJson) {
+          inputs.append(input)
+        }
+      }
+
+      return inputs
     }
   }
 

@@ -1,8 +1,8 @@
 //
-//  ViewController.swift
+//  InputListViewController.swift
 //  EmonCMSiOS
 //
-//  Created by Matt Galloway on 11/09/2016.
+//  Created by Matt Galloway on 23/11/2016.
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
@@ -12,24 +12,21 @@ import RxSwift
 import RxCocoa
 import RxDataSources
 
-final class FeedListViewController: UITableViewController {
+final class InputListViewController: UITableViewController {
 
-  var viewModel: FeedListViewModel!
+  var viewModel: InputListViewModel!
 
-  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>()
+  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<InputListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
-
-  fileprivate enum Segues: String {
-    case showFeed
-  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.title = "Feeds"
+    self.title = "Inputs"
 
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.allowsSelection = false
 
     self.setupDataSource()
     self.setupBindings()
@@ -52,7 +49,6 @@ final class FeedListViewController: UITableViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
       cell.titleLabel.text = item.name
       cell.valueLabel.text = item.value
-      cell.accessoryType = .disclosureIndicator
 
       let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
       let value: String
@@ -83,15 +79,8 @@ final class FeedListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.feeds
+    self.viewModel.inputs
       .drive(self.tableView.rx.items(dataSource: self.dataSource))
-      .addDisposableTo(self.disposeBag)
-
-    self.tableView.rx.modelSelected(FeedListViewModel.ListItem.self)
-      .subscribe(onNext: { [weak self] item in
-        guard let strongSelf = self else { return }
-        strongSelf.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
-      })
       .addDisposableTo(self.disposeBag)
   }
 
@@ -105,19 +94,6 @@ final class FeedListViewController: UITableViewController {
     self.viewModel.isRefreshing
       .drive(refreshControl.rx.refreshing)
       .addDisposableTo(self.disposeBag)
-  }
-
-}
-
-extension FeedListViewController {
-
-  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    if segue.identifier == Segues.showFeed.rawValue {
-      let feedViewController = segue.destination as! FeedChartViewController
-      let item = sender as! FeedListViewModel.ListItem
-      let viewModel = self.viewModel.feedChartViewModel(forItem: item)
-      feedViewController.viewModel = viewModel
-    }
   }
 
 }
