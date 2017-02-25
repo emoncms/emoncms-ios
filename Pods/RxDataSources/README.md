@@ -1,3 +1,5 @@
+[![Travis CI](https://travis-ci.org/RxSwiftCommunity/RxDataSources.svg?branch=master)](https://travis-ci.org/RxSwiftCommunity/RxDataSources)
+
 Table and Collection view data sources
 ======================================
 
@@ -95,7 +97,7 @@ let dataSource = RxTableViewSectionedReloadDataSource<SectionOfCustomData>()
 - etc
 
 ```swift 
-dataSource.configureCell = { ds, tv, ip, item in
+dataSource.configureCell = { (ds: RxTableViewSectionedReloadDataSource<SectionOfCustomData>, tv: UITableView, ip: IndexPath, item: Item) in
   let cell = tv.dequeueReusableCell(withIdentifier: "Cell", for: ip)
   cell.textLabel?.text = "Item \(item.anInt): \(item.aString) - \(item.aCGPoint.x):\(item.aCGPoint.y)"
   return cell
@@ -121,7 +123,7 @@ Observable.just(sections)
 ### Animations
 To implement animations with RxDataSources, the same steps are required as with non-animated data, execept:
 - SectionOfCustomData needs to conform to `AnimatableSectionModelType`
-- dataSource needs to be an instance of `RxTableViewSectionedAnimatedDataSource` or `RxTableViewSectionedAnimatedDataSource`
+- dataSource needs to be an instance of `RxTableViewSectionedAnimatedDataSource` or `RxCollectionViewSectionedAnimatedDataSource`
 
 
 ## Requirements

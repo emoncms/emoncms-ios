@@ -1,3 +1,4 @@
+#if os(iOS) || os(tvOS)
 import UIKit
 import RxSwift
 import RxCocoa
@@ -16,31 +17,27 @@ public extension Reactive where Base: UIAlertAction {
 
     /// Binds enabled state of action to button, and subscribes to rx_tap to execute action.
     /// These subscriptions are managed in a private, inaccessible dispose bag. To cancel
-    /// them, set the rx_action to nil or another action.
+    /// them, set the rx.action to nil or another action.
     public var action: CocoaAction? {
         get {
             var action: CocoaAction?
-            doLocked {
-                action = objc_getAssociatedObject(base, &AssociatedKeys.Action) as? Action
-            }
+            action = objc_getAssociatedObject(base, &AssociatedKeys.Action) as? Action
             return action
         }
 
         set {
-            doLocked {
-                // Store new value.
-                objc_setAssociatedObject(base, &AssociatedKeys.Action, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-
-                // This effectively disposes of any existing subscriptions.
-                self.base.resetActionDisposeBag()
-
-                // Set up new bindings, if applicable.
-                if let action = newValue {
-                    action
-                        .enabled
-                        .bindTo(self.enabled)
-                        .addDisposableTo(self.base.actionDisposeBag)
-                }
+            // Store new value.
+            objc_setAssociatedObject(base, &AssociatedKeys.Action, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            
+            // This effectively disposes of any existing subscriptions.
+            self.base.resetActionDisposeBag()
+            
+            // Set up new bindings, if applicable.
+            if let action = newValue {
+                action
+                    .enabled
+                    .bindTo(self.enabled)
+                    .addDisposableTo(self.base.actionDisposeBag)
             }
         }
     }
@@ -66,3 +63,4 @@ public extension Reactive where Base: UIAlertAction {
 		}
 	}
 }
+#endif

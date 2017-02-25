@@ -1,5 +1,5 @@
 PODS:
-  - Action (2.0.0):
+  - Action (2.2.1):
     - RxCocoa (~> 3.0)
     - RxSwift (~> 3.0)
   - Charts (3.0.1):
@@ -9,21 +9,21 @@ PODS:
   - Locksmith (3.0.0)
   - Nimble (5.1.1)
   - Quick (0.10.0)
-  - Realm (2.1.0):
-    - Realm/Headers (= 2.1.0)
-  - Realm/Headers (2.1.0)
-  - RealmSwift (2.1.0):
-    - Realm (= 2.1.0)
-  - RxCocoa (3.0.1):
-    - RxSwift (~> 3.0)
-  - RxDataSources (1.0.0):
+  - Realm (2.4.3):
+    - Realm/Headers (= 2.4.3)
+  - Realm/Headers (2.4.3)
+  - RealmSwift (2.4.3):
+    - Realm (= 2.4.3)
+  - RxCocoa (3.2.0):
+    - RxSwift (~> 3.1)
+  - RxDataSources (1.0.3):
     - RxCocoa (~> 3.0)
     - RxSwift (~> 3.0)
-  - RxRealm (0.3.2):
-    - RealmSwift (~> 2.0)
-    - RxSwift (~> 3.0.0)
-  - RxSwift (3.0.1)
-  - RxTest (3.0.1):
+  - RxRealm (0.5.1):
+    - RealmSwift (~> 2.2)
+    - RxSwift (~> 3.1)
+  - RxSwift (3.2.0)
+  - RxTest (3.2.0):
     - RxSwift (~> 3.0)
   - XCGLogger (4.0.0):
     - XCGLogger/Core (= 4.0.0)
@@ -46,21 +46,21 @@ DEPENDENCIES:
   - XCGLogger (~> 4.0)
 
 SPEC CHECKSUMS:
-  Action: 0bc7f713038917e2d8b7a0cc71278a79c1db06c1
+  Action: 93c6c9eec95eb76428b2d49a6d260466c2f71b7e
   Charts: 0e84f4418e87dad6a9edde221fba37ebb51d3ba7
   Former: 0b48a812c0d93b092b908d1b0574d0fd95c6b6f9
   Locksmith: 310b4cc5031af5728bf4db5d4de547a5100c6a3b
   Nimble: 415e3aa3267e7bc2c96b05fa814ddea7bb686a29
   Quick: 5d290df1c69d5ee2f0729956dcf0fd9a30447eaa
-  Realm: bc829ad0ef3d4eea70c34cfcc3b1704d18d50df1
-  RealmSwift: a4d4abbf0088c337cab5b738054395842e4b3052
-  RxCocoa: 15a52fc590dcc700cb4a690a633b5c5184ce3a78
-  RxDataSources: 824693e84d00781d0a5e5cedc1ff95ce9250aacd
-  RxRealm: 42a12f1e62d6b54a8529fe0292d52c8e9f9b3267
-  RxSwift: af5680055c4ad04480189c52d28385b1029493a6
-  RxTest: 9867e6f3c435af30fbdb44b6d8ec30b78c40b515
+  Realm: e08d60b0048ccccd3949c8c28a92c4db5712d7e9
+  RealmSwift: 30d49739ccb3385d201242736ca4dda56aec9dfc
+  RxCocoa: ccdf43101a70407097a29082f648ba1676075b30
+  RxDataSources: a021a0e944ba5f7991259829d973afdbfa719c0b
+  RxRealm: c80d17d42fc362f4d8af4ac62de360b014be5c3f
+  RxSwift: 46574f70d416b7923c237195939cc488a7fbf3a0
+  RxTest: 85fdd6f753e8e62635a58d37bbdd3ce7d5abbef3
   XCGLogger: 38063ea89b4c8b23232d18efd2e12eb0005f3ea4
 
 PODFILE CHECKSUM: 288584c8cb57746686993ad7b21a1031157c79df
 
-COCOAPODS: 1.1.0
+COCOAPODS: 1.2.0
