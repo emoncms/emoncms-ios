@@ -51,7 +51,7 @@ final class InputListViewModel {
     self.inputs = Driver.never()
     self.isRefreshing = Driver.never()
 
-    self.inputs = Observable.arrayFrom(self.realm.objects(Input.self))
+    self.inputs = Observable.array(from: self.realm.objects(Input.self))
       .map(self.inputsToSections)
       .asDriver(onErrorJustReturn: [])
 

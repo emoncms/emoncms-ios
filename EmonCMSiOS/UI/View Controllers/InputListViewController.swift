@@ -92,7 +92,7 @@ final class InputListViewController: UITableViewController {
       .addDisposableTo(self.disposeBag)
 
     self.viewModel.isRefreshing
-      .drive(refreshControl.rx.refreshing)
+      .drive(refreshControl.rx.isRefreshing)
       .addDisposableTo(self.disposeBag)
   }
 

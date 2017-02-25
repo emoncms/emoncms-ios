@@ -41,8 +41,8 @@ final class AppListViewModel {
     self.apps = Driver.never()
 
     let appQuery = self.realm.objects(MyElectricAppData.self)
-      .sorted(byProperty: #keyPath(MyElectricAppData.name), ascending: true)
-    self.apps = Observable.arrayFrom(appQuery)
+      .sorted(byKeyPath: #keyPath(MyElectricAppData.name), ascending: true)
+    self.apps = Observable.array(from: appQuery)
       .map(self.appsToListItems)
       .asDriver(onErrorJustReturn: [])
   }
