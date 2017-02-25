@@ -177,7 +177,7 @@ final class MyElectricAppViewModel {
                             barChartData: barChartData)
     }
     .catchError { error in
-      AppLog.info("Uodate failed: \(error)")
+      AppLog.info("Update failed: \(error)")
       return Observable.error(MyElectricAppError.updateFailed)
     }
   }
