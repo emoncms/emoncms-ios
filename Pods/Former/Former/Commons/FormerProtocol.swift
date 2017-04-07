@@ -31,7 +31,7 @@ extension ConfigurableInlineForm where Self: RowFormer {
     }
     
     @discardableResult
-    public final func inlineCellUpdate(update: ((InlineCellType) -> Void)) -> Self {
+    public func inlineCellUpdate(update: ((InlineCellType) -> Void)) -> Self {
         update(inlineRowFormer.cellInstance as! InlineCellType)
         return self
     }
@@ -113,6 +113,13 @@ public extension ConfigurableForm where Self: ViewFormer {
     @discardableResult
     func configure(handler: ((Self) -> Void)) -> Self {
         handler(self)
+        return self
+    }
+    
+    @discardableResult
+    func update(_ handler: ((Self) -> Void)) -> Self {
+        handler(self)
+        self.update()
         return self
     }
 }

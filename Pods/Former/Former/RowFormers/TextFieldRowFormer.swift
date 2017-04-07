@@ -40,12 +40,18 @@ open class TextFieldRowFormer<T: UITableViewCell>
         onTextChanged = handler
         return self
     }
+
+    @discardableResult
+    public final func onReturn(_ handler: @escaping ((String) -> Void)) -> Self {
+        onReturn = handler
+        return self
+    }
     
     open override func cellInitialized(_ cell: T) {
         super.cellInitialized(cell)
         let textField = cell.formTextField()
         textField.delegate = observer
-        let events: [(Selector, UIControlEvents)] = [(#selector(TextFieldRowFormer.textChanged(textField:)), .editingChanged),
+        let events: [(Selector, UIControl.Event)] = [(#selector(TextFieldRowFormer.textChanged(textField:)), .editingChanged),
             (#selector(TextFieldRowFormer.editingDidBegin(textField:)), .editingDidBegin),
             (#selector(TextFieldRowFormer.editingDidEnd(textField:)), .editingDidEnd)]
         events.forEach {
@@ -82,13 +88,17 @@ open class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
-    public override func cellSelected(indexPath: IndexPath) {        
+    open override func cellSelected(indexPath: IndexPath) {        
         let textField = cell.formTextField()
         if !textField.isEditing {
             textField.isUserInteractionEnabled = true
             textField.becomeFirstResponder()
         }
     }
+    
+    // MARK: Fileprivate
+    
+    fileprivate final var onReturn: ((String) -> Void)?
     
     // MARK: Private
     
@@ -98,7 +108,7 @@ open class TextFieldRowFormer<T: UITableViewCell>
     
     private lazy var observer: Observer<T> = Observer<T>(textFieldRowFormer: self)
     
-    private dynamic func textChanged(textField: UITextField) {
+    @objc private dynamic func textChanged(textField: UITextField) {
         if enabled {
             let text = textField.text ?? ""
             self.text = text
@@ -106,13 +116,13 @@ open class TextFieldRowFormer<T: UITableViewCell>
         }
     }
     
-    private dynamic func editingDidBegin(textField: UITextField) {
+    @objc private dynamic func editingDidBegin(textField: UITextField) {
         let titleLabel = cell.formTitleLabel()
         if titleColor == nil { textColor = textField.textColor ?? .black }
         _ = titleEditingColor.map { titleLabel?.textColor = $0 }
     }
     
-    private dynamic func editingDidEnd(textField: UITextField) {
+    @objc private dynamic func editingDidEnd(textField: UITextField) {
         let titleLabel = cell.formTitleLabel()
         if enabled {
             _ = titleColor.map { titleLabel?.textColor = $0 }
@@ -135,6 +145,10 @@ private class Observer<T: UITableViewCell>: NSObject, UITextFieldDelegate where 
     
     fileprivate dynamic func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         guard let textFieldRowFormer = textFieldRowFormer else { return false }
+        if let returnHandler = textFieldRowFormer.onReturn {
+            returnHandler(textField.text ?? "")
+            return false
+        }
         if textFieldRowFormer.returnToNextRow {
             let returnToNextRow = (textFieldRowFormer.former?.canBecomeEditingNext() ?? false) ?
                 textFieldRowFormer.former?.becomeEditingNext :

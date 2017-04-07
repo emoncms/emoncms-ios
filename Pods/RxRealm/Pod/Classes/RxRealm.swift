@@ -12,6 +12,7 @@ import RxSwift
 
 public enum RxRealmError: Error {
     case objectDeleted
+    case unknown
 }
 
 //MARK: Realm Collections type extensions
@@ -25,14 +26,14 @@ public enum RxRealmError: Error {
 */
 public protocol NotificationEmitter {
 
-    associatedtype ElementType: Object
+    associatedtype ElementType: RealmCollectionValue
 
     /**
      Returns a `NotificationToken`, which while retained enables change notifications for the current collection.
      
      - returns: `NotificationToken` - retain this value to keep notifications being emitted for the current collection.
      */
-    func addNotificationBlock(_ block: @escaping (RealmCollectionChange<Self>) -> ()) -> NotificationToken
+    func observe(_ block: @escaping (RealmCollectionChange<Self>) -> ()) -> NotificationToken
 
     func toArray() -> [ElementType]
 
@@ -40,8 +41,8 @@ public protocol NotificationEmitter {
 }
 
 extension List: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<T> {
-        return AnyRealmCollection<ElementType>(self)
+    public func toAnyCollection() -> AnyRealmCollection<Element> {
+        return AnyRealmCollection<Element>(self)
     }
     public typealias ElementType = Element
     public func toArray() -> [Element] {
@@ -50,7 +51,7 @@ extension List: NotificationEmitter {
 }
 
 extension AnyRealmCollection: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<T> {
+    public func toAnyCollection() -> AnyRealmCollection<Element> {
         return AnyRealmCollection<ElementType>(self)
     }
     public typealias ElementType = Element
@@ -60,7 +61,7 @@ extension AnyRealmCollection: NotificationEmitter {
 }
 
 extension Results: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<T> {
+    public func toAnyCollection() -> AnyRealmCollection<Element> {
         return AnyRealmCollection<ElementType>(self)
     }
     public typealias ElementType = Element
@@ -70,7 +71,7 @@ extension Results: NotificationEmitter {
 }
 
 extension LinkingObjects: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<T> {
+    public func toAnyCollection() -> AnyRealmCollection<Element> {
         return AnyRealmCollection<ElementType>(self)
     }
     public typealias ElementType = Element
@@ -95,7 +96,7 @@ public struct RealmChangeset {
     public let updated: [Int]
 }
 
-public extension ObservableType where E: NotificationEmitter, E.ElementType: Object {
+public extension ObservableType where E: NotificationEmitter {
 
     @available(*, deprecated, renamed: "collection(from:synchronousStart:)")
     public static func from(_ collection: E, scheduler: ImmediateSchedulerType = CurrentThreadScheduler.instance) -> Observable<E> {
@@ -111,13 +112,15 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
 
      - returns: `Observable<E>`, e.g. when called on `Results<Model>` it will return `Observable<Results<Model>>`, on a `List<User>` it will return `Observable<List<User>>`, etc.
      */
-    public static func collection(from collection: E, synchronousStart: Bool = true) -> Observable<E> {
-        return Observable.create {observer in
+    public static func collection(from collection: E, synchronousStart: Bool = true)
+        -> Observable<E> {
+
+        return Observable.create { observer in
             if synchronousStart {
                 observer.onNext(collection)
             }
 
-            let token = collection.addNotificationBlock {changeset in
+            let token = collection.observe { changeset in
 
                 let value: E
 
@@ -138,8 +141,7 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
             }
 
             return Disposables.create {
-                token.stop()
-                observer.onCompleted()
+                token.invalidate()
             }
         }
     }
@@ -158,7 +160,9 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
 
      - returns: `Observable<Array<E.Element>>`, e.g. when called on `Results<Model>` it will return `Observable<Array<Model>>`, on a `List<User>` it will return `Observable<Array<User>>`, etc.
      */
-    public static func array(from collection: E, synchronousStart: Bool = true) -> Observable<Array<E.ElementType>> {
+    public static func array(from collection: E, synchronousStart: Bool = true)
+        -> Observable<Array<E.ElementType>> {
+
         return Observable.collection(from: collection, synchronousStart: synchronousStart)
             .map { $0.toArray() }
     }
@@ -180,13 +184,15 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
 
      - returns: `Observable<(AnyRealmCollection<E.Element>, RealmChangeset?)>`
      */
-    public static func changeset(from collection: E, synchronousStart: Bool = true) -> Observable<(AnyRealmCollection<E.ElementType>, RealmChangeset?)> {
-        return Observable.create {observer in
+    public static func changeset(from collection: E, synchronousStart: Bool = true)
+        -> Observable<(AnyRealmCollection<E.ElementType>, RealmChangeset?)> {
+
+        return Observable.create { observer in
             if synchronousStart {
                 observer.onNext((collection.toAnyCollection(), nil))
             }
 
-            let token = collection.toAnyCollection().addNotificationBlock {changeset in
+            let token = collection.toAnyCollection().observe { changeset in
 
                 switch changeset {
                     case .initial(let value):
@@ -201,8 +207,7 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
             }
 
             return Disposables.create {
-                observer.onCompleted()
-                token.stop()
+                token.invalidate()
             }
         }
     }
@@ -226,7 +231,9 @@ public extension ObservableType where E: NotificationEmitter, E.ElementType: Obj
 
      - returns: `Observable<(Array<E.Element>, RealmChangeset?)>`
      */
-    public static func arrayWithChangeset(from collection: E, synchronousStart: Bool = true) -> Observable<(Array<E.ElementType>, RealmChangeset?)> {
+    public static func arrayWithChangeset(from collection: E, synchronousStart: Bool = true)
+        -> Observable<(Array<E.ElementType>, RealmChangeset?)> {
+
         return Observable.changeset(from: collection)
             .map { ($0.toArray(), $1) }
     }
@@ -255,14 +262,13 @@ public extension Observable {
      */
     public static func from(realm: Realm) -> Observable<(Realm, Realm.Notification)> {
 
-        return Observable<(Realm, Realm.Notification)>.create {observer in
-            let token = realm.addNotificationBlock { (notification: Realm.Notification, realm: Realm) in
+        return Observable<(Realm, Realm.Notification)>.create { observer in
+            let token = realm.observe { (notification: Realm.Notification, realm: Realm) in
                 observer.onNext((realm, notification))
             }
 
             return Disposables.create {
-                observer.onCompleted()
-                token.stop()
+                token.invalidate()
             }
         }
     }
@@ -278,12 +284,24 @@ extension Reactive where Base: Realm {
      Returns bindable sink wich adds object sequence to the current Realm
 
      - parameter: update - if set to `true` it will override existing objects with matching primary key
-     - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
+     - parameter: onError - closure to implement custom error handling
+     - returns: `AnyObserver<S>`, which you can use to subscribe an `Observable` to
      */
-    public func add<O: Sequence>(update: Bool = false) -> AnyObserver<O> where O.Iterator.Element: Object {
-        return RealmObserver(realm: base) {realm, element in
-            try! realm.write {
-                realm.add(element, update: update)
+    public func add<S: Sequence>(update: Bool = false, onError: ((S?, Error)->Void)? = nil)
+        -> AnyObserver<S> where S.Iterator.Element: Object {
+
+        return RealmObserver(realm: base) { realm, elements, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.add(elements, update: update)
+                }
+            } catch let e {
+                onError?(elements, e)
             }
         }
         .asObserver()
@@ -293,12 +311,24 @@ extension Reactive where Base: Realm {
      Returns bindable sink wich adds an object to Realm
 
      - parameter: update - if set to `true` it will override existing objects with matching primary key
+     - parameter: onError - closure to implement custom error handling
      - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
      */
-    public func add<O: Object>(update: Bool = false) -> AnyObserver<O> {
-        return RealmObserver(realm: base) {realm, element in
-            try! realm.write {
-                realm.add(element, update: update)
+    public func add<O: Object>(update: Bool = false,
+                    onError: ((O?, Error)->Void)? = nil) -> AnyObserver<O> {
+
+        return RealmObserver(realm: base) { realm, element, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.add(element, update: update)
+                }
+            } catch let e {
+                onError?(element, e)
             }
         }.asObserver()
     }
@@ -306,12 +336,24 @@ extension Reactive where Base: Realm {
     /**
      Returns bindable sink wich deletes objects in sequence from Realm.
 
-     - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
+     - parameter: onError - closure to implement custom error handling
+     - returns: `AnyObserver<S>`, which you can use to subscribe an `Observable` to
      */
-    public func delete<S: Sequence>() -> AnyObserver<S> where S.Iterator.Element: Object {
-        return RealmObserver(realm: base, binding: { (realm, elements) in
-            try! realm.write {
-                realm.delete(elements)
+    public func delete<S: Sequence>(onError: ((S?, Error)->Void)? = nil)
+        -> AnyObserver<S> where S.Iterator.Element: Object {
+
+        return RealmObserver(realm: base, binding: { realm, elements, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.delete(elements)
+                }
+            } catch let e {
+                onError?(elements, e)
             }
         }).asObserver()
     }
@@ -319,12 +361,22 @@ extension Reactive where Base: Realm {
     /**
      Returns bindable sink wich deletes objects in sequence from Realm.
 
+     - parameter: onError - closure to implement custom error handling
      - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
      */
-    public func delete<O: Object>() -> AnyObserver<O> {
-        return RealmObserver(realm: base, binding: { (realm, elements) in
-            try! realm.write {
-                realm.delete(elements)
+    public func delete<O: Object>(onError: ((O?, Error)->Void)? = nil) -> AnyObserver<O> {
+        return RealmObserver(realm: base, binding: { realm, element, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.delete(element)
+                }
+            } catch let e {
+                onError?(element, e)
             }
         }).asObserver()
     }
@@ -338,74 +390,110 @@ extension Reactive where Base: Realm {
      - parameter: configuration (by default uses `Realm.Configuration.defaultConfiguration`)
      to use to get a Realm for the write operations
      - parameter: update - if set to `true` it will override existing objects with matching primary key
-     - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
+     - parameter: onError - closure to implement custom error handling
+     - returns: `AnyObserver<S>`, which you can use to subscribe an `Observable` to
      */
-    public static func add<O: Sequence>(
+    public static func add<S: Sequence>(
         configuration: Realm.Configuration = Realm.Configuration.defaultConfiguration,
-        update: Bool = false) -> AnyObserver<O> where O.Iterator.Element: Object {
+        update: Bool = false,
+        onError: ((S?, Error)->Void)? = nil) -> AnyObserver<S> where S.Iterator.Element: Object {
 
-        return RealmObserver(configuration: configuration) {realm, elements in
-            try! realm.write {
-                realm.add(elements, update: update)
+        return RealmObserver(configuration: configuration) { realm, elements, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.add(elements, update: update)
+                }
+            } catch let e {
+                onError?(elements, e)
             }
         }.asObserver()
     }
 
     /**
-     Returns bindable sink wich adds an object to a Realm
+     Returns bindable sink which adds an object to a Realm
 
      - parameter: configuration (by default uses `Realm.Configuration.defaultConfiguration`)
      to use to get a Realm for the write operations
      - parameter: update - if set to `true` it will override existing objects with matching primary key
+     - parameter: onError - closure to implement custom error handling
      - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
      */
     public static func add<O: Object>(
         configuration: Realm.Configuration = Realm.Configuration.defaultConfiguration,
-        update: Bool = false) -> AnyObserver<O> {
+        update: Bool = false,
+        onError: ((O?, Error)->Void)? = nil) -> AnyObserver<O> {
 
-        return RealmObserver(configuration: configuration) {realm, element in
-            try! realm.write {
-                realm.add(element, update: update)
+        return RealmObserver(configuration: configuration) { realm, element, error in
+            guard let realm = realm else {
+                onError?(nil, error ?? RxRealmError.unknown)
+                return
+            }
+
+            do {
+                try realm.write {
+                    realm.add(element, update: update)
+                }
+            } catch let e {
+                onError?(element, e)
             }
         }.asObserver()
     }
 
     /**
-     Returns bindable sink wich deletes objects in sequence from Realm.
+     Returns bindable sink, which deletes objects in sequence from Realm.
 
-     - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
+     - parameter: onError - closure to implement custom error handling
+     - returns: `AnyObserver<S>`, which you can use to subscribe an `Observable` to
      */
-    public static func delete<S: Sequence>() -> AnyObserver<S>  where S.Iterator.Element: Object {
-        return AnyObserver {event in
+    public static func delete<S: Sequence>(onError: ((S?, Error)->Void)? = nil)
+        -> AnyObserver<S>  where S.Iterator.Element: Object {
+
+        return AnyObserver { event in
 
             guard let elements = event.element,
                 var generator = elements.makeIterator() as S.Iterator?,
                 let first = generator.next(),
                 let realm = first.realm else {
+                    onError?(nil, RxRealmError.unknown)
                     return
             }
 
-            try! realm.write {
-                realm.delete(elements)
+            do {
+                try realm.write {
+                    realm.delete(elements)
+                }
+            } catch let e {
+                onError?(elements, e)
             }
         }
     }
 
     /**
-     Returns bindable sink wich deletes object from Realm
+     Returns bindable sink, which deletes object from Realm
 
+     - parameter: onError - closure to implement custom error handling
      - returns: `AnyObserver<O>`, which you can use to subscribe an `Observable` to
      */
-    public static func delete<O: Object>() -> AnyObserver<O> {
-        return AnyObserver {event in
+    public static func delete<O: Object>(onError: ((O?, Error)->Void)? = nil) -> AnyObserver<O> {
 
-            guard let element = event.element,
-                let realm = element.realm else {
-                    return
+        return AnyObserver { event in
+
+            guard let element = event.element, let realm = element.realm else {
+                onError?(nil, RxRealmError.unknown)
+                return
             }
             
-            try! realm.write {
-                realm.delete(element)
+            do {
+                try realm.write {
+                    realm.delete(element)
+                }
+            } catch let e {
+                onError?(element, e)
             }
         }
     }
@@ -420,60 +508,72 @@ public extension Observable where Element: Object {
         return from(object: object)
     }
 
-    // until there is a built-in solution from Realm to observe a single object
-    // this handy method observes a single object by its primary key
-
     /**
      Returns an `Observable<Object>` that emits each time the object changes. The observable emits an initial value upon subscription.
 
      - parameter object: A Realm Object to observe
-     - parameter synchronousStart: whether the resulting `Observable` should emit its first element synchronously (e.g. better for UI bindings)
-
+     - parameter emitInitialValue: whether the resulting `Observable` should emit its first element synchronously (e.g. better for UI bindings)
+     - parameter properties: changes to which properties would triger emitting a .next event
      - returns: `Observable<Object>` will emit any time the observed object changes + one initial emit upon subscription
      */
 
-    public static func from(object: Element, synchronousStart: Bool = true) -> Observable<Element> {
+  public static func from(object: Element, emitInitialValue: Bool = true,
+                          properties: [String]? = nil) -> Observable<Element> {
 
-        guard let realm = object.realm else {
-            return Observable<Element>.empty()
-        }
-
-        guard let primaryKeyName = Element.primaryKey(),
-            let primaryKey = object.value(forKey: primaryKeyName) else {
-            fatalError("At present you can't observe objects that don't have primary key.")
-        }
-
-        return Observable<Element>.create {observer in
-            if synchronousStart {
+        return Observable<Element>.create { observer in
+            if emitInitialValue {
                 observer.onNext(object)
             }
 
-            let objectQuery = realm.objects(Element.self)
-                .filter("%K == %@", primaryKeyName, primaryKey)
-
-            let token = objectQuery.addNotificationBlock {changes in
-                switch changes {
-                case .initial(let results):
-                    guard !synchronousStart else { return }
-                    if let latestObject = results.first {
-                        observer.onNext(latestObject)
-                    } else {
-                        observer.onError(RxRealmError.objectDeleted)
+            let token = object.observe { change in
+                switch change {
+                case .change(let changedProperties):
+                    if let properties = properties, !changedProperties.contains { return properties.contains($0.name) } {
+                        //if change property isn't an observed one, just return
+                        return
                     }
-                case .update(let results, _, _, _):
-                    if let latestObject = results.first {
-                        observer.onNext(latestObject)
-                    } else {
-                        observer.onError(RxRealmError.objectDeleted)
-                    }
+                    observer.onNext(object)
+                case .deleted:
+                    observer.onError(RxRealmError.objectDeleted)
                 case .error(let error):
                     observer.onError(error)
                 }
             }
 
             return Disposables.create {
-                token.stop()
+                token.invalidate()
             }
         }
     }
+    
+    /**
+     Returns an `Observable<PropertyChange>` that emits the object `PropertyChange`s.
+     
+     - parameter object: A Realm Object to observe
+     - returns: `Observable<PropertyChange>` will emit any time a change is detected on the object
+     */
+    
+    public static func propertyChanges(object: Element) -> Observable<PropertyChange> {
+
+        return Observable<PropertyChange>.create { observer in
+            let token = object.observe { change in
+                switch change {
+                case .change(let changes):
+                    for change in changes {
+                        observer.onNext(change)
+                    }
+                case .deleted:
+                    observer.onError(RxRealmError.objectDeleted)
+                case .error(let error):
+                    observer.onError(error)
+                }
+            }
+            
+            return Disposables.create {
+                token.invalidate()
+            }
+        }
+    }
+
+    
 }

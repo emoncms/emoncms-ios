@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/RxSwiftCommunity/Action.svg)](https://travis-ci.org/RxSwiftCommunity/Action)
+[![CircleCI](https://circleci.com/gh/RxSwiftCommunity/Action.svg?style=svg)](https://circleci.com/gh/RxSwiftCommunity/Action)
 
 Action
 ======
@@ -37,7 +37,7 @@ Notice that the first generic parameter is the type of the input, and the second
 You can also specify an `enabledIf` parameter to the `Action` initializer.
 
 ```swift
-let validEmailAddress = emailTextField.rx_text.map(isValidEmail)
+let validEmailAddress = emailTextField.rx.text.map(isValidEmail)
 
 action: Action<String, Bool> = Action(enabledIf: validEmailAddress, workFactory: { input in
     return networkLibrary.checkEmailExists(input)
@@ -64,12 +64,12 @@ If your scenario involves many buttons that needs to trigger the same `Action` p
 let button1 = UIButton()
 let button2 = UIButton()
 
-let action = Action<String,String> { input in
-  print(input)
-  return .just(input)
+let action = Action<String, String> { input in
+    print(input)
+    return .just(input)
 }
-button1.rx.bindTo(action) {_ in return "Hello"}
-button2.rx.bindTo(action) {_ in return "Goodbye"}
+button1.rx.bindTo(action) { _ in return "Hello"}
+button2.rx.bindTo(action) { _ in return "Goodbye"}
 ```
 
 `button1` and `button2` are sharing the same `Action`, but they are feeding it with different input (`Hello` and `Goodbye` that will be printed for corresponding tap).
@@ -79,7 +79,7 @@ A more complex use case can be a single action related to a `UIViewController` t
 There's also a really cool extension on `UIAlertAction`, used by [`UIAlertController`](http://ashfurrow.com/blog/uialertviewcontroller-example/). One catch: because of the limitations of that class, you can't instantiate it with the normal initializer. Instead, call this class method:
 
 ```swift
-let action = UIAlertAction.Action("Hi", style: .Default)
+let action = UIAlertAction.Action("Hi", style: .default)
 ```
 
 Installing
@@ -100,8 +100,10 @@ Then run `pod install` and that'll be 👌
 Add this to `Cartfile`
 
 ```
-github "RxSwiftCommunity/Action" ~> 2.1.1
+github "RxSwiftCommunity/Action" ~> 3.6.0
 ```
+
+If you are using RxSwift 3.2.0 or below, Use Action `~2.2.0` instead!
 
 then run
 

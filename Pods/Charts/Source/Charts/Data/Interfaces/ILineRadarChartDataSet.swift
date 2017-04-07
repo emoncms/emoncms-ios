@@ -30,7 +30,7 @@ public protocol ILineRadarChartDataSet: ILineScatterCandleRadarChartDataSet
     /// **default**: 0.33
     var fillAlpha: CGFloat { get set }
     
-    /// line width of the chart (min = 0.2, max = 10)
+    /// line width of the chart (min = 0.0, max = 10)
     ///
     /// **default**: 1
     var lineWidth: CGFloat { get set }
@@ -40,6 +40,6 @@ public protocol ILineRadarChartDataSet: ILineScatterCandleRadarChartDataSet
     /// Please note that this method uses the path clipping for drawing the filled area (with images, gradients and layers).
     var drawFilledEnabled: Bool { get set }
     
-    /// - returns: `true` if filled drawing is enabled, `false` ifnot
+    /// - returns: `true` if filled drawing is enabled, `false` if not
     var isDrawFilledEnabled: Bool { get }
 }

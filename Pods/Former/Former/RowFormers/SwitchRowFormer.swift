@@ -63,7 +63,7 @@ open class SwitchRowFormer<T: UITableViewCell>
         }
     }
     
-    public override func cellSelected(indexPath: IndexPath) {        
+    open override func cellSelected(indexPath: IndexPath) {        
         former?.deselect(animated: true)
         if switchWhenSelected && enabled {
             let switchButton = cell.formSwitch()
@@ -76,9 +76,9 @@ open class SwitchRowFormer<T: UITableViewCell>
     
     private final var onSwitchChanged: ((Bool) -> Void)?
     private final var titleColor: UIColor?
-    private final var selectionStyle: UITableViewCellSelectionStyle?
+    private final var selectionStyle: UITableViewCell.SelectionStyle?
     
-    private dynamic func switchChanged(_ switchButton: UISwitch) {
+    @objc private dynamic func switchChanged(_ switchButton: UISwitch) {
         if self.enabled {
             let switched = switchButton.isOn
             self.switched = switched

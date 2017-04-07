@@ -78,7 +78,7 @@ public:
     void clear();
 
     void sort(size_t column, bool ascending = true);
-    void sort(const SortDescriptor& order);
+    void sort(SortDescriptor&& order);
 
     TableView get_sorted_view(size_t column_index, bool ascending = true) const;
     TableView get_sorted_view(SortDescriptor order) const;
@@ -383,6 +383,12 @@ public:
     static void do_insert(LinkView& list, size_t link_ndx, size_t target_row_ndx)
     {
         list.do_insert(link_ndx, target_row_ndx);
+    }
+
+    static const LinkListColumn& get_origin_column(const LinkView& list)
+    {
+        REALM_ASSERT(list.is_attached());
+        return *list.m_origin_column;
     }
 };
 

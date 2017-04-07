@@ -23,7 +23,21 @@ open class PieChartData: ChartData
         super.init(dataSets: dataSets)
     }
 
-    var dataSet: IPieChartDataSet?
+    /// - returns: All DataSet objects this ChartData object holds.
+    @objc open override var dataSets: [IChartDataSet]
+    {
+        get
+        {
+            assert(super.dataSets.count <= 1, "Found multiple data sets while pie chart only allows one")
+            return super.dataSets
+        }
+        set
+        {
+            super.dataSets = newValue
+        }
+    }
+
+    @objc var dataSet: IPieChartDataSet?
     {
         get
         {
@@ -31,9 +45,9 @@ open class PieChartData: ChartData
         }
         set
         {
-            if newValue != nil
+            if let newValue = newValue
             {
-                dataSets = [newValue!]
+                dataSets = [newValue]
             }
             else
             {
@@ -60,7 +74,7 @@ open class PieChartData: ChartData
         
         if ignorecase
         {
-            if (label.caseInsensitiveCompare(dataSets[0].label!) == ComparisonResult.orderedSame)
+            if let label = dataSets[0].label, label.caseInsensitiveCompare(label) == .orderedSame
             {
                 return dataSets[0]
             }
@@ -100,7 +114,7 @@ open class PieChartData: ChartData
     }
     
     /// - returns: The total y-value sum across all DataSet objects the this object represents.
-    open var yValueSum: Double
+    @objc open var yValueSum: Double
     {
         guard let dataSet = dataSet else { return 0.0 }
         

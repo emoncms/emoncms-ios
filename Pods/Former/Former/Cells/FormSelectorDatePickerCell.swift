@@ -26,6 +26,14 @@ open class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
         return displayLabel
     }
     
+    open func formDefaultDisplayLabelText() -> String? {
+        return "Not Set"
+    }
+    
+    open func formDefaultDisplayDate() -> NSDate? {
+        return NSDate()
+    }
+
     open override func updateWithRowFormer(_ rowFormer: RowFormer) {
         super.updateWithRowFormer(rowFormer)
         rightConst.constant = (accessoryType == .none) ? -15 : 0
@@ -35,7 +43,7 @@ open class FormSelectorDatePickerCell: FormCell, SelectorDatePickerFormableRow {
         super.setup()
         
         let titleLabel = UILabel()
-        titleLabel.setContentHuggingPriority(500, for: .horizontal)
+        titleLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 500), for: .horizontal)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         contentView.insertSubview(titleLabel, at: 0)
         self.titleLabel = titleLabel
