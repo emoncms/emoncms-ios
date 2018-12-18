@@ -11,10 +11,15 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import Charts
 
-final class FeedListViewController: UITableViewController {
+final class FeedListViewController: UIViewController {
 
   var viewModel: FeedListViewModel!
+
+  @IBOutlet fileprivate var tableView: UITableView!
+  @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
+  @IBOutlet fileprivate var lineChartView: LineChartView!
 
   fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
@@ -31,8 +36,28 @@ final class FeedListViewController: UITableViewController {
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableViewAutomaticDimension
 
+    if #available(iOS 10.0, *) {
+      self.tableView.refreshControl = UIRefreshControl()
+    }
+
     self.setupDataSource()
+    self.setupChartView()
     self.setupBindings()
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+
+    let topOfChartInTableView = self.lineChartView.convert(CGPoint.zero, to: self.tableView)
+    let insetBottom = self.tableView.bounds.height - topOfChartInTableView.y
+
+    var contentInset = self.tableView.contentInset
+    contentInset.bottom = insetBottom
+    self.tableView.contentInset = contentInset
+
+    var scrollIndicatorInsets = self.tableView.scrollIndicatorInsets
+    scrollIndicatorInsets.bottom = insetBottom
+    self.tableView.scrollIndicatorInsets = scrollIndicatorInsets
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -52,7 +77,7 @@ final class FeedListViewController: UITableViewController {
       let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
       cell.titleLabel.text = item.name
       cell.valueLabel.text = item.value
-      cell.accessoryType = .disclosureIndicator
+      cell.accessoryType = .detailDisclosureButton
 
       let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
       let value: String
@@ -87,24 +112,117 @@ final class FeedListViewController: UITableViewController {
       .drive(self.tableView.rx.items(dataSource: self.dataSource))
       .addDisposableTo(self.disposeBag)
 
-    self.tableView.rx.modelSelected(FeedListViewModel.ListItem.self)
-      .subscribe(onNext: { [weak self] item in
+    let i = self.tableView.rx.itemSelected
+    i
+      .map { [weak self] indexPath -> FeedChartViewModel? in
+        guard let strongSelf = self else { return nil }
+
+        let item = try! strongSelf.dataSource.model(at: indexPath) as! FeedListViewModel.ListItem
+        let chartViewModel = strongSelf.viewModel.feedChartViewModel(forItem: item)
+        return chartViewModel
+      }
+      .flatMapLatest { [weak self] chartViewModel -> Observable<()> in
+        let disposeBag = CompositeDisposable()
+
+        if let chartViewModel = chartViewModel {
+          chartViewModel.dateRange.value = .relative(.hour8)
+          let disposable = chartViewModel.dataPoints
+            .drive(onNext: { [weak self] dataPoints in
+              guard let strongSelf = self else { return }
+
+              let chartView = strongSelf.lineChartView!
+
+              guard !dataPoints.isEmpty else {
+                chartView.data = nil
+                chartView.notifyDataSetChanged()
+                return
+              }
+
+              let dataSet = LineChartDataSet(values: [], label: nil)
+              dataSet.valueTextColor = .lightGray
+              dataSet.fillColor = .black
+              dataSet.setColor(.black)
+              dataSet.drawCirclesEnabled = false
+              dataSet.drawFilledEnabled = true
+              dataSet.drawValuesEnabled = false
+              dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+
+              for point in dataPoints {
+                let x = point.time.timeIntervalSince1970
+                let y = point.value
+
+                let yDataEntry = ChartDataEntry(x: x, y: y)
+                _ = dataSet.addEntry(yDataEntry)
+              }
+
+              let data = LineChartData()
+              data.addDataSet(dataSet)
+              chartView.data = data
+              
+              chartView.notifyDataSetChanged()
+            })
+          chartViewModel.active.value = true
+          _ = disposeBag.insert(disposable)
+        }
+
+        return Observable<()>.never()
+          .do(onDispose: { 
+            disposeBag.dispose()
+          })
+      }
+      .subscribe()
+      .addDisposableTo(self.disposeBag)
+
+    self.tableView.rx.itemAccessoryButtonTapped
+      .subscribe(onNext: { [weak self] indexPath in
         guard let strongSelf = self else { return }
+        let item = try! strongSelf.dataSource.model(at: indexPath)
         strongSelf.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
       })
       .addDisposableTo(self.disposeBag)
   }
 
+  private func setupChartView() {
+    let chartView = self.lineChartView!
+
+    chartView.noDataText = "Select a feed"
+    chartView.dragEnabled = false
+    chartView.pinchZoomEnabled = false
+    chartView.highlightPerTapEnabled = false
+    chartView.setScaleEnabled(false)
+    chartView.chartDescription = nil
+    chartView.drawGridBackgroundEnabled = false
+    chartView.legend.enabled = false
+    chartView.rightAxis.enabled = false
+
+    let xAxis = chartView.xAxis
+    xAxis.drawGridLinesEnabled = false
+    xAxis.drawLabelsEnabled = false
+
+    let yAxis = chartView.leftAxis
+    yAxis.drawGridLinesEnabled = false
+    yAxis.labelPosition = .outsideChart
+    yAxis.drawZeroLineEnabled = true
+  }
+
   private func setupBindings() {
-    let refreshControl = self.refreshControl!
+    if #available(iOS 10.0, *) {
+      let refreshControl = self.tableView.refreshControl!
 
-    refreshControl.rx.controlEvent(.valueChanged)
-      .bindTo(self.viewModel.refresh)
-      .addDisposableTo(self.disposeBag)
+      Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
+        .merge()
+        .bindTo(self.viewModel.refresh)
+        .addDisposableTo(self.disposeBag)
 
-    self.viewModel.isRefreshing
-      .drive(refreshControl.rx.isRefreshing)
-      .addDisposableTo(self.disposeBag)
+      self.viewModel.isRefreshing
+        .drive(refreshControl.rx.isRefreshing)
+        .addDisposableTo(self.disposeBag)
+
+      self.viewModel.isRefreshing
+        .map { !$0 }
+        .drive(self.refreshButton.rx.isEnabled)
+        .addDisposableTo(self.disposeBag)
+    }
   }
 
 }

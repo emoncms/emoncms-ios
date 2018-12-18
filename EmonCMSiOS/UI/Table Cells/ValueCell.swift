@@ -20,4 +20,10 @@ final class ValueCell: UITableViewCell {
     self.activityCircle.layer.cornerRadius = self.activityCircle.bounds.width / 2
   }
 
+  override func setSelected(_ selected: Bool, animated: Bool) {
+    let colour = self.activityCircle.backgroundColor
+    super.setSelected(selected, animated: animated)
+    self.activityCircle.backgroundColor = colour
+  }
+
 }
