@@ -37,9 +37,9 @@ final class AppListViewController: UITableViewController {
         cell.textLabel?.text = item.name
         return cell
     },
-      titleForHeaderInSection: { _ in "" },
-      canEditRowAtIndexPath: { _ in true },
-      canMoveRowAtIndexPath: { _ in false })
+      titleForHeaderInSection: { _,_  in "" },
+      canEditRowAtIndexPath: { _,_  in true },
+      canMoveRowAtIndexPath: { _,_  in false })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil

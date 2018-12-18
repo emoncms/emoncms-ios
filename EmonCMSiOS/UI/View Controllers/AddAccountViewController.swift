@@ -61,7 +61,7 @@ final class AddAccountViewController: FormViewController {
         $0.placeholder = "Emoncms instance URL"
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
-        strongSelf.viewModel.url.value = text
+        strongSelf.viewModel.url.accept(text)
     }
 
     let apikeyRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -72,7 +72,7 @@ final class AddAccountViewController: FormViewController {
         $0.placeholder = "Emoncms API read Key"
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
-        strongSelf.viewModel.apikey.value = text
+        strongSelf.viewModel.apikey.accept(text)
     }
 
     let scanQRRow = LabelRowFormer<FormLabelCell>() {
@@ -135,8 +135,8 @@ final class AddAccountViewController: FormViewController {
   }
 
   fileprivate func updateWithAccount(_ account: Account) {
-    self.viewModel.url.value = account.url
-    self.viewModel.apikey.value = account.apikey
+    self.viewModel.url.accept(account.url)
+    self.viewModel.apikey.accept(account.apikey)
     self.urlRow?.text = account.url
     self.urlRow?.update()
     self.apikeyRow?.text = account.apikey

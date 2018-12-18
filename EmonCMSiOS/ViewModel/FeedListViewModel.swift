@@ -34,7 +34,7 @@ final class FeedListViewModel {
   private let disposeBag = DisposeBag()
 
   // Inputs
-  let active = Variable<Bool>(false)
+  let active = BehaviorRelay<Bool>(value: false)
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs

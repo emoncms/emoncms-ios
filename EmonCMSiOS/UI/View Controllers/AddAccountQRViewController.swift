@@ -47,14 +47,14 @@ final class AddAccountQRViewController: UIViewController {
     self.videoPreviewLayer?.frame = self.playerLayerView.bounds
   }
 
-  private dynamic func cancel() {
+  @objc private dynamic func cancel() {
     self.delegate?.addAccountQRViewControllerDidCancel(controller: self)
   }
 
   private func checkCameraPermissionAndSetupStack() {
     guard self.captureSession == nil else { return }
 
-    let authStatus = AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo)
+    let authStatus = AVCaptureDevice.authorizationStatus(for: .video)
     switch authStatus {
     case .authorized:
       self.setupAVStack()
@@ -68,7 +68,10 @@ final class AddAccountQRViewController: UIViewController {
   }
 
   private func setupAVStack() {
-    let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    guard let captureDevice = AVCaptureDevice.default(for: .video) else {
+      AppLog.error("No capture device!")
+      return
+    }
 
     do {
       let captureSession = AVCaptureSession()
@@ -79,14 +82,13 @@ final class AddAccountQRViewController: UIViewController {
       let captureMetadataOutput = AVCaptureMetadataOutput()
       captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
       captureSession.addOutput(captureMetadataOutput)
-      captureMetadataOutput.metadataObjectTypes = [AVMetadataObjectTypeQRCode]
+      captureMetadataOutput.metadataObjectTypes = [AVMetadataObject.ObjectType.qr]
 
-      if let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession) {
-        videoPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
-        videoPreviewLayer.frame = self.playerLayerView.bounds
-        self.videoPreviewLayer = videoPreviewLayer
-        self.playerLayerView.layer.addSublayer(videoPreviewLayer)
-      }
+      let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+      videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+      videoPreviewLayer.frame = self.playerLayerView.bounds
+      self.videoPreviewLayer = videoPreviewLayer
+      self.playerLayerView.layer.addSublayer(videoPreviewLayer)
 
       self.captureSession = captureSession
       captureSession.startRunning()
@@ -96,7 +98,7 @@ final class AddAccountQRViewController: UIViewController {
   }
 
   private func askForCameraPermission() {
-    AVCaptureDevice.requestAccess(forMediaType: AVMediaTypeVideo) { (enabled) in
+    AVCaptureDevice.requestAccess(for: AVMediaType.video) { (enabled) in
       DispatchQueue.main.async {
         if enabled {
           self.setupAVStack()
@@ -110,7 +112,7 @@ final class AddAccountQRViewController: UIViewController {
   private func presentCameraRequiredDialog() {
     let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
-      if let url = URL(string: UIApplicationOpenSettingsURLString) {
+      if let url = URL(string: UIApplication.openSettingsURLString) {
         if #available(iOS 10.0, *) {
           UIApplication.shared.open(url, options: [:], completionHandler: nil)
         } else {
@@ -132,17 +134,13 @@ final class AddAccountQRViewController: UIViewController {
 
 extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
-  func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+  func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
     guard self.foundAccount == false else { return }
 
-    guard let metadataObjects = metadataObjects,
-      metadataObjects.count > 0
-      else {
-        return
-    }
+    guard metadataObjects.count > 0 else { return }
 
     guard let qrCode = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
-      qrCode.type == AVMetadataObjectTypeQRCode,
+      qrCode.type == AVMetadataObject.ObjectType.qr,
       let string = qrCode.stringValue
       else {
         return

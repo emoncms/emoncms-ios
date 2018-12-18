@@ -12,12 +12,12 @@ import RealmSwift
 
 final class Input: Object {
 
-  dynamic var id: String = ""
-  dynamic var nodeid: String = ""
-  dynamic var name: String = ""
-  dynamic var desc: String = ""
-  dynamic var time: Date = Date()
-  dynamic var value: Double = 0
+  @objc dynamic var id: String = ""
+  @objc dynamic var nodeid: String = ""
+  @objc dynamic var name: String = ""
+  @objc dynamic var desc: String = ""
+  @objc dynamic var time: Date = Date()
+  @objc dynamic var value: Double = 0
 
   override class func primaryKey() -> String? {
     return "id"

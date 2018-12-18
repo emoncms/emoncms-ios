@@ -21,7 +21,7 @@ final class SettingsViewModel {
   private let disposeBag = DisposeBag()
 
   // Inputs
-  let active = Variable<Bool>(false)
+  let active = BehaviorRelay<Bool>(value: false)
 
   // Outputs
   let feedList: FeedListHelper

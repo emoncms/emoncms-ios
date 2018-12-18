@@ -18,8 +18,8 @@ final class FeedChartViewModel {
   private let feedId: String
 
   // Inputs
-  let active = Variable<Bool>(false)
-  let dateRange: Variable<DateRange>
+  let active = BehaviorRelay<Bool>(value: false)
+  let dateRange: BehaviorRelay<DateRange>
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
@@ -31,7 +31,7 @@ final class FeedChartViewModel {
     self.api = api
     self.feedId = feedId
 
-    self.dateRange = Variable<DateRange>(DateRange.relative(.hour8))
+    self.dateRange = BehaviorRelay<DateRange>(value: DateRange.relative(.hour8))
 
     self.dataPoints = Driver.empty()
 

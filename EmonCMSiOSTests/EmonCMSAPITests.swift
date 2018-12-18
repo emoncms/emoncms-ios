@@ -23,7 +23,7 @@ class EmonCMSAPITests: QuickSpec {
     var account: Account!
 
     func call<T>(api: Observable<T>, observer: TestableObserver<T>, expect: @escaping () -> Void) {
-      let sharedResult = api.shareReplay(1)
+      let sharedResult = api.share(replay: 1)
 
       sharedResult
         .subscribe(observer)
@@ -56,7 +56,7 @@ class EmonCMSAPITests: QuickSpec {
       it("should return feeds") {
         let observer = scheduler.createObserver([Feed].self)
 
-        let result = api.feedList(account).shareReplay(1)
+        let result = api.feedList(account).share(replay: 1)
 
         call(api: result, observer: observer) {
           expect(observer.events.count).to(equal(2))

@@ -16,11 +16,11 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
   let chartView: ChartViewType
   let spinner: UIActivityIndicatorView
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     self.chartView = ChartViewType()
     chartView.translatesAutoresizingMaskIntoConstraints = false
 
-    self.spinner = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    self.spinner = UIActivityIndicatorView(style: .gray)
     spinner.translatesAutoresizingMaskIntoConstraints = false
     spinner.hidesWhenStopped = true
 

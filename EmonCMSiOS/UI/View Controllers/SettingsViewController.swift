@@ -37,12 +37,12 @@ final class SettingsViewController: FormViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.value = true
+    self.viewModel.active.accept(true)
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.value = false
+    self.viewModel.active.accept(false)
   }
 
   private func setupFormer() {

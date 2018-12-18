@@ -24,7 +24,7 @@ final class InputListViewController: UITableViewController {
     self.title = "Inputs"
 
     self.tableView.estimatedRowHeight = 68.0
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.allowsSelection = false
 
     self.setupDataSource()
@@ -33,12 +33,12 @@ final class InputListViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.value = true
+    self.viewModel.active.accept(true)
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.value = false
+    self.viewModel.active.accept(false)
   }
 
   private func setupDataSource() {

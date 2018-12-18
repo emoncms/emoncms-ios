@@ -35,7 +35,7 @@ final class MyElectricAppViewModel {
   private let appData: MyElectricAppData
 
   // Inputs
-  let active = Variable<Bool>(false)
+  let active = BehaviorRelay<Bool>(value: false)
 
   // Outputs
   private(set) var title: Driver<String>

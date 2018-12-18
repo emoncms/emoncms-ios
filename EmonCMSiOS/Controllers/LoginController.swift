@@ -19,7 +19,7 @@ final class LoginController {
     case KeychainFailed
   }
 
-  private var _account = Variable<Account?>(nil)
+  private var _account = BehaviorRelay<Account?>(value: nil)
   let account: Observable<Account?>
 
   init() {
@@ -40,7 +40,7 @@ final class LoginController {
       else { return }
 
     let account = Account(uuid: accountUUID, url: accountURL, apikey: apikey)
-    self._account.value = account
+    self._account.accept(account)
   }
 
   func login(withAccount account: Account) throws {
@@ -60,7 +60,7 @@ final class LoginController {
       }
       UserDefaults.standard.set(account.url, forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
       UserDefaults.standard.set(account.uuid.uuidString, forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
-      self._account.value = account
+      self._account.accept(account)
     } catch {
       throw LoginControllerError.KeychainFailed
     }
@@ -73,7 +73,7 @@ final class LoginController {
     do {
       try Locksmith.deleteDataForUserAccount(userAccount: accountURL)
       UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
-      self._account.value = nil
+      self._account.accept(nil)
     } catch {
       throw LoginControllerError.KeychainFailed
     }

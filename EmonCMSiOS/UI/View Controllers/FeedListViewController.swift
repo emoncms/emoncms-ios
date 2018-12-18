@@ -33,7 +33,7 @@ final class FeedListViewController: UIViewController {
     self.title = "Feeds"
 
     self.tableView.estimatedRowHeight = 68.0
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = UITableView.automaticDimension
 
     if #available(iOS 10.0, *) {
       self.tableView.refreshControl = UIRefreshControl()
@@ -61,12 +61,12 @@ final class FeedListViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.value = true
+    self.viewModel.active.accept(true)
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.value = false
+    self.viewModel.active.accept(false)
   }
 
   private func setupDataSource() {
@@ -124,7 +124,7 @@ final class FeedListViewController: UIViewController {
         let disposeBag = CompositeDisposable()
 
         if let chartViewModel = chartViewModel {
-          chartViewModel.dateRange.value = .relative(.hour8)
+          chartViewModel.dateRange.accept(.relative(.hour8))
           let disposable = chartViewModel.dataPoints
             .drive(onNext: { [weak self] dataPoints in
               guard let strongSelf = self else { return }
@@ -160,7 +160,7 @@ final class FeedListViewController: UIViewController {
               
               chartView.notifyDataSetChanged()
             })
-          chartViewModel.active.value = true
+          chartViewModel.active.accept(true)
           _ = disposeBag.insert(disposable)
         }
 

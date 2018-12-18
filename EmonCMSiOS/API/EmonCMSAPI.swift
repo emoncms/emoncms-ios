@@ -235,8 +235,8 @@ final class EmonCMSAPI {
       let nsStringUrl = url as NSString
       let matches = regex.matches(in: url, options: [], range: NSMakeRange(0, nsStringUrl.length))
       if let match = matches.first, match.numberOfRanges == 3 {
-        let host = nsStringUrl.substring(with: match.rangeAt(1))
-        let apikey = nsStringUrl.substring(with: match.rangeAt(2))
+        let host = nsStringUrl.substring(with: match.range(at: 1))
+        let apikey = nsStringUrl.substring(with: match.range(at: 2))
         return (host: host, apikey: apikey)
       }
     } catch {}

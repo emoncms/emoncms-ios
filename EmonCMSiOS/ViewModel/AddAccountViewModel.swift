@@ -9,6 +9,7 @@
 import Foundation
 
 import RxSwift
+import RxCocoa
 
 final class AddAccountViewModel {
 
@@ -20,8 +21,8 @@ final class AddAccountViewModel {
 
   let api: EmonCMSAPI
 
-  let url = Variable<String>("")
-  let apikey = Variable<String>("")
+  let url = BehaviorRelay<String>(value: "")
+  let apikey = BehaviorRelay<String>(value: "")
 
   init(api: EmonCMSAPI) {
     self.api = api
