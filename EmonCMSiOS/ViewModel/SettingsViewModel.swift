@@ -38,7 +38,7 @@ final class SettingsViewModel {
       .filter { $0 == true }
       .becomeVoid()
       .subscribe(self.feedList.refresh)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
 }

@@ -23,7 +23,7 @@ final class LoginController {
   let account: Observable<Account?>
 
   init() {
-    self.account = _account.asObservable().shareReplay(1)
+    self.account = _account.asObservable().share(replay: 1)
     self.loadAccount()
   }
 

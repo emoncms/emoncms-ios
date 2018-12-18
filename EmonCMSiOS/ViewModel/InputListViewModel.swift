@@ -72,7 +72,7 @@ final class InputListViewModel {
           .trackActivity(isRefreshing)
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func inputsToSections(_ inputs: [Input]) -> [Section] {

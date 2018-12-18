@@ -44,7 +44,7 @@ final class MainController {
           strongSelf.loadAddAccountUI()
         }
       })
-      .addDisposableTo(disposeBag)
+      .disposed(by: disposeBag)
 
     self.disposeBag = disposeBag
 

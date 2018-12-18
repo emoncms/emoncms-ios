@@ -21,7 +21,6 @@ final class FeedListViewController: UIViewController {
   @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
   @IBOutlet fileprivate var lineChartView: LineChartView!
 
-  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {
@@ -73,51 +72,51 @@ final class FeedListViewController: UIViewController {
   private func setupDataSource() {
     self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
 
-    self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
-      let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
-      cell.titleLabel.text = item.name
-      cell.valueLabel.text = item.value
-      cell.accessoryType = .detailDisclosureButton
+    let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>(
+      configureCell: { (ds, tableView, indexPath, item) in
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
+        cell.titleLabel.text = item.name
+        cell.valueLabel.text = item.value
+        cell.accessoryType = .detailDisclosureButton
 
-      let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
-      let value: String
-      let colour: UIColor
-      if secondsAgo < 60 {
-        value = "\(secondsAgo) secs"
-        colour = EmonCMSColors.ActivityIndicator.Green
-      } else if secondsAgo < 3600 {
-        value = "\(secondsAgo / 60) mins"
-        colour = EmonCMSColors.ActivityIndicator.Yellow
-      } else if secondsAgo < 86400 {
-        value = "\(secondsAgo / 3600) hours"
-        colour = EmonCMSColors.ActivityIndicator.Orange
-      } else {
-        value = "\(secondsAgo / 86400) days"
-        colour = EmonCMSColors.ActivityIndicator.Red
-      }
-      cell.timeLabel.text = value
-      cell.activityCircle.backgroundColor = colour
+        let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
+        let value: String
+        let colour: UIColor
+        if secondsAgo < 60 {
+          value = "\(secondsAgo) secs"
+          colour = EmonCMSColors.ActivityIndicator.Green
+        } else if secondsAgo < 3600 {
+          value = "\(secondsAgo / 60) mins"
+          colour = EmonCMSColors.ActivityIndicator.Yellow
+        } else if secondsAgo < 86400 {
+          value = "\(secondsAgo / 3600) hours"
+          colour = EmonCMSColors.ActivityIndicator.Orange
+        } else {
+          value = "\(secondsAgo / 86400) days"
+          colour = EmonCMSColors.ActivityIndicator.Red
+        }
+        cell.timeLabel.text = value
+        cell.activityCircle.backgroundColor = colour
 
-      return cell
-    }
-
-    self.dataSource.titleForHeaderInSection = { (ds, index) in
-      return ds.sectionModels[index].model
-    }
+        return cell
+    },
+      titleForHeaderInSection: { (ds, index) in
+        return ds.sectionModels[index].model
+    })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
     self.viewModel.feeds
-      .drive(self.tableView.rx.items(dataSource: self.dataSource))
-      .addDisposableTo(self.disposeBag)
+      .drive(self.tableView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
 
     let i = self.tableView.rx.itemSelected
     i
       .map { [weak self] indexPath -> FeedChartViewModel? in
         guard let strongSelf = self else { return nil }
 
-        let item = try! strongSelf.dataSource.model(at: indexPath) as! FeedListViewModel.ListItem
+        let item = try! dataSource.model(at: indexPath) as! FeedListViewModel.ListItem
         let chartViewModel = strongSelf.viewModel.feedChartViewModel(forItem: item)
         return chartViewModel
       }
@@ -171,15 +170,15 @@ final class FeedListViewController: UIViewController {
           })
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.tableView.rx.itemAccessoryButtonTapped
       .subscribe(onNext: { [weak self] indexPath in
         guard let strongSelf = self else { return }
-        let item = try! strongSelf.dataSource.model(at: indexPath)
+        let item = try! dataSource.model(at: indexPath)
         strongSelf.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupChartView() {
@@ -211,17 +210,17 @@ final class FeedListViewController: UIViewController {
 
       Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
         .merge()
-        .bindTo(self.viewModel.refresh)
-        .addDisposableTo(self.disposeBag)
+        .bind(to: self.viewModel.refresh)
+        .disposed(by: self.disposeBag)
 
       self.viewModel.isRefreshing
         .drive(refreshControl.rx.isRefreshing)
-        .addDisposableTo(self.disposeBag)
+        .disposed(by: self.disposeBag)
 
       self.viewModel.isRefreshing
         .map { !$0 }
         .drive(self.refreshButton.rx.isEnabled)
-        .addDisposableTo(self.disposeBag)
+        .disposed(by: self.disposeBag)
     }
   }
 

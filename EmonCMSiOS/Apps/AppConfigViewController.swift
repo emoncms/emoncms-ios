@@ -121,7 +121,7 @@ final class AppConfigViewController: FormViewController {
           row.selectedRow = selectedIndex
         }
         })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     Observable<FeedListHelper.FeedListItem?>.create { observer in
         row.onValueChanged { item in
@@ -137,7 +137,7 @@ final class AppConfigViewController: FormViewController {
           strongSelf.data.removeValue(forKey: field.id)
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupNavigation() {
@@ -183,7 +183,7 @@ final class AppConfigViewController: FormViewController {
         return Observable.just(nil)
       }
       .subscribe(self.finishedSubject)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
 }

@@ -50,7 +50,7 @@ final class MyElectricAppViewController: UIViewController {
   private func setupBindings() {
     self.viewModel.title
       .drive(self.rx.title)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.data
       .map { $0?.powerNow }
@@ -64,7 +64,7 @@ final class MyElectricAppViewController: UIViewController {
         return value + "W"
       }
       .drive(self.powerLabel.rx.text)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.data
       .map { $0?.usageToday }
@@ -78,7 +78,7 @@ final class MyElectricAppViewController: UIViewController {
         return value + "kWh"
       }
       .drive(self.usageTodayLabel.rx.text)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.data
       .map { $0?.lineChartData }
@@ -86,7 +86,7 @@ final class MyElectricAppViewController: UIViewController {
         guard let strongSelf = self else { return }
         strongSelf.updateLineChartData(dataPoints)
         })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.data
       .map { $0?.barChartData }
@@ -94,16 +94,16 @@ final class MyElectricAppViewController: UIViewController {
         guard let strongSelf = self else { return }
         strongSelf.updateBarChartData(dataPoints)
         })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.isReady
       .map { !$0 }
       .drive(self.mainView.rx.isHidden)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.isReady
       .drive(self.configureView.rx.isHidden)
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.errors
       .drive(onNext: { [weak self] error in
@@ -118,7 +118,7 @@ final class MyElectricAppViewController: UIViewController {
           break
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .none
@@ -142,7 +142,7 @@ final class MyElectricAppViewController: UIViewController {
           strongSelf.bannerView.backgroundColor = UIColor.lightGray
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupNavigation() {
@@ -162,7 +162,7 @@ final class MyElectricAppViewController: UIViewController {
         guard let strongSelf = self else { return }
         strongSelf.dismiss(animated: true, completion: nil)
         })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 

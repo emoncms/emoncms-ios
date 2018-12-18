@@ -71,7 +71,7 @@ final class FeedListViewModel {
           .trackActivity(isRefreshing)
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func feedsToSections(_ feeds: [Feed]) -> [Section] {

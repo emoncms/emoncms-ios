@@ -185,17 +185,17 @@ final class FeedChartViewController: FormViewController {
           break
         }
       })
-      .shareReplay(1)
+      .share(replay: 1)
     let startDateSignal = RowFormer.rx_observable(startDateRow.onDateChanged)
       .startWith(startDateRow.date)
-      .shareReplay(1)
+      .share(replay: 1)
     let endDateSignal = RowFormer.rx_observable(endDateRow.onDateChanged)
       .startWith(endDateRow.date)
-      .shareReplay(1)
+      .share(replay: 1)
     let dateRelativeSignal = RowFormer.rx_observable(dateRelativeRow.onSegmentSelected)
       .map { $0.0 }
       .startWith(dateRelativeRow.selectedIndex)
-      .shareReplay(1)
+      .share(replay: 1)
 
     let dateRangeSignal = Observable
       .combineLatest(dateRangeTypeSignal, startDateSignal, endDateSignal, dateRelativeSignal) {
@@ -211,8 +211,8 @@ final class FeedChartViewController: FormViewController {
     }
 
     dateRangeSignal
-      .bindTo(self.viewModel.dateRange)
-      .addDisposableTo(self.disposeBag)
+      .bind(to: self.viewModel.dateRange)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupBindings() {
@@ -220,12 +220,12 @@ final class FeedChartViewController: FormViewController {
       let refreshControl = self.tableView.refreshControl!
 
       refreshControl.rx.controlEvent(.valueChanged)
-        .bindTo(self.viewModel.refresh)
-        .addDisposableTo(self.disposeBag)
+        .bind(to: self.viewModel.refresh)
+        .disposed(by: self.disposeBag)
 
       self.viewModel.isRefreshing
         .drive(refreshControl.rx.isRefreshing)
-        .addDisposableTo(self.disposeBag)
+        .disposed(by: self.disposeBag)
     }
 
     self.viewModel.isRefreshing
@@ -243,7 +243,7 @@ final class FeedChartViewController: FormViewController {
           cell.chartView.alpha = 1.0
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.dataPoints
       .drive(onNext: { [weak self] dataPoints in
@@ -270,7 +270,7 @@ final class FeedChartViewController: FormViewController {
         data.notifyDataChanged()
         chartView.notifyDataSetChanged()
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
 }

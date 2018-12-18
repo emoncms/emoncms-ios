@@ -57,7 +57,7 @@ final class FeedListHelper {
           .trackActivity(isRefreshing)
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {

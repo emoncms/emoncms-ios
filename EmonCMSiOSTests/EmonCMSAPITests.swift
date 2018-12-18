@@ -27,7 +27,7 @@ class EmonCMSAPITests: QuickSpec {
 
       sharedResult
         .subscribe(observer)
-        .addDisposableTo(disposeBag)
+        .disposed(by: disposeBag)
 
       waitUntil { done in
         sharedResult
@@ -40,7 +40,7 @@ class EmonCMSAPITests: QuickSpec {
               expect()
               done()
           })
-          .addDisposableTo(disposeBag)
+          .disposed(by: disposeBag)
       }
     }
 

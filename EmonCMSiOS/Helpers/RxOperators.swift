@@ -14,7 +14,7 @@ extension ObservableType {
     return map { _ in () }
   }
 
-  public func becomeVoidAndIgnoreElements() -> Observable<()> {
+  public func becomeVoidAndIgnoreElements() -> Completable {
     return becomeVoid().ignoreElements()
   }
 

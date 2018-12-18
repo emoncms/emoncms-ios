@@ -18,7 +18,6 @@ final class AppListViewController: UITableViewController {
 
   private var emptyLabel: UILabel?
 
-  fileprivate let dataSource = RxTableViewSectionedReloadDataSource<AppListViewModel.Section>()
   fileprivate let disposeBag = DisposeBag()
 
   override func viewDidLoad() {
@@ -32,25 +31,23 @@ final class AppListViewController: UITableViewController {
   }
 
   private func setupDataSource() {
-    self.dataSource.configureCell = { (ds, tableView, indexPath, item) in
-      let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-      cell.textLabel?.text = item.name
-      return cell
-    }
-
-    self.dataSource.titleForHeaderInSection = { _ in "" }
-
-    self.dataSource.canEditRowAtIndexPath = { _ in true }
-
-    self.dataSource.canMoveRowAtIndexPath = { _ in false }
+    let dataSource = RxTableViewSectionedReloadDataSource<AppListViewModel.Section>(
+      configureCell: { (ds, tableView, indexPath, item) in
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        cell.textLabel?.text = item.name
+        return cell
+    },
+      titleForHeaderInSection: { _ in "" },
+      canEditRowAtIndexPath: { _ in true },
+      canMoveRowAtIndexPath: { _ in false })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
     self.viewModel.apps
       .map { [AppListViewModel.Section(model: "", items: $0)] }
-      .drive(self.tableView.rx.items(dataSource: self.dataSource))
-      .addDisposableTo(self.disposeBag)
+      .drive(self.tableView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
   }
 
   private func setupBindings() {
@@ -59,7 +56,7 @@ final class AppListViewController: UITableViewController {
       .subscribe(onNext: { [unowned self] in
         self.presentApp(withId: $0.appId)
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.tableView.rx
       .itemDeleted
@@ -72,7 +69,7 @@ final class AppListViewController: UITableViewController {
           .catchErrorJustReturn(())
       }
       .subscribe()
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.apps
       .map {
@@ -129,7 +126,7 @@ final class AppListViewController: UITableViewController {
           }
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupNavigation() {
@@ -157,7 +154,7 @@ final class AppListViewController: UITableViewController {
           }
         }
       })
-      .addDisposableTo(self.disposeBag)
+      .disposed(by: self.disposeBag)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 

@@ -34,7 +34,7 @@ class AddAccountViewModelTests: QuickSpec {
         var result: Bool?
         viewModel.canSave()
           .subscribe(onNext: { result = $0 })
-          .addDisposableTo(disposeBag)
+          .disposed(by: disposeBag)
 
         expect(result).to(equal(false))
       }
@@ -46,7 +46,7 @@ class AddAccountViewModelTests: QuickSpec {
         var result: Bool?
         viewModel.canSave()
           .subscribe(onNext: { result = $0 })
-          .addDisposableTo(disposeBag)
+          .disposed(by: disposeBag)
 
         expect(result).to(equal(true))
       }
