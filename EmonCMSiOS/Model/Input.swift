@@ -33,9 +33,9 @@ extension Input {
     guard let name = json["name"] as? String else { return nil }
     guard let desc = json["description"] as? String else { return nil }
     guard let timeAny = json["time"],
-      let timeDouble = Double(timeAny) else { return nil }
+      let timeDouble = Double.from(timeAny) else { return nil }
     guard let valueAny = json["value"],
-      let value = Double(valueAny) else { return nil }
+      let value = Double.from(valueAny) else { return nil }
 
     let time = Date(timeIntervalSince1970: timeDouble)
 

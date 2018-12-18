@@ -10,16 +10,16 @@ import Foundation
 
 extension Double {
 
-  init?(_ value: Any) {
+  static func from(_ value: Any) -> Double? {
     switch value {
     case let double as Double:
-      self.init(double)
+      return double
     case let float as Float:
-      self.init(float)
+      return Double(float)
     case let int as Int:
-      self.init(int)
+      return Double(int)
     case let string as String:
-      self.init(string)
+      return Double(string)
     default:
       return nil
     }

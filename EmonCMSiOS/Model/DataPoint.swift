@@ -20,8 +20,8 @@ extension DataPoint {
   static func from(json: [Any]) -> DataPoint? {
     guard json.count == 2 else { return nil }
 
-    guard let timeDouble = Double(json[0]) else { return nil }
-    guard let value = Double(json[1]) else { return nil }
+    guard let timeDouble = Double.from(json[0]) else { return nil }
+    guard let value = Double.from(json[1]) else { return nil }
 
     let time = Date(timeIntervalSince1970: timeDouble / 1000)
 

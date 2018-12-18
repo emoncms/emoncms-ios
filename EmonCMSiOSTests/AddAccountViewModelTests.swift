@@ -28,8 +28,8 @@ class AddAccountViewModelTests: QuickSpec {
 
     describe("canSave") {
       it("should be false for invalid input") {
-        viewModel.url.value = ""
-        viewModel.apikey.value = ""
+        viewModel.url.accept("")
+        viewModel.apikey.accept("")
 
         var result: Bool?
         viewModel.canSave()
@@ -40,8 +40,8 @@ class AddAccountViewModelTests: QuickSpec {
       }
 
       it("should be true for valid input") {
-        viewModel.url.value = "http://emoncms.org"
-        viewModel.apikey.value = "abcdef"
+        viewModel.url.accept("http://emoncms.org")
+        viewModel.apikey.accept("abcdef")
 
         var result: Bool?
         viewModel.canSave()

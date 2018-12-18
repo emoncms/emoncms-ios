@@ -179,7 +179,7 @@ final class EmonCMSAPI {
 
     return self.request(account, path: "feed/value", queryItems: queryItems).map { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
-        let value = Double(json) else {
+        let value = Double.from(json) else {
           throw EmonCMSAPIError.invalidResponse
       }
 
@@ -200,7 +200,7 @@ final class EmonCMSAPI {
 
       var results: [String:Double] = [:]
       for (id, valueAny) in zip(ids, array) {
-        guard let value = Double(valueAny) else {
+        guard let value = Double.from(valueAny) else {
             throw EmonCMSAPIError.invalidResponse
         }
 
