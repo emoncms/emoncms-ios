@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d12-Mm-32y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="d12-Mm-32y">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,25 +27,69 @@
                                 <sections/>
                             </tableView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-yG-B6c">
-                                <rect key="frame" x="0.0" y="438" width="375" height="180"/>
+                                <rect key="frame" x="0.0" y="378" width="375" height="240"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jxG-jJ-DbO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOL-NE-T7V" customClass="LineChartView" customModule="Charts">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="180"/>
+                                            <rect key="frame" x="0.0" y="44" width="375" height="196"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aps-4m-XUP">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag up to view graph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUS-sd-8ba">
+                                                    <rect key="frame" x="103" y="12" width="169" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstItem="RUS-sd-8ba" firstAttribute="centerY" secondItem="aps-4m-XUP" secondAttribute="centerY" id="CuT-Mf-1e7"/>
+                                                <constraint firstItem="RUS-sd-8ba" firstAttribute="centerX" secondItem="aps-4m-XUP" secondAttribute="centerX" id="rSZ-9e-v7h"/>
+                                            </constraints>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oex-Ds-1WM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <subviews>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QpN-ww-W8G">
+                                                    <rect key="frame" x="110.5" y="8" width="154" height="29"/>
+                                                    <segments>
+                                                        <segment title="1h"/>
+                                                        <segment title="8h"/>
+                                                        <segment title="D"/>
+                                                        <segment title="M"/>
+                                                        <segment title="Y"/>
+                                                    </segments>
+                                                </segmentedControl>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="QpN-ww-W8G" secondAttribute="bottom" constant="8" id="0Ew-va-y8j"/>
+                                                <constraint firstItem="QpN-ww-W8G" firstAttribute="centerX" secondItem="Oex-Ds-1WM" secondAttribute="centerX" id="MIG-0b-2NY"/>
+                                                <constraint firstItem="QpN-ww-W8G" firstAttribute="top" secondItem="Oex-Ds-1WM" secondAttribute="top" constant="8" id="rif-5U-3CY"/>
+                                            </constraints>
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstItem="Oex-Ds-1WM" firstAttribute="leading" secondItem="jxG-jJ-DbO" secondAttribute="leading" id="3w8-gG-8s9"/>
+                                        <constraint firstItem="aps-4m-XUP" firstAttribute="centerX" secondItem="Oex-Ds-1WM" secondAttribute="centerX" id="5sd-Fj-ZrG"/>
                                         <constraint firstAttribute="bottom" secondItem="EOL-NE-T7V" secondAttribute="bottom" id="EcP-Cp-CLR"/>
                                         <constraint firstAttribute="trailing" secondItem="EOL-NE-T7V" secondAttribute="trailing" id="EsR-bF-LVh"/>
+                                        <constraint firstItem="aps-4m-XUP" firstAttribute="height" secondItem="Oex-Ds-1WM" secondAttribute="height" id="KV7-WH-jl0"/>
+                                        <constraint firstItem="EOL-NE-T7V" firstAttribute="top" secondItem="Oex-Ds-1WM" secondAttribute="bottom" id="NVo-Wq-phX"/>
+                                        <constraint firstAttribute="trailing" secondItem="Oex-Ds-1WM" secondAttribute="trailing" id="ZU7-TB-G8Y"/>
+                                        <constraint firstItem="Oex-Ds-1WM" firstAttribute="top" secondItem="jxG-jJ-DbO" secondAttribute="top" id="aMB-Dg-r1D"/>
+                                        <constraint firstItem="aps-4m-XUP" firstAttribute="centerY" secondItem="Oex-Ds-1WM" secondAttribute="centerY" id="eHE-nq-ey9"/>
                                         <constraint firstItem="EOL-NE-T7V" firstAttribute="leading" secondItem="jxG-jJ-DbO" secondAttribute="leading" id="iun-UB-X5K"/>
-                                        <constraint firstItem="EOL-NE-T7V" firstAttribute="top" secondItem="jxG-jJ-DbO" secondAttribute="top" id="wag-L0-qAX"/>
+                                        <constraint firstItem="aps-4m-XUP" firstAttribute="width" secondItem="Oex-Ds-1WM" secondAttribute="width" id="rfS-Ky-Ata"/>
                                     </constraints>
                                 </view>
                                 <constraints>
-                                    <constraint firstAttribute="width" secondItem="fEd-yG-B6c" secondAttribute="height" multiplier="25:12" id="vjX-ET-LwR"/>
+                                    <constraint firstAttribute="width" secondItem="fEd-yG-B6c" secondAttribute="height" multiplier="25:16" id="vjX-ET-LwR"/>
                                 </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
@@ -67,6 +109,11 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="yuN-HQ-kww"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="chartContainerView" destination="fEd-yG-B6c" id="hk0-Mk-Dum"/>
+                        <outlet property="chartContainerViewBottomConstraint" destination="E1u-Ep-hoN" id="6qv-DD-afo"/>
+                        <outlet property="chartControlsContainerView" destination="Oex-Ds-1WM" id="bOb-VY-WMu"/>
+                        <outlet property="chartLabelContainerView" destination="aps-4m-XUP" id="4fs-7x-Vpd"/>
+                        <outlet property="chartSegmentedControl" destination="QpN-ww-W8G" id="aLS-P8-uDZ"/>
                         <outlet property="lineChartView" destination="EOL-NE-T7V" id="VIr-gC-Dej"/>
                         <outlet property="refreshButton" destination="yuN-HQ-kww" id="fYC-aB-D6D"/>
                         <outlet property="tableView" destination="iKX-04-Ggf" id="ELb-kb-Ja5"/>
@@ -166,11 +213,11 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7j1-1U-a5H" id="vJ9-9z-28e">
-                                    <rect key="frame" x="0.0" y="0.0" width="342" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="341" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KKm-Yo-dif">
-                                            <rect key="frame" x="15" y="0.0" width="325" height="43.5"/>
+                                            <rect key="frame" x="16" y="0.0" width="324" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

@@ -16,10 +16,16 @@ import Charts
 final class FeedListViewController: UIViewController {
 
   var viewModel: FeedListViewModel!
+  let chartViewModel = BehaviorRelay<FeedChartViewModel?>(value: nil)
 
   @IBOutlet fileprivate var tableView: UITableView!
   @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
+  @IBOutlet fileprivate var chartContainerView: UIView!
+  @IBOutlet fileprivate var chartContainerViewBottomConstraint: NSLayoutConstraint!
   @IBOutlet fileprivate var lineChartView: LineChartView!
+  @IBOutlet fileprivate var chartLabelContainerView: UIView!
+  @IBOutlet fileprivate var chartControlsContainerView: UIView!
+  @IBOutlet fileprivate var chartSegmentedControl: UISegmentedControl!
 
   fileprivate let disposeBag = DisposeBag()
 
@@ -40,8 +46,10 @@ final class FeedListViewController: UIViewController {
     }
 
     self.setupDataSource()
+    self.setupDragRecogniser()
     self.setupChartView()
     self.setupBindings()
+    self.setupChartBindings()
   }
 
   override func viewDidLayoutSubviews() {
@@ -111,8 +119,7 @@ final class FeedListViewController: UIViewController {
       .drive(self.tableView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
 
-    let i = self.tableView.rx.itemSelected
-    i
+    self.tableView.rx.itemSelected
       .map { [weak self] indexPath -> FeedChartViewModel? in
         guard let strongSelf = self else { return nil }
 
@@ -120,56 +127,7 @@ final class FeedListViewController: UIViewController {
         let chartViewModel = strongSelf.viewModel.feedChartViewModel(forItem: item)
         return chartViewModel
       }
-      .flatMapLatest { [weak self] chartViewModel -> Observable<()> in
-        let disposeBag = CompositeDisposable()
-
-        if let chartViewModel = chartViewModel {
-          chartViewModel.dateRange.accept(.relative(.hour8))
-          let disposable = chartViewModel.dataPoints
-            .drive(onNext: { [weak self] dataPoints in
-              guard let strongSelf = self else { return }
-
-              let chartView = strongSelf.lineChartView!
-
-              guard !dataPoints.isEmpty else {
-                chartView.data = nil
-                chartView.notifyDataSetChanged()
-                return
-              }
-
-              let dataSet = LineChartDataSet(values: [], label: nil)
-              dataSet.valueTextColor = .lightGray
-              dataSet.fillColor = .black
-              dataSet.setColor(.black)
-              dataSet.drawCirclesEnabled = false
-              dataSet.drawFilledEnabled = true
-              dataSet.drawValuesEnabled = false
-              dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-              for point in dataPoints {
-                let x = point.time.timeIntervalSince1970
-                let y = point.value
-
-                let yDataEntry = ChartDataEntry(x: x, y: y)
-                _ = dataSet.addEntry(yDataEntry)
-              }
-
-              let data = LineChartData()
-              data.addDataSet(dataSet)
-              chartView.data = data
-              
-              chartView.notifyDataSetChanged()
-            })
-          chartViewModel.active.accept(true)
-          _ = disposeBag.insert(disposable)
-        }
-
-        return Observable<()>.never()
-          .do(onDispose: { 
-            disposeBag.dispose()
-          })
-      }
-      .subscribe()
+      .bind(to: self.chartViewModel)
       .disposed(by: self.disposeBag)
 
     self.tableView.rx.itemAccessoryButtonTapped
@@ -177,6 +135,70 @@ final class FeedListViewController: UIViewController {
         guard let strongSelf = self else { return }
         let item = try! dataSource.model(at: indexPath)
         strongSelf.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
+      })
+      .disposed(by: self.disposeBag)
+  }
+
+  private func setupDragRecogniser() {
+    let gestureRecogniser = UIPanGestureRecognizer()
+    self.chartContainerView.addGestureRecognizer(gestureRecogniser)
+
+    var beginConstant = CGFloat(0)
+    var minY = CGFloat(0)
+
+    let dragProgress = gestureRecogniser.rx.event
+      .map { [weak self] recognizer -> (CGFloat, Bool) in
+        guard let self = self else { return (0, false) }
+
+        if recognizer.state == .began {
+          beginConstant = self.chartContainerViewBottomConstraint.constant
+          minY = -(self.chartContainerView.bounds.height - self.chartControlsContainerView.frame.maxY)
+        }
+
+        let maxY = CGFloat(0)
+
+        let translation = recognizer.translation(in: self.view).y
+        var newConstantValue = beginConstant - translation
+
+        if newConstantValue < minY {
+          newConstantValue = minY
+        } else if newConstantValue > maxY {
+          newConstantValue /= 2
+        }
+
+        let progress = (minY - newConstantValue) / minY
+
+        switch recognizer.state {
+        case .ended, .failed, .cancelled:
+          let endProgress = (progress > 0.5) ? CGFloat(1.0) : CGFloat(0.0)
+          return (endProgress, true)
+        case .began, .changed, .possible:
+          return (progress, false)
+        }
+      }
+
+    let tapRecogniser = UITapGestureRecognizer()
+    self.chartLabelContainerView.addGestureRecognizer(tapRecogniser)
+
+    let tapProgress = Observable.merge(
+      tapRecogniser.rx.event.becomeVoid(),
+      self.tableView.rx.itemSelected.becomeVoid()
+      )
+      .map { _ in (CGFloat(1.0), true) }
+
+    Observable.merge(dragProgress, tapProgress)
+      .asDriver(onErrorJustReturn: (0, false))
+      .drive(onNext: { [weak self] (progress, animated) in
+        guard let self = self else { return }
+
+        let constant = (1.0 - progress) * minY
+
+        self.chartContainerViewBottomConstraint.constant = constant
+        UIView.animate(withDuration: animated ? 0.3 : 0.0) {
+          self.chartControlsContainerView.alpha = progress
+          self.chartLabelContainerView.alpha = 1.0 - progress
+          self.view.layoutIfNeeded()
+        }
       })
       .disposed(by: self.disposeBag)
   }
@@ -222,6 +244,69 @@ final class FeedListViewController: UIViewController {
         .drive(self.refreshButton.rx.isEnabled)
         .disposed(by: self.disposeBag)
     }
+  }
+
+  private func setupChartBindings() {
+    self.chartViewModel
+      .asObservable()
+      .flatMapLatest { [weak self] chartViewModel -> Observable<()> in
+        let disposeBag = CompositeDisposable()
+
+        if let self = self, let chartViewModel = chartViewModel {
+          let disposable1 = self.chartSegmentedControl.rx.selectedSegmentIndex
+            .startWith(self.chartSegmentedControl.selectedSegmentIndex)
+            .map {
+              DateRange.relative(DateRange.RelativeTime(rawValue: $0) ?? .hour1)
+            }
+            .bind(to: chartViewModel.dateRange)
+          _ = disposeBag.insert(disposable1)
+
+          let disposable2 = chartViewModel.dataPoints
+            .drive(onNext: { [weak self] dataPoints in
+              guard let strongSelf = self else { return }
+
+              let chartView = strongSelf.lineChartView!
+
+              guard !dataPoints.isEmpty else {
+                chartView.data = nil
+                chartView.notifyDataSetChanged()
+                return
+              }
+
+              let dataSet = LineChartDataSet(values: [], label: nil)
+              dataSet.valueTextColor = .lightGray
+              dataSet.fillColor = .black
+              dataSet.setColor(.black)
+              dataSet.drawCirclesEnabled = false
+              dataSet.drawFilledEnabled = true
+              dataSet.drawValuesEnabled = false
+              dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+
+              for point in dataPoints {
+                let x = point.time.timeIntervalSince1970
+                let y = point.value
+
+                let yDataEntry = ChartDataEntry(x: x, y: y)
+                _ = dataSet.addEntry(yDataEntry)
+              }
+
+              let data = LineChartData()
+              data.addDataSet(dataSet)
+              chartView.data = data
+
+              chartView.notifyDataSetChanged()
+            })
+          chartViewModel.active.accept(true)
+          _ = disposeBag.insert(disposable2)
+        }
+
+        return Observable<()>.never()
+          .do(onDispose: {
+            disposeBag.dispose()
+          })
+      }
+      .subscribe()
+      .disposed(by: self.disposeBag)
   }
 
 }
