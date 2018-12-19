@@ -156,8 +156,8 @@ final class FeedListViewController: UIViewController {
     var beginConstant = CGFloat(0)
 
     let dragProgress = gestureRecogniser.rx.event
-      .map { [weak self] recognizer -> (CGFloat, Bool) in
-        guard let self = self else { return (0, false) }
+      .map { [weak self] recognizer -> (CGFloat, CGFloat, Bool) in
+        guard let self = self else { return (0, 0, false) }
 
         if recognizer.state == .began {
           beginConstant = self.chartContainerViewBottomConstraint.constant
@@ -167,12 +167,14 @@ final class FeedListViewController: UIViewController {
         let maxY = self.chartContainerMaxDisplacement
 
         let translation = recognizer.translation(in: self.view).y
+        let velocity = recognizer.velocity(in: self.view).y
         var newConstantValue = beginConstant - translation
 
         if newConstantValue < minY {
           newConstantValue = minY
         } else if newConstantValue > maxY {
-          newConstantValue = maxY
+          // Rubber banding equation from: https://twitter.com/chpwn/status/285540192096497664
+          newConstantValue = maxY + (1.0 - (1.0 / (((newConstantValue - maxY) * 0.55 / maxY) + 1.0))) * maxY
         }
 
         let progress = (newConstantValue - minY) / (maxY - minY)
@@ -180,9 +182,9 @@ final class FeedListViewController: UIViewController {
         switch recognizer.state {
         case .ended, .failed, .cancelled:
           let endProgress = (progress > 0.5) ? CGFloat(1.0) : CGFloat(0.0)
-          return (endProgress, true)
+          return (endProgress, velocity, true)
         case .began, .changed, .possible:
-          return (progress, false)
+          return (progress, velocity, false)
         }
       }
 
@@ -193,21 +195,26 @@ final class FeedListViewController: UIViewController {
       tapRecogniser.rx.event.becomeVoid(),
       self.tableView.rx.itemSelected.becomeVoid()
       )
-      .map { _ in (CGFloat(1.0), true) }
+      .map { _ in (CGFloat(1), CGFloat(0), true) }
 
     Observable.merge(dragProgress, tapProgress)
-      .asDriver(onErrorJustReturn: (0, false))
-      .drive(onNext: { [weak self] (progress, animated) in
+      .asDriver(onErrorJustReturn: (0, 0, false))
+      .drive(onNext: { [weak self] (progress, velocity, animated) in
         guard let self = self else { return }
 
         let displacement = self.chartContainerMinDisplacement + (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
 
         self.chartContainerViewBottomConstraint.constant = displacement
-        UIView.animate(withDuration: animated ? 0.3 : 0.0) {
-          self.chartControlsContainerView.alpha = progress
-          self.chartLabelContainerView.alpha = 1.0 - progress
-          self.view.layoutIfNeeded()
-        }
+        UIView.animate(withDuration: animated ? 0.3 : 0.0,
+                       delay: 0,
+                       usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: -(velocity / self.chartContainerMaxDisplacement),
+                       options: UIView.AnimationOptions(rawValue: 0),
+                       animations: {
+                        self.chartControlsContainerView.alpha = progress
+                        self.chartLabelContainerView.alpha = 1.0 - progress
+                        self.view.layoutIfNeeded()
+        }, completion: nil)
       })
       .disposed(by: self.disposeBag)
   }
