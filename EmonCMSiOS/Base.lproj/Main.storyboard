@@ -61,14 +61,14 @@
                                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oex-Ds-1WM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QpN-ww-W8G">
-                                                    <rect key="frame" x="110.5" y="8" width="154" height="29"/>
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="QpN-ww-W8G">
+                                                    <rect key="frame" x="60.5" y="8" width="254" height="29"/>
                                                     <segments>
-                                                        <segment title="1h"/>
-                                                        <segment title="8h"/>
-                                                        <segment title="D"/>
-                                                        <segment title="M"/>
-                                                        <segment title="Y"/>
+                                                        <segment title="1h" width="50"/>
+                                                        <segment title="8h" width="50"/>
+                                                        <segment title="D" width="50"/>
+                                                        <segment title="M" width="50"/>
+                                                        <segment title="Y" width="50"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
