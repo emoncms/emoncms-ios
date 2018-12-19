@@ -41,9 +41,7 @@ final class FeedListViewController: UIViewController {
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableView.automaticDimension
 
-    if #available(iOS 10.0, *) {
-      self.tableView.refreshControl = UIRefreshControl()
-    }
+    self.tableView.refreshControl = UIRefreshControl()
 
     self.setupDataSource()
     self.setupDragRecogniser()
@@ -227,23 +225,21 @@ final class FeedListViewController: UIViewController {
   }
 
   private func setupBindings() {
-    if #available(iOS 10.0, *) {
-      let refreshControl = self.tableView.refreshControl!
+    let refreshControl = self.tableView.refreshControl!
 
-      Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
-        .merge()
-        .bind(to: self.viewModel.refresh)
-        .disposed(by: self.disposeBag)
+    Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
+      .merge()
+      .bind(to: self.viewModel.refresh)
+      .disposed(by: self.disposeBag)
 
-      self.viewModel.isRefreshing
-        .drive(refreshControl.rx.isRefreshing)
-        .disposed(by: self.disposeBag)
+    self.viewModel.isRefreshing
+      .drive(refreshControl.rx.isRefreshing)
+      .disposed(by: self.disposeBag)
 
-      self.viewModel.isRefreshing
-        .map { !$0 }
-        .drive(self.refreshButton.rx.isEnabled)
-        .disposed(by: self.disposeBag)
-    }
+    self.viewModel.isRefreshing
+      .map { !$0 }
+      .drive(self.refreshButton.rx.isEnabled)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupChartBindings() {

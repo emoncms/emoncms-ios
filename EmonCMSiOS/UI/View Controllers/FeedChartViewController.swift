@@ -25,9 +25,7 @@ final class FeedChartViewController: FormViewController {
 
     self.title = "Chart"
 
-    if #available(iOS 10.0, *) {
-      self.tableView.refreshControl = UIRefreshControl()
-    }
+    self.tableView.refreshControl = UIRefreshControl()
 
     self.setupFormer()
     self.setupBindings()
@@ -216,17 +214,15 @@ final class FeedChartViewController: FormViewController {
   }
 
   private func setupBindings() {
-    if #available(iOS 10.0, *) {
-      let refreshControl = self.tableView.refreshControl!
+    let refreshControl = self.tableView.refreshControl!
 
-      refreshControl.rx.controlEvent(.valueChanged)
-        .bind(to: self.viewModel.refresh)
-        .disposed(by: self.disposeBag)
+    refreshControl.rx.controlEvent(.valueChanged)
+      .bind(to: self.viewModel.refresh)
+      .disposed(by: self.disposeBag)
 
-      self.viewModel.isRefreshing
-        .drive(refreshControl.rx.isRefreshing)
-        .disposed(by: self.disposeBag)
-    }
+    self.viewModel.isRefreshing
+      .drive(refreshControl.rx.isRefreshing)
+      .disposed(by: self.disposeBag)
 
     self.viewModel.isRefreshing
       .throttle(0.3)
