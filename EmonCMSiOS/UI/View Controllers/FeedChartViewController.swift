@@ -54,8 +54,10 @@ final class FeedChartViewController: FormViewController {
 
   private func chartFormerSection() -> CustomRowFormer<ChartCell<LineChartView>> {
     let chartRow = CustomRowFormer<ChartCell<LineChartView>>(instantiateType: .Class) {
+      $0.chartView.noDataText = "No data"
       $0.chartView.dragEnabled = false
       $0.chartView.pinchZoomEnabled = false
+      $0.chartView.highlightPerTapEnabled = false
       $0.chartView.setScaleEnabled(false)
       $0.chartView.chartDescription = nil
       $0.chartView.drawGridBackgroundEnabled = false
@@ -71,20 +73,7 @@ final class FeedChartViewController: FormViewController {
       yAxis.drawGridLinesEnabled = false
       yAxis.labelPosition = .outsideChart
       yAxis.drawZeroLineEnabled = true
-
-      let dataSet = LineChartDataSet(values: [ChartDataEntry(x: 0, y: 0)], label: nil)
-      dataSet.valueTextColor = .lightGray
-      dataSet.fillColor = .black
-      dataSet.setColor(.black)
-      dataSet.drawCirclesEnabled = false
-      dataSet.drawFilledEnabled = true
-      dataSet.drawValuesEnabled = false
-      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-      let data = LineChartData()
-      data.addDataSet(dataSet)
-      $0.chartView.data = data
-      }.configure {
+    }.configure {
         $0.rowHeight = 250
     }
 
@@ -247,23 +236,33 @@ final class FeedChartViewController: FormViewController {
 
         let chartView = strongSelf.chartRow.cell.chartView
 
-        guard let data = chartView.data,
-          let dataSet = data.getDataSetByIndex(0) else {
-            return
+        guard !dataPoints.isEmpty else {
+          chartView.data = nil
+          chartView.notifyDataSetChanged()
+          return
         }
 
-        dataSet.clear()
+        let dataSet = LineChartDataSet(values: [], label: nil)
+        dataSet.valueTextColor = .lightGray
+        dataSet.fillColor = .black
+        dataSet.setColor(.black)
+        dataSet.drawCirclesEnabled = false
+        dataSet.drawFilledEnabled = true
+        dataSet.drawValuesEnabled = false
+        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
 
         for point in dataPoints {
           let x = point.time.timeIntervalSince1970
           let y = point.value
 
           let yDataEntry = ChartDataEntry(x: x, y: y)
-          data.addEntry(yDataEntry, dataSetIndex: 0)
+          _ = dataSet.addEntry(yDataEntry)
         }
 
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
+        let data = LineChartData()
+        data.addDataSet(dataSet)
+        chartView.data = data
+
         chartView.notifyDataSetChanged()
       })
       .disposed(by: self.disposeBag)

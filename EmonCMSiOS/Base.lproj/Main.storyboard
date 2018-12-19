@@ -27,16 +27,22 @@
                                 <sections/>
                             </tableView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-yG-B6c">
-                                <rect key="frame" x="0.0" y="378" width="375" height="240"/>
+                                <rect key="frame" x="0.0" y="573" width="375" height="667"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jxG-jJ-DbO">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="240"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOL-NE-T7V" customClass="LineChartView" customModule="Charts">
-                                            <rect key="frame" x="0.0" y="44" width="375" height="196"/>
+                                            <rect key="frame" x="0.0" y="44" width="375" height="180"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" secondItem="EOL-NE-T7V" secondAttribute="height" multiplier="25:12" id="2Gg-J6-icM"/>
+                                            </constraints>
                                         </view>
-                                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aps-4m-XUP">
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="hSq-ec-yjY">
+                                            <rect key="frame" x="177.5" y="124" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aps-4m-XUP">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag up to view graph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUS-sd-8ba">
@@ -52,7 +58,7 @@
                                                 <constraint firstItem="RUS-sd-8ba" firstAttribute="centerX" secondItem="aps-4m-XUP" secondAttribute="centerX" id="rSZ-9e-v7h"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oex-Ds-1WM">
+                                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oex-Ds-1WM">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="QpN-ww-W8G">
@@ -77,10 +83,11 @@
                                     <constraints>
                                         <constraint firstItem="Oex-Ds-1WM" firstAttribute="leading" secondItem="jxG-jJ-DbO" secondAttribute="leading" id="3w8-gG-8s9"/>
                                         <constraint firstItem="aps-4m-XUP" firstAttribute="centerX" secondItem="Oex-Ds-1WM" secondAttribute="centerX" id="5sd-Fj-ZrG"/>
-                                        <constraint firstAttribute="bottom" secondItem="EOL-NE-T7V" secondAttribute="bottom" id="EcP-Cp-CLR"/>
+                                        <constraint firstItem="hSq-ec-yjY" firstAttribute="centerY" secondItem="EOL-NE-T7V" secondAttribute="centerY" id="AfS-ei-5yq"/>
                                         <constraint firstAttribute="trailing" secondItem="EOL-NE-T7V" secondAttribute="trailing" id="EsR-bF-LVh"/>
                                         <constraint firstItem="aps-4m-XUP" firstAttribute="height" secondItem="Oex-Ds-1WM" secondAttribute="height" id="KV7-WH-jl0"/>
                                         <constraint firstItem="EOL-NE-T7V" firstAttribute="top" secondItem="Oex-Ds-1WM" secondAttribute="bottom" id="NVo-Wq-phX"/>
+                                        <constraint firstItem="hSq-ec-yjY" firstAttribute="centerX" secondItem="EOL-NE-T7V" secondAttribute="centerX" id="SMQ-yh-SJx"/>
                                         <constraint firstAttribute="trailing" secondItem="Oex-Ds-1WM" secondAttribute="trailing" id="ZU7-TB-G8Y"/>
                                         <constraint firstItem="Oex-Ds-1WM" firstAttribute="top" secondItem="jxG-jJ-DbO" secondAttribute="top" id="aMB-Dg-r1D"/>
                                         <constraint firstItem="aps-4m-XUP" firstAttribute="centerY" secondItem="Oex-Ds-1WM" secondAttribute="centerY" id="eHE-nq-ey9"/>
@@ -88,16 +95,14 @@
                                         <constraint firstItem="aps-4m-XUP" firstAttribute="width" secondItem="Oex-Ds-1WM" secondAttribute="width" id="rfS-Ky-Ata"/>
                                     </constraints>
                                 </view>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="fEd-yG-B6c" secondAttribute="height" multiplier="25:16" id="vjX-ET-LwR"/>
-                                </constraints>
                                 <blurEffect style="light"/>
                             </visualEffectView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="fEd-yG-B6c" firstAttribute="height" secondItem="5nu-ah-nb1" secondAttribute="height" id="3j5-c1-b3d"/>
                             <constraint firstItem="fEd-yG-B6c" firstAttribute="leading" secondItem="5nu-ah-nb1" secondAttribute="leading" id="9iq-E0-l3S"/>
-                            <constraint firstItem="XnG-M1-ctI" firstAttribute="top" secondItem="fEd-yG-B6c" secondAttribute="bottom" id="E1u-Ep-hoN"/>
+                            <constraint firstItem="XnG-M1-ctI" firstAttribute="top" secondItem="fEd-yG-B6c" secondAttribute="top" constant="45" id="E1u-Ep-hoN"/>
                             <constraint firstAttribute="trailing" secondItem="iKX-04-Ggf" secondAttribute="trailing" id="ZQQ-2C-sCs"/>
                             <constraint firstAttribute="bottom" secondItem="iKX-04-Ggf" secondAttribute="bottom" id="aBC-4b-qyA"/>
                             <constraint firstItem="iKX-04-Ggf" firstAttribute="top" secondItem="5nu-ah-nb1" secondAttribute="top" id="xt5-3R-ceX"/>
@@ -114,7 +119,8 @@
                         <outlet property="chartControlsContainerView" destination="Oex-Ds-1WM" id="bOb-VY-WMu"/>
                         <outlet property="chartLabelContainerView" destination="aps-4m-XUP" id="4fs-7x-Vpd"/>
                         <outlet property="chartSegmentedControl" destination="QpN-ww-W8G" id="aLS-P8-uDZ"/>
-                        <outlet property="lineChartView" destination="EOL-NE-T7V" id="VIr-gC-Dej"/>
+                        <outlet property="chartSpinner" destination="hSq-ec-yjY" id="2X8-ki-FiQ"/>
+                        <outlet property="chartView" destination="EOL-NE-T7V" id="8rT-3G-wqz"/>
                         <outlet property="refreshButton" destination="yuN-HQ-kww" id="fYC-aB-D6D"/>
                         <outlet property="tableView" destination="iKX-04-Ggf" id="ELb-kb-Ja5"/>
                         <segue destination="WAP-7R-QNT" kind="show" identifier="showFeed" id="owJ-L7-7fG"/>

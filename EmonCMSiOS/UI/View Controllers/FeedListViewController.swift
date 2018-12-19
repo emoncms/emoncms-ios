@@ -22,7 +22,8 @@ final class FeedListViewController: UIViewController {
   @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
   @IBOutlet fileprivate var chartContainerView: UIView!
   @IBOutlet fileprivate var chartContainerViewBottomConstraint: NSLayoutConstraint!
-  @IBOutlet fileprivate var lineChartView: LineChartView!
+  @IBOutlet fileprivate var chartView: LineChartView!
+  @IBOutlet fileprivate var chartSpinner: UIActivityIndicatorView!
   @IBOutlet fileprivate var chartLabelContainerView: UIView!
   @IBOutlet fileprivate var chartControlsContainerView: UIView!
   @IBOutlet fileprivate var chartSegmentedControl: UISegmentedControl!
@@ -33,6 +34,14 @@ final class FeedListViewController: UIViewController {
     case showFeed
   }
 
+  fileprivate var chartContainerMinDisplacement: CGFloat {
+    return self.chartControlsContainerView.frame.maxY
+  }
+
+  fileprivate var chartContainerMaxDisplacement: CGFloat {
+    return self.chartView.frame.maxY + 8
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -40,8 +49,12 @@ final class FeedListViewController: UIViewController {
 
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableView.automaticDimension
-
     self.tableView.refreshControl = UIRefreshControl()
+
+    self.chartContainerView.layer.cornerRadius = 20.0
+    self.chartContainerView.clipsToBounds = true
+    self.chartContainerView.layer.borderColor = UIColor(white: 0.7, alpha: 1.0).cgColor
+    self.chartContainerView.layer.borderWidth = 2.0
 
     self.setupDataSource()
     self.setupDragRecogniser()
@@ -53,8 +66,7 @@ final class FeedListViewController: UIViewController {
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    let topOfChartInTableView = self.lineChartView.convert(CGPoint.zero, to: self.tableView)
-    let insetBottom = self.tableView.bounds.height - topOfChartInTableView.y
+    let insetBottom = self.chartContainerViewBottomConstraint.constant
 
     var contentInset = self.tableView.contentInset
     contentInset.bottom = insetBottom
@@ -142,7 +154,6 @@ final class FeedListViewController: UIViewController {
     self.chartContainerView.addGestureRecognizer(gestureRecogniser)
 
     var beginConstant = CGFloat(0)
-    var minY = CGFloat(0)
 
     let dragProgress = gestureRecogniser.rx.event
       .map { [weak self] recognizer -> (CGFloat, Bool) in
@@ -150,10 +161,10 @@ final class FeedListViewController: UIViewController {
 
         if recognizer.state == .began {
           beginConstant = self.chartContainerViewBottomConstraint.constant
-          minY = -(self.chartContainerView.bounds.height - self.chartControlsContainerView.frame.maxY)
         }
 
-        let maxY = CGFloat(0)
+        let minY = self.chartContainerMinDisplacement
+        let maxY = self.chartContainerMaxDisplacement
 
         let translation = recognizer.translation(in: self.view).y
         var newConstantValue = beginConstant - translation
@@ -161,10 +172,10 @@ final class FeedListViewController: UIViewController {
         if newConstantValue < minY {
           newConstantValue = minY
         } else if newConstantValue > maxY {
-          newConstantValue /= 2
+          newConstantValue = maxY
         }
 
-        let progress = (minY - newConstantValue) / minY
+        let progress = (newConstantValue - minY) / (maxY - minY)
 
         switch recognizer.state {
         case .ended, .failed, .cancelled:
@@ -189,9 +200,9 @@ final class FeedListViewController: UIViewController {
       .drive(onNext: { [weak self] (progress, animated) in
         guard let self = self else { return }
 
-        let constant = (1.0 - progress) * minY
+        let displacement = self.chartContainerMinDisplacement + (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
 
-        self.chartContainerViewBottomConstraint.constant = constant
+        self.chartContainerViewBottomConstraint.constant = displacement
         UIView.animate(withDuration: animated ? 0.3 : 0.0) {
           self.chartControlsContainerView.alpha = progress
           self.chartLabelContainerView.alpha = 1.0 - progress
@@ -202,9 +213,8 @@ final class FeedListViewController: UIViewController {
   }
 
   private func setupChartView() {
-    let chartView = self.lineChartView!
+    let chartView = self.chartView!
 
-    chartView.noDataText = "Select a feed"
     chartView.dragEnabled = false
     chartView.pinchZoomEnabled = false
     chartView.highlightPerTapEnabled = false
@@ -216,7 +226,8 @@ final class FeedListViewController: UIViewController {
 
     let xAxis = chartView.xAxis
     xAxis.drawGridLinesEnabled = false
-    xAxis.drawLabelsEnabled = false
+    xAxis.labelPosition = .bottom
+    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
 
     let yAxis = chartView.leftAxis
     yAxis.drawGridLinesEnabled = false
@@ -243,6 +254,43 @@ final class FeedListViewController: UIViewController {
   }
 
   private func setupChartBindings() {
+
+    self.chartViewModel
+      .asObservable()
+      .flatMapLatest { chartViewModel -> Observable<Bool> in
+        if let chartViewModel = chartViewModel {
+          return chartViewModel.isRefreshing.throttle(0.3).asObservable()
+        } else {
+          return Observable<Bool>.never()
+        }
+      }
+      .asDriver(onErrorJustReturn: false)
+      .drive(onNext: { [weak self] refreshing in
+        guard let self = self else { return }
+
+        if refreshing {
+          self.chartSpinner.startAnimating()
+          self.chartView.alpha = 0.5
+        } else {
+          self.chartSpinner.stopAnimating()
+          self.chartView.alpha = 1.0
+        }
+      })
+      .disposed(by: self.disposeBag)
+
+    self.chartViewModel
+      .asDriver()
+      .drive(onNext: { [weak self] chartViewModel in
+        guard let self = self else { return }
+
+        if chartViewModel == nil {
+          self.chartView.noDataText = "Select a feed"
+        } else {
+          self.chartView.noDataText = "No data"
+        }
+      })
+      .disposed(by: self.disposeBag)
+
     self.chartViewModel
       .asObservable()
       .flatMapLatest { [weak self] chartViewModel -> Observable<()> in
@@ -261,7 +309,7 @@ final class FeedListViewController: UIViewController {
             .drive(onNext: { [weak self] dataPoints in
               guard let strongSelf = self else { return }
 
-              let chartView = strongSelf.lineChartView!
+              let chartView = strongSelf.chartView!
 
               guard !dataPoints.isEmpty else {
                 chartView.data = nil
