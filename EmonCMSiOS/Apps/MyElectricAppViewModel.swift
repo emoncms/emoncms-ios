@@ -193,7 +193,10 @@ final class MyElectricAppViewModel {
     } else {
       startOfDayKwhSignal = self.api.feedData(self.account, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
         .map { dataPoints in
-          guard dataPoints.count > 0 else { throw MyElectricAppError.generic("Start of day data had no data points") }
+          guard dataPoints.count > 0 else {
+            // Assume that the data point doesn't exist, so it's a new feed, so zero
+            return DataPoint(time: midnightToday, value: 0)
+          }
           return dataPoints[0]
         }
         .do(onNext: { [weak self] in
@@ -230,6 +233,18 @@ final class MyElectricAppViewModel {
 
         var newDataPoints: [DataPoint] = []
         var lastValue: Double = dataPoints[0].value
+
+        let extraPadding = daysToDisplay - dataPoints.count
+        if extraPadding > 0 {
+          let thisDataPoint = dataPoints[0]
+          newDataPoints.append(thisDataPoint)
+          var time = thisDataPoint.time
+          for _ in 1..<extraPadding {
+            time = time - Double(86400)
+            newDataPoints.append(DataPoint(time: time, value: 0))
+          }
+        }
+
         for i in 1..<dataPoints.count {
           let thisDataPoint = dataPoints[i]
           let differenceValue = thisDataPoint.value - lastValue
