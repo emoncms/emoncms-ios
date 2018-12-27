@@ -231,14 +231,22 @@
 		C92010F81D89FD2500C9974B /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				C941630921D52C8B00FEF2B6 /* MyElectric */,
 				C92010FB1D89FD7300C9974B /* AppDataModel.swift */,
+				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
+			);
+			path = Apps;
+			sourceTree = "<group>";
+		};
+		C941630921D52C8B00FEF2B6 /* MyElectric */ = {
+			isa = PBXGroup;
+			children = (
 				C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */,
 				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
 				C96233FA1DAF78BD004C17E8 /* MyElectricAppConfigViewModel.swift */,
 				C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */,
-				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
 			);
-			path = Apps;
+			path = MyElectric;
 			sourceTree = "<group>";
 		};
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
