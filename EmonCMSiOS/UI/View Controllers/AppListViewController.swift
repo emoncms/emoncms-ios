@@ -35,6 +35,7 @@ final class AppListViewController: UITableViewController {
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
+        cell.detailTextLabel?.text = item.category.info.displayName
         return cell
     },
       titleForHeaderInSection: { _,_  in "" },
