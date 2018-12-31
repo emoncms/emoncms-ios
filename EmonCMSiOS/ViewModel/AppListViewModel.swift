@@ -17,6 +17,7 @@ final class AppListViewModel {
 
   struct ListItem {
     let appId: String
+    let category: AppCategory
     let name: String
   }
 
@@ -40,33 +41,25 @@ final class AppListViewModel {
 
     self.apps = Driver.never()
 
-    let appQuery = self.realm.objects(MyElectricAppData.self)
-      .sorted(byKeyPath: #keyPath(MyElectricAppData.name), ascending: true)
+    let appQuery = self.realm.objects(AppData.self)
+      .sorted(byKeyPath: #keyPath(AppData.name), ascending: true)
     self.apps = Observable.array(from: appQuery)
       .map(self.appsToListItems)
       .asDriver(onErrorJustReturn: [])
   }
 
-  private func appsToListItems(_ apps: [MyElectricAppData]) -> [ListItem] {
+  private func appsToListItems(_ apps: [AppData]) -> [ListItem] {
     let listItems = apps.map {
-      ListItem(appId: $0.uuid, name: $0.name)
+      ListItem(appId: $0.uuid, category: $0.appCategory, name: $0.name)
     }
     return listItems
-  }
-
-  func viewModelForApp(withId id: String) -> MyElectricAppViewModel {
-    return MyElectricAppViewModel(account: self.account, api: self.api, appDataId: id)
-  }
-
-  func newAppConfigViewModel() -> MyElectricAppConfigViewModel {
-    return MyElectricAppConfigViewModel(account: self.account, api: self.api, appDataId: nil)
   }
 
   func deleteApp(withId id: String) -> Observable<()> {
     let realm = self.realm
     return Observable.create() { observer in
       do {
-        if let app = realm.object(ofType: MyElectricAppData.self, forPrimaryKey: id) {
+        if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
           try realm.write {
             realm.delete(app)
           }
@@ -79,6 +72,36 @@ final class AppListViewModel {
 
       return Disposables.create()
     }
+  }
+
+  func viewController(forDataWithId id: String, ofCategory category: AppCategory) -> UIViewController {
+    let storyboard = UIStoryboard(name: "Apps", bundle: nil)
+    let viewController = storyboard.instantiateViewController(withIdentifier: category.info.storyboardId)
+
+    switch category {
+    case .myElectric:
+      let viewModel = MyElectricAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let appVC = viewController as! MyElectricAppViewController
+      appVC.viewModel = viewModel
+    case .mySolar:
+      let viewModel = MySolarAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let appVC = viewController as! MySolarAppViewController
+      appVC.viewModel = viewModel
+    }
+
+    return viewController
+  }
+
+  func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {
+    let vmType: AppConfigViewModel.Type
+    switch category {
+    case .myElectric:
+      vmType = MyElectricAppConfigViewModel.self
+    case .mySolar:
+      vmType = MySolarAppConfigViewModel.self
+    }
+
+    return vmType.init(account: self.account, api: self.api, appDataId: nil)
   }
 
 }

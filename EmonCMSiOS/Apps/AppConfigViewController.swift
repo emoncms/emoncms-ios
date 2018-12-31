@@ -14,12 +14,12 @@ import RxCocoa
 
 final class AppConfigViewController: FormViewController {
 
-  var viewModel: MyElectricAppConfigViewModel!
+  var viewModel: AppConfigViewModel!
 
-  lazy var finished: Driver<String?> = {
+  lazy var finished: Driver<AppUUIDAndCategory?> = {
     return self.finishedSubject.asDriver(onErrorJustReturn: nil)
   }()
-  private var finishedSubject = PublishSubject<String?>()
+  private var finishedSubject = PublishSubject<AppUUIDAndCategory?>()
 
   private var data: [String:Any] = [:]
 
@@ -151,12 +151,12 @@ final class AppConfigViewController: FormViewController {
 
     Observable.of(cancelTap, saveTap)
       .merge()
-      .flatMapLatest { [weak self] save -> Observable<String?> in
+      .flatMapLatest { [weak self] save -> Observable<AppUUIDAndCategory?> in
         guard let strongSelf = self else { return Observable.just(nil) }
 
         if save {
           return strongSelf.viewModel.updateWithConfigData(strongSelf.data)
-            .map { $0 as String? }
+            .map { $0 as AppUUIDAndCategory? }
             .catchError { [weak self] error in
               guard let strongSelf = self else { return Observable.never() }
 

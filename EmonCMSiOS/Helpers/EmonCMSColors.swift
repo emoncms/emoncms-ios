@@ -14,6 +14,7 @@ struct EmonCMSColors {
   struct Chart {
     static let Blue = UIColor(hexString: "3399ff")
     static let DarkBlue = UIColor(hexString: "0779c1")
+    static let Yellow = UIColor(hexString: "dccc1f")
   }
 
   struct ActivityIndicator {

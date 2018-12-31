@@ -54,7 +54,7 @@ final class AppListViewController: UITableViewController {
     self.tableView.rx
       .modelSelected(AppListViewModel.ListItem.self)
       .subscribe(onNext: { [unowned self] in
-        self.presentApp(withId: $0.appId)
+        self.presentApp(withId: $0.appId, ofCategory: $0.category)
       })
       .disposed(by: self.disposeBag)
 
@@ -134,10 +134,34 @@ final class AppListViewController: UITableViewController {
 
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
     rightBarButtonItem.rx.tap
-      .flatMapLatest { [weak self] () -> Driver<String?> in
+      .flatMapLatest { [weak self] () -> Observable<AppCategory> in
+        guard let strongSelf = self else { return Observable.empty() }
+
+        return Observable.create { observer in
+          let alert = UIAlertController(title: "Select a type", message: nil, preferredStyle: .actionSheet)
+
+          alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            observer.on(.completed)
+          })
+
+          AppCategory.allCases.forEach { appCategory in
+            alert.addAction(UIAlertAction(title: appCategory.info.displayName, style: .default) { _ in
+              observer.on(.next(appCategory))
+              observer.on(.completed)
+            })
+          }
+
+          strongSelf.present(alert, animated: true, completion: nil)
+
+          return Disposables.create {
+            alert.dismiss(animated: true, completion: nil)
+          }
+        }
+      }
+      .flatMapLatest { [weak self] (appCategory) -> Driver<AppUUIDAndCategory?> in
         guard let strongSelf = self else { return Driver.empty() }
 
-        let viewModel = strongSelf.viewModel.newAppConfigViewModel()
+        let viewModel = self?.viewModel.appConfigViewModel(forCategory: appCategory)
         let viewController = AppConfigViewController()
         viewController.viewModel = viewModel
         let navController = UINavigationController(rootViewController: viewController)
@@ -146,11 +170,11 @@ final class AppListViewController: UITableViewController {
 
         return viewController.finished
       }
-      .subscribe(onNext: { [weak self] appDataId in
+      .subscribe(onNext: { [weak self] appUUIDAndCategory in
         guard let strongSelf = self else { return }
         strongSelf.dismiss(animated: true) {
-          if let appDataId = appDataId {
-            strongSelf.presentApp(withId: appDataId)
+          if let appUUIDAndCategory = appUUIDAndCategory {
+            strongSelf.presentApp(withId: appUUIDAndCategory.uuid, ofCategory: appUUIDAndCategory.category)
           }
         }
       })
@@ -158,13 +182,8 @@ final class AppListViewController: UITableViewController {
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
-  private func presentApp(withId appId: String) {
-    let storyboard = UIStoryboard(name: "Apps", bundle: nil)
-    let viewController = storyboard.instantiateViewController(withIdentifier: "myElectric")
-    if let appVC = viewController as? MyElectricAppViewController {
-      let viewModel = self.viewModel.viewModelForApp(withId: appId)
-      appVC.viewModel = viewModel
-    }
+  private func presentApp(withId appId: String, ofCategory category: AppCategory) {
+    let viewController = self.viewModel.viewController(forDataWithId: appId, ofCategory: category)
     self.navigationController?.pushViewController(viewController, animated: true)
   }
 

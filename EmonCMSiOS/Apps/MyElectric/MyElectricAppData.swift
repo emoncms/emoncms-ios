@@ -10,15 +10,11 @@ import Foundation
 
 import RealmSwift
 
-final class MyElectricAppData: Object {
+final class MyElectricAppData {
 
-  @objc dynamic var uuid: String = UUID().uuidString
-  @objc dynamic var name: String = "MyElectric"
-  @objc dynamic var useFeedId: String?
-  @objc dynamic var kwhFeedId: String?
-
-  override class func primaryKey() -> String? {
-    return "uuid"
-  }
+  var uuid: String = UUID().uuidString
+  var name: String = "MyElectric"
+  var useFeedId: String?
+  var kwhFeedId: String?
 
 }

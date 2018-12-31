@@ -21,6 +21,7 @@ struct Account {
     let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
     let fileURL = container.appendingPathComponent(self.uuid.uuidString + ".realm")
     var config = Realm.Configuration(fileURL: fileURL)
+    config.schemaVersion = 1
 
     #if DEBUG
     config.deleteRealmIfMigrationNeeded = true

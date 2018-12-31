@@ -1,8 +1,8 @@
 //
-//  MyElectricAppConfigViewModel.swift
+//  MySolarAppConfigViewModel.swift
 //  EmonCMSiOS
 //
-//  Created by Matt Galloway on 13/10/2016.
+//  Created by Matt Galloway on 27/12/2018.
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 import RealmSwift
 
-final class MyElectricAppConfigViewModel: AppConfigViewModel {
+final class MySolarAppConfigViewModel: AppConfigViewModel {
 
   enum SaveError: Error {
     case missingFields([AppConfigField])
@@ -34,21 +34,25 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
       self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
     } else {
       self.appData = AppData()
-      self.appData.appCategory = .myElectric
+      self.appData.appCategory = .mySolar
     }
   }
 
   private enum ConfigKeys: String {
     case name
     case useFeedId
-    case kwhFeedId
+    case useKwhFeedId
+    case solarFeedId
+    case solarKwhFeedId
   }
 
   func configFields() -> [AppConfigField] {
     return [
       AppConfigFieldString(id: "name", name: "Name", optional: false),
       AppConfigFieldFeed(id: "useFeedId", name: "Power Feed", optional: false, defaultName: "use"),
-      AppConfigFieldFeed(id: "kwhFeedId", name: "kWh Feed", optional: false, defaultName: "use_kwh"),
+      AppConfigFieldFeed(id: "useKwhFeedId", name: "Power kWh Feed", optional: false, defaultName: "use_kwh"),
+      AppConfigFieldFeed(id: "solarFeedId", name: "Solar Feed", optional: false, defaultName: "solar"),
+      AppConfigFieldFeed(id: "solarKwhFeedId", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
     ]
   }
 
@@ -59,8 +63,14 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
     if let feedId = self.appData.feed(forName: "use") {
       data[ConfigKeys.useFeedId.rawValue] = feedId
     }
-    if let feedId = self.appData.feed(forName: "kwh") {
-      data[ConfigKeys.kwhFeedId.rawValue] = feedId
+    if let feedId = self.appData.feed(forName: "useKwh") {
+      data[ConfigKeys.useKwhFeedId.rawValue] = feedId
+    }
+    if let feedId = self.appData.feed(forName: "solar") {
+      data[ConfigKeys.solarFeedId.rawValue] = feedId
+    }
+    if let feedId = self.appData.feed(forName: "solarKwh") {
+      data[ConfigKeys.solarKwhFeedId.rawValue] = feedId
     }
 
     return data
@@ -90,8 +100,14 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
             if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
               appData.setFeed(feedId, forName: "use")
             }
-            if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
-              appData.setFeed(feedId, forName: "kwh")
+            if let feedId = data[ConfigKeys.useKwhFeedId.rawValue] as? String {
+              appData.setFeed(feedId, forName: "useKwh")
+            }
+            if let feedId = data[ConfigKeys.solarFeedId.rawValue] as? String {
+              appData.setFeed(feedId, forName: "solar")
+            }
+            if let feedId = data[ConfigKeys.solarKwhFeedId.rawValue] as? String {
+              appData.setFeed(feedId, forName: "solarKwh")
             }
 
             if appData.realm == nil {

@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-final class MyElectricAppViewModel {
+final class MyElectricAppViewModel: AppViewModel {
 
   enum MyElectricAppError: Error {
     case generic(String)
@@ -32,7 +32,7 @@ final class MyElectricAppViewModel {
   private let account: Account
   private let api: EmonCMSAPI
   private let realm: Realm
-  private let appData: MyElectricAppData
+  private let appData: AppData
 
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)
@@ -52,7 +52,7 @@ final class MyElectricAppViewModel {
     self.account = account
     self.api = api
     self.realm = account.createRealm()
-    self.appData = self.realm.object(ofType: MyElectricAppData.self, forPrimaryKey: appDataId)!
+    self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
 
     self.title = Driver.empty()
     self.data = Driver.empty()
@@ -68,10 +68,9 @@ final class MyElectricAppViewModel {
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
 
-    self.isReady = Observable.combineLatest(
-      self.appData.rx.observe(String.self, #keyPath(MyElectricAppData.useFeedId)),
-      self.appData.rx.observe(String.self, #keyPath(MyElectricAppData.kwhFeedId))) {
-        $0 != nil && $1 != nil
+    self.isReady = self.appData.rx.observe(String.self, #keyPath(AppData.name))
+      .map {
+        $0 != nil
       }
       .asDriver(onErrorJustReturn: false)
 
@@ -86,11 +85,9 @@ final class MyElectricAppViewModel {
       }
       .becomeVoid()
 
-    let feedsChangedSignal = Observable.combineLatest(self.appData.rx.observe(String.self, "useFeedId"), self.appData.rx.observe(String.self, "kwhFeedId")) {
-        ($0, $1)
-      }
+    let feedsChangedSignal = self.appData.rx.observe(String.self, "feedsJson")
       .distinctUntilChanged {
-        $0.0 == $1.0 && $0.1 == $1.1
+        $0 == $1
       }
       .becomeVoid()
 
@@ -160,8 +157,11 @@ final class MyElectricAppViewModel {
   }
 
   private func update() -> Observable<MyElectricData> {
-    guard let useFeedId = self.appData.useFeedId, let kwhFeedId = self.appData.kwhFeedId else {
-      return Observable.error(MyElectricAppError.notConfigured)
+    guard
+      let useFeedId = self.appData.feed(forName: "use"),
+      let kwhFeedId = self.appData.feed(forName: "kwh")
+      else {
+        return Observable.error(MyElectricAppError.notConfigured)
     }
 
     return Observable.zip(
