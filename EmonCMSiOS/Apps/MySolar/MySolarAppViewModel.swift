@@ -151,16 +151,14 @@ final class MySolarAppViewModel: AppViewModel {
       .asDriver(onErrorJustReturn: .error("Error"))
   }
 
-  func configViewModel() -> MySolarAppConfigViewModel {
-    return MySolarAppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid)
+  func configViewModel() -> AppConfigViewModel {
+    return AppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolar)
   }
 
   private func update() -> Observable<MySolarData> {
     guard
       let useFeedId = self.appData.feed(forName: "use"),
-      let useKwhFeedId = self.appData.feed(forName: "useKwh"),
-      let solarFeedId = self.appData.feed(forName: "solar"),
-      let solarKwhFeedId = self.appData.feed(forName: "solarKwh")
+      let solarFeedId = self.appData.feed(forName: "solar")
     else {
       return Observable.error(MySolarAppError.notConfigured)
     }

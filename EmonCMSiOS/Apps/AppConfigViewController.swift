@@ -161,7 +161,7 @@ final class AppConfigViewController: FormViewController {
               guard let strongSelf = self else { return Observable.never() }
 
               let message: String
-              if let error = error as? MyElectricAppConfigViewModel.SaveError {
+              if let error = error as? AppConfigViewModel.SaveError {
                 switch error {
                 case .missingFields(let fields):
                   let fieldsText = fields.map { $0.name }.joined(separator: "\n")

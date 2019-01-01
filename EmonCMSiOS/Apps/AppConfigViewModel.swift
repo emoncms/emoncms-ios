@@ -1,9 +1,9 @@
 //
-//  MyElectricAppConfigViewModel.swift
+//  AppConfigViewModel.swift
 //  EmonCMSiOS
 //
-//  Created by Matt Galloway on 13/10/2016.
-//  Copyright © 2016 Matt Galloway. All rights reserved.
+//  Created by Matt Galloway on 01/01/2019.
+//  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
 import Foundation
@@ -11,7 +11,7 @@ import Foundation
 import RxSwift
 import RealmSwift
 
-final class MyElectricAppConfigViewModel: AppConfigViewModel {
+final class AppConfigViewModel {
 
   enum SaveError: Error {
     case missingFields([AppConfigField])
@@ -21,12 +21,13 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
   private let appData: AppData
+  private let appCategory: AppCategory
 
   lazy var feedListHelper: FeedListHelper = {
     return FeedListHelper(account: self.account, api: self.api)
   }()
 
-  init(account: Account, api: EmonCMSAPI, appDataId: String?) {
+  init(account: Account, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()
@@ -34,33 +35,31 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
       self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
     } else {
       self.appData = AppData()
-      self.appData.appCategory = .myElectric
+      self.appData.appCategory = appCategory
     }
+    self.appCategory = appCategory
   }
 
-  private enum ConfigKeys: String {
-    case name
-    case useFeedId
-    case kwhFeedId
-  }
+  static let nameConfigFieldID = "name"
 
   func configFields() -> [AppConfigField] {
-    return [
-      AppConfigFieldString(id: "name", name: "Name", optional: false),
-      AppConfigFieldFeed(id: "useFeedId", name: "Power Feed", optional: false, defaultName: "use"),
-      AppConfigFieldFeed(id: "kwhFeedId", name: "kWh Feed", optional: false, defaultName: "use_kwh"),
-    ]
+    var fields = [AppConfigField]()
+
+    // Always have a name
+    fields.append(AppConfigFieldString(id: AppConfigViewModel.nameConfigFieldID, name: "Name", optional: false))
+    fields.append(contentsOf: self.appCategory.feedConfigFields)
+
+    return fields
   }
 
   func configData() -> [String:Any] {
     var data: [String:Any] = [:]
 
-    data[ConfigKeys.name.rawValue] = self.appData.name
-    if let feedId = self.appData.feed(forName: "use") {
-      data[ConfigKeys.useFeedId.rawValue] = feedId
-    }
-    if let feedId = self.appData.feed(forName: "kwh") {
-      data[ConfigKeys.kwhFeedId.rawValue] = feedId
+    data[AppConfigViewModel.nameConfigFieldID] = self.appData.name
+    for feedConfigField in self.appCategory.feedConfigFields {
+      if let feedId = self.appData.feed(forName: feedConfigField.id) {
+        data[feedConfigField.id] = feedId
+      }
     }
 
     return data
@@ -84,14 +83,13 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
         do {
           let appData = strongSelf.appData
           try strongSelf.realm.write {
-            if let name = data[ConfigKeys.name.rawValue] as? String {
+            if let name = data[AppConfigViewModel.nameConfigFieldID] as? String {
               appData.name = name
             }
-            if let feedId = data[ConfigKeys.useFeedId.rawValue] as? String {
-              appData.setFeed(feedId, forName: "use")
-            }
-            if let feedId = data[ConfigKeys.kwhFeedId.rawValue] as? String {
-              appData.setFeed(feedId, forName: "kwh")
+            for feedConfigField in strongSelf.appCategory.feedConfigFields {
+              if let feedId = data[feedConfigField.id] as? String {
+                appData.setFeed(feedId, forName: feedConfigField.id)
+              }
             }
 
             if appData.realm == nil {
@@ -108,5 +106,5 @@ final class MyElectricAppConfigViewModel: AppConfigViewModel {
       return Disposables.create()
     }
   }
-  
+
 }

@@ -152,8 +152,8 @@ final class MyElectricAppViewModel: AppViewModel {
       .asDriver(onErrorJustReturn: .error("Error"))
   }
 
-  func configViewModel() -> MyElectricAppConfigViewModel {
-    return MyElectricAppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid)
+  func configViewModel() -> AppConfigViewModel {
+    return AppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .myElectric)
   }
 
   private func update() -> Observable<MyElectricData> {

@@ -93,15 +93,7 @@ final class AppListViewModel {
   }
 
   func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {
-    let vmType: AppConfigViewModel.Type
-    switch category {
-    case .myElectric:
-      vmType = MyElectricAppConfigViewModel.self
-    case .mySolar:
-      vmType = MySolarAppConfigViewModel.self
-    }
-
-    return vmType.init(account: self.account, api: self.api, appDataId: nil)
+    return AppConfigViewModel(account: self.account, api: self.api, appDataId: nil, appCategory: category)
   }
 
 }

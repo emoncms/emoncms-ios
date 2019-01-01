@@ -16,17 +16,6 @@ protocol AppViewModel: AnyObject {
 
 }
 
-protocol AppConfigViewModel: AnyObject {
-
-  init(account: Account, api: EmonCMSAPI, appDataId: String?)
-
-  var feedListHelper: FeedListHelper { get }
-  func configFields() -> [AppConfigField]
-  func configData() -> [String:Any]
-  func updateWithConfigData(_ data: [String:Any]) -> Observable<AppUUIDAndCategory>
-
-}
-
 typealias AppUUIDAndCategory = (uuid: String, category: AppCategory)
 
 enum AppCategory: String, CaseIterable {
@@ -51,6 +40,23 @@ enum AppCategory: String, CaseIterable {
         displayName: "MySolar",
         storyboardId: "mySolar"
       )
+    }
+  }
+
+  var feedConfigFields: [AppConfigFieldFeed] {
+    switch self {
+    case .myElectric:
+      return [
+        AppConfigFieldFeed(id: "useFeedId", name: "Power Feed", optional: false, defaultName: "use"),
+        AppConfigFieldFeed(id: "kwhFeedId", name: "kWh Feed", optional: false, defaultName: "use_kwh"),
+      ]
+    case .mySolar:
+      return [
+        AppConfigFieldFeed(id: "useFeedId", name: "Power Feed", optional: false, defaultName: "use"),
+        AppConfigFieldFeed(id: "useKwhFeedId", name: "Power kWh Feed", optional: false, defaultName: "use_kwh"),
+        AppConfigFieldFeed(id: "solarFeedId", name: "Solar Feed", optional: false, defaultName: "solar"),
+        AppConfigFieldFeed(id: "solarKwhFeedId", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
+      ]
     }
   }
 
