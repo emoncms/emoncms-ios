@@ -107,4 +107,8 @@ final class AppConfigViewModel {
     }
   }
 
+  func feedListViewModel() -> FeedListViewModel {
+    return FeedListViewModel(account: self.account, api: self.api)
+  }
+
 }

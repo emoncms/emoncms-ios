@@ -20,6 +20,7 @@
 		C92010FC1D89FD7300C9974B /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppConfig.swift */; };
 		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
 		C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */; };
+		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
 		C92A5C4921C9996800B1D5CD /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */; };
@@ -128,6 +129,7 @@
 		C92010FB1D89FD7300C9974B /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewController.swift; sourceTree = "<group>"; };
 		C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigViewModel.swift; sourceTree = "<group>"; };
+		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
 		C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				C92010FB1D89FD7300C9974B /* AppConfig.swift */,
 				C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */,
 				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
+				C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -688,6 +691,7 @@
 				C98BD5B71DE63638000B6344 /* InputListViewController.swift in Sources */,
 				C98BD5B91DE6365D000B6344 /* InputListViewModel.swift in Sources */,
 				C941631221D52EB700FEF2B6 /* MySolarAppData.swift in Sources */,
+				C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */,
 				C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
 				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,

@@ -39,6 +39,9 @@ final class AppConfigViewController: FormViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     self.viewModel.feedListHelper.refresh.onNext(())
+    if let indexPath = self.tableView.indexPathForSelectedRow {
+      self.tableView.deselectRow(at: indexPath, animated: true)
+    }
   }
 
   private func setupFormer() {
@@ -62,11 +65,14 @@ final class AppConfigViewController: FormViewController {
         }
         row = textFieldRow
       case let feedField as AppConfigFieldFeed:
-        let inlinePickerRow = InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>() {
-          $0.titleLabel.text = field.name
+        let labelRow = LabelRowFormer<FormLabelCell>()
+          .configure { [weak self] in
+            guard let strongSelf = self else { return }
+            $0.text = field.name
+            $0.subText = strongSelf.data[field.id] as? String
         }
-        self.setupFeedListBindings(forRow: inlinePickerRow, field: feedField)
-        row = inlinePickerRow
+        self.setupFeedCellBindings(forRow: labelRow, field: feedField)
+        row = labelRow
       default:
         AppLog.error("Unhandled app config type: \(field)")
         row = nil
@@ -81,60 +87,45 @@ final class AppConfigViewController: FormViewController {
     self.former.add(sectionFormers: [section])
   }
 
-  private func setupFeedListBindings(forRow row: InlinePickerRowFormer<FormInlinePickerCell, FeedListHelper.FeedListItem>, field: AppConfigFieldFeed) {
-    self.viewModel.feedListHelper.feeds
-      .startWith([])
-      .drive(onNext: { [weak self] feeds in
-        guard let strongSelf = self else { return }
-
-        row.update { row in
-          var pickerItems: [InlinePickerItem<FeedListHelper.FeedListItem>] = [InlinePickerItem(title: "-- Select a feed --")]
-          var selectedIndex = 0
-
-          if feeds.count > 0 {
-            var selectedFeedId: String? = strongSelf.data[field.id] as? String
-            for (i, feed) in feeds.enumerated() {
-              if let selectedFeedId = selectedFeedId {
-                // If we have a selected feed, see if this is it
-                if feed.feedId == selectedFeedId {
-                  selectedIndex = i + 1
-                }
-              } else {
-                // If we don't have a selected feed, see if this is the default feed, by name
-                if feed.name == field.defaultName {
-                  selectedIndex = i + 1
-                  selectedFeedId = feed.feedId
-                }
-              }
-
-              pickerItems.append(InlinePickerItem(title: "(\(feed.feedId)) \(feed.name)", value: feed))
-            }
-
-            if selectedIndex > 0 {
-              strongSelf.data[field.id] = selectedFeedId
-            } else {
-              strongSelf.data.removeValue(forKey: field.id)
-            }
-          }
-
-          row.pickerItems = pickerItems
-          row.selectedRow = selectedIndex
-        }
-        })
-      .disposed(by: self.disposeBag)
-
-    Observable<FeedListHelper.FeedListItem?>.create { observer in
-        row.onValueChanged { item in
-          observer.onNext(item.value)
+  private func setupFeedCellBindings(forRow row: LabelRowFormer<FormLabelCell>, field: AppConfigFieldFeed) {
+    let selectedFeed = Observable<()>.create { observer in
+        row.onSelected { _ in
+          observer.onNext(())
         }
         return Disposables.create()
       }
-      .subscribe(onNext: { [weak self] in
+      .flatMap { [weak self] _ -> Driver<String?> in
+        guard let strongSelf = self else { return Driver.empty() }
+
+        let viewController = AppSelectFeedViewController()
+        viewController.viewModel = strongSelf.viewModel.feedListViewModel()
+        strongSelf.navigationController?.pushViewController(viewController, animated: true)
+
+        return viewController.finished
+      }
+      .do(onNext: { [weak self] selectedFeed in
         guard let strongSelf = self else { return }
-        if let item = $0 {
-          strongSelf.data[field.id] = item.feedId
-        } else {
-          strongSelf.data.removeValue(forKey: field.id)
+
+        if let selectedFeed = selectedFeed {
+          strongSelf.data[field.id] = selectedFeed
+        }
+
+        strongSelf.navigationController?.popViewController(animated: true)
+      })
+      .startWith(self.data[field.id] as? String)
+
+    let feeds = self.viewModel.feedListHelper.feeds.asObservable().startWith([])
+
+    Observable.combineLatest(feeds, selectedFeed)
+      .asDriver(onErrorJustReturn: ([], nil))
+      .drive(onNext: { feeds, selectedFeedId in
+        guard let selectedFeedId = selectedFeedId else { return }
+        row.update { row in
+          if let feed = feeds.first(where: { $0.feedId == selectedFeedId }) {
+            row.subText = feed.name
+          } else {
+            row.subText = "-- Select a feed --"
+          }
         }
       })
       .disposed(by: self.disposeBag)
