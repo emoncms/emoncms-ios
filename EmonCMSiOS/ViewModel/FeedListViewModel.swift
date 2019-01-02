@@ -36,6 +36,7 @@ final class FeedListViewModel {
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
+  let searchTerm = BehaviorRelay<String>(value: "")
 
   // Outputs
   private(set) var feeds: Driver<[Section]>
@@ -50,7 +51,16 @@ final class FeedListViewModel {
     self.feeds = Driver.never()
     self.isRefreshing = Driver.never()
 
-    self.feeds = Observable.array(from: self.realm.objects(Feed.self))
+    self.feeds = self.searchTerm
+      .distinctUntilChanged()
+      .flatMapLatest { searchTerm -> Observable<[Feed]> in
+        var results = self.realm.objects(Feed.self)
+        let trimmedSearchTerm = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmedSearchTerm != "" {
+          results = results.filter("name CONTAINS[c] %@", trimmedSearchTerm)
+        }
+        return Observable.array(from: results)
+      }
       .map(self.feedsToSections)
       .asDriver(onErrorJustReturn: [])
 
