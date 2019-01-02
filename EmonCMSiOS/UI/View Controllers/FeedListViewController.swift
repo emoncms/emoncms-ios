@@ -28,6 +28,9 @@ final class FeedListViewController: UIViewController {
   @IBOutlet fileprivate var chartControlsContainerView: UIView!
   @IBOutlet fileprivate var chartSegmentedControl: UISegmentedControl!
 
+  fileprivate let searchController = UISearchController(searchResultsController: nil)
+  fileprivate let searchSubject = BehaviorSubject<String>(value: "")
+
   fileprivate let disposeBag = DisposeBag()
 
   fileprivate enum Segues: String {
@@ -50,6 +53,12 @@ final class FeedListViewController: UIViewController {
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableView.automaticDimension
     self.tableView.refreshControl = UIRefreshControl()
+
+    self.searchController.searchResultsUpdater = self
+    self.searchController.dimsBackgroundDuringPresentation = false
+    self.searchController.searchBar.placeholder = "Search feeds"
+    self.navigationItem.searchController = searchController
+    self.definesPresentationContext = true
 
     self.chartContainerView.layer.cornerRadius = 20.0
     self.chartContainerView.clipsToBounds = true
@@ -258,10 +267,13 @@ final class FeedListViewController: UIViewController {
       .map { !$0 }
       .drive(self.refreshButton.rx.isEnabled)
       .disposed(by: self.disposeBag)
+
+    self.searchSubject
+      .bind(to: self.viewModel.searchTerm)
+      .disposed(by: self.disposeBag)
   }
 
   private func setupChartBindings() {
-
     self.chartViewModel
       .asObservable()
       .flatMapLatest { chartViewModel -> Observable<Bool> in
@@ -371,6 +383,14 @@ extension FeedListViewController {
       let viewModel = self.viewModel.feedChartViewModel(forItem: item)
       feedViewController.viewModel = viewModel
     }
+  }
+
+}
+
+extension FeedListViewController: UISearchResultsUpdating {
+
+  public func updateSearchResults(for searchController: UISearchController) {
+    searchSubject.onNext(searchController.searchBar.text ?? "")
   }
 
 }
