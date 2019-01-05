@@ -142,6 +142,8 @@ final class FeedListViewController: UIViewController {
       .map { [weak self] indexPath -> FeedChartViewModel? in
         guard let strongSelf = self else { return nil }
 
+        strongSelf.searchController.searchBar.resignFirstResponder()
+
         let item = try! dataSource.model(at: indexPath) as! FeedListViewModel.ListItem
         let chartViewModel = strongSelf.viewModel.feedChartViewModel(forItem: item)
         return chartViewModel
