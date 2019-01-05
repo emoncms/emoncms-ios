@@ -86,8 +86,11 @@ final class FeedListViewController: UIViewController {
     self.tableView.scrollIndicatorInsets = scrollIndicatorInsets
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    // Annoyingly this has to be in DIDappear and not WILLappear, otherwise it causes a weird
+    // navigation bar bug when going back to the feed list view from a feed detail view.
     self.viewModel.active.accept(true)
   }
 
