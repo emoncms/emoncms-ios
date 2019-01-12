@@ -100,7 +100,7 @@ final class AddAccountViewController: FormViewController {
         .do(onNext: { [weak self] account in
           guard let strongSelf = self else { return }
           strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
-          })
+        })
         .catchError { [weak self] error in
           guard let strongSelf = self else { return Observable.empty() }
 
