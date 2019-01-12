@@ -14,7 +14,7 @@ import RxCocoa
 final class MainController {
 
   private let window: UIWindow
-  private let requestProvider: NSURLSessionHTTPRequestProvider
+  private let requestProvider: HTTPRequestProvider
   private let api: EmonCMSAPI
   private let loginController: LoginController
 
