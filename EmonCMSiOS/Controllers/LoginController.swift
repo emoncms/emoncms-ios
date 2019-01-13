@@ -73,6 +73,7 @@ final class LoginController {
     do {
       try Locksmith.deleteDataForUserAccount(userAccount: accountUUID)
       UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
+      UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
       self._account.accept(nil)
     } catch {
       throw LoginControllerError.KeychainFailed
