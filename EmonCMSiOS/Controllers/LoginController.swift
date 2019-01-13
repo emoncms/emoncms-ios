@@ -67,11 +67,11 @@ final class LoginController {
   }
 
   func logout() throws {
-    guard let accountURL = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) else {
+    guard let accountUUID = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) else {
       throw LoginControllerError.Generic
     }
     do {
-      try Locksmith.deleteDataForUserAccount(userAccount: accountURL)
+      try Locksmith.deleteDataForUserAccount(userAccount: accountUUID)
       UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
       self._account.accept(nil)
     } catch {
