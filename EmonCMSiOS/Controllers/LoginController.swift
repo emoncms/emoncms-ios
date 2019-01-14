@@ -8,72 +8,110 @@
 
 import Foundation
 
+import Realm
+import RealmSwift
 import RxSwift
 import RxCocoa
 import Locksmith
 
 final class LoginController {
 
+  private let realmController: RealmController
+
   enum LoginControllerError: Error {
     case Generic
     case KeychainFailed
   }
 
-  private var _account = BehaviorRelay<Account?>(value: nil)
-  let account: Observable<Account?>
+  private var _account = BehaviorRelay<AccountRealmController?>(value: nil)
+  let account: Observable<AccountRealmController?>
 
-  init() {
+  init(realmController: RealmController) {
+    self.realmController = realmController
     self.account = _account.asObservable().share(replay: 1)
     self.loadAccount()
   }
 
   private func loadAccount() {
-    guard
+    let realm = realmController.createRealm()
+
+    // Migrate account to Realm if needed
+    if
       let accountURL = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue),
-      let accountUUIDString = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue),
-      let accountUUID = UUID(uuidString: accountUUIDString)
-      else { return }
+      let accountUUIDString = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
+    {
+      let account = Account()
+      account.uuid = accountUUIDString
+      account.url = accountURL
 
-    guard
-      let data = Locksmith.loadDataForUserAccount(userAccount: accountUUIDString),
-      let apikey = data["apikey"] as? String
-      else { return }
+      do {
+        try realm.write {
+          realm.add(account)
+        }
+      } catch {}
 
-    let account = Account(uuid: accountUUID, url: accountURL, apikey: apikey)
-    self._account.accept(account)
+      UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
+      UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
+    }
+
+    let accounts = realm.objects(Account.self)
+    if let account = accounts.first {
+      guard
+        let accountUUID = UUID(uuidString: account.uuid),
+        let data = Locksmith.loadDataForUserAccount(userAccount: account.uuid),
+        let apikey = data["apikey"] as? String
+        else { return }
+
+      let accountController = AccountRealmController(uuid: accountUUID, url: account.url, apikey: apikey)
+      self._account.accept(accountController)
+    }
   }
 
-  func login(withAccount account: Account) throws {
+  func login(withAccount accountController: AccountRealmController) throws {
+    let realm = realmController.createRealm()
+
     do {
-      if let currentAccount = _account.value {
-        if currentAccount == account {
+      if let currentAccountController = _account.value {
+        if currentAccountController == accountController {
           return
         }
       }
 
-      let data = ["apikey": account.apikey]
+      let data = ["apikey": accountController.apikey]
       do {
-        try Locksmith.saveData(data: data, forUserAccount: account.uuid.uuidString)
+        try Locksmith.saveData(data: data, forUserAccount: accountController.uuid.uuidString)
       } catch LocksmithError.duplicate {
         // We already have it, let's try updating it
-        try Locksmith.updateData(data: data, forUserAccount: account.uuid.uuidString)
+        try Locksmith.updateData(data: data, forUserAccount: accountController.uuid.uuidString)
       }
-      UserDefaults.standard.set(account.url, forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
-      UserDefaults.standard.set(account.uuid.uuidString, forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
-      self._account.accept(account)
+
+      let account = Account()
+      account.uuid = accountController.uuid.uuidString
+      account.url = accountController.url
+
+      try realm.write {
+        realm.add(account)
+      }
+
+      self._account.accept(accountController)
     } catch {
       throw LoginControllerError.KeychainFailed
     }
   }
 
   func logout() throws {
-    guard let accountUUID = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) else {
+    let realm = realmController.createRealm()
+
+    let accounts = realm.objects(Account.self)
+    guard let account = accounts.first else {
       throw LoginControllerError.Generic
     }
+
     do {
-      try Locksmith.deleteDataForUserAccount(userAccount: accountUUID)
-      UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
-      UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
+      try Locksmith.deleteDataForUserAccount(userAccount: account.uuid)
+      try realm.write {
+        realm.delete(account)
+      }
       self._account.accept(nil)
     } catch {
       throw LoginControllerError.KeychainFailed

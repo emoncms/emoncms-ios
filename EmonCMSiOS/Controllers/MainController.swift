@@ -16,6 +16,7 @@ final class MainController {
   private let window: UIWindow
   private let requestProvider: HTTPRequestProvider
   private let api: EmonCMSAPI
+  private let realmController: RealmController
   private let loginController: LoginController
 
   fileprivate var addAccountViewStack: UINavigationController?
@@ -27,7 +28,8 @@ final class MainController {
     self.window = UIWindow()
     self.requestProvider = NSURLSessionHTTPRequestProvider()
     self.api = EmonCMSAPI(requestProvider: self.requestProvider)
-    self.loginController = LoginController()
+    self.realmController = RealmController()
+    self.loginController = LoginController(realmController: self.realmController)
   }
 
   func initialise() {
@@ -51,7 +53,7 @@ final class MainController {
     self.window.makeKeyAndVisible()
   }
 
-  func login(withAccount account: Account) {
+  func login(withAccount account: AccountRealmController) {
     do {
       try self.loginController.login(withAccount: account)
     } catch {
@@ -71,7 +73,7 @@ final class MainController {
     }
   }
 
-  private func loadMainUI(forAccount account: Account) {
+  private func loadMainUI(forAccount account: AccountRealmController) {
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let rootViewController = storyboard.instantiateInitialViewController() as! UITabBarController
     self.mainViewStack = rootViewController
@@ -130,7 +132,7 @@ final class MainController {
 
 extension MainController: AddAccountViewControllerDelegate {
 
-  func addAccountViewController(controller: AddAccountViewController, didFinishWithAccount account: Account) {
+  func addAccountViewController(_ controller: AddAccountViewController, didFinishWithAccount account: AccountRealmController) {
     self.login(withAccount: account)
   }
 
@@ -138,7 +140,7 @@ extension MainController: AddAccountViewControllerDelegate {
 
 extension MainController: SettingsViewControllerDelegate {
 
-  func settingsViewControllerDidRequestLogout(controller: SettingsViewController) {
+  func settingsViewControllerDidRequestLogout(_ controller: SettingsViewController) {
     self.logout()
   }
 

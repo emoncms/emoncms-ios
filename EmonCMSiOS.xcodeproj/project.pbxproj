@@ -10,6 +10,8 @@
 		1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */; };
 		1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */; };
 		1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */; };
+		1EE02C1121ED10E800C6AE9A /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1021ED10E800C6AE9A /* Account.swift */; };
+		1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
@@ -48,7 +50,7 @@
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
 		C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF4131D9042CE00BBF80D /* ChartCell.swift */; };
 		C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */; };
-		C9BB834D1D869CC80058C059 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* Account.swift */; };
+		C9BB834D1D869CC80058C059 /* AccountRealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* AccountRealmController.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
 		C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
@@ -113,6 +115,8 @@
 		1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHTTPProvider.swift; sourceTree = "<group>"; };
 		1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesFeedView.swift; sourceTree = "<group>"; };
 		1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesArrowView.swift; sourceTree = "<group>"; };
+		1EE02C1021ED10E800C6AE9A /* Account.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		1EE02C1221ED116900C6AE9A /* RealmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmController.swift; sourceTree = "<group>"; };
 		29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.release.xcconfig"; sourceTree = "<group>"; };
 		73EE7C16F303D6BC48C8C1AC /* Pods-EmonCMSToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.debug.xcconfig"; sourceTree = "<group>"; };
 		813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -161,7 +165,7 @@
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C99DF4131D9042CE00BBF80D /* ChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
 		C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewModelTests.swift; sourceTree = "<group>"; };
-		C9BB834C1D869CC80058C059 /* Account.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Account.swift; sourceTree = "<group>"; };
+		C9BB834C1D869CC80058C059 /* AccountRealmController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountRealmController.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
 		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatHelpers.swift; sourceTree = "<group>"; };
@@ -323,7 +327,8 @@
 		C9BB83461D869CB00058C059 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C9BB834C1D869CC80058C059 /* Account.swift */,
+				C9BB834C1D869CC80058C059 /* AccountRealmController.swift */,
+				1EE02C1021ED10E800C6AE9A /* Account.swift */,
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
 				C98BD5BA1DE636FA000B6344 /* Input.swift */,
 				C9F53E351D9297FD00E9724D /* Chart.swift */,
@@ -393,6 +398,7 @@
 				C9BB83681D87F5630058C059 /* LoginController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
 				C9D9CA0C1DA3B06C0087754A /* BackendController.swift */,
+				1EE02C1221ED116900C6AE9A /* RealmController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -749,6 +755,7 @@
 				C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */,
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
+				1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */,
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
@@ -757,7 +764,7 @@
 				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,
 				C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */,
 				C98BD5BD1DE63768000B6344 /* InputUpdateHelper.swift in Sources */,
-				C9BB834D1D869CC80058C059 /* Account.swift in Sources */,
+				C9BB834D1D869CC80058C059 /* AccountRealmController.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C98BD5BB1DE636FA000B6344 /* Input.swift in Sources */,
@@ -765,6 +772,7 @@
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
+				1EE02C1121ED10E800C6AE9A /* Account.swift in Sources */,
 				C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */,
 				C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,

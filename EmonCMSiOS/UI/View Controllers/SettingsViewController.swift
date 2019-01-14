@@ -15,7 +15,7 @@ import RxCocoa
 
 protocol SettingsViewControllerDelegate: class {
 
-  func settingsViewControllerDidRequestLogout(controller: SettingsViewController)
+  func settingsViewControllerDidRequestLogout(_ controller: SettingsViewController)
 
 }
 
@@ -56,7 +56,7 @@ final class SettingsViewController: FormViewController {
         guard let strongSelf = self else { return }
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
-          strongSelf.delegate?.settingsViewControllerDidRequestLogout(controller: strongSelf)
+          strongSelf.delegate?.settingsViewControllerDidRequestLogout(strongSelf)
           strongSelf.former.deselect(animated: true)
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
             strongSelf.tableView.deselectRow(at: selectedRow, animated: true)

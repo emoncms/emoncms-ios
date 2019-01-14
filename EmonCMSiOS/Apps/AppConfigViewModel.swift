@@ -17,7 +17,7 @@ final class AppConfigViewModel {
     case missingFields([AppConfigField])
   }
 
-  private let account: Account
+  private let account: AccountRealmController
   private let api: EmonCMSAPI
   private let realm: Realm
   private let appData: AppData
@@ -27,7 +27,7 @@ final class AppConfigViewModel {
     return FeedListHelper(account: self.account, api: self.api)
   }()
 
-  init(account: Account, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
+  init(account: AccountRealmController, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

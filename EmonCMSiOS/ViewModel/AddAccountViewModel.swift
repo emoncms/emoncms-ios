@@ -36,8 +36,8 @@ final class AddAccountViewModel {
       .distinctUntilChanged()
   }
 
-  func validate() -> Observable<Account> {
-    let account = Account(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
+  func validate() -> Observable<AccountRealmController> {
+    let account = AccountRealmController(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
     return self.api.feedList(account)
       .catchError { error -> Observable<[Feed]> in
         let returnError: AddAccountError

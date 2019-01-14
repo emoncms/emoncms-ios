@@ -26,7 +26,7 @@ final class FeedListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
-  private let account: Account
+  private let account: AccountRealmController
   private let api: EmonCMSAPI
   private let realm: Realm
   private let feedUpdateHelper: FeedUpdateHelper
@@ -43,7 +43,7 @@ final class FeedListViewModel {
   private(set) var updateTime: Driver<Date?>
   private(set) var isRefreshing: Driver<Bool>
 
-  init(account: Account, api: EmonCMSAPI) {
+  init(account: AccountRealmController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

@@ -26,7 +26,7 @@ final class EmonCMSAPI {
     self.requestProvider = requestProvider
   }
 
-  private class func buildURL(_ account: Account, path: String, queryItems: [String:String] = [:]) throws -> URL {
+  private class func buildURL(_ account: AccountRealmController, path: String, queryItems: [String:String] = [:]) throws -> URL {
     let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
       throw EmonCMSAPIError.failedToCreateURL
@@ -43,7 +43,7 @@ final class EmonCMSAPI {
     }
   }
 
-  private func request(_ account: Account, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
+  private func request(_ account: AccountRealmController, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
     let url: URL
     do {
       url = try EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems)
@@ -77,7 +77,7 @@ final class EmonCMSAPI {
       }
   }
 
-  func feedList(_ account: Account) -> Observable<[Feed]> {
+  func feedList(_ account: AccountRealmController) -> Observable<[Feed]> {
     return self.request(account, path: "feed/list").map { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
@@ -96,7 +96,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedFields(_ account: Account, id: String) -> Observable<Feed> {
+  func feedFields(_ account: AccountRealmController, id: String) -> Observable<Feed> {
     let queryItems = [
       "id": id
     ]
@@ -112,7 +112,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedField(_ account: Account, id: String, fieldName: String) -> Observable<String> {
+  func feedField(_ account: AccountRealmController, id: String, fieldName: String) -> Observable<String> {
     let queryItems = [
       "id": id,
       "field": fieldName
@@ -146,7 +146,7 @@ final class EmonCMSAPI {
     return dataPoints
   }
 
-  func feedData(_ account: Account, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
+  func feedData(_ account: AccountRealmController, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -159,7 +159,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedDataDaily(_ account: Account, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
+  func feedDataDaily(_ account: AccountRealmController, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -172,7 +172,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedValue(_ account: Account, id: String) -> Observable<Double> {
+  func feedValue(_ account: AccountRealmController, id: String) -> Observable<Double> {
     let queryItems = [
       "id": id
     ]
@@ -187,7 +187,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedValue(_ account: Account, ids: [String]) -> Observable<[String:Double]> {
+  func feedValue(_ account: AccountRealmController, ids: [String]) -> Observable<[String:Double]> {
     let queryItems = [
       "ids": ids.joined(separator: ",")
     ]
@@ -210,7 +210,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func inputList(_ account: Account) -> Observable<[Input]> {
+  func inputList(_ account: AccountRealmController) -> Observable<[Input]> {
     return self.request(account, path: "input/list").map { resultData -> [Input] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {

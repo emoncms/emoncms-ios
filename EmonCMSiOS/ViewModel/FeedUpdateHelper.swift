@@ -14,11 +14,11 @@ import RealmSwift
 
 final class FeedUpdateHelper {
 
-  private let account: Account
+  private let account: AccountRealmController
   private let api: EmonCMSAPI
   private let scheduler: SerialDispatchQueueScheduler
 
-  init(account: Account, api: EmonCMSAPI) {
+  init(account: AccountRealmController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.FeedUpdateHelper")

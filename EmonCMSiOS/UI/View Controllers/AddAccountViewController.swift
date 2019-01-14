@@ -13,7 +13,7 @@ import Action
 import Former
 
 protocol AddAccountViewControllerDelegate: class {
-  func addAccountViewController(controller: AddAccountViewController, didFinishWithAccount account: Account)
+  func addAccountViewController(_ controller: AddAccountViewController, didFinishWithAccount account: AccountRealmController)
 }
 
 final class AddAccountViewController: FormViewController {
@@ -99,7 +99,7 @@ final class AddAccountViewController: FormViewController {
         .observeOn(MainScheduler.asyncInstance)
         .do(onNext: { [weak self] account in
           guard let strongSelf = self else { return }
-          strongSelf.delegate?.addAccountViewController(controller: strongSelf, didFinishWithAccount: account)
+          strongSelf.delegate?.addAccountViewController(strongSelf, didFinishWithAccount: account)
         })
         .catchError { [weak self] error in
           guard let strongSelf = self else { return Observable.empty() }
@@ -134,7 +134,7 @@ final class AddAccountViewController: FormViewController {
     self.performSegue(withIdentifier: Segues.scanQR.rawValue, sender: self)
   }
 
-  fileprivate func updateWithAccount(_ account: Account) {
+  fileprivate func updateWithAccount(_ account: AccountRealmController) {
     self.viewModel.url.accept(account.url)
     self.viewModel.apikey.accept(account.apikey)
     self.urlRow?.text = account.url
@@ -159,7 +159,7 @@ extension AddAccountViewController {
 
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
 
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: Account) {
+  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: AccountRealmController) {
     self.updateWithAccount(account)
     self.dismiss(animated: true, completion: nil)
   }

@@ -13,7 +13,7 @@ import RxCocoa
 
 final class FeedChartViewModel {
 
-  private let account: Account
+  private let account: AccountRealmController
   private let api: EmonCMSAPI
   private let feedId: String
 
@@ -26,7 +26,7 @@ final class FeedChartViewModel {
   private(set) var dataPoints: Driver<[DataPoint]>
   private(set) var isRefreshing: Driver<Bool>
 
-  init(account: Account, api: EmonCMSAPI, feedId: String) {
+  init(account: AccountRealmController, api: EmonCMSAPI, feedId: String) {
     self.account = account
     self.api = api
     self.feedId = feedId

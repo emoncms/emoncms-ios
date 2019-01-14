@@ -20,7 +20,7 @@ class EmonCMSAPITests: QuickSpec {
     var scheduler: TestScheduler!
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
-    var account: Account!
+    var account: AccountRealmController!
 
     func call<T>(api: Observable<T>, observer: TestableObserver<T>, expect: @escaping () -> Void) {
       let sharedResult = api.share(replay: 1)
