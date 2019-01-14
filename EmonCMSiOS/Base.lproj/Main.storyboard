@@ -214,8 +214,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3au-Y7-kRv" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Feeds" image="tab_list" id="0Mp-rd-uPI"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="VnL-q3-CAE">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="VnL-q3-CAE">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -277,8 +277,8 @@
             <objects>
                 <navigationController id="jai-SN-rB0" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Apps" image="tab_leaf" id="r8F-dR-J26"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="gKW-rS-yIy">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="gKW-rS-yIy">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -295,8 +295,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="QF4-pp-Rv7" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Settings" image="tab_wrench" id="gvE-Pb-avN"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7q2-zL-BUu">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="7q2-zL-BUu">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -438,8 +438,8 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ebM-v0-Itg" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Inputs" image="tab_list" id="UjD-9J-ctJ"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ifd-KW-BSh">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="ifd-KW-BSh">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
