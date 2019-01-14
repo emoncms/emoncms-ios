@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */; };
 		1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */; };
 		1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */; };
 		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
@@ -109,6 +110,7 @@
 
 /* Begin PBXFileReference section */
 		17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHTTPProvider.swift; sourceTree = "<group>"; };
 		1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesFeedView.swift; sourceTree = "<group>"; };
 		1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesArrowView.swift; sourceTree = "<group>"; };
 		29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.release.xcconfig"; sourceTree = "<group>"; };
@@ -212,6 +214,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EE02BF921EB4BBB00C6AE9A /* Fake Server */ = {
+			isa = PBXGroup;
+			children = (
+				1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */,
+			);
+			path = "Fake Server";
+			sourceTree = "<group>";
+		};
 		1EE02C0921ECEFC000C6AE9A /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -418,6 +428,7 @@
 				C9BB83471D869CB00058C059 /* UI */,
 				C92010F81D89FD2500C9974B /* Apps */,
 				C9BB83551D86B19C0058C059 /* Helpers */,
+				1EE02BF921EB4BBB00C6AE9A /* Fake Server */,
 				C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */,
 				C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */,
 				C92010F31D89F6AD00C9974B /* Apps.storyboard */,
@@ -478,6 +489,7 @@
 				C9D6923B1D95B55B00E0B249 /* Embed Watch Content */,
 				7EA407F0228622A839AC933D /* [CP] Embed Pods Frameworks */,
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
+				1EE02C0721EB4BFA00C6AE9A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -564,6 +576,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1EE02C0721EB4BFA00C6AE9A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then\ncp -r \"${PROJECT_DIR}/EmonCMSiOS/Fake Server/data\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/fake_server_data\"\nfi\n";
+		};
 		222414EEEA60BA63308A49DD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -743,6 +772,7 @@
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
 				1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
+				1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
