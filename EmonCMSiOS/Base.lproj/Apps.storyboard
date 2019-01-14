@@ -68,11 +68,11 @@
                                         <rect key="frame" x="0.0" y="112" width="375" height="442"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fdg-ew-n0d" customClass="LineChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="217"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="260.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3y-mo-Cjj" customClass="BarChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="217" width="375" height="217"/>
+                                                <rect key="frame" x="0.0" y="260.5" width="375" height="173.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
@@ -81,7 +81,7 @@
                                             <constraint firstAttribute="trailing" secondItem="Fdg-ew-n0d" secondAttribute="trailing" id="5K7-hH-GHW"/>
                                             <constraint firstAttribute="bottom" secondItem="u3y-mo-Cjj" secondAttribute="bottom" constant="8" id="7WI-Ei-2Lu"/>
                                             <constraint firstItem="Fdg-ew-n0d" firstAttribute="top" secondItem="SFz-rN-Orh" secondAttribute="top" id="8ZU-vM-0JC"/>
-                                            <constraint firstItem="u3y-mo-Cjj" firstAttribute="height" secondItem="Fdg-ew-n0d" secondAttribute="height" id="EhV-Hp-roe"/>
+                                            <constraint firstItem="u3y-mo-Cjj" firstAttribute="height" secondItem="Fdg-ew-n0d" secondAttribute="height" multiplier="2:3" id="EhV-Hp-roe"/>
                                             <constraint firstItem="u3y-mo-Cjj" firstAttribute="leading" secondItem="SFz-rN-Orh" secondAttribute="leading" id="Fiw-iS-LcA"/>
                                             <constraint firstItem="u3y-mo-Cjj" firstAttribute="top" secondItem="Fdg-ew-n0d" secondAttribute="bottom" id="Q0T-3H-AwW"/>
                                             <constraint firstAttribute="trailing" secondItem="u3y-mo-Cjj" secondAttribute="trailing" id="kRY-IW-X8n"/>
