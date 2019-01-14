@@ -36,6 +36,7 @@ final class AppConfigViewModel {
     } else {
       self.appData = AppData()
       self.appData.appCategory = appCategory
+      self.appData.name = appCategory.info.displayName
     }
     self.appCategory = appCategory
   }
