@@ -119,9 +119,11 @@ final class AppConfigViewController: FormViewController {
     Observable.combineLatest(feeds, selectedFeed)
       .asDriver(onErrorJustReturn: ([], nil))
       .drive(onNext: { feeds, selectedFeedId in
-        guard let selectedFeedId = selectedFeedId else { return }
         row.update { row in
-          if let feed = feeds.first(where: { $0.feedId == selectedFeedId }) {
+          if
+            let selectedFeedId = selectedFeedId,
+            let feed = feeds.first(where: { $0.feedId == selectedFeedId })
+          {
             row.subText = feed.name
           } else {
             row.subText = "-- Select a feed --"
