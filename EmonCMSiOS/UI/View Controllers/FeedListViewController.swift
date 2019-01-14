@@ -20,6 +20,7 @@ final class FeedListViewController: UIViewController {
 
   @IBOutlet fileprivate var tableView: UITableView!
   @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
+  @IBOutlet fileprivate var lastUpdatedLabel: UILabel!
   @IBOutlet fileprivate var chartContainerView: UIView!
   @IBOutlet fileprivate var chartContainerViewBottomConstraint: NSLayoutConstraint!
   @IBOutlet fileprivate var chartView: LineChartView!
@@ -262,6 +263,22 @@ final class FeedListViewController: UIViewController {
     Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
       .merge()
       .bind(to: self.viewModel.refresh)
+      .disposed(by: self.disposeBag)
+
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateStyle = .none
+    dateFormatter.timeStyle = .medium
+    self.viewModel.updateTime
+      .map { time in
+        var string = "Last updated: "
+        if let time = time {
+          string += dateFormatter.string(from: time)
+        } else {
+          string += "Never"
+        }
+        return string
+      }
+      .drive(self.lastUpdatedLabel.rx.text)
       .disposed(by: self.disposeBag)
 
     self.viewModel.isRefreshing

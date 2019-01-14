@@ -40,6 +40,7 @@ final class FeedListViewModel {
 
   // Outputs
   private(set) var feeds: Driver<[Section]>
+  private(set) var updateTime: Driver<Date?>
   private(set) var isRefreshing: Driver<Bool>
 
   init(account: Account, api: EmonCMSAPI) {
@@ -49,6 +50,7 @@ final class FeedListViewModel {
     self.feedUpdateHelper = FeedUpdateHelper(account: account, api: api)
 
     self.feeds = Driver.never()
+    self.updateTime = Driver.never()
     self.isRefreshing = Driver.never()
 
     self.feeds = self.searchTerm
@@ -64,6 +66,11 @@ final class FeedListViewModel {
       }
       .map(self.feedsToSections)
       .asDriver(onErrorJustReturn: [])
+
+    self.updateTime = self.feeds
+      .map { _ in Date() }
+      .startWith(nil)
+      .asDriver(onErrorJustReturn: Date())
 
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()

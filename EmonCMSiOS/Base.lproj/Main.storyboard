@@ -24,6 +24,26 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="105" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="iKX-04-Ggf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="6uf-Up-dfA">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST UPDATED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0an-VV-Hhm">
+                                            <rect key="frame" x="133.5" y="8" width="108.5" height="28"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <constraints>
+                                        <constraint firstItem="0an-VV-Hhm" firstAttribute="top" secondItem="6uf-Up-dfA" secondAttribute="top" constant="8" id="3XF-mO-GUh"/>
+                                        <constraint firstAttribute="bottom" secondItem="0an-VV-Hhm" secondAttribute="bottom" constant="8" id="FYY-PD-rAD"/>
+                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="0an-VV-Hhm" secondAttribute="trailing" constant="8" id="MMD-Bn-mMf"/>
+                                        <constraint firstItem="0an-VV-Hhm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6uf-Up-dfA" secondAttribute="leading" constant="8" id="dii-eE-kNN"/>
+                                        <constraint firstItem="0an-VV-Hhm" firstAttribute="centerX" secondItem="6uf-Up-dfA" secondAttribute="centerX" id="ouR-u3-Bcs"/>
+                                    </constraints>
+                                </view>
                                 <sections/>
                             </tableView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fEd-yG-B6c">
@@ -121,6 +141,7 @@
                         <outlet property="chartSegmentedControl" destination="QpN-ww-W8G" id="aLS-P8-uDZ"/>
                         <outlet property="chartSpinner" destination="hSq-ec-yjY" id="2X8-ki-FiQ"/>
                         <outlet property="chartView" destination="EOL-NE-T7V" id="8rT-3G-wqz"/>
+                        <outlet property="lastUpdatedLabel" destination="0an-VV-Hhm" id="Xcw-KT-lct"/>
                         <outlet property="refreshButton" destination="yuN-HQ-kww" id="fYC-aB-D6D"/>
                         <outlet property="tableView" destination="iKX-04-Ggf" id="ELb-kb-Ja5"/>
                         <segue destination="WAP-7R-QNT" kind="show" identifier="showFeed" id="owJ-L7-7fG"/>
