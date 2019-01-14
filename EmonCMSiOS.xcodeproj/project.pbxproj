@@ -24,7 +24,6 @@
 		C92A5C4921C9996800B1D5CD /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */; };
-		C941631221D52EB700FEF2B6 /* MySolarAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630E21D52EB700FEF2B6 /* MySolarAppData.swift */; };
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
 		C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
 		C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631C21DA540A00FEF2B6 /* Apps.swift */; };
@@ -34,7 +33,6 @@
 		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
 		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
 		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
-		C97284F31DABB1EA0010C7B7 /* MyElectricAppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */; };
 		C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */; };
 		C98BD5B71DE63638000B6344 /* InputListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5B61DE63638000B6344 /* InputListViewController.swift */; };
 		C98BD5B91DE6365D000B6344 /* InputListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */; };
@@ -133,7 +131,6 @@
 		C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewController.swift; sourceTree = "<group>"; };
-		C941630E21D52EB700FEF2B6 /* MySolarAppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppData.swift; sourceTree = "<group>"; };
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
 		C941631421D65A6F00FEF2B6 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C941631C21DA540A00FEF2B6 /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
@@ -146,7 +143,6 @@
 		C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayRelativeToTodayValueFormatter.swift; sourceTree = "<group>"; };
 		C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelper.swift; sourceTree = "<group>"; };
 		C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigViewController.swift; sourceTree = "<group>"; };
-		C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppData.swift; sourceTree = "<group>"; };
 		C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedUpdateHelper.swift; sourceTree = "<group>"; };
 		C98BD5B61DE63638000B6344 /* InputListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewController.swift; sourceTree = "<group>"; };
 		C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewModel.swift; sourceTree = "<group>"; };
@@ -260,7 +256,6 @@
 			children = (
 				C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */,
 				C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */,
-				C97284F21DABB1EA0010C7B7 /* MyElectricAppData.swift */,
 			);
 			path = MyElectric;
 			sourceTree = "<group>";
@@ -270,7 +265,6 @@
 			children = (
 				C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */,
 				C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */,
-				C941630E21D52EB700FEF2B6 /* MySolarAppData.swift */,
 			);
 			path = MySolar;
 			sourceTree = "<group>";
@@ -690,7 +684,6 @@
 				C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */,
 				C98BD5B71DE63638000B6344 /* InputListViewController.swift in Sources */,
 				C98BD5B91DE6365D000B6344 /* InputListViewModel.swift in Sources */,
-				C941631221D52EB700FEF2B6 /* MySolarAppData.swift in Sources */,
 				C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */,
 				C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
@@ -715,7 +708,6 @@
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
-				C97284F31DABB1EA0010C7B7 /* MyElectricAppData.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
 				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,
