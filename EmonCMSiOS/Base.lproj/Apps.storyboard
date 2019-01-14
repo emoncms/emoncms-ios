@@ -235,18 +235,79 @@
                                         <rect key="frame" x="0.0" y="112" width="375" height="442"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9re-Re-BAP" customClass="LineChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="217"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="245.5"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZTe-CV-15R">
+                                                <rect key="frame" x="0.0" y="245.5" width="375" height="196.5"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2F-13-74A" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="8" y="8" width="114.5" height="60"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZU-Mp-s4X" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="130.5" y="8" width="114" height="60"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68Z-2T-evZ" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="8" y="76" width="114.5" height="44.5"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KgR-D7-N8X" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="252.5" y="8" width="114.5" height="60"/>
+                                                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYS-jG-9qC" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="8" y="128.5" width="359" height="60"/>
+                                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" secondItem="PYS-jG-9qC" secondAttribute="height" multiplier="6:1" id="mz7-2f-dxt"/>
+                                                        </constraints>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HrJ-zu-G3q" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="252.5" y="76" width="114.5" height="44.5"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="217" id="nuF-hC-IIU"/>
+                                                    <constraint firstItem="68Z-2T-evZ" firstAttribute="top" secondItem="b2F-13-74A" secondAttribute="bottom" constant="8" id="1jt-eJ-UTb"/>
+                                                    <constraint firstItem="PYS-jG-9qC" firstAttribute="top" secondItem="HrJ-zu-G3q" secondAttribute="bottom" constant="8" id="6ev-K7-deF"/>
+                                                    <constraint firstItem="KgR-D7-N8X" firstAttribute="top" secondItem="ZTe-CV-15R" secondAttribute="top" constant="8" id="7BD-Eq-EiX"/>
+                                                    <constraint firstItem="68Z-2T-evZ" firstAttribute="width" secondItem="b2F-13-74A" secondAttribute="width" id="8ld-PP-Ipv"/>
+                                                    <constraint firstItem="b2F-13-74A" firstAttribute="leading" secondItem="ZTe-CV-15R" secondAttribute="leading" constant="8" id="Dny-H7-pfp"/>
+                                                    <constraint firstAttribute="trailing" secondItem="PYS-jG-9qC" secondAttribute="trailing" constant="8" id="JVY-rt-Y3a"/>
+                                                    <constraint firstItem="PYS-jG-9qC" firstAttribute="leading" secondItem="ZTe-CV-15R" secondAttribute="leading" constant="8" id="KeY-0O-CQn"/>
+                                                    <constraint firstItem="b2F-13-74A" firstAttribute="width" secondItem="bZU-Mp-s4X" secondAttribute="width" id="LhJ-c4-j0o"/>
+                                                    <constraint firstItem="KgR-D7-N8X" firstAttribute="leading" secondItem="bZU-Mp-s4X" secondAttribute="trailing" constant="8" id="T9p-ml-GUf"/>
+                                                    <constraint firstItem="68Z-2T-evZ" firstAttribute="height" secondItem="b2F-13-74A" secondAttribute="height" multiplier="3:4" id="UJn-Fr-5cZ"/>
+                                                    <constraint firstItem="HrJ-zu-G3q" firstAttribute="top" secondItem="KgR-D7-N8X" secondAttribute="bottom" constant="8" id="VMV-kM-F6P"/>
+                                                    <constraint firstItem="68Z-2T-evZ" firstAttribute="leading" secondItem="ZTe-CV-15R" secondAttribute="leading" constant="8" id="Wma-ma-fjH"/>
+                                                    <constraint firstItem="bZU-Mp-s4X" firstAttribute="leading" secondItem="b2F-13-74A" secondAttribute="trailing" constant="8" id="Xxu-Ex-Ucm"/>
+                                                    <constraint firstItem="bZU-Mp-s4X" firstAttribute="height" secondItem="PYS-jG-9qC" secondAttribute="height" id="YNm-9B-H6b"/>
+                                                    <constraint firstAttribute="trailing" secondItem="HrJ-zu-G3q" secondAttribute="trailing" constant="8" id="Ynp-VC-eGU"/>
+                                                    <constraint firstItem="b2F-13-74A" firstAttribute="width" secondItem="KgR-D7-N8X" secondAttribute="width" id="a7L-DL-nau"/>
+                                                    <constraint firstAttribute="trailing" secondItem="KgR-D7-N8X" secondAttribute="trailing" constant="8" id="e4o-Ht-0wY"/>
+                                                    <constraint firstItem="bZU-Mp-s4X" firstAttribute="top" secondItem="ZTe-CV-15R" secondAttribute="top" constant="8" id="jBn-XX-scH"/>
+                                                    <constraint firstItem="HrJ-zu-G3q" firstAttribute="width" secondItem="KgR-D7-N8X" secondAttribute="width" id="lR8-1q-Vla"/>
+                                                    <constraint firstItem="bZU-Mp-s4X" firstAttribute="height" secondItem="b2F-13-74A" secondAttribute="height" id="nIy-20-npQ"/>
+                                                    <constraint firstItem="PYS-jG-9qC" firstAttribute="top" secondItem="68Z-2T-evZ" secondAttribute="bottom" constant="8" id="nW1-dS-QHt"/>
+                                                    <constraint firstItem="bZU-Mp-s4X" firstAttribute="height" secondItem="KgR-D7-N8X" secondAttribute="height" id="vNl-ZU-2PE"/>
+                                                    <constraint firstItem="b2F-13-74A" firstAttribute="top" secondItem="ZTe-CV-15R" secondAttribute="top" constant="8" id="xaX-RA-a5Z"/>
+                                                    <constraint firstAttribute="bottom" secondItem="PYS-jG-9qC" secondAttribute="bottom" constant="8" id="zRZ-Y8-BaP"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="9re-Re-BAP" secondAttribute="trailing" id="6Fj-FJ-rSt"/>
+                                            <constraint firstItem="ZTe-CV-15R" firstAttribute="leading" secondItem="Vkg-48-rIn" secondAttribute="leading" id="A3T-ZB-st0"/>
+                                            <constraint firstItem="ZTe-CV-15R" firstAttribute="top" secondItem="9re-Re-BAP" secondAttribute="bottom" id="Cys-XR-zHL"/>
+                                            <constraint firstAttribute="bottom" secondItem="ZTe-CV-15R" secondAttribute="bottom" id="F3z-nh-5PJ"/>
                                             <constraint firstItem="9re-Re-BAP" firstAttribute="leading" secondItem="Vkg-48-rIn" secondAttribute="leading" id="JUc-6g-ldo"/>
+                                            <constraint firstItem="ZTe-CV-15R" firstAttribute="top" secondItem="9re-Re-BAP" secondAttribute="bottom" id="Lgd-Qa-p3u"/>
                                             <constraint firstItem="9re-Re-BAP" firstAttribute="top" secondItem="Vkg-48-rIn" secondAttribute="top" id="cNz-A6-snH"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZTe-CV-15R" secondAttribute="trailing" id="l5g-vR-t53"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmD-9u-8t2" userLabel="Banner View">
@@ -322,16 +383,23 @@
                         <outlet property="bannerSpinner" destination="RoM-Rg-IeR" id="RQO-kf-XAA"/>
                         <outlet property="bannerView" destination="TmD-9u-8t2" id="dSG-sI-9c9"/>
                         <outlet property="configureView" destination="OY8-qa-O9x" id="mGL-AN-2wh"/>
+                        <outlet property="gridBoxView" destination="KgR-D7-N8X" id="X2s-Ug-WFd"/>
+                        <outlet property="gridToHouseArrowView" destination="HrJ-zu-G3q" id="q5p-B9-WUd"/>
+                        <outlet property="houseBoxView" destination="PYS-jG-9qC" id="wJY-el-7uu"/>
                         <outlet property="importLabel" destination="Svs-hg-Voj" id="4Yp-sf-grS"/>
+                        <outlet property="importTitleLabel" destination="58w-lR-UtC" id="PDF-yD-JaQ"/>
                         <outlet property="lineChart" destination="9re-Re-BAP" id="qDO-uP-UmJ"/>
                         <outlet property="mainView" destination="pMy-K4-oek" id="Tsc-48-T0S"/>
+                        <outlet property="solarBoxView" destination="b2F-13-74A" id="dUx-xR-3Pi"/>
                         <outlet property="solarLabel" destination="2We-oC-lXb" id="c6d-XR-A2F"/>
+                        <outlet property="solarToGridArrowView" destination="bZU-Mp-s4X" id="cEZ-yS-C5T"/>
+                        <outlet property="solarToHouseArrowView" destination="68Z-2T-evZ" id="BPe-uJ-WIe"/>
                         <outlet property="useLabel" destination="wpx-hI-GlP" id="qpu-G4-rkF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="whm-GF-KfJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="180" y="102.99850074962519"/>
+            <point key="canvasLocation" x="968.79999999999995" y="102.99850074962519"/>
         </scene>
     </scenes>
 </document>

@@ -17,6 +17,12 @@ struct EmonCMSColors {
     static let Yellow = UIColor(hexString: "dccc1f")
   }
 
+  struct Apps {
+    static let Solar = UIColor(hexString: "dccc1f")
+    static let Grid = UIColor(hexString: "d52e2e")
+    static let House = UIColor(hexString: "82cbfc")
+  }
+
   struct ActivityIndicator {
     static let Green = UIColor(red: 0.196, green: 0.784, blue: 0.196, alpha: 1.0)
     static let Yellow = UIColor(red: 0.94, green: 0.71, blue: 0.078, alpha: 1.0)

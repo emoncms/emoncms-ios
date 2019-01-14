@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */; };
+		1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */; };
 		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
@@ -107,6 +109,8 @@
 
 /* Begin PBXFileReference section */
 		17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesFeedView.swift; sourceTree = "<group>"; };
+		1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesArrowView.swift; sourceTree = "<group>"; };
 		29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.release.xcconfig"; sourceTree = "<group>"; };
 		73EE7C16F303D6BC48C8C1AC /* Pods-EmonCMSToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.debug.xcconfig"; sourceTree = "<group>"; };
 		813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -208,6 +212,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1EE02C0921ECEFC000C6AE9A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */,
+				1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		7DD291A48ED452A793DCA3EE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -316,6 +329,7 @@
 				C99DF4121D9042C300BBF80D /* Custom Former Cells */,
 				C98BD5C01DE9B589000B6344 /* Table Cells */,
 				C9C240B81D91730100BC302C /* View Controllers */,
+				1EE02C0921ECEFC000C6AE9A /* Views */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -689,6 +703,7 @@
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
 				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
+				1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */,
 				C9C240C01D91730100BC302C /* AddAccountQRViewController.swift in Sources */,
 				C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */,
 				C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */,
@@ -726,6 +741,7 @@
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
+				1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
