@@ -152,12 +152,12 @@ final class AddAccountViewController: FormViewController {
     self.performSegue(withIdentifier: Segues.scanQR.rawValue, sender: self)
   }
 
-  fileprivate func updateWithAccount(_ account: AccountController) {
-    self.viewModel.url.accept(account.url)
-    self.viewModel.apikey.accept(account.apikey)
-    self.urlRow?.text = account.url
+  fileprivate func updateWithAccountCredentials(_ accountCredentials: AccountCredentials) {
+    self.viewModel.url.accept(accountCredentials.url)
+    self.viewModel.apikey.accept(accountCredentials.apiKey)
+    self.urlRow?.text = accountCredentials.url
     self.urlRow?.update()
-    self.apikeyRow?.text = account.apikey
+    self.apikeyRow?.text = accountCredentials.apiKey
     self.apikeyRow?.update()
   }
 
@@ -177,8 +177,8 @@ extension AddAccountViewController {
 
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
 
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: AccountController) {
-    self.updateWithAccount(account)
+  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials) {
+    self.updateWithAccountCredentials(accountCredentials)
     self.dismiss(animated: true, completion: nil)
   }
 

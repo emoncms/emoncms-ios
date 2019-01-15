@@ -10,7 +10,7 @@ import UIKit
 import AVFoundation
 
 protocol AddAccountQRViewControllerDelegate: class {
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: AccountController)
+  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials)
   func addAccountQRViewControllerDidCancel(controller: AddAccountQRViewController)
 }
 
@@ -148,9 +148,7 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
 
     self.foundAccount = true
     DispatchQueue.main.async {
-      // TODO: Shouldn't have to create an `AccountRealmController` here.
-      let account = AccountController(uuid: UUID().uuidString, url: result.host, apikey: result.apikey)
-      self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccount: account)
+      self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccountCredentials: result)
     }
   }
 

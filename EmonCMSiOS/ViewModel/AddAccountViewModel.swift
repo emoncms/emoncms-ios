@@ -43,11 +43,9 @@ final class AddAccountViewModel {
       .distinctUntilChanged()
   }
 
-  func validate() -> Observable<(url: String, apiKey: String)> {
-    // TODO: Shouldn't have to create an `AccoutRealmController` here
-    let account = AccountController(uuid: UUID().uuidString, url: self.url.value, apikey: self.apikey.value)
-    let accountDetails = (self.url.value, self.apikey.value)
-    return self.api.feedList(account)
+  func validate() -> Observable<AccountCredentials> {
+    let accountCredentials = AccountCredentials(url: self.url.value, apiKey: self.apikey.value)
+    return self.api.feedList(accountCredentials)
       .catchError { error -> Observable<[Feed]> in
         let returnError: AddAccountError
         if let error = error as? EmonCMSAPI.EmonCMSAPIError {
@@ -66,7 +64,7 @@ final class AddAccountViewModel {
         return Observable.error(returnError)
       }
       .map { _ in
-        return accountDetails
+        return accountCredentials
     }
   }
 

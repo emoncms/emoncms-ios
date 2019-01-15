@@ -26,14 +26,14 @@ final class EmonCMSAPI {
     self.requestProvider = requestProvider
   }
 
-  private class func buildURL(_ account: AccountController, path: String, queryItems: [String:String] = [:]) throws -> URL {
+  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) throws -> URL {
     let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
       throw EmonCMSAPIError.failedToCreateURL
     }
 
     var allQueryItems = queryItems
-    allQueryItems["apikey"] = account.apikey
+    allQueryItems["apikey"] = account.apiKey
     urlBuilder.queryItems = allQueryItems.map() { URLQueryItem(name: $0, value: $1) }
 
     if let url = urlBuilder.url {
@@ -43,7 +43,7 @@ final class EmonCMSAPI {
     }
   }
 
-  private func request(_ account: AccountController, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
+  private func request(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
     let url: URL
     do {
       url = try EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems)
@@ -77,7 +77,7 @@ final class EmonCMSAPI {
       }
   }
 
-  func feedList(_ account: AccountController) -> Observable<[Feed]> {
+  func feedList(_ account: AccountCredentials) -> Observable<[Feed]> {
     return self.request(account, path: "feed/list").map { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
@@ -96,7 +96,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedFields(_ account: AccountController, id: String) -> Observable<Feed> {
+  func feedFields(_ account: AccountCredentials, id: String) -> Observable<Feed> {
     let queryItems = [
       "id": id
     ]
@@ -112,7 +112,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedField(_ account: AccountController, id: String, fieldName: String) -> Observable<String> {
+  func feedField(_ account: AccountCredentials, id: String, fieldName: String) -> Observable<String> {
     let queryItems = [
       "id": id,
       "field": fieldName
@@ -146,7 +146,7 @@ final class EmonCMSAPI {
     return dataPoints
   }
 
-  func feedData(_ account: AccountController, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
+  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -159,7 +159,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedDataDaily(_ account: AccountController, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
+  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -172,7 +172,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedValue(_ account: AccountController, id: String) -> Observable<Double> {
+  func feedValue(_ account: AccountCredentials, id: String) -> Observable<Double> {
     let queryItems = [
       "id": id
     ]
@@ -187,7 +187,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func feedValue(_ account: AccountController, ids: [String]) -> Observable<[String:Double]> {
+  func feedValue(_ account: AccountCredentials, ids: [String]) -> Observable<[String:Double]> {
     let queryItems = [
       "ids": ids.joined(separator: ",")
     ]
@@ -210,7 +210,7 @@ final class EmonCMSAPI {
     }
   }
 
-  func inputList(_ account: AccountController) -> Observable<[Input]> {
+  func inputList(_ account: AccountCredentials) -> Observable<[Input]> {
     return self.request(account, path: "input/list").map { resultData -> [Input] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
@@ -229,15 +229,15 @@ final class EmonCMSAPI {
     }
   }
 
-  class func extractAPIDetailsFromURLString(_ url: String) -> (host: String, apikey: String)? {
+  class func extractAPIDetailsFromURLString(_ url: String) -> AccountCredentials? {
     do {
       let regex = try NSRegularExpression(pattern: "^(http[s]?://.*)/app\\?[readkey=]+=([^&]+)#myelectric", options: [])
       let nsStringUrl = url as NSString
       let matches = regex.matches(in: url, options: [], range: NSMakeRange(0, nsStringUrl.length))
       if let match = matches.first, match.numberOfRanges == 3 {
         let host = nsStringUrl.substring(with: match.range(at: 1))
-        let apikey = nsStringUrl.substring(with: match.range(at: 2))
-        return (host: host, apikey: apikey)
+        let apiKey = nsStringUrl.substring(with: match.range(at: 2))
+        return AccountCredentials(url: host, apiKey: apiKey)
       }
     } catch {}
     return nil

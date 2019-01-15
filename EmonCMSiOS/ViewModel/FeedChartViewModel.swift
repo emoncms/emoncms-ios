@@ -56,7 +56,7 @@ final class FeedChartViewModel {
 
         let (startDate, endDate) = dateRange.calculateDates()
         let interval = Int(endDate.timeIntervalSince(startDate) / 500)
-        return strongSelf.api.feedData(strongSelf.account, id: feedId, at: startDate, until: endDate, interval: interval)
+        return strongSelf.api.feedData(strongSelf.account.credentials, id: feedId, at: startDate, until: endDate, interval: interval)
           .catchErrorJustReturn([])
           .trackActivity(isRefreshing)
       }

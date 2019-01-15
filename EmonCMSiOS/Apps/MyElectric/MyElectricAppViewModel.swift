@@ -191,7 +191,7 @@ final class MyElectricAppViewModel: AppViewModel {
     if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
       startOfDayKwhSignal = Observable.just(startOfDayKwh)
     } else {
-      startOfDayKwhSignal = self.api.feedData(self.account, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
+      startOfDayKwhSignal = self.api.feedData(self.account.credentials, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
         .map { dataPoints in
           guard dataPoints.count > 0 else {
             // Assume that the data point doesn't exist, so it's a new feed, so zero
@@ -205,7 +205,7 @@ final class MyElectricAppViewModel: AppViewModel {
         })
     }
 
-    let feedValuesSignal = self.api.feedValue(self.account, ids: [useFeedId, kwhFeedId])
+    let feedValuesSignal = self.api.feedValue(self.account.credentials, ids: [useFeedId, kwhFeedId])
 
     return Observable.zip(startOfDayKwhSignal, feedValuesSignal) { (startOfDayUsage, feedValues) in
       guard let use = feedValues[useFeedId], let useKwh = feedValues[kwhFeedId] else { return (0.0, 0.0) }
@@ -219,7 +219,7 @@ final class MyElectricAppViewModel: AppViewModel {
     let startTime = endTime - (60 * 60 * 8)
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
 
-    return self.api.feedData(self.account, id: useFeedId, at: startTime, until: endTime, interval: interval)
+    return self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
   }
 
   private func fetchBarChartHistory(kwhFeedId: String) -> Observable<[DataPoint]> {
@@ -227,7 +227,7 @@ final class MyElectricAppViewModel: AppViewModel {
     let endTime = Date()
     let startTime = endTime - Double(daysToDisplay * 86400)
 
-    return self.api.feedDataDaily(self.account, id: kwhFeedId, at: startTime, until: endTime)
+    return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
       .map { dataPoints in
         guard dataPoints.count > 1 else { return [] }
 

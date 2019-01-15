@@ -181,7 +181,7 @@ final class MySolarAppViewModel: AppViewModel {
   }
 
   private func fetchPowerNow(useFeedId: String, solarFeedId: String) -> Observable<(Double, Double, Double)> {
-    return self.api.feedValue(self.account, ids: [useFeedId, solarFeedId])
+    return self.api.feedValue(self.account.credentials, ids: [useFeedId, solarFeedId])
       .map { feedValues in
         guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId] else { return (0.0, 0.0, 0.0) }
 
@@ -194,8 +194,8 @@ final class MySolarAppViewModel: AppViewModel {
     let startTime = endTime - (60 * 60 * 8)
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
 
-    let use = self.api.feedData(self.account, id: useFeedId, at: startTime, until: endTime, interval: interval)
-    let solar = self.api.feedData(self.account, id: solarFeedId, at: startTime, until: endTime, interval: interval)
+    let use = self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
+    let solar = self.api.feedData(self.account.credentials, id: solarFeedId, at: startTime, until: endTime, interval: interval)
 
     return Observable.zip(use, solar)
   }

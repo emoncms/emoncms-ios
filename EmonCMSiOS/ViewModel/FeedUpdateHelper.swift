@@ -26,7 +26,7 @@ final class FeedUpdateHelper {
 
   func updateFeeds() -> Observable<()> {
     return Observable.deferred {
-      return self.api.feedList(self.account)
+      return self.api.feedList(self.account.credentials)
         .observeOn(self.scheduler)
         .flatMap { feeds -> Observable<()> in
           let realm = self.account.createRealm()

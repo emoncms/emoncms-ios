@@ -26,7 +26,7 @@ final class InputUpdateHelper {
 
   func updateInputs() -> Observable<()> {
     return Observable.deferred {
-      return self.api.inputList(self.account)
+      return self.api.inputList(self.account.credentials)
         .observeOn(self.scheduler)
         .flatMap { inputs -> Observable<()> in
           let realm = self.account.createRealm()

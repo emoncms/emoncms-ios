@@ -89,7 +89,8 @@ final class AccountListViewModel {
       let apiKey = self.keychainController.apiKey(forAccountWithId: id) else {
         return nil
     }
-    return AccountController(uuid: account.uuid, url: account.url, apikey: apiKey)
+    let credentials = AccountCredentials(url: account.url, apiKey: apiKey)
+    return AccountController(uuid: account.uuid, credentials: credentials)
   }
 
   func mainViewModels(forAccountWithId id: String) ->

@@ -11,11 +11,26 @@ import Foundation
 import Realm
 import RealmSwift
 
+struct AccountCredentials {
+
+  let url: String
+  let apiKey: String
+
+}
+
+extension AccountCredentials: Equatable {
+
+  static func ==(lhs: AccountCredentials, rhs: AccountCredentials) -> Bool {
+    return lhs.url == rhs.url &&
+      lhs.apiKey == rhs.apiKey
+  }
+
+}
+
 struct AccountController {
 
   let uuid: String
-  let url: String
-  let apikey: String
+  let credentials: AccountCredentials
 
   private func realmConfiguration() -> Realm.Configuration {
     let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
@@ -41,20 +56,13 @@ struct AccountController {
     return realm
   }
 
-  init(uuid: String, url: String, apikey: String) {
-    self.uuid = uuid
-    self.url = url
-    self.apikey = apikey
-  }
-
 }
 
 extension AccountController: Equatable {
 
   static func ==(lhs: AccountController, rhs: AccountController) -> Bool {
     return lhs.uuid == rhs.uuid &&
-      lhs.url == rhs.url &&
-      lhs.apikey == rhs.apikey
+      lhs.credentials == rhs.credentials
   }
 
 }
