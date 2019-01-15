@@ -13,17 +13,14 @@ import Former
 import RxSwift
 import RxCocoa
 
-protocol SettingsViewControllerDelegate: class {
-
-  func settingsViewControllerDidRequestLogout(_ controller: SettingsViewController)
-
-}
-
 final class SettingsViewController: FormViewController {
 
   var viewModel: SettingsViewModel!
 
-  weak var delegate: SettingsViewControllerDelegate?
+  lazy var switchAccount: Driver<Bool> = {
+    return self.switchAccountSubject.asDriver(onErrorJustReturn: false)
+  }()
+  private var switchAccountSubject = PublishSubject<Bool>()
 
   private let disposeBag = DisposeBag()
 
@@ -56,11 +53,11 @@ final class SettingsViewController: FormViewController {
         guard let strongSelf = self else { return }
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
         actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
-          strongSelf.delegate?.settingsViewControllerDidRequestLogout(strongSelf)
           strongSelf.former.deselect(animated: true)
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
             strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
           }
+          strongSelf.switchAccountSubject.onNext(true)
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
@@ -68,6 +65,15 @@ final class SettingsViewController: FormViewController {
           }
         }))
         strongSelf.present(actionSheet, animated: true, completion: nil)
+    }
+
+    let switchAccountRow = LabelRowFormer<FormLabelCell>() {
+      $0.accessoryType = .disclosureIndicator
+      }.configure {
+        $0.text = "Switch Account"
+      }.onSelected { [weak self] _ in
+        guard let strongSelf = self else { return }
+        strongSelf.switchAccountSubject.onNext(false)
     }
 
     let feedbackRow = LabelRowFormer<FormLabelCell>() {
@@ -87,7 +93,7 @@ final class SettingsViewController: FormViewController {
         $0.text = "App Version: \(appVersion) (\(buildNumber))"
     }
 
-    let logoutSection = SectionFormer(rowFormer: logoutRow, feedbackRow)
+    let logoutSection = SectionFormer(rowFormer: logoutRow, switchAccountRow, feedbackRow)
       .set(footerViewFormer: detailsFooter)
     sections.append(logoutSection)
 

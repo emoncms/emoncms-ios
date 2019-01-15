@@ -9,19 +9,20 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
 import Action
 import Former
-
-protocol AddAccountViewControllerDelegate: class {
-  func addAccountViewController(_ controller: AddAccountViewController, didFinishWithAccount account: AccountRealmController)
-}
 
 final class AddAccountViewController: FormViewController {
 
   var viewModel: AddAccountViewModel!
 
-  weak var delegate: AddAccountViewControllerDelegate?
+  lazy var finished: Driver<String?> = {
+    return self.finishedSubject.asDriver(onErrorJustReturn: nil)
+  }()
+  private var finishedSubject = PublishSubject<String?>()
 
+  private var nameRow: TextFieldRowFormer<FormTextFieldCell>?
   private var urlRow: TextFieldRowFormer<FormTextFieldCell>?
   private var apikeyRow: TextFieldRowFormer<FormTextFieldCell>?
   private var scanQRRow: LabelRowFormer<FormLabelCell>?
@@ -52,6 +53,18 @@ final class AddAccountViewController: FormViewController {
   }
 
   private func setupFormer() {
+    let nameRow = TextFieldRowFormer<FormTextFieldCell>() {
+      $0.textField.font = .systemFont(ofSize: 15)
+      $0.textField.keyboardType = .URL
+      $0.textField.autocapitalizationType = .none
+      $0.textField.autocorrectionType = .no
+      }.configure {
+        $0.placeholder = "Emoncms instance name"
+      }.onTextChanged { [weak self] text in
+        guard let strongSelf = self else { return }
+        strongSelf.viewModel.name.accept(text)
+    }
+
     let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       $0.textField.keyboardType = .URL
@@ -83,11 +96,12 @@ final class AddAccountViewController: FormViewController {
         self?.presentScanQR()
     }
 
+    self.nameRow = nameRow
     self.urlRow = urlRow
     self.apikeyRow = apikeyRow
     self.scanQRRow = scanQRRow
 
-    let section = SectionFormer(rowFormer: urlRow, apikeyRow, scanQRRow)
+    let section = SectionFormer(rowFormer: nameRow, urlRow, apikeyRow, scanQRRow)
     self.former.append(sectionFormer: section)
   }
 
@@ -97,9 +111,13 @@ final class AddAccountViewController: FormViewController {
 
       return strongSelf.viewModel.validate()
         .observeOn(MainScheduler.asyncInstance)
-        .do(onNext: { [weak self] account in
+        .flatMap { [weak self] account -> Observable<String> in
+          guard let strongSelf = self else { return Observable.empty() }
+          return strongSelf.viewModel.saveAccount(withUrl: account.url, apiKey: account.apiKey)
+        }
+        .do(onNext: { [weak self] accountId in
           guard let strongSelf = self else { return }
-          strongSelf.delegate?.addAccountViewController(strongSelf, didFinishWithAccount: account)
+          strongSelf.finishedSubject.onNext(accountId)
         })
         .catchError { [weak self] error in
           guard let strongSelf = self else { return Observable.empty() }
@@ -134,7 +152,7 @@ final class AddAccountViewController: FormViewController {
     self.performSegue(withIdentifier: Segues.scanQR.rawValue, sender: self)
   }
 
-  fileprivate func updateWithAccount(_ account: AccountRealmController) {
+  fileprivate func updateWithAccount(_ account: AccountController) {
     self.viewModel.url.accept(account.url)
     self.viewModel.apikey.accept(account.apikey)
     self.urlRow?.text = account.url
@@ -159,7 +177,7 @@ extension AddAccountViewController {
 
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
 
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: AccountRealmController) {
+  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccount account: AccountController) {
     self.updateWithAccount(account)
     self.dismiss(animated: true, completion: nil)
   }

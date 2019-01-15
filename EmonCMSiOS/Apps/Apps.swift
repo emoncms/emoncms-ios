@@ -12,7 +12,7 @@ import RxSwift
 
 protocol AppViewModel: AnyObject {
 
-  init(account: AccountRealmController, api: EmonCMSAPI, appDataId: String)
+  init(account: AccountController, api: EmonCMSAPI, appDataId: String)
 
 }
 

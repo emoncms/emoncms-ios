@@ -19,7 +19,7 @@ final class BackendController {
     self.api = api
   }
 
-  func updateFeedList(account: AccountRealmController) -> Observable<()> {
+  func updateFeedList(account: AccountController) -> Observable<()> {
     let realm = account.createRealm()
     return self.api.feedList(account)
       .flatMap { self.saveRealmObjects(realm: realm, objects: $0) }

@@ -23,7 +23,7 @@ final class AppListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
 
@@ -34,7 +34,7 @@ final class AppListViewModel {
   // Outputs
   private(set) var apps: Driver<[ListItem]>
 
-  init(account: AccountRealmController, api: EmonCMSAPI) {
+  init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

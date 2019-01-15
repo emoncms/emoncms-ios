@@ -29,7 +29,7 @@ final class MySolarAppViewModel: AppViewModel {
 
   typealias MySolarData = (updateTime: Date, useNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint], solar: [DataPoint]))
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
   private let appData: AppData
@@ -47,7 +47,7 @@ final class MySolarAppViewModel: AppViewModel {
 
   private let errorsSubject = PublishSubject<MySolarAppError>()
 
-  init(account: AccountRealmController, api: EmonCMSAPI, appDataId: String) {
+  init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

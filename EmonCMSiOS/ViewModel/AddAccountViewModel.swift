@@ -10,6 +10,8 @@ import Foundation
 
 import RxSwift
 import RxCocoa
+import Realm
+import RealmSwift
 
 final class AddAccountViewModel {
 
@@ -19,25 +21,32 @@ final class AddAccountViewModel {
     case invalidCredentials
   }
 
-  let api: EmonCMSAPI
+  private let realmController: RealmController
+  private let keychainController: KeychainController
+  private let api: EmonCMSAPI
 
+  let name = BehaviorRelay<String>(value: "")
   let url = BehaviorRelay<String>(value: "")
   let apikey = BehaviorRelay<String>(value: "")
 
-  init(api: EmonCMSAPI) {
+  init(realmController: RealmController, api: EmonCMSAPI) {
+    self.realmController = realmController
+    self.keychainController = KeychainController()
     self.api = api
   }
 
   func canSave() -> Observable<Bool> {
     return Observable
-      .combineLatest(self.url.asObservable(), self.apikey.asObservable()) { url, apikey in
-        return !url.isEmpty && !apikey.isEmpty
+      .combineLatest(self.name.asObservable(), self.url.asObservable(), self.apikey.asObservable()) { name, url, apikey in
+        return !name.isEmpty && !url.isEmpty && !apikey.isEmpty
       }
       .distinctUntilChanged()
   }
 
-  func validate() -> Observable<AccountRealmController> {
-    let account = AccountRealmController(uuid: UUID(), url: self.url.value, apikey: self.apikey.value)
+  func validate() -> Observable<(url: String, apiKey: String)> {
+    // TODO: Shouldn't have to create an `AccoutRealmController` here
+    let account = AccountController(uuid: UUID().uuidString, url: self.url.value, apikey: self.apikey.value)
+    let accountDetails = (self.url.value, self.apikey.value)
     return self.api.feedList(account)
       .catchError { error -> Observable<[Feed]> in
         let returnError: AddAccountError
@@ -57,7 +66,30 @@ final class AddAccountViewModel {
         return Observable.error(returnError)
       }
       .map { _ in
-        return account
+        return accountDetails
+    }
+  }
+
+  func saveAccount(withUrl url: String, apiKey: String) -> Observable<String> {
+    return Observable.create { observer -> Disposable in
+      let realm = self.realmController.createRealm()
+
+      let account = Account()
+      account.name = self.name.value
+      account.url = url
+
+      do {
+        try self.keychainController.saveAccount(forId: account.uuid, apiKey: apiKey)
+        try realm.write {
+          realm.add(account)
+        }
+        observer.onNext(account.uuid)
+        observer.onCompleted()
+      } catch {
+        observer.onError(error)
+      }
+
+      return Disposables.create()
     }
   }
 

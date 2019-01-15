@@ -14,7 +14,7 @@ import RealmSwift
 
 final class SettingsViewModel {
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
 
@@ -26,7 +26,7 @@ final class SettingsViewModel {
   // Outputs
   let feedList: FeedListHelper
 
-  init(account: AccountRealmController, api: EmonCMSAPI) {
+  init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

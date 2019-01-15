@@ -14,11 +14,11 @@ import RealmSwift
 
 final class InputUpdateHelper {
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let scheduler: SerialDispatchQueueScheduler
 
-  init(account: AccountRealmController, api: EmonCMSAPI) {
+  init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.InputUpdateHelper")

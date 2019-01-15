@@ -1,5 +1,5 @@
 //
-//  EmonCMSAccount.swift
+//  AccountController.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 12/09/2016.
@@ -11,15 +11,15 @@ import Foundation
 import Realm
 import RealmSwift
 
-struct AccountRealmController {
+struct AccountController {
 
-  let uuid: UUID
+  let uuid: String
   let url: String
   let apikey: String
 
   private func realmConfiguration() -> Realm.Configuration {
     let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
-    let fileURL = container.appendingPathComponent(self.uuid.uuidString + ".realm")
+    let fileURL = container.appendingPathComponent(self.uuid + ".realm")
     var config = Realm.Configuration(fileURL: fileURL)
     config.schemaVersion = 1
     config.migrationBlock = { (migration, oldSchemaVersion) in
@@ -41,7 +41,7 @@ struct AccountRealmController {
     return realm
   }
 
-  init(uuid: UUID, url: String, apikey: String) {
+  init(uuid: String, url: String, apikey: String) {
     self.uuid = uuid
     self.url = url
     self.apikey = apikey
@@ -49,9 +49,9 @@ struct AccountRealmController {
 
 }
 
-extension AccountRealmController: Equatable {
+extension AccountController: Equatable {
 
-  static func ==(lhs: AccountRealmController, rhs: AccountRealmController) -> Bool {
+  static func ==(lhs: AccountController, rhs: AccountController) -> Bool {
     return lhs.uuid == rhs.uuid &&
       lhs.url == rhs.url &&
       lhs.apikey == rhs.apikey
@@ -59,7 +59,7 @@ extension AccountRealmController: Equatable {
 
 }
 
-extension AccountRealmController {
+extension AccountController {
 
   private func migrate_0_1(_ migration: Migration) {
     // Migrate the apps to new data model

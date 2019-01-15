@@ -27,7 +27,7 @@ final class InputListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
   private let inputUpdateHelper: InputUpdateHelper
@@ -42,7 +42,7 @@ final class InputListViewModel {
   private(set) var inputs: Driver<[Section]>
   private(set) var isRefreshing: Driver<Bool>
 
-  init(account: AccountRealmController, api: EmonCMSAPI) {
+  init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

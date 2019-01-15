@@ -13,6 +13,7 @@ import RealmSwift
 final class Account: Object {
 
   @objc dynamic var uuid: String = UUID().uuidString
+  @objc dynamic var name: String = ""
   @objc dynamic var url: String = ""
 
   override class func primaryKey() -> String? {

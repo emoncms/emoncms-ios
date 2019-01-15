@@ -29,7 +29,7 @@ final class MyElectricAppViewModel: AppViewModel {
 
   typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
 
-  private let account: AccountRealmController
+  private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
   private let appData: AppData
@@ -48,7 +48,7 @@ final class MyElectricAppViewModel: AppViewModel {
   private var startOfDayKwh: DataPoint?
   private let errorsSubject = PublishSubject<MyElectricAppError>()
 
-  init(account: AccountRealmController, api: EmonCMSAPI, appDataId: String) {
+  init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.account = account
     self.api = api
     self.realm = account.createRealm()

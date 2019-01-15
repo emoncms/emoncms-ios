@@ -20,7 +20,7 @@ class EmonCMSAPITests: QuickSpec {
     var scheduler: TestScheduler!
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
-    var account: AccountRealmController!
+    var account: AccountController!
 
     func call<T>(api: Observable<T>, observer: TestableObserver<T>, expect: @escaping () -> Void) {
       let sharedResult = api.share(replay: 1)
@@ -49,7 +49,7 @@ class EmonCMSAPITests: QuickSpec {
       scheduler = TestScheduler(initialClock: 0)
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
-      account = AccountRealmController(uuid: UUID(), url: "http://test", apikey: "ilikecats")
+      account = AccountController(uuid: UUID(), url: "http://test", apikey: "ilikecats")
     }
 
     describe("feedList") {
