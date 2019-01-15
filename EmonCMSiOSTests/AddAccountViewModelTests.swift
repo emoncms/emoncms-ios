@@ -22,8 +22,9 @@ class AddAccountViewModelTests: QuickSpec {
     beforeEach {
       disposeBag = DisposeBag()
       let requestProvider = MockHTTPRequestProvider()
+      let realmController = RealmController()
       let api = EmonCMSAPI(requestProvider: requestProvider)
-      viewModel = AddAccountViewModel(api: api)
+      viewModel = AddAccountViewModel(realmController: realmController, api: api)
     }
 
     describe("canSave") {
@@ -40,6 +41,7 @@ class AddAccountViewModelTests: QuickSpec {
       }
 
       it("should be true for valid input") {
+        viewModel.name.accept("EmonCMS.org instance")
         viewModel.url.accept("http://emoncms.org")
         viewModel.apikey.accept("abcdef")
 
