@@ -17,6 +17,7 @@ final class AccountListViewController: UITableViewController {
   var viewModel: AccountListViewModel!
 
   private let disposeBag = DisposeBag()
+  private var firstLoad = true
 
   private enum Segues: String {
     case addAccount
@@ -30,6 +31,16 @@ final class AccountListViewController: UITableViewController {
     self.setupDataSource()
     self.setupBindings()
     self.setupNavigation()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if self.firstLoad {
+      self.firstLoad = false
+      if let selectedAccountId = self.viewModel.lastSelectedAccountId {
+        self.login(toAccountWithId: selectedAccountId, animated: false)
+      }
+    }
   }
 
   private func setupDataSource() {
@@ -89,10 +100,12 @@ final class AccountListViewController: UITableViewController {
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
-  private func login(toAccountWithId accountId: String) {
+  private func login(toAccountWithId accountId: String, animated: Bool = true) {
     guard let viewModels = self.viewModel.mainViewModels(forAccountWithId: accountId) else {
       return
     }
+
+    self.viewModel.lastSelectedAccountId = accountId
 
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let rootViewController = storyboard.instantiateViewController(withIdentifier: "MainFlow") as! UITabBarController
@@ -128,7 +141,7 @@ final class AccountListViewController: UITableViewController {
       })
       .disposed(by: self.disposeBag)
 
-    self.present(rootViewController, animated: true, completion: nil)
+    self.present(rootViewController, animated: animated, completion: nil)
   }
 
 }

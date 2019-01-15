@@ -19,6 +19,7 @@ struct SharedConstants {
   enum UserDefaultsKeys: String {
     case accountURL
     case accountUUID
+    case lastSelectedAccountUUID
   }
 
 }

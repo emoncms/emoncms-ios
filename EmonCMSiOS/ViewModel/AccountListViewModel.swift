@@ -93,6 +93,19 @@ final class AccountListViewModel {
     return AccountController(uuid: account.uuid, credentials: credentials)
   }
 
+  var lastSelectedAccountId: String? {
+    get {
+      return UserDefaults.standard.object(forKey: SharedConstants.UserDefaultsKeys.lastSelectedAccountUUID.rawValue) as? String
+    }
+    set {
+      if let newValue = newValue {
+        UserDefaults.standard.set(newValue, forKey: SharedConstants.UserDefaultsKeys.lastSelectedAccountUUID.rawValue)
+      } else {
+        UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.lastSelectedAccountUUID.rawValue)
+      }
+    }
+  }
+
   func mainViewModels(forAccountWithId id: String) ->
     (appList: AppListViewModel, feedList: FeedListViewModel, settings: SettingsViewModel)? {
       guard
