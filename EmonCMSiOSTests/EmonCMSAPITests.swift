@@ -49,7 +49,7 @@ class EmonCMSAPITests: QuickSpec {
       scheduler = TestScheduler(initialClock: 0)
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
-      account = Account(uuid: UUID(), url: "http://test", apikey: "ilikecats")
+      account = AccountRealmController(uuid: UUID(), url: "http://test", apikey: "ilikecats")
     }
 
     describe("feedList") {
