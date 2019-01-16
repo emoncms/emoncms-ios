@@ -10,6 +10,7 @@
 		1E7C55F921EEFFED0009809C /* MySolarDivertAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7C55F721EEFFED0009809C /* MySolarDivertAppViewModel.swift */; };
 		1E7C55FA21EEFFED0009809C /* MySolarDivertAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */; };
 		1EA783C221EF78F8002D6A3A /* ChartHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */; };
+		1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C321EF7B84002D6A3A /* AppViewController.swift */; };
 		1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */; };
 		1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */; };
 		1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */; };
@@ -120,6 +121,7 @@
 		1E7C55F721EEFFED0009809C /* MySolarDivertAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppViewModel.swift; sourceTree = "<group>"; };
 		1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppViewController.swift; sourceTree = "<group>"; };
 		1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelpers.swift; sourceTree = "<group>"; };
+		1EA783C321EF7B84002D6A3A /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
 		1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHTTPProvider.swift; sourceTree = "<group>"; };
 		1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesFeedView.swift; sourceTree = "<group>"; };
 		1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesArrowView.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				1E7C55F621EEFFED0009809C /* MySolarDivert */,
 				C941631421D65A6F00FEF2B6 /* AppData.swift */,
 				C941631C21DA540A00FEF2B6 /* Apps.swift */,
+				1EA783C321EF7B84002D6A3A /* AppViewController.swift */,
 				C92010FB1D89FD7300C9974B /* AppConfig.swift */,
 				C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */,
 				C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */,
@@ -812,6 +815,7 @@
 				1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
+				1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
 				C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
 			);

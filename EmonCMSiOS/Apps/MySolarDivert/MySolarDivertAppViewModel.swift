@@ -14,19 +14,6 @@ import RealmSwift
 
 final class MySolarDivertAppViewModel: AppViewModel {
 
-  enum MySolarDivertAppError: Error {
-    case generic(String)
-    case notConfigured
-    case initialFailed
-    case updateFailed
-  }
-
-  enum BannerBarState {
-    case loading
-    case error(String)
-    case loaded(Date)
-  }
-
   typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint]))
 
   private let account: AccountController
@@ -42,10 +29,10 @@ final class MySolarDivertAppViewModel: AppViewModel {
   private(set) var data: Driver<MySolarDivertData?>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
-  private(set) var errors: Driver<MySolarDivertAppError>
-  private(set) var bannerBarState: Driver<BannerBarState>
+  private(set) var errors: Driver<AppError>
+  private(set) var bannerBarState: Driver<AppBannerBarState>
 
-  private let errorsSubject = PublishSubject<MySolarDivertAppError>()
+  private let errorsSubject = PublishSubject<AppError>()
 
   init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.account = account
@@ -102,8 +89,8 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
         let update: Observable<MySolarDivertData?> = strongSelf.update()
           .catchError { [weak self] error in
-            var typedError = error as? MySolarDivertAppError ?? .generic("\(error)")
-            if typedError == MySolarDivertAppError.updateFailed && isFirst {
+            var typedError = error as? AppError ?? .generic("\(error)")
+            if typedError == AppError.updateFailed && isFirst {
               typedError = .initialFailed
             }
             self?.errorsSubject.onNext(typedError)
@@ -126,7 +113,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
     let loading = self.isRefreshing.asObservable()
     let updateTime = self.data.map { $0?.updateTime }.asObservable()
     let lastErrorOrNil = Observable.combineLatest(errors, loading) { ($0, $1) }
-      .map { tuple -> MySolarDivertAppViewModel.MySolarDivertAppError? in
+      .map { tuple -> AppError? in
         if tuple.1 {
           return nil
         } else {
@@ -136,7 +123,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
       .startWith(nil)
 
     self.bannerBarState = Observable.combineLatest(loading, lastErrorOrNil, updateTime) { ($0, $1, $2) }
-      .map { (loading: Bool, error: MySolarDivertAppError?, updateTime: Date?) -> BannerBarState in
+      .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading
         }
@@ -161,7 +148,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
       let solarFeedId = self.appData.feed(forName: "solar"),
       let divertFeedId = self.appData.feed(forName: "divert")
     else {
-      return Observable.error(MySolarDivertAppError.notConfigured)
+      return Observable.error(AppError.notConfigured)
     }
 
     return Observable.zip(
@@ -179,7 +166,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
     }
     .catchError { error in
       AppLog.info("Update failed: \(error)")
-      return Observable.error(MySolarDivertAppError.updateFailed)
+      return Observable.error(AppError.updateFailed)
     }
   }
 

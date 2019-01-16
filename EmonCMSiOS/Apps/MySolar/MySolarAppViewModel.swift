@@ -14,19 +14,6 @@ import RealmSwift
 
 final class MySolarAppViewModel: AppViewModel {
 
-  enum MySolarAppError: Error {
-    case generic(String)
-    case notConfigured
-    case initialFailed
-    case updateFailed
-  }
-
-  enum BannerBarState {
-    case loading
-    case error(String)
-    case loaded(Date)
-  }
-
   typealias MySolarData = (updateTime: Date, useNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint], solar: [DataPoint]))
 
   private let account: AccountController
@@ -42,10 +29,10 @@ final class MySolarAppViewModel: AppViewModel {
   private(set) var data: Driver<MySolarData?>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
-  private(set) var errors: Driver<MySolarAppError>
-  private(set) var bannerBarState: Driver<BannerBarState>
+  private(set) var errors: Driver<AppError>
+  private(set) var bannerBarState: Driver<AppBannerBarState>
 
-  private let errorsSubject = PublishSubject<MySolarAppError>()
+  private let errorsSubject = PublishSubject<AppError>()
 
   init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.account = account
@@ -102,8 +89,8 @@ final class MySolarAppViewModel: AppViewModel {
 
         let update: Observable<MySolarData?> = strongSelf.update()
           .catchError { [weak self] error in
-            var typedError = error as? MySolarAppError ?? .generic("\(error)")
-            if typedError == MySolarAppError.updateFailed && isFirst {
+            var typedError = error as? AppError ?? .generic("\(error)")
+            if typedError == AppError.updateFailed && isFirst {
               typedError = .initialFailed
             }
             self?.errorsSubject.onNext(typedError)
@@ -126,7 +113,7 @@ final class MySolarAppViewModel: AppViewModel {
     let loading = self.isRefreshing.asObservable()
     let updateTime = self.data.map { $0?.updateTime }.asObservable()
     let lastErrorOrNil = Observable.combineLatest(errors, loading) { ($0, $1) }
-      .map { tuple -> MySolarAppViewModel.MySolarAppError? in
+      .map { tuple -> AppError? in
         if tuple.1 {
           return nil
         } else {
@@ -136,7 +123,7 @@ final class MySolarAppViewModel: AppViewModel {
       .startWith(nil)
 
     self.bannerBarState = Observable.combineLatest(loading, lastErrorOrNil, updateTime) { ($0, $1, $2) }
-      .map { (loading: Bool, error: MySolarAppError?, updateTime: Date?) -> BannerBarState in
+      .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading
         }
@@ -160,7 +147,7 @@ final class MySolarAppViewModel: AppViewModel {
       let useFeedId = self.appData.feed(forName: "use"),
       let solarFeedId = self.appData.feed(forName: "solar")
     else {
-      return Observable.error(MySolarAppError.notConfigured)
+      return Observable.error(AppError.notConfigured)
     }
 
     return Observable.zip(
@@ -176,7 +163,7 @@ final class MySolarAppViewModel: AppViewModel {
     }
     .catchError { error in
       AppLog.info("Update failed: \(error)")
-      return Observable.error(MySolarAppError.updateFailed)
+      return Observable.error(AppError.updateFailed)
     }
   }
 

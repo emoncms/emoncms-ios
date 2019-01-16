@@ -9,10 +9,33 @@
 import UIKit
 
 import RxSwift
+import RxCocoa
+
+enum AppBannerBarState {
+  case loading
+  case error(String)
+  case loaded(Date)
+}
+
+enum AppError: Error {
+  case generic(String)
+  case notConfigured
+  case initialFailed
+  case updateFailed
+}
 
 protocol AppViewModel: AnyObject {
 
   init(account: AccountController, api: EmonCMSAPI, appDataId: String)
+
+  var active: BehaviorRelay<Bool> { get }
+  var title: Driver<String> { get }
+  var errors: Driver<AppError> { get }
+  var isRefreshing: Driver<Bool> { get }
+  var isReady: Driver<Bool> { get }
+  var bannerBarState: Driver<AppBannerBarState> { get }
+
+  func configViewModel() -> AppConfigViewModel
 
 }
 

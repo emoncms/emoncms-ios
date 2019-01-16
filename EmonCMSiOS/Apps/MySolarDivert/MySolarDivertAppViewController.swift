@@ -12,11 +12,12 @@ import RxSwift
 import RxCocoa
 import Charts
 
-final class MySolarDivertAppViewController: UIViewController {
+final class MySolarDivertAppViewController: AppViewController {
 
-  var viewModel: MySolarDivertAppViewModel!
+  var typedViewModel: MySolarDivertAppViewModel {
+    return self.viewModel as! MySolarDivertAppViewModel
+  }
 
-  @IBOutlet private var mainView: UIView!
   @IBOutlet private var houseLabel: UILabel!
   @IBOutlet private var divertLabel: UILabel!
   @IBOutlet private var totalUseLabel: UILabel!
@@ -32,11 +33,6 @@ final class MySolarDivertAppViewController: UIViewController {
   @IBOutlet private var solarToHouseArrowView: AppBoxesArrowView!
   @IBOutlet private var solarToGridArrowView: AppBoxesArrowView!
   @IBOutlet private var gridToHouseArrowView: AppBoxesArrowView!
-  @IBOutlet private var bannerView: UIView!
-  @IBOutlet private var bannerLabel: UILabel!
-  @IBOutlet private var bannerSpinner: UIActivityIndicatorView!
-
-  @IBOutlet private var configureView: UIView!
 
   private let disposeBag = DisposeBag()
 
@@ -46,24 +42,9 @@ final class MySolarDivertAppViewController: UIViewController {
     self.setupCharts()
     self.setupBoxView()
     self.setupBindings()
-    self.setupNavigation()
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
-  }
-
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
   }
 
   private func setupBindings() {
-    self.viewModel.title
-      .drive(self.rx.title)
-      .disposed(by: self.disposeBag)
-
     func powerFormat(powerNow: Double?) -> String {
       let value: String
       if let powerNow = powerNow {
@@ -74,25 +55,25 @@ final class MySolarDivertAppViewController: UIViewController {
       return value + "W"
     }
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.houseNow }
       .map(powerFormat)
       .drive(self.houseLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.divertNow }
       .map(powerFormat)
       .drive(self.divertLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.totalUseNow }
       .map(powerFormat)
       .drive(self.totalUseLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         guard let value = $0?.importNow else { return "-" }
 
@@ -106,7 +87,7 @@ final class MySolarDivertAppViewController: UIViewController {
       .drive(self.importTitleLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         if let value = $0?.importNow {
           return abs(value)
@@ -118,13 +99,13 @@ final class MySolarDivertAppViewController: UIViewController {
       .drive(self.importLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.solarNow }
       .map(powerFormat)
       .drive(self.solarLabel.rx.text)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }
@@ -132,75 +113,6 @@ final class MySolarDivertAppViewController: UIViewController {
         strongSelf.updateBoxViewData(dataPoints)
         })
       .disposed(by: self.disposeBag)
-
-    self.viewModel.isReady
-      .map { !$0 }
-      .drive(self.mainView.rx.isHidden)
-      .disposed(by: self.disposeBag)
-
-    self.viewModel.isReady
-      .drive(self.configureView.rx.isHidden)
-      .disposed(by: self.disposeBag)
-
-    self.viewModel.errors
-      .drive(onNext: { [weak self] error in
-        guard let strongSelf = self else { return }
-
-        switch error {
-        case .initialFailed:
-          let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
-        default:
-          break
-        }
-      })
-      .disposed(by: self.disposeBag)
-
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .none
-    dateFormatter.timeStyle = .medium
-    self.viewModel.bannerBarState
-      .drive(onNext: { [weak self] state in
-        guard let strongSelf = self else { return }
-
-        switch state {
-        case .loading:
-          strongSelf.bannerSpinner.startAnimating()
-          strongSelf.bannerLabel.text = "Loading"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
-        case .error(let message):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = message
-          strongSelf.bannerView.backgroundColor = EmonCMSColors.ErrorRed
-        case .loaded(let updateTime):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
-        }
-      })
-      .disposed(by: self.disposeBag)
-  }
-
-  private func setupNavigation() {
-    let rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
-    rightBarButtonItem.rx.tap
-      .flatMap { [weak self] _ -> Driver<AppUUIDAndCategory?> in
-        guard let strongSelf = self else { return Driver.empty() }
-
-        let configViewController = AppConfigViewController()
-        configViewController.viewModel = strongSelf.viewModel.configViewModel()
-        let navController = UINavigationController(rootViewController: configViewController)
-        strongSelf.present(navController, animated: true, completion: nil)
-
-        return configViewController.finished
-      }
-      .subscribe(onNext: { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.dismiss(animated: true, completion: nil)
-        })
-      .disposed(by: self.disposeBag)
-    self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
 }
