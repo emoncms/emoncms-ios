@@ -65,11 +65,14 @@ final class AccountListViewModel {
       account.url = accountURL
 
       let realm = realmController.createRealm()
-      do {
-        try realm.write {
-          realm.add(account)
-        }
-      } catch {}
+      let existingObject = realm.object(ofType: Account.self, forPrimaryKey: accountUUIDString)
+      if existingObject == nil {
+        do {
+          try realm.write {
+            realm.add(account)
+          }
+        } catch {}
+      }
 
       UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue)
       UserDefaults.standard.removeObject(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
