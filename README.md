@@ -15,8 +15,9 @@
 - [x] Data caching
 - [ ] Apps
   - [x] My Electric app
-  - [ ] My Solar PV app
-- [ ] Multi-account
+  - [x] My Solar PV app
+  - [x] My Solar PV + Divert app
+- [x] Multi-account
 - [ ] watchOS app
 - [ ] Today extension
 - [ ] tvOS app
