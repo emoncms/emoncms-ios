@@ -118,15 +118,27 @@ final class AppConfigViewController: FormViewController {
 
     Observable.combineLatest(feeds, selectedFeed)
       .asDriver(onErrorJustReturn: ([], nil))
-      .drive(onNext: { feeds, selectedFeedId in
+      .drive(onNext: { [weak self] feeds, selectedFeedId in
+        guard let self = self else { return }
+
         row.update { row in
-          if
-            let selectedFeedId = selectedFeedId,
-            let feed = feeds.first(where: { $0.feedId == selectedFeedId })
-          {
-            row.subText = feed.name
-          } else {
-            row.subText = "-- Select a feed --"
+          var actualSelectedFeedId = selectedFeedId
+          if actualSelectedFeedId == nil {
+            for feed in feeds {
+              if feed.name == field.defaultName {
+                actualSelectedFeedId = feed.feedId
+                self.data[field.id] = selectedFeed
+                break
+              }
+            }
+          }
+
+          if let selectedFeedId = actualSelectedFeedId {
+            if let feed = feeds.first(where: { $0.feedId == selectedFeedId }) {
+              row.subText = feed.name
+            } else {
+              row.subText = "-- Select a feed --"
+            }
           }
         }
       })
