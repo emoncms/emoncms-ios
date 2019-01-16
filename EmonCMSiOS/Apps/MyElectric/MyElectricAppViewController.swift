@@ -19,8 +19,8 @@ final class MyElectricAppViewController: UIViewController {
   @IBOutlet private var mainView: UIView!
   @IBOutlet private var powerLabel: UILabel!
   @IBOutlet private var usageTodayLabel: UILabel!
-  @IBOutlet fileprivate var lineChart: LineChartView!
-  @IBOutlet fileprivate var barChart: BarChartView!
+  @IBOutlet private var lineChart: LineChartView!
+  @IBOutlet private var barChart: BarChartView!
   @IBOutlet private var bannerView: UIView!
   @IBOutlet private var bannerLabel: UILabel!
   @IBOutlet private var bannerSpinner: UIActivityIndicatorView!
@@ -170,12 +170,12 @@ final class MyElectricAppViewController: UIViewController {
 
 extension MyElectricAppViewController {
 
-  fileprivate func setupCharts() {
+  private func setupCharts() {
     self.setupLineChart()
     self.setupBarChart()
   }
 
-  fileprivate func setupLineChart() {
+  private func setupLineChart() {
     guard let lineChart = self.lineChart else {
       return
     }
@@ -206,7 +206,7 @@ extension MyElectricAppViewController {
     yAxis.labelTextColor = .black
   }
 
-  fileprivate func setupBarChart() {
+  private func setupBarChart() {
     guard let barChart = self.barChart else {
       return
     }
@@ -233,7 +233,7 @@ extension MyElectricAppViewController {
     xAxis.labelCount = 14
   }
 
-  fileprivate func updateLineChartData(_ dataPoints: [DataPoint]?) {
+  private func updateLineChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
       let data = (self.lineChart.data as? LineChartData) ?? LineChartData()
       self.lineChart.data = data
@@ -249,7 +249,7 @@ extension MyElectricAppViewController {
     self.lineChart.notifyDataSetChanged()
   }
 
-  fileprivate func updateBarChartData(_ dataPoints: [DataPoint]?) {
+  private func updateBarChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
       var entries: [ChartDataEntry] = []
       for point in dataPoints {
