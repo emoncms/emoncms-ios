@@ -22,6 +22,7 @@ enum AppCategory: String, CaseIterable {
 
   case myElectric
   case mySolar
+  case mySolarDivert
 
   struct Info {
     let displayName: String
@@ -40,6 +41,11 @@ enum AppCategory: String, CaseIterable {
         displayName: "MySolar",
         storyboardId: "mySolar"
       )
+    case .mySolarDivert:
+      return Info(
+        displayName: "MySolarDivert",
+        storyboardId: "mySolarDivert"
+      )
     }
   }
 
@@ -56,6 +62,15 @@ enum AppCategory: String, CaseIterable {
         AppConfigFieldFeed(id: "useKwh", name: "Power kWh Feed", optional: false, defaultName: "use_kwh"),
         AppConfigFieldFeed(id: "solar", name: "Solar Feed", optional: false, defaultName: "solar"),
         AppConfigFieldFeed(id: "solarKwh", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
+      ]
+    case .mySolarDivert:
+      return [
+        AppConfigFieldFeed(id: "use", name: "Power Feed", optional: false, defaultName: "use"),
+        AppConfigFieldFeed(id: "useKwh", name: "Power kWh Feed", optional: false, defaultName: "use_kwh"),
+        AppConfigFieldFeed(id: "solar", name: "Solar Feed", optional: false, defaultName: "solar"),
+        AppConfigFieldFeed(id: "solarKwh", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
+        AppConfigFieldFeed(id: "divert", name: "Divert Feed", optional: false, defaultName: "divert"),
+        AppConfigFieldFeed(id: "divertKwh", name: "Divert kWh Feed", optional: false, defaultName: "divert_kwh"),
       ]
     }
   }

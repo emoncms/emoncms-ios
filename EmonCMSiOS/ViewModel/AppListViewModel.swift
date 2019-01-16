@@ -87,6 +87,10 @@ final class AppListViewModel {
       let viewModel = MySolarAppViewModel(account: self.account, api: self.api, appDataId: id)
       let appVC = viewController as! MySolarAppViewController
       appVC.viewModel = viewModel
+    case .mySolarDivert:
+      let viewModel = MySolarDivertAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let appVC = viewController as! MySolarDivertAppViewController
+      appVC.viewModel = viewModel
     }
 
     return viewController

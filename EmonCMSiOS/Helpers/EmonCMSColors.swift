@@ -15,12 +15,14 @@ struct EmonCMSColors {
     static let Blue = UIColor(hexString: "3399ff")
     static let DarkBlue = UIColor(hexString: "0779c1")
     static let Yellow = UIColor(hexString: "dccc1f")
+    static let Orange = UIColor(hexString: "fb7b50")
   }
 
   struct Apps {
     static let Solar = UIColor(hexString: "dccc1f")
     static let Grid = UIColor(hexString: "d52e2e")
     static let House = UIColor(hexString: "82cbfc")
+    static let Divert = UIColor(hexString: "fb7b50")
   }
 
   struct ActivityIndicator {
