@@ -10,9 +10,9 @@ import UIKit
 
 final class AppBoxesFeedView: UIView {
 
-  var feedName: String = "FEED"
-  var feedValue: Double = 0
-  var feedUnit: String = "kWh"
+  var feedName: String = "FEED" { didSet { self.setNeedsLayout() } }
+  var feedValue: Double = 0 { didSet { self.setNeedsLayout() } }
+  var feedUnit: String = "kWh" { didSet { self.setNeedsLayout() } }
 
   private var nameLabel: UILabel!
   private var valueLabel: UILabel!

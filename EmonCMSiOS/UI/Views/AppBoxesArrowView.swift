@@ -18,10 +18,10 @@ final class AppBoxesArrowView: UIView {
     case right
   }
 
-  var value: Double = 0.0
-  var unit: String = "kWh"
-  var direction: Direction = .up
-  var arrowColor: UIColor = UIColor.darkGray
+  var value: Double = 0.0 { didSet { self.setNeedsLayout() } }
+  var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  var direction: Direction = .up { didSet { self.setNeedsLayout(); self.setNeedsDisplay() } }
+  var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
 
   private var valueLabel: UILabel!
 
