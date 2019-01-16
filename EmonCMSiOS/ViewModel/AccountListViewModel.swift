@@ -35,7 +35,7 @@ final class AccountListViewModel {
   // Inputs
 
   // Outputs
-  private(set) var apps: Driver<[ListItem]>
+  private(set) var accounts: Driver<[ListItem]>
 
   init(realmController: RealmController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -43,13 +43,13 @@ final class AccountListViewModel {
     self.api = api
     self.realm = realmController.createRealm()
 
-    self.apps = Driver.never()
+    self.accounts = Driver.never()
 
     self.migrateOldAccountIfNeeded()
 
-    let appQuery = self.realm.objects(Account.self)
-      .sorted(byKeyPath: #keyPath(AppData.name), ascending: true)
-    self.apps = Observable.array(from: appQuery)
+    let accountQuery = self.realm.objects(Account.self)
+      .sorted(byKeyPath: #keyPath(Account.name), ascending: true)
+    self.accounts = Observable.array(from: accountQuery)
       .map(self.accountsToListItems)
       .asDriver(onErrorJustReturn: [])
   }

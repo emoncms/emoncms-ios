@@ -58,7 +58,7 @@ final class AccountListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.apps
+    self.viewModel.accounts
       .map { [AccountListViewModel.Section(model: "", items: $0)] }
       .drive(self.tableView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
