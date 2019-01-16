@@ -120,38 +120,7 @@ final class MySolarDivertAppViewController: AppViewController {
 extension MySolarDivertAppViewController {
 
   private func setupCharts() {
-    self.setupLineChart()
-  }
-
-  private func setupLineChart() {
-    guard let lineChart = self.lineChart else {
-      return
-    }
-
-    lineChart.drawGridBackgroundEnabled = false
-    lineChart.legend.enabled = false
-    lineChart.rightAxis.enabled = false
-    lineChart.chartDescription = nil
-    lineChart.noDataText = "Loading data..."
-    lineChart.noDataTextColor = .black
-    lineChart.isUserInteractionEnabled = false
-
-    let xAxis = lineChart.xAxis
-    xAxis.drawAxisLineEnabled = false
-    xAxis.drawGridLinesEnabled = false
-    xAxis.drawLabelsEnabled = true
-    xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .black
-    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
-    xAxis.granularity = 3600
-
-    let yAxis = lineChart.leftAxis
-    yAxis.labelPosition = .insideChart
-    yAxis.drawTopYLabelEntryEnabled = false
-    yAxis.drawZeroLineEnabled = true
-    yAxis.drawGridLinesEnabled = false
-    yAxis.drawAxisLineEnabled = false
-    yAxis.labelTextColor = .black
+    ChartHelpers.setupAppLineChart(self.lineChart)
   }
 
   private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint])?) {

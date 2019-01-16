@@ -83,66 +83,8 @@ final class MyElectricAppViewController: AppViewController {
 extension MyElectricAppViewController {
 
   private func setupCharts() {
-    self.setupLineChart()
-    self.setupBarChart()
-  }
-
-  private func setupLineChart() {
-    guard let lineChart = self.lineChart else {
-      return
-    }
-
-    lineChart.drawGridBackgroundEnabled = false
-    lineChart.legend.enabled = false
-    lineChart.rightAxis.enabled = false
-    lineChart.chartDescription = nil
-    lineChart.noDataText = "Loading data..."
-    lineChart.noDataTextColor = .black
-    lineChart.isUserInteractionEnabled = false
-
-    let xAxis = lineChart.xAxis
-    xAxis.drawAxisLineEnabled = false
-    xAxis.drawGridLinesEnabled = false
-    xAxis.drawLabelsEnabled = true
-    xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .black
-    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
-    xAxis.granularity = 3600
-
-    let yAxis = lineChart.leftAxis
-    yAxis.labelPosition = .insideChart
-    yAxis.drawTopYLabelEntryEnabled = false
-    yAxis.drawZeroLineEnabled = true
-    yAxis.drawGridLinesEnabled = false
-    yAxis.drawAxisLineEnabled = false
-    yAxis.labelTextColor = .black
-  }
-
-  private func setupBarChart() {
-    guard let barChart = self.barChart else {
-      return
-    }
-
-    barChart.drawGridBackgroundEnabled = false
-    barChart.legend.enabled = false
-    barChart.leftAxis.enabled = false
-    barChart.rightAxis.enabled = false
-    barChart.chartDescription = nil
-    barChart.noDataText = "Loading data..."
-    barChart.noDataTextColor = .black
-    barChart.isUserInteractionEnabled = false
-    barChart.extraBottomOffset = 0
-    barChart.drawValueAboveBarEnabled = true
-
-    let xAxis = barChart.xAxis
-    xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .black
-    xAxis.valueFormatter = DayRelativeToTodayValueFormatter()
-    xAxis.drawGridLinesEnabled = false
-    xAxis.drawAxisLineEnabled = false
-    xAxis.drawLabelsEnabled = true
-    xAxis.granularity = 1
-    xAxis.labelCount = 14
+    ChartHelpers.setupAppLineChart(self.lineChart)
+    ChartHelpers.setupAppBarChart(self.barChart)
   }
 
   private func updateLineChartData(_ dataPoints: [DataPoint]?) {
@@ -163,35 +105,11 @@ extension MyElectricAppViewController {
 
   private func updateBarChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
-      var entries: [ChartDataEntry] = []
-      for point in dataPoints {
-        // 'x' here means the offset in days from 'today'
-        let x = floor(point.time.timeIntervalSinceNow / 86400)
-        let y = point.value
+      let data = (self.barChart.data as? BarChartData) ?? BarChartData()
+      self.barChart.data = data
 
-        let yDataEntry = BarChartDataEntry(x: x, y: y)
-        entries.append(yDataEntry)
-      }
-
-      if let data = self.barChart.data,
-        let dataSet = data.getDataSetByIndex(0)
-      {
-        dataSet.clear()
-        for entry in entries {
-          _ = dataSet.addEntry(entry)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-      } else {
-        let dataSet = BarChartDataSet(values: entries, label: "kWh")
-        dataSet.setColor(EmonCMSColors.Chart.Blue)
-        dataSet.valueTextColor = .black
-
-        let data = BarChartData()
-        data.addDataSet(dataSet)
-
-        self.barChart.data = data
+      ChartHelpers.updateBarChart(withData: data, forSet: 0, withPoints: dataPoints) {
+        $0.setColor(EmonCMSColors.Chart.Blue)
       }
     } else {
       self.barChart.data = nil
