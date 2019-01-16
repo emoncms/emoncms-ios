@@ -342,6 +342,11 @@ extension MySolarAppViewController {
         continue
       }
 
+      defer {
+        useIndex = useIndex.advanced(by: 1)
+        solarIndex = solarIndex.advanced(by: 1)
+      }
+
       guard let unwrappedLastTime = lastTime else {
         lastTime = useTime
         continue
@@ -369,9 +374,6 @@ extension MySolarAppViewController {
         solarToGrid += (-importValue)
         solarToHouse += solarValue
       }
-
-      useIndex = useIndex.advanced(by: 1)
-      solarIndex = solarIndex.advanced(by: 1)
     }
 
     self.solarBoxView.feedValue = totalSolar
