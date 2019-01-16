@@ -226,50 +226,16 @@ extension MySolarAppViewController {
     yAxis.labelTextColor = .black
   }
 
-  private func updateLineChartData(forSet setIndex: Int, withPoints points: [DataPoint], configureBlock: (_ set: LineChartDataSet) -> Void) {
-    let data = self.lineChart.data ?? LineChartData()
-
-    var entries: [ChartDataEntry] = []
-    for point in points {
-      let x = point.time.timeIntervalSince1970
-      let y = point.value
-
-      let yDataEntry = ChartDataEntry(x: x, y: y)
-      entries.append(yDataEntry)
-    }
-
-    if let dataSet = data.getDataSetByIndex(setIndex)
-    {
-      dataSet.clear()
-      for entry in entries {
-        _ = dataSet.addEntry(entry)
-      }
-
-      dataSet.notifyDataSetChanged()
-      data.notifyDataChanged()
-    } else {
-      let dataSet = LineChartDataSet(values: entries, label: nil)
-      configureBlock(dataSet)
-      dataSet.valueTextColor = .black
-      dataSet.drawFilledEnabled = true
-      dataSet.drawCirclesEnabled = false
-      dataSet.drawValuesEnabled = false
-      dataSet.highlightEnabled = false
-      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-      data.addDataSet(dataSet)
-
-      self.lineChart.data = data
-    }
-  }
-
   private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint])?) {
     if let dataPoints = dataPoints {
-      self.updateLineChartData(forSet: 0, withPoints: dataPoints.use) {
+      let data = (self.lineChart.data as? LineChartData) ?? LineChartData()
+      self.lineChart.data = data
+
+      ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: dataPoints.use) {
         $0.setColor(EmonCMSColors.Chart.Blue)
         $0.fillColor = EmonCMSColors.Chart.Blue
       }
-      self.updateLineChartData(forSet: 1, withPoints: dataPoints.solar) {
+      ChartHelpers.updateLineChart(withData: data, forSet: 1, withPoints: dataPoints.solar) {
         $0.setColor(EmonCMSColors.Chart.Yellow)
         $0.fillColor = EmonCMSColors.Chart.Yellow
       }

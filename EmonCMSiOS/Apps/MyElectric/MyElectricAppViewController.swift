@@ -235,40 +235,12 @@ extension MyElectricAppViewController {
 
   fileprivate func updateLineChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
-      var entries: [ChartDataEntry] = []
-      for point in dataPoints {
-        let x = point.time.timeIntervalSince1970
-        let y = point.value
+      let data = (self.lineChart.data as? LineChartData) ?? LineChartData()
+      self.lineChart.data = data
 
-        let yDataEntry = ChartDataEntry(x: x, y: y)
-        entries.append(yDataEntry)
-      }
-
-      if let data = self.lineChart.data,
-        let dataSet = data.getDataSetByIndex(0)
-      {
-        dataSet.clear()
-        for entry in entries {
-          _ = dataSet.addEntry(entry)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-      } else {
-        let dataSet = LineChartDataSet(values: entries, label: nil)
-        dataSet.setColor(EmonCMSColors.Chart.Blue)
-        dataSet.fillColor = EmonCMSColors.Chart.Blue
-        dataSet.valueTextColor = .black
-        dataSet.drawFilledEnabled = true
-        dataSet.drawCirclesEnabled = false
-        dataSet.drawValuesEnabled = false
-        dataSet.highlightEnabled = false
-        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-        let data = LineChartData()
-        data.addDataSet(dataSet)
-
-        self.lineChart.data = data
+      ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: dataPoints) {
+        $0.setColor(EmonCMSColors.Chart.Blue)
+        $0.fillColor = EmonCMSColors.Chart.Blue
       }
     } else {
       self.lineChart.data = nil
