@@ -191,11 +191,11 @@ final class MySolarAppViewController: UIViewController {
 
 extension MySolarAppViewController {
 
-  fileprivate func setupCharts() {
+  private func setupCharts() {
     self.setupLineChart()
   }
 
-  fileprivate func setupLineChart() {
+  private func setupLineChart() {
     guard let lineChart = self.lineChart else {
       return
     }
@@ -226,76 +226,52 @@ extension MySolarAppViewController {
     yAxis.labelTextColor = .black
   }
 
-  fileprivate func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint])?) {
+  private func updateLineChartData(forSet setIndex: Int, withPoints points: [DataPoint], configureBlock: (_ set: LineChartDataSet) -> Void) {
+    let data = self.lineChart.data ?? LineChartData()
+
+    var entries: [ChartDataEntry] = []
+    for point in points {
+      let x = point.time.timeIntervalSince1970
+      let y = point.value
+
+      let yDataEntry = ChartDataEntry(x: x, y: y)
+      entries.append(yDataEntry)
+    }
+
+    if let dataSet = data.getDataSetByIndex(setIndex)
+    {
+      dataSet.clear()
+      for entry in entries {
+        _ = dataSet.addEntry(entry)
+      }
+
+      dataSet.notifyDataSetChanged()
+      data.notifyDataChanged()
+    } else {
+      let dataSet = LineChartDataSet(values: entries, label: nil)
+      configureBlock(dataSet)
+      dataSet.valueTextColor = .black
+      dataSet.drawFilledEnabled = true
+      dataSet.drawCirclesEnabled = false
+      dataSet.drawValuesEnabled = false
+      dataSet.highlightEnabled = false
+      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+
+      data.addDataSet(dataSet)
+
+      self.lineChart.data = data
+    }
+  }
+
+  private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint])?) {
     if let dataPoints = dataPoints {
-      let data = self.lineChart.data ?? LineChartData()
-
-      var useEntries: [ChartDataEntry] = []
-      for point in dataPoints.use {
-        let x = point.time.timeIntervalSince1970
-        let y = point.value
-
-        let yDataEntry = ChartDataEntry(x: x, y: y)
-        useEntries.append(yDataEntry)
+      self.updateLineChartData(forSet: 0, withPoints: dataPoints.use) {
+        $0.setColor(EmonCMSColors.Chart.Blue)
+        $0.fillColor = EmonCMSColors.Chart.Blue
       }
-
-      if let dataSet = data.getDataSetByIndex(0)
-      {
-        dataSet.clear()
-        for entry in useEntries {
-          _ = dataSet.addEntry(entry)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-      } else {
-        let dataSet = LineChartDataSet(values: useEntries, label: nil)
-        dataSet.setColor(EmonCMSColors.Chart.Blue)
-        dataSet.fillColor = EmonCMSColors.Chart.Blue
-        dataSet.valueTextColor = .black
-        dataSet.drawFilledEnabled = true
-        dataSet.drawCirclesEnabled = false
-        dataSet.drawValuesEnabled = false
-        dataSet.highlightEnabled = false
-        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-        data.addDataSet(dataSet)
-
-        self.lineChart.data = data
-      }
-
-      var solarEntries: [ChartDataEntry] = []
-      for point in dataPoints.solar {
-        let x = point.time.timeIntervalSince1970
-        let y = point.value
-
-        let yDataEntry = ChartDataEntry(x: x, y: y)
-        solarEntries.append(yDataEntry)
-      }
-
-      if let dataSet = data.getDataSetByIndex(1)
-      {
-        dataSet.clear()
-        for entry in solarEntries {
-          _ = dataSet.addEntry(entry)
-        }
-
-        dataSet.notifyDataSetChanged()
-        data.notifyDataChanged()
-      } else {
-        let dataSet = LineChartDataSet(values: solarEntries, label: nil)
-        dataSet.setColor(EmonCMSColors.Chart.Yellow)
-        dataSet.fillColor = EmonCMSColors.Chart.Yellow
-        dataSet.valueTextColor = .black
-        dataSet.drawFilledEnabled = true
-        dataSet.drawCirclesEnabled = false
-        dataSet.drawValuesEnabled = false
-        dataSet.highlightEnabled = false
-        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
-
-        data.addDataSet(dataSet)
-
-        self.lineChart.data = data
+      self.updateLineChartData(forSet: 1, withPoints: dataPoints.solar) {
+        $0.setColor(EmonCMSColors.Chart.Yellow)
+        $0.fillColor = EmonCMSColors.Chart.Yellow
       }
     } else {
       self.lineChart.data = nil
