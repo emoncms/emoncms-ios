@@ -127,7 +127,7 @@ final class AppConfigViewController: FormViewController {
             for feed in feeds {
               if feed.name == field.defaultName {
                 actualSelectedFeedId = feed.feedId
-                self.data[field.id] = selectedFeed
+                self.data[field.id] = actualSelectedFeedId
                 break
               }
             }
