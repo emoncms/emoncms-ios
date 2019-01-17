@@ -46,6 +46,8 @@ final class KeychainController {
   func logout(ofAccountWithId id: String) throws {
     do {
       try Locksmith.deleteDataForUserAccount(userAccount: id)
+    } catch LocksmithError.notFound {
+      // This is OK - it wasn't there anyway
     } catch {
       throw LoginControllerError.KeychainFailed
     }
