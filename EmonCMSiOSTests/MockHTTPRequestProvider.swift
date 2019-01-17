@@ -28,7 +28,7 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
     }
 
     guard queryValues["apikey"] == "ilikecats" else {
-      return Observable.empty()
+      return Observable.error(HTTPRequestProviderError.httpError(code: 401))
     }
 
     var responseString: String?
