@@ -128,17 +128,23 @@ extension MySolarDivertAppViewController {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
 
-      ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: dataPoints.use) {
+      var houseUse = [DataPoint]()
+      let bigDivert = dataPoints.use // We can't do a stacked line chart, so we're faking it
+      DataPoint.merge(pointsFrom: [dataPoints.use, dataPoints.divert]) { (_, time, values) in
+        houseUse.append(DataPoint(time: time, value: (values[0] - values[1])))
+      }
+
+      ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: bigDivert) {
+        $0.setColor(EmonCMSColors.Chart.Orange)
+        $0.fillColor = EmonCMSColors.Chart.Orange
+      }
+      ChartHelpers.updateLineChart(withData: data, forSet: 1, withPoints: houseUse) {
         $0.setColor(EmonCMSColors.Chart.Blue)
         $0.fillColor = EmonCMSColors.Chart.Blue
       }
-      ChartHelpers.updateLineChart(withData: data, forSet: 1, withPoints: dataPoints.solar) {
+      ChartHelpers.updateLineChart(withData: data, forSet: 2, withPoints: dataPoints.solar) {
         $0.setColor(EmonCMSColors.Chart.Yellow)
         $0.fillColor = EmonCMSColors.Chart.Yellow
-      }
-      ChartHelpers.updateLineChart(withData: data, forSet: 2, withPoints: dataPoints.divert) {
-        $0.setColor(EmonCMSColors.Chart.Orange)
-        $0.fillColor = EmonCMSColors.Chart.Orange
       }
     } else {
       self.lineChart.data = nil
