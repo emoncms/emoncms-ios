@@ -32,7 +32,7 @@ extension DataPoint {
 
 extension DataPoint {
 
-  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, [Double]) -> Void) {
+  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [Double]) -> Void) {
     guard points.count > 0 else { return }
     var indices = points.map { $0.startIndex }
     var lastTime: Date?
@@ -63,7 +63,7 @@ extension DataPoint {
       let timeDelta = time.timeIntervalSince(unwrappedLastTime)
       lastTime = time
 
-      mergeBlock(timeDelta, thisPoints.map { $0.value })
+      mergeBlock(timeDelta, time, thisPoints.map { $0.value })
 
       indices = indices.map { $0.advanced(by: 1) }
     }

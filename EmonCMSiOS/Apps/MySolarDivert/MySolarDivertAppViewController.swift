@@ -198,7 +198,7 @@ extension MySolarDivertAppViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    DataPoint.merge(pointsFrom: [use, solar, divert]) { (timeDelta, values) in
+    DataPoint.merge(pointsFrom: [use, solar, divert]) { (timeDelta, _, values) in
       let wattsToKWH = { (power: Double) -> Double in
         return (power / 1000.0) * (timeDelta / 3600.0)
       }
@@ -206,21 +206,21 @@ extension MySolarDivertAppViewController {
       let useValue = wattsToKWH(values[0])
       let solarValue = wattsToKWH(values[1])
       let divertValue = wattsToKWH(values[2])
-      let houseValue = useValue - divertValue
+      let houseUseValue = useValue - divertValue
       let importValue = useValue - solarValue
 
-      totalHouse += houseValue
+      totalHouse += houseUseValue
       totalSolar += solarValue
+      totalImport += importValue
       totalDivert += divertValue
       solarToDivert += divertValue
 
       if importValue > 0 { // Importing
-        totalImport += importValue
         gridToHouse += importValue
-        solarToHouse += useValue
+        solarToHouse += solarValue
       } else { // Exporting
         solarToGrid += (-importValue)
-        solarToHouse += solarValue
+        solarToHouse += houseUseValue
       }
     }
 
