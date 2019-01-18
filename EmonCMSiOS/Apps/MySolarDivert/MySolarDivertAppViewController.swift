@@ -189,11 +189,6 @@ extension MySolarDivertAppViewController {
     let divert = dataPoints.divert
     guard use.count > 0, solar.count > 0, divert.count > 0 else { return }
 
-    var lastTime: Date? = nil
-    var useIndex = use.startIndex
-    var solarIndex = solar.startIndex
-    var divertIndex = divert.startIndex
-
     var totalHouse = 0.0
     var totalDivert = 0.0
     var totalSolar = 0.0
@@ -203,48 +198,14 @@ extension MySolarDivertAppViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    while useIndex < use.endIndex && solarIndex < solar.endIndex && divertIndex < divert.endIndex {
-      let usePoint = use[useIndex]
-      let solarPoint = solar[solarIndex]
-      let divertPoint = divert[divertIndex]
-
-      let useTime = usePoint.time
-      let solarTime = solarPoint.time
-      let divertTime = divertPoint.time
-
-      guard useTime == solarTime && useTime == divertTime else {
-        if useTime < solarTime {
-          useIndex = useIndex.advanced(by: 1)
-        } else if solarTime < divertTime {
-          solarIndex = solarIndex.advanced(by: 1)
-        } else {
-          divertIndex = divertIndex.advanced(by: 1)
-        }
-        lastTime = nil
-        continue
-      }
-
-      defer {
-        useIndex = useIndex.advanced(by: 1)
-        solarIndex = solarIndex.advanced(by: 1)
-        divertIndex = divertIndex.advanced(by: 1)
-      }
-
-      guard let unwrappedLastTime = lastTime else {
-        lastTime = useTime
-        continue
-      }
-
-      let timeDelta = useTime.timeIntervalSince(unwrappedLastTime)
-      lastTime = useTime
-
+    DataPoint.merge(pointsFrom: [use, solar, divert]) { (timeDelta, values) in
       let wattsToKWH = { (power: Double) -> Double in
         return (power / 1000.0) * (timeDelta / 3600.0)
       }
 
-      let useValue = wattsToKWH(usePoint.value)
-      let solarValue = wattsToKWH(solarPoint.value)
-      let divertValue = wattsToKWH(divertPoint.value)
+      let useValue = wattsToKWH(values[0])
+      let solarValue = wattsToKWH(values[1])
+      let divertValue = wattsToKWH(values[2])
       let houseValue = useValue - divertValue
       let importValue = useValue - solarValue
 

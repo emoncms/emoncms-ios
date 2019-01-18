@@ -161,10 +161,6 @@ extension MySolarAppViewController {
     let solar = dataPoints.solar
     guard use.count > 0, solar.count > 0 else { return }
 
-    var lastTime: Date? = nil
-    var useIndex = use.startIndex
-    var solarIndex = solar.startIndex
-
     var totalUse = 0.0
     var totalSolar = 0.0
     var totalImport = 0.0
@@ -172,42 +168,13 @@ extension MySolarAppViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    while useIndex < use.endIndex && solarIndex < solar.endIndex {
-      let usePoint = use[useIndex]
-      let solarPoint = solar[solarIndex]
-
-      let useTime = usePoint.time
-      let solarTime = solarPoint.time
-
-      guard useTime == solarTime else {
-        if useTime < solarTime {
-          useIndex = useIndex.advanced(by: 1)
-        } else {
-          solarIndex = solarIndex.advanced(by: 1)
-        }
-        lastTime = nil
-        continue
-      }
-
-      defer {
-        useIndex = useIndex.advanced(by: 1)
-        solarIndex = solarIndex.advanced(by: 1)
-      }
-
-      guard let unwrappedLastTime = lastTime else {
-        lastTime = useTime
-        continue
-      }
-
-      let timeDelta = useTime.timeIntervalSince(unwrappedLastTime)
-      lastTime = useTime
-
+    DataPoint.merge(pointsFrom: [use, solar]) { (timeDelta, values) in
       let wattsToKWH = { (power: Double) -> Double in
         return (power / 1000.0) * (timeDelta / 3600.0)
       }
 
-      let useValue = wattsToKWH(usePoint.value)
-      let solarValue = wattsToKWH(solarPoint.value)
+      let useValue = wattsToKWH(values[0])
+      let solarValue = wattsToKWH(values[1])
       let importValue = useValue - solarValue
 
       totalUse += useValue
