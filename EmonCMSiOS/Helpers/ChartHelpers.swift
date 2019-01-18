@@ -63,13 +63,8 @@ final class ChartHelpers {
   }
 
   static func updateLineChart(withData data: LineChartData, forSet setIndex: Int, withPoints points: [DataPoint], configureBlock: (_ set: LineChartDataSet) -> Void) {
-    var entries: [ChartDataEntry] = []
-    for point in points {
-      let x = point.time.timeIntervalSince1970
-      let y = point.value
-
-      let yDataEntry = ChartDataEntry(x: x, y: y)
-      entries.append(yDataEntry)
+    let entries = points.map {
+      ChartDataEntry(x: $0.time.timeIntervalSince1970, y: $0.value)
     }
 
     if let dataSet = data.getDataSetByIndex(setIndex) {
