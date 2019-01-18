@@ -125,7 +125,7 @@ extension MySolarDivertAppViewController {
 
   private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint])?) {
     if let dataPoints = dataPoints {
-      let data = (self.lineChart.data as? LineChartData) ?? LineChartData()
+      let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
 
       ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: dataPoints.use) {
