@@ -29,7 +29,7 @@ class FeedUpdateHelperTests: QuickSpec {
       disposeBag = DisposeBag()
 
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
-      accountController = AccountController(uuid: "testaccount", credentials: credentials)
+      accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
       realm = accountController.createRealm()
       try! realm.write {
         realm.deleteAll()
