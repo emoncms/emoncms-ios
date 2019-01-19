@@ -56,7 +56,7 @@ class FeedUpdateHelperTests: QuickSpec {
         }
 
         let results = realm.objects(Feed.self)
-        expect(results.count).to(equal(2))
+        expect(results.count).toEventually(equal(2))
       }
     }
 
