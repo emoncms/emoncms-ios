@@ -116,6 +116,31 @@ class FeedListViewModelTests: QuickSpec {
           expect(feed.name).to(equal("Feed 5"))
         }
       }
+
+      it("should refresh when asked to") {
+        let refreshObserver = scheduler.createObserver(Bool.self)
+        viewModel.isRefreshing
+          .drive(refreshObserver)
+          .disposed(by: disposeBag)
+
+        viewModel.active.accept(true)
+
+        scheduler.createColdObservable([.next(10, ()), .next(20, ())])
+          .bind(to: viewModel.refresh)
+          .disposed(by: disposeBag)
+
+        scheduler.start()
+
+        expect(refreshObserver.events).toEventually(equal([
+          .next(0, false),
+          .next(0, true),
+          .next(10, false),
+          .next(10, true),
+          .next(20, false),
+          .next(20, true),
+          .next(20, false),
+          ]))
+      }
     }
 
   }

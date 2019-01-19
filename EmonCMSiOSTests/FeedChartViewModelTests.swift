@@ -1,5 +1,5 @@
 //
-//  FeedListHelperTests.swift
+//  FeedChartViewModelTests.swift
 //  EmonCMSiOSTests
 //
 //  Created by Matt Galloway on 19/01/2019.
@@ -14,7 +14,7 @@ import Realm
 import RealmSwift
 @testable import EmonCMSiOS
 
-class FeedListHelperTests: QuickSpec {
+class FeedChartViewModelTests: QuickSpec {
 
   override func spec() {
 
@@ -24,7 +24,7 @@ class FeedListHelperTests: QuickSpec {
     var realm: Realm!
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
-    var viewModel: FeedListHelper!
+    var viewModel: FeedChartViewModel!
 
     beforeEach {
       disposeBag = DisposeBag()
@@ -39,45 +39,35 @@ class FeedListHelperTests: QuickSpec {
 
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
-      viewModel = FeedListHelper(account: accountController, api: api)
+      viewModel = FeedChartViewModel(account: accountController, api: api, feedId: "1")
     }
 
-    describe("feedHandling") {
-      it("should list all feeds") {
-        let feedsObserver = scheduler.createObserver([FeedListHelper.FeedListItem].self)
-        viewModel.feeds
-          .drive(feedsObserver)
+    describe("dataHandling") {
+      it("should fetch feed data") {
+        let dataPointsObserver = scheduler.createObserver([DataPoint].self)
+        viewModel.dataPoints
+          .drive(dataPointsObserver)
           .disposed(by: disposeBag)
 
-        let count = 10
-        try! realm.write {
-          for i in 0..<count {
-            let feed = Feed()
-            feed.id = "\(i)"
-            feed.name = "Feed \(i)"
-            feed.tag = "Tag"
-            realm.add(feed)
-          }
-        }
+        viewModel.active.accept(true)
 
         scheduler.start()
 
-        expect(feedsObserver.events.count).toEventually(equal(2))
-
-        let lastEventFeeds = feedsObserver.events.last!.value.element!
-        expect(lastEventFeeds.count).to(equal(10))
-
-        for (i, feed) in lastEventFeeds.enumerated() {
-          expect(feed.feedId).to(equal("\(i)"))
-          expect(feed.name).to(equal("Feed \(i)"))
-        }
+        expect(dataPointsObserver.events.count).toEventually(equal(1))
       }
 
       it("should refresh when asked to") {
+        let dataPointsObserver = scheduler.createObserver([DataPoint].self)
+        viewModel.dataPoints
+          .drive(dataPointsObserver)
+          .disposed(by: disposeBag)
+
         let refreshObserver = scheduler.createObserver(Bool.self)
         viewModel.isRefreshing
           .drive(refreshObserver)
           .disposed(by: disposeBag)
+
+        viewModel.active.accept(true)
 
         scheduler.createColdObservable([.next(10, ()), .next(20, ())])
           .bind(to: viewModel.refresh)
@@ -85,13 +75,16 @@ class FeedListHelperTests: QuickSpec {
 
         scheduler.start()
 
-        expect(refreshObserver.events).toEventually(equal([
+        expect(dataPointsObserver.events.count).toEventually(equal(3))
+        expect(refreshObserver.events).to(equal([
+          .next(0, false),
+          .next(0, true),
           .next(0, false),
           .next(10, true),
-          .next(20, false),
+          .next(10, false),
           .next(20, true),
           .next(20, false),
-          ]))
+        ]))
       }
     }
 
