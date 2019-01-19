@@ -11,6 +11,8 @@
 		1E7C55FA21EEFFED0009809C /* MySolarDivertAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */; };
 		1EA783C221EF78F8002D6A3A /* ChartHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */; };
 		1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C321EF7B84002D6A3A /* AppViewController.swift */; };
+		1EA783C621EFD8E3002D6A3A /* AccountListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */; };
+		1EA783C821F04C9A002D6A3A /* FeedListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */; };
 		1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */; };
 		1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */; };
 		1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */; };
@@ -122,6 +124,8 @@
 		1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppViewController.swift; sourceTree = "<group>"; };
 		1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelpers.swift; sourceTree = "<group>"; };
 		1EA783C321EF7B84002D6A3A /* AppViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppViewController.swift; sourceTree = "<group>"; };
+		1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewModelTests.swift; sourceTree = "<group>"; };
+		1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModelTests.swift; sourceTree = "<group>"; };
 		1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FakeHTTPProvider.swift; sourceTree = "<group>"; };
 		1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesFeedView.swift; sourceTree = "<group>"; };
 		1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxesArrowView.swift; sourceTree = "<group>"; };
@@ -324,7 +328,9 @@
 			isa = PBXGroup;
 			children = (
 				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
+				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
 				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
+				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
 			);
@@ -751,6 +757,8 @@
 			files = (
 				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
 				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
+				1EA783C821F04C9A002D6A3A /* FeedListViewModelTests.swift in Sources */,
+				1EA783C621EFD8E3002D6A3A /* AccountListViewModelTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
