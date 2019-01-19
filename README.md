@@ -1,6 +1,6 @@
 # Emoncms for iOS
 
-[![Build Status](https://travis-ci.org/emoncms/emoncms-ios.svg?branch=master)](https://travis-ci.org/emoncms/emoncms-ios) [![codecov](https://codecov.io/gh/mattjgalloway/emoncms-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/mattjgalloway/emoncms-ios)
+[![Build Status](https://travis-ci.org/emoncms/emoncms-ios.svg?branch=master)](https://travis-ci.org/emoncms/emoncms-ios) [![codecov](https://codecov.io/gh/emoncms/emoncms-ios/branch/master/graph/badge.svg)](https://codecov.io/gh/emoncms/emoncms-ios)
 
 <a href="https://itunes.apple.com/us/app/emoncms/id1169483587?ls=1&mt=8"><img alt="Download on the App Store" src="https://emoncms.org/Modules/site/appstore.png" /></a>
 
