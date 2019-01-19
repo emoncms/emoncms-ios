@@ -4,6 +4,7 @@ use_frameworks!
 def shared_pods
     pod 'RxSwift', '~> 4.4'
     pod 'RxCocoa', '~> 4.4'
+    pod 'RxDataSources', '~> 3.1'
     pod 'Realm', '~> 3.13'
     pod 'RealmSwift', '~> 3.13'
 end
@@ -19,7 +20,6 @@ target 'EmonCMSiOS' do
     shared_pods
     shared_app_pods
 
-    pod 'RxDataSources', '~> 3.1'
     pod 'Action', '~> 3.9'
     pod 'Charts', '~> 3.2'
     pod 'Former', '~> 1.7'
