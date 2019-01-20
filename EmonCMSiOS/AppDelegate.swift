@@ -25,7 +25,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
     guard !AppDelegate.isRunningTests() else { return true }
-    self.mainController.initialise()
+
+    let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
+    self.mainController.initialise(dataDirectory: container)
+
     return true
   }
 

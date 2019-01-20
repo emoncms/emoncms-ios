@@ -13,9 +13,14 @@ import RealmSwift
 
 final class RealmController {
 
+  let dataDirectory: URL
+
+  init(dataDirectory: URL) {
+    self.dataDirectory = dataDirectory
+  }
+
   private func realmConfiguration() -> Realm.Configuration {
-    let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
-    let fileURL = container.appendingPathComponent("main" + ".realm")
+    let fileURL = self.dataDirectory.appendingPathComponent("main" + ".realm")
     var config = Realm.Configuration(fileURL: fileURL)
     config.schemaVersion = 1
 

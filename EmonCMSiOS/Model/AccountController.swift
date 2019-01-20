@@ -27,14 +27,20 @@ extension AccountCredentials: Equatable {
 
 }
 
-struct AccountController {
+final class AccountController {
 
   let uuid: String
+  let dataDirectory: URL
   let credentials: AccountCredentials
 
+  init(uuid: String, dataDirectory: URL, credentials: AccountCredentials) {
+    self.uuid = uuid
+    self.dataDirectory = dataDirectory
+    self.credentials = credentials
+  }
+
   private func realmConfiguration() -> Realm.Configuration {
-    let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
-    let fileURL = container.appendingPathComponent(self.uuid + ".realm")
+    let fileURL = self.dataDirectory.appendingPathComponent(self.uuid + ".realm")
     var config = Realm.Configuration(fileURL: fileURL)
     config.schemaVersion = 1
     config.migrationBlock = { (migration, oldSchemaVersion) in

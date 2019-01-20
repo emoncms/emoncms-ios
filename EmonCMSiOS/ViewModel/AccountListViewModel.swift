@@ -93,7 +93,7 @@ final class AccountListViewModel {
         return nil
     }
     let credentials = AccountCredentials(url: account.url, apiKey: apiKey)
-    return AccountController(uuid: account.uuid, credentials: credentials)
+    return AccountController(uuid: account.uuid, dataDirectory: self.realmController.dataDirectory, credentials: credentials)
   }
 
   var lastSelectedAccountId: String? {
