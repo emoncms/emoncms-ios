@@ -33,6 +33,10 @@ final class AccountController {
   let dataDirectory: URL
   let credentials: AccountCredentials
 
+  var realmFileURL: URL {
+    return self.dataDirectory.appendingPathComponent(self.uuid + ".realm")
+  }
+
   init(uuid: String, dataDirectory: URL, credentials: AccountCredentials) {
     self.uuid = uuid
     self.dataDirectory = dataDirectory
@@ -40,18 +44,13 @@ final class AccountController {
   }
 
   private func realmConfiguration() -> Realm.Configuration {
-    let fileURL = self.dataDirectory.appendingPathComponent(self.uuid + ".realm")
-    var config = Realm.Configuration(fileURL: fileURL)
+    var config = Realm.Configuration(fileURL: self.realmFileURL)
     config.schemaVersion = 1
     config.migrationBlock = { (migration, oldSchemaVersion) in
       if oldSchemaVersion == 0 {
         self.migrate_0_1(migration)
       }
     }
-
-    #if DEBUG
-    config.deleteRealmIfMigrationNeeded = true
-    #endif
 
     return config
   }

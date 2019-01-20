@@ -91,6 +91,8 @@
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
+		C9E7A6F821F50873008BD497 /* v0.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9E7A6F721F50873008BD497 /* v0.realm */; };
+		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -236,6 +238,8 @@
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		C9D9CA0C1DA3B06C0087754A /* BackendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendController.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
+		C9E7A6F721F50873008BD497 /* v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = v0.realm; sourceTree = "<group>"; };
+		C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -384,7 +388,9 @@
 				C91747A721F37A9A0054875D /* FeedListHelperTests.swift */,
 				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
 				C91747A921F37BA50054875D /* FeedUpdateHelperTests.swift */,
+				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
+				C9E7A6F621F50873008BD497 /* Realms */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
 			);
 			path = EmonCMSiOSTests;
@@ -550,6 +556,14 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
+		C9E7A6F621F50873008BD497 /* Realms */ = {
+			isa = PBXGroup;
+			children = (
+				C9E7A6F721F50873008BD497 /* v0.realm */,
+			);
+			path = Realms;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -686,6 +700,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E7A6F821F50873008BD497 /* v0.realm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -926,6 +941,7 @@
 				C91747AE21F3C42B0054875D /* AppListViewModelTests.swift in Sources */,
 				1EA783C621EFD8E3002D6A3A /* AccountListViewModelTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
+				C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -15,19 +15,17 @@ final class RealmController {
 
   let dataDirectory: URL
 
+  var realmFileURL: URL {
+    return self.dataDirectory.appendingPathComponent("main" + ".realm")
+  }
+
   init(dataDirectory: URL) {
     self.dataDirectory = dataDirectory
   }
 
   private func realmConfiguration() -> Realm.Configuration {
-    let fileURL = self.dataDirectory.appendingPathComponent("main" + ".realm")
-    var config = Realm.Configuration(fileURL: fileURL)
+    var config = Realm.Configuration(fileURL: self.realmFileURL)
     config.schemaVersion = 1
-
-    #if DEBUG
-    config.deleteRealmIfMigrationNeeded = true
-    #endif
-
     return config
   }
 
