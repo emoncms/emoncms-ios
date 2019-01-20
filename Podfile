@@ -16,7 +16,7 @@ def shared_app_pods
 end
 
 target 'EmonCMSiOS' do
-    platform :ios, '10.0'
+    platform :ios, '11.0'
     shared_pods
     shared_app_pods
 
@@ -37,13 +37,13 @@ def testing_pods
 end
 
 target 'EmonCMSiOSTests' do
-    platform :ios, '10.0'
+    platform :ios, '11.0'
     shared_pods
     testing_pods
 end
 
 target 'EmonCMSiOSUITests' do
-    platform :ios, '10.0'
+    platform :ios, '11.0'
     shared_pods
     testing_pods
 end
