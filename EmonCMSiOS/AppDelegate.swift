@@ -41,7 +41,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     if runningUITests {
       dataDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("uitests")
       try? FileManager.default.removeItem(at: dataDirectory)
-      try! FileManager.default.createDirectory(at: dataDirectory, withIntermediateDirectories: false, attributes: nil)
+      try! FileManager.default.createDirectory(at: dataDirectory, withIntermediateDirectories: true, attributes: nil)
       requestProvider = FakeHTTPProvider()
     } else {
       dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!

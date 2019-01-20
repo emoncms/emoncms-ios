@@ -14,4 +14,8 @@ class EmonCMSTestCase: QuickSpec {
     return FileManager.default.temporaryDirectory.appendingPathComponent("tests")
   }
 
+  override func setUp() {
+    try? FileManager.default.createDirectory(at: self.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+  }
+
 }
