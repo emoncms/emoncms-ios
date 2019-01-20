@@ -30,11 +30,11 @@ class EmonCMSiOSUITests: QuickSpec {
       app.navigationBars["Accounts"].buttons["Add"].tap()
 
       let tablesQuery = app.tables
-      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance name"]/*[[".cells.textFields[\"Emoncms instance name\"]",".textFields[\"Emoncms instance name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      tablesQuery.textFields["Emoncms instance name"].tap()
       app.typeText(name)
-      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance URL"]/*[[".cells.textFields[\"Emoncms instance URL\"]",".textFields[\"Emoncms instance URL\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      tablesQuery.textFields["Emoncms instance URL"].tap()
       app.typeText(url)
-      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms API read Key"]/*[[".cells.textFields[\"Emoncms API read Key\"]",".textFields[\"Emoncms API read Key\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      tablesQuery.textFields["Emoncms API read Key"].tap()
       app.typeText(apiKey)
 
       app.navigationBars["Account Details"].buttons["Save"].tap()
@@ -72,21 +72,73 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(addAppLabel.exists).to(equal(true))
       }
 
-      it("should add app successfully") {
+      it("should add a MyElectric app successfully") {
         loginFromAccountListWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MyElectric"].tap()
 
         app.tables.staticTexts["Power Feed"].tap()
-        app.tables/*@START_MENU_TOKEN@*/.staticTexts["use"]/*[[".cells.staticTexts[\"use\"]",".staticTexts[\"use\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables.staticTexts["use"].tap()
 
         app.tables.staticTexts["kWh Feed"].tap()
-        app.tables/*@START_MENU_TOKEN@*/.staticTexts["use_kwh"]/*[[".cells.staticTexts[\"use_kwh\"]",".staticTexts[\"use_kwh\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+        app.tables.staticTexts["use_kwh"].tap()
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
         expect(app.otherElements[AccessibilityIdentifiers.Apps.MyElectric].waitForExistence(timeout: 1)).to(equal(true))
+      }
+
+      it("should add a MySolar app successfully") {
+        loginFromAccountListWithValidCredentials()
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
+        app.navigationBars["Apps"].buttons["Add"].tap()
+        app.sheets["Select a type"].buttons["MySolar"].tap()
+
+        app.tables.staticTexts["Power Feed"].tap()
+        app.tables.staticTexts["use"].tap()
+
+        app.tables.staticTexts["Power kWh Feed"].tap()
+        app.tables.staticTexts["use_kwh"].tap()
+
+        app.tables.staticTexts["Solar Feed"].tap()
+        app.tables.staticTexts["solar"].tap()
+
+        app.tables.staticTexts["Solar kWh Feed"].tap()
+        app.tables.staticTexts["solar_kwh"].tap()
+
+        app.navigationBars["Configure"].buttons["Save"].tap()
+
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolar].waitForExistence(timeout: 1)).to(equal(true))
+      }
+
+      it("should add a MySolarDivert app successfully") {
+        loginFromAccountListWithValidCredentials()
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
+        app.navigationBars["Apps"].buttons["Add"].tap()
+        app.sheets["Select a type"].buttons["MySolarDivert"].tap()
+
+        app.tables.staticTexts["Power Feed"].tap()
+        app.tables.staticTexts["use"].tap()
+
+        app.tables.staticTexts["Power kWh Feed"].tap()
+        app.tables.staticTexts["use_kwh"].tap()
+
+        app.tables.staticTexts["Solar Feed"].tap()
+        app.tables.staticTexts["solar"].tap()
+
+        app.tables.staticTexts["Solar kWh Feed"].tap()
+        app.tables.staticTexts["solar_kwh"].tap()
+
+        app.tables.staticTexts["Divert Feed"].tap()
+        app.tables.staticTexts["divert"].tap()
+
+        app.tables.staticTexts["Divert kWh Feed"].tap()
+        app.tables.staticTexts["divert_kwh"].tap()
+
+        app.navigationBars["Configure"].buttons["Save"].tap()
+
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert].waitForExistence(timeout: 1)).to(equal(true))
       }
     }
 
@@ -95,7 +147,7 @@ class EmonCMSiOSUITests: QuickSpec {
         loginFromAccountListWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
         expect(app.tables[AccessibilityIdentifiers.Lists.Feed].waitForExistence(timeout: 1)).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(6))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(8))
       }
     }
 

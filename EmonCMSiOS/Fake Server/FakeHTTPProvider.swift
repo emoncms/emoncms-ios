@@ -21,6 +21,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     "4" : "1000",
     "5" : "100",
     "6" : "1000",
+    "7" : "100",
+    "8" : "1000",
     ]
 
   private func feedValue(forId feedId: String) -> String? {
