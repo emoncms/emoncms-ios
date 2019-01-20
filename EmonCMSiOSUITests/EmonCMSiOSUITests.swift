@@ -26,44 +26,56 @@ class EmonCMSiOSUITests: QuickSpec {
       app.launch()
     }
 
+    func loginFromAccountList(name: String, url: String, apiKey: String) {
+      app.navigationBars["Accounts"].buttons["Add"].tap()
+
+      let tablesQuery = app.tables
+      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance name"]/*[[".cells.textFields[\"Emoncms instance name\"]",".textFields[\"Emoncms instance name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      app.typeText(name)
+      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance URL"]/*[[".cells.textFields[\"Emoncms instance URL\"]",".textFields[\"Emoncms instance URL\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      app.typeText(url)
+      tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms API read Key"]/*[[".cells.textFields[\"Emoncms API read Key\"]",".textFields[\"Emoncms API read Key\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+      app.typeText(apiKey)
+
+      app.navigationBars["Account Details"].buttons["Save"].tap()
+    }
+
+    func loginFromAccountListWithValidCredentials() {
+      loginFromAccountList(name: "Test Instance", url: "https://localhost", apiKey: "ilikecats")
+    }
+
     describe("accounts") {
       it("should show empty accounts screen") {
         expect(app.tables[AccessibilityIdentifiers.Lists.Account].exists).to(equal(true))
-        expect(app.tables.cells.count).to(equal(0))
-        let addAppLabel = app.staticTexts["Tap + to add a new account"]
-        expect(addAppLabel.exists).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(0))
+        let addAccountLabel = app.staticTexts["Tap + to add a new account"]
+        expect(addAccountLabel.exists).to(equal(true))
       }
 
       it("should add account successfully for valid details") {
-        app.navigationBars["Accounts"].buttons["Add"].tap()
-
-        let tablesQuery = app.tables
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance name"]/*[[".cells.textFields[\"Emoncms instance name\"]",".textFields[\"Emoncms instance name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("Test Instance")
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance URL"]/*[[".cells.textFields[\"Emoncms instance URL\"]",".textFields[\"Emoncms instance URL\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("https://localhost")
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms API read Key"]/*[[".cells.textFields[\"Emoncms API read Key\"]",".textFields[\"Emoncms API read Key\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("ilikecats")
-
-        app.navigationBars["Account Details"].buttons["Save"].tap()
-
+        loginFromAccountListWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
       }
 
       it("should error for invalid credentials") {
-        app.navigationBars["Accounts"].buttons["Add"].tap()
-
-        let tablesQuery = app.tables
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance name"]/*[[".cells.textFields[\"Emoncms instance name\"]",".textFields[\"Emoncms instance name\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("Test Instance")
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms instance URL"]/*[[".cells.textFields[\"Emoncms instance URL\"]",".textFields[\"Emoncms instance URL\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("https://localhost")
-        tablesQuery/*@START_MENU_TOKEN@*/.textFields["Emoncms API read Key"]/*[[".cells.textFields[\"Emoncms API read Key\"]",".textFields[\"Emoncms API read Key\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
-        app.typeText("notthekey")
-
-        app.navigationBars["Account Details"].buttons["Save"].tap()
-
+        loginFromAccountList(name: "Test Instance", url: "https://localhost", apiKey: "notthekey")
         expect(app.alerts["Error"].exists).to(equal(true))
+      }
+    }
+
+    describe("apps") {
+      it("should show empty apps screen") {
+        loginFromAccountListWithValidCredentials()
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].cells.count).to(equal(0))
+        let addAppLabel = app.staticTexts["Tap + to add a new app"]
+        expect(addAppLabel.exists).to(equal(true))
+      }
+
+      it("should add app successfully") {
+        loginFromAccountListWithValidCredentials()
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
+        app.navigationBars["Apps"].buttons["Add"].tap()
       }
     }
   }
