@@ -49,6 +49,8 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
       responseString = "\"100\""
     case "/feed/fetch.json":
       responseString = "[\"100\",\"200\",\"300\"]"
+    case "/input/list.json":
+      responseString = "[{\"id\":\"1\",\"nodeid\":\"1\",\"name\":\"use\",\"description\":\"\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"1186\"},{\"id\":\"2\",\"nodeid\":\"1\",\"name\":\"use_kwh\",\"description\":\"\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"189.12940747385\"}]"
     default:
       break
     }
