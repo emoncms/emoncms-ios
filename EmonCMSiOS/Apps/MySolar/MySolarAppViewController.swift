@@ -35,6 +35,8 @@ final class MySolarAppViewController: AppViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolar
+
     self.setupCharts()
     self.setupBoxView()
     self.setupBindings()

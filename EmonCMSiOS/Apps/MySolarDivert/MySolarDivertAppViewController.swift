@@ -39,6 +39,8 @@ final class MySolarDivertAppViewController: AppViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolarDivert
+
     self.setupCharts()
     self.setupBoxView()
     self.setupBindings()

@@ -39,6 +39,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     let dataDirectory: URL
     let requestProvider: HTTPRequestProvider
     if runningUITests {
+      UIView.setAnimationsEnabled(false)
       dataDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("uitests")
       try? FileManager.default.removeItem(at: dataDirectory)
       try! FileManager.default.createDirectory(at: dataDirectory, withIntermediateDirectories: true, attributes: nil)

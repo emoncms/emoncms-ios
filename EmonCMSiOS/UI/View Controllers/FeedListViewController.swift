@@ -50,6 +50,7 @@ final class FeedListViewController: UIViewController {
     super.viewDidLoad()
 
     self.title = "Feeds"
+    self.tableView.accessibilityIdentifier = AccessibilityIdentifiers.Lists.Feed
 
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableView.automaticDimension

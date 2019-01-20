@@ -13,6 +13,15 @@ struct AccessibilityIdentifiers {
   struct Lists {
     static let Account = "AccountList"
     static let App = "AppList"
+    static let Feed = "FeedList"
   }
+
+  struct Apps {
+    static let MyElectric = "MyElectricApp"
+    static let MySolar = "MySolar"
+    static let MySolarDivert = "MySolarDivert"
+  }
+
+  static let Settings = "Settings"
   
 }

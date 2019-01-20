@@ -28,6 +28,7 @@ final class SettingsViewController: FormViewController {
     super.viewDidLoad()
 
     self.title = "Settings"
+    self.tableView.accessibilityIdentifier = AccessibilityIdentifiers.Settings
 
     self.setupFormer()
   }

@@ -76,6 +76,47 @@ class EmonCMSiOSUITests: QuickSpec {
         loginFromAccountListWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
+        app.sheets["Select a type"].buttons["MyElectric"].tap()
+
+        app.tables.staticTexts["Power Feed"].tap()
+        app.tables/*@START_MENU_TOKEN@*/.staticTexts["use"]/*[[".cells.staticTexts[\"use\"]",".staticTexts[\"use\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+
+        app.tables.staticTexts["kWh Feed"].tap()
+        app.tables/*@START_MENU_TOKEN@*/.staticTexts["use_kwh"]/*[[".cells.staticTexts[\"use_kwh\"]",".staticTexts[\"use_kwh\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.tap()
+
+        app.navigationBars["Configure"].buttons["Save"].tap()
+
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MyElectric].waitForExistence(timeout: 1)).to(equal(true))
+      }
+    }
+
+    describe("feeds") {
+      it("should show feeds screen") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Feeds"].tap()
+        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(6))
+      }
+    }
+
+    describe("settings") {
+      it("should logout") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+        expect(app.tables[AccessibilityIdentifiers.Settings].waitForExistence(timeout: 1)).to(equal(true))
+        app.tables[AccessibilityIdentifiers.Settings].staticTexts["Logout"].tap()
+        app.sheets.buttons["Logout"].tap()
+        expect(app.tables[AccessibilityIdentifiers.Lists.Account].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(0))
+      }
+
+      it("should switch account") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+        expect(app.tables[AccessibilityIdentifiers.Settings].waitForExistence(timeout: 1)).to(equal(true))
+        app.tables[AccessibilityIdentifiers.Settings].staticTexts["Switch Account"].tap()
+        expect(app.tables[AccessibilityIdentifiers.Lists.Account].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(1))
       }
     }
   }

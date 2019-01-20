@@ -28,6 +28,8 @@ final class MyElectricAppViewController: AppViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MyElectric
+
     self.setupCharts()
     self.setupBindings()
   }
