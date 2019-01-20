@@ -89,7 +89,6 @@
 		C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */; };
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
-		C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0C1DA3B06C0087754A /* BackendController.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
 		C9E7A6F821F50873008BD497 /* v0.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9E7A6F721F50873008BD497 /* v0.realm */; };
 		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
@@ -236,7 +235,6 @@
 		C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotViewController.swift; sourceTree = "<group>"; };
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
-		C9D9CA0C1DA3B06C0087754A /* BackendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackendController.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C9E7A6F721F50873008BD497 /* v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = v0.realm; sourceTree = "<group>"; };
 		C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
@@ -489,7 +487,6 @@
 				C9BB83661D87F52E0058C059 /* MainController.swift */,
 				C9BB83681D87F5630058C059 /* KeychainController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
-				C9D9CA0C1DA3B06C0087754A /* BackendController.swift */,
 				1EE02C1221ED116900C6AE9A /* RealmController.swift */,
 			);
 			path = Controllers;
@@ -976,7 +973,6 @@
 				C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* KeychainController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
-				C9D9CA0D1DA3B06C0087754A /* BackendController.swift in Sources */,
 				C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */,
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
