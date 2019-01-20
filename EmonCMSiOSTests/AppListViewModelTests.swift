@@ -14,7 +14,7 @@ import Realm
 import RealmSwift
 @testable import EmonCMSiOS
 
-class AppListViewModelTests: QuickSpec {
+class AppListViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
@@ -31,7 +31,7 @@ class AppListViewModelTests: QuickSpec {
       scheduler = TestScheduler(initialClock: 0)
 
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
-      accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
+      accountController = AccountController(uuid: "testaccount-\(type(of: self))", dataDirectory: self.dataDirectory, credentials: credentials)
       realm = accountController.createRealm()
       try! realm.write {
         realm.deleteAll()

@@ -14,7 +14,7 @@ import Realm
 import RealmSwift
 @testable import EmonCMSiOS
 
-class FeedUpdateHelperTests: QuickSpec {
+class FeedUpdateHelperTests: EmonCMSTestCase {
 
   override func spec() {
 
@@ -29,7 +29,7 @@ class FeedUpdateHelperTests: QuickSpec {
       disposeBag = DisposeBag()
 
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
-      accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
+      accountController = AccountController(uuid: "testaccount-\(type(of: self))", dataDirectory: self.dataDirectory, credentials: credentials)
       realm = accountController.createRealm()
       try! realm.write {
         realm.deleteAll()

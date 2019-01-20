@@ -14,7 +14,7 @@ import Realm
 import RealmSwift
 @testable import EmonCMSiOS
 
-class AddAccountViewModelTests: QuickSpec {
+class AddAccountViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
@@ -28,7 +28,7 @@ class AddAccountViewModelTests: QuickSpec {
     beforeEach {
       disposeBag = DisposeBag()
 
-      realmController = RealmController()
+      realmController = RealmController(dataDirectory: self.dataDirectory)
       realm = realmController.createRealm()
       try! realm.write {
         realm.deleteAll()

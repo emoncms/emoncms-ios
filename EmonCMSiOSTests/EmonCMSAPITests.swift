@@ -12,7 +12,7 @@ import RxSwift
 import RxTest
 @testable import EmonCMSiOS
 
-class EmonCMSAPITests: QuickSpec {
+class EmonCMSAPITests: EmonCMSTestCase {
 
   override func spec() {
 

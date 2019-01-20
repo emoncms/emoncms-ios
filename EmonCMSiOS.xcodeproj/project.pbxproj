@@ -36,6 +36,7 @@
 		C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */; };
 		C92010FC1D89FD7300C9974B /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FB1D89FD7300C9974B /* AppConfig.swift */; };
 		C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */; };
+		C925518321F4B3F1008342D8 /* EmonCMSTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */; };
 		C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */; };
 		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
 		C92A5C4921C9996800B1D5CD /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */; };
@@ -160,6 +161,7 @@
 		C92010F91D89FD6300C9974B /* MyElectricAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewModel.swift; sourceTree = "<group>"; };
 		C92010FB1D89FD7300C9974B /* AppConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		C92010FD1D89FD8D00C9974B /* MyElectricAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyElectricAppViewController.swift; sourceTree = "<group>"; };
+		C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSTestCase.swift; sourceTree = "<group>"; };
 		C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigViewModel.swift; sourceTree = "<group>"; };
 		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
 		C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -335,6 +337,7 @@
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
 				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
 				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
 				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
@@ -769,6 +772,7 @@
 			files = (
 				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
 				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
+				C925518321F4B3F1008342D8 /* EmonCMSTestCase.swift in Sources */,
 				1EA783C821F04C9A002D6A3A /* FeedListViewModelTests.swift in Sources */,
 				C91747AA21F37BA50054875D /* FeedUpdateHelperTests.swift in Sources */,
 				C91747A821F37A9A0054875D /* FeedListHelperTests.swift in Sources */,
