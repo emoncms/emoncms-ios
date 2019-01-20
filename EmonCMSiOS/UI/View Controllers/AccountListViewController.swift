@@ -29,6 +29,7 @@ final class AccountListViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Accounts"
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Lists.Account
 
     self.setupDataSource()
     self.setupBindings()

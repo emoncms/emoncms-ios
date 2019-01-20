@@ -30,11 +30,20 @@ target 'EmonCMSiOS' do
     end
 end
 
-target 'EmonCMSiOSTests' do
-    platform :ios, '10.0'
-    shared_pods
-
+def testing_pods
     pod 'Quick', '~> 1.3'
     pod 'Nimble', '~> 7.3'
     pod 'RxTest', '~> 4.4'
+end
+
+target 'EmonCMSiOSTests' do
+    platform :ios, '10.0'
+    shared_pods
+    testing_pods
+end
+
+target 'EmonCMSiOSUITests' do
+    platform :ios, '10.0'
+    shared_pods
+    testing_pods
 end

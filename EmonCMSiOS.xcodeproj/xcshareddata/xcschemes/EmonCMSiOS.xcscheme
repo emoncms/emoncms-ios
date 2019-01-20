@@ -39,6 +39,16 @@
                ReferencedContainer = "container:EmonCMSiOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "C925517721F4AB2A008342D8"
+               BuildableName = "EmonCMSiOSUITests.xctest"
+               BlueprintName = "EmonCMSiOSUITests"
+               ReferencedContainer = "container:EmonCMSiOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

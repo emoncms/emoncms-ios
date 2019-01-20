@@ -24,6 +24,7 @@ final class AppListViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Apps"
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Lists.App
 
     self.setupDataSource()
     self.setupBindings()

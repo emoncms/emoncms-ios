@@ -17,6 +17,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
   }
 
+  private static func isRunningUITests() -> Bool {
+    return CommandLine.arguments.contains("--uitesting")
+  }
+
   override init() {
     LogController.shared.initialise()
     self.mainController = MainController()
@@ -24,10 +28,27 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    guard !AppDelegate.isRunningTests() else { return true }
+    let runningTests = AppDelegate.isRunningTests()
+    let runningUITests = AppDelegate.isRunningUITests()
 
-    let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
-    self.mainController.initialise(dataDirectory: container)
+    if (runningTests && !runningUITests) {
+      // Skip initialising the UI if running unit tests
+      return true
+    }
+
+    let dataDirectory: URL
+    let requestProvider: HTTPRequestProvider
+    if runningUITests {
+      dataDirectory = FileManager.default.temporaryDirectory.appendingPathComponent("uitests")
+      try? FileManager.default.removeItem(at: dataDirectory)
+      try! FileManager.default.createDirectory(at: dataDirectory, withIntermediateDirectories: false, attributes: nil)
+      requestProvider = FakeHTTPProvider()
+    } else {
+      dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
+      requestProvider = NSURLSessionHTTPRequestProvider()
+    }
+
+    self.mainController.initialise(dataDirectory: dataDirectory, requestProvider: requestProvider)
 
     return true
   }
