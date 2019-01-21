@@ -18,4 +18,26 @@ extension ObservableType {
     return becomeVoid().ignoreElements()
   }
 
+  public func log() -> Observable<Self.E> {
+    return self.do(
+      onNext: {
+        print("\(self): onNext <\($0)>")
+      },
+      onError: {
+        print("\(self): onError <\($0)>")
+      },
+      onCompleted: {
+        print("\(self): onCompleted")
+      },
+      onSubscribe: {
+        print("\(self): onSubscribe")
+      },
+      onSubscribed: {
+        print("\(self): onSubscribed")
+      },
+      onDispose: {
+        print("\(self): onDispose")
+      })
+  }
+
 }
