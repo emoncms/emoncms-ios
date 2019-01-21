@@ -90,6 +90,7 @@
 		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
 		C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */; };
 		C9E7A70821F662AA008BD497 /* EmonCMSAPI+Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70721F662AA008BD497 /* EmonCMSAPI+Feed.swift */; };
+		C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70921F666EC008BD497 /* FakeEmonCMSFeedEngine.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -241,6 +242,7 @@
 		C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewModelTests.swift; sourceTree = "<group>"; };
 		C9E7A70521F6627B008BD497 /* EmonCMSAPI+Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Input.swift"; sourceTree = "<group>"; };
 		C9E7A70721F662AA008BD497 /* EmonCMSAPI+Feed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Feed.swift"; sourceTree = "<group>"; };
+		C9E7A70921F666EC008BD497 /* FakeEmonCMSFeedEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeEmonCMSFeedEngine.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -289,6 +291,7 @@
 			isa = PBXGroup;
 			children = (
 				1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */,
+				C9E7A70921F666EC008BD497 /* FakeEmonCMSFeedEngine.swift */,
 			);
 			path = "Fake Server";
 			sourceTree = "<group>";
@@ -623,7 +626,6 @@
 				C9D6923B1D95B55B00E0B249 /* Embed Watch Content */,
 				7EA407F0228622A839AC933D /* [CP] Embed Pods Frameworks */,
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
-				1EE02C0721EB4BFA00C6AE9A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -746,23 +748,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		1EE02C0721EB4BFA00C6AE9A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug\" ]; then\ncp -r \"${PROJECT_DIR}/EmonCMSiOS/Fake Server/data\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/fake_server_data\"\nfi\n";
 		};
 		222414EEEA60BA63308A49DD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -987,6 +972,7 @@
 				1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */,
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
+				C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */,
 				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,

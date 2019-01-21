@@ -12,22 +12,182 @@ import RxSwift
 
 final class FakeHTTPProvider: HTTPRequestProvider {
 
-  private static let fakeDataDirectory = "fake_server_data"
-
-  private static let feedValues = [
-    "1" : "200",
-    "2" : "1000",
-    "3" : "100",
-    "4" : "1000",
-    "5" : "100",
-    "6" : "1000",
-    "7" : "100",
-    "8" : "1000",
-    ]
-
-  private func feedValue(forId feedId: String) -> String? {
-    return FakeHTTPProvider.feedValues[feedId]
+  enum FakeHTTPProviderError: Error {
+    case unknown
+    case invalidParameters
   }
+
+  struct Config {
+    struct Feed {
+      let id: String
+      let name: String
+      let tag: String
+      let interval: Int
+      let kwhFeed: (id: String, name: String)?
+    }
+
+    let startTime: Date
+    let feeds: [Feed]
+  }
+
+  let config: Config
+
+  init(config: Config) {
+    self.config = config
+    self.createFeeds()
+  }
+
+
+
+  struct Feed {
+    let id: String
+    let name: String
+    let tag: String
+  }
+
+  private var feeds = [String:Feed]()
+  private let feedEngine = FakeEmonCMSFeedEngine()
+
+  private func createFeeds() {
+    for feedConfig in self.config.feeds {
+      let feed = Feed(id: feedConfig.id, name: feedConfig.name, tag: feedConfig.tag)
+      self.feeds[feedConfig.id] = feed
+      self.feedEngine.create(id: feedConfig.id, interval: TimeInterval(feedConfig.interval))
+
+      if let kwhFeedConfig = feedConfig.kwhFeed {
+        let kwhFeed = Feed(id: kwhFeedConfig.id, name: kwhFeedConfig.name, tag: feedConfig.tag)
+        self.feeds[kwhFeedConfig.id] = kwhFeed
+        self.feedEngine.create(id: kwhFeedConfig.id, interval: TimeInterval(feedConfig.interval))
+      }
+    }
+  }
+
+  private func createFeedData(untilTime: Date) {
+    guard untilTime > self.config.startTime else { return }
+
+    for feedConfig in self.config.feeds {
+      let id = feedConfig.id
+      guard
+        let meta = self.feedEngine.getMeta(id: id),
+        let nPoints = self.feedEngine.nPoints(id: id)
+      else { continue }
+
+      var timeToCreateAt: TimeInterval
+      if let startTime = meta.startTime {
+        timeToCreateAt = startTime + (Double(nPoints + 1) * meta.interval)
+      } else {
+        timeToCreateAt = self.config.startTime.timeIntervalSince1970
+      }
+
+      while timeToCreateAt < untilTime.timeIntervalSince1970 {
+        let value = Double.random(in: 0...3000)
+        self.feedEngine.post(id: id, time: timeToCreateAt, value: value)
+
+        if let kwhFeed = feedConfig.kwhFeed {
+          let kwhValue = (value / 1000.0) * (meta.interval / 3600.0)
+          let lastValue = self.feedEngine.lastValue(id: kwhFeed.id)?.value ?? 0
+          self.feedEngine.post(id: kwhFeed.id, time: timeToCreateAt, value: lastValue + kwhValue)
+        }
+
+        timeToCreateAt += meta.interval
+      }
+    }
+  }
+
+  private func feedDataForFeed(withId id: String) -> [String:Any]? {
+    guard
+      let feed = self.feeds[id],
+      let meta = self.feedEngine.getMeta(id: id)
+      else { return nil }
+
+    let lastValue = self.feedEngine.lastValue(id: id)
+    let feedData: [String:Any] = [
+      "id": id,
+      "name": feed.name,
+      "tag": feed.tag,
+      "time": lastValue?.time ?? 0,
+      "value": lastValue?.value ?? 0,
+      "start_time": meta.startTime ?? 0,
+      "interval": meta.interval
+    ]
+    return feedData
+  }
+
+  private func feedList(query: [String:String]) throws -> Any {
+    var feedsData = [[String:Any]]()
+    for (id, _) in self.feeds {
+      guard let feedData = self.feedDataForFeed(withId: id) else { continue }
+      feedsData.append(feedData)
+    }
+    return feedsData
+  }
+
+  private func feedAGet(query: [String:String]) throws -> Any {
+    guard let id = query["id"] else {
+      throw FakeHTTPProviderError.invalidParameters
+    }
+
+    guard let feedData = self.feedDataForFeed(withId: id) else { return [:] }
+    return feedData
+  }
+
+  private func feedGet(query: [String:String]) throws -> Any {
+    guard
+      let id = query["id"],
+      let field = query["field"]
+    else {
+      throw FakeHTTPProviderError.invalidParameters
+    }
+
+    guard let feedData = self.feedDataForFeed(withId: id) else { return "" }
+    return feedData[field] ?? ""
+  }
+
+  private func feedData(query: [String:String]) throws -> Any {
+    guard
+      let id = query["id"],
+      let startString = query["start"],
+      let start = TimeInterval(startString),
+      let endString = query["end"],
+      let end = TimeInterval(endString),
+      let intervalString = query["interval"],
+      let interval = Int(intervalString)
+      else {
+        throw FakeHTTPProviderError.invalidParameters
+    }
+
+    return self.feedEngine.getData(id: id, start: start, end: end, interval: interval)
+      .map { point in
+        return [point.time, point.value ?? 0]
+      }
+  }
+
+  private func feedValue(query: [String:String]) throws -> Any {
+    guard let id = query["id"] else {
+      throw FakeHTTPProviderError.invalidParameters
+    }
+
+    return feedEngine.lastValue(id: id)?.value ?? 0
+  }
+
+  private func feedFetch(query: [String:String]) throws -> Any {
+    guard let ids = query["ids"]?.split(separator: ",") else {
+      throw FakeHTTPProviderError.invalidParameters
+    }
+
+    var feedValues = [Double]()
+    for id in ids {
+      let value = feedEngine.lastValue(id: String(id))?.value ?? 0
+      feedValues.append(value)
+    }
+    return feedValues
+  }
+
+  private func error(query: [String:String]) throws -> Any {
+    throw FakeHTTPProviderError.unknown
+  }
+
+
 
   func request(url: URL) -> Observable<Data> {
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
@@ -47,67 +207,31 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       return Observable.error(HTTPRequestProviderError.httpError(code: 401))
     }
 
-    var responseJsonFilename: String?
-    var responseString: String?
+    self.createFeedData(untilTime: Date())
 
+    let routeFunc: (_ query: [String:String]) throws -> Any
     switch path {
     case "/feed/list.json":
-      responseJsonFilename = "list_response"
+      routeFunc = feedList
     case "/feed/aget.json":
-      responseString = "{\"id\":\"1\",\"userid\":\"1\",\"name\":\"use\",\"datatype\":\"1\",\"tag\":\"Node 5\",\"public\":\"0\",\"size\":\"154624\",\"engine\":\"5\",\"processList\":\"\",\"time\":\"1473946653\",\"value\":\"278\"}"
+      routeFunc = feedAGet
     case "/feed/get.json":
-      responseString = "\"use\""
+      routeFunc = feedGet
     case "/feed/data.json":
-      if queryValues["mode"] == "daily" {
-        responseString = "[[0,0],[86400000,10],[172800000,20]]"
-      } else {
-        switch queryValues["id"] {
-        case "1":
-          responseJsonFilename = "data_use_response"
-        case "5":
-          responseJsonFilename = "data_solar_response"
-        default:
-          responseJsonFilename = "data_s_response"
-        }
-      }
+      routeFunc = feedData
     case "/feed/value.json":
-      if
-        let feedId = queryValues["id"],
-        let feedValue = self.feedValue(forId: feedId)
-      {
-        responseString = "\"\(feedValue)\""
-      }
+      routeFunc = feedValue
     case "/feed/fetch.json":
-      var feedValues = [String]()
-      if let feedIds = queryValues["ids"]?.split(separator: ",") {
-        for feedId in feedIds {
-          if let feedValue = self.feedValue(forId: String(feedId)) {
-            feedValues.append("\"\(feedValue)\"")
-          }
-        }
-      }
-      responseString = "[\(feedValues.joined(separator: ","))]"
+      routeFunc = feedFetch
     default:
+      routeFunc = error
       break
     }
 
-    let responseData: Data?
     if
-      let responseString = responseString
+      let responseObject = try? routeFunc(queryValues),
+      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: [])
     {
-      responseData = responseString.data(using: .utf8)
-    }
-    else if
-      let responseJsonFilename = responseJsonFilename,
-      let responseFileURL = Bundle.main.url(forResource: responseJsonFilename, withExtension: "json", subdirectory: FakeHTTPProvider.fakeDataDirectory)
-    {
-      responseData = try? Data(contentsOf: responseFileURL)
-    }
-    else {
-      responseData = nil
-    }
-
-    if let responseData = responseData {
       return Observable.just(responseData)
     }
 

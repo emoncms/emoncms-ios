@@ -147,7 +147,7 @@ class EmonCMSiOSUITests: QuickSpec {
         loginFromAccountListWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
         expect(app.tables[AccessibilityIdentifiers.Lists.Feed].waitForExistence(timeout: 1)).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(8))
+        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(6))
       }
     }
 
