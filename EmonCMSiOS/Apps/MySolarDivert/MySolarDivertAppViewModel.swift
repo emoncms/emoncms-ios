@@ -47,7 +47,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
     self.bannerBarState = Driver.empty()
 
     self.title = self.appData.rx
-      .observe(String.self, "name")
+      .observe(String.self, #keyPath(AppData.name))
       .map { $0 ?? "" }
       .asDriver(onErrorJustReturn: "")
 
