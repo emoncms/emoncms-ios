@@ -122,6 +122,8 @@ final class AppConfigViewController: FormViewController {
         guard let self = self else { return }
 
         row.update { row in
+          row.subText = "-- Select a feed --"
+
           var actualSelectedFeedId = selectedFeedId
           if actualSelectedFeedId == nil {
             for feed in feeds {
@@ -136,8 +138,6 @@ final class AppConfigViewController: FormViewController {
           if let selectedFeedId = actualSelectedFeedId {
             if let feed = feeds.first(where: { $0.feedId == selectedFeedId }) {
               row.subText = feed.name
-            } else {
-              row.subText = "-- Select a feed --"
             }
           }
         }
