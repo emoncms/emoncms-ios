@@ -26,10 +26,10 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="6uf-Up-dfA">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST UPDATED" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0an-VV-Hhm">
-                                            <rect key="frame" x="133.5" y="8" width="108.5" height="28"/>
+                                            <rect key="frame" x="279.5" y="8" width="108.5" height="28"/>
                                             <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -53,20 +53,20 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EOL-NE-T7V" customClass="LineChartView" customModule="Charts">
-                                            <rect key="frame" x="0.0" y="44" width="375" height="180"/>
+                                            <rect key="frame" x="0.0" y="44" width="375.5" height="180"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="EOL-NE-T7V" secondAttribute="height" multiplier="25:12" id="2Gg-J6-icM"/>
                                             </constraints>
                                         </view>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="hSq-ec-yjY">
-                                            <rect key="frame" x="177.5" y="124" width="20" height="20"/>
+                                            <rect key="frame" x="178" y="124" width="20" height="20"/>
                                         </activityIndicatorView>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aps-4m-XUP">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375.5" height="44"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag up to view graph" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RUS-sd-8ba">
-                                                    <rect key="frame" x="103" y="12" width="169" height="20.5"/>
+                                                    <rect key="frame" x="103.5" y="12" width="169" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -79,10 +79,10 @@
                                             </constraints>
                                         </view>
                                         <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Oex-Ds-1WM">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375.5" height="44"/>
                                             <subviews>
                                                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="QpN-ww-W8G">
-                                                    <rect key="frame" x="60.5" y="8" width="254" height="29"/>
+                                                    <rect key="frame" x="61" y="8" width="254" height="29"/>
                                                     <segments>
                                                         <segment title="1h" width="50"/>
                                                         <segment title="8h" width="50"/>
@@ -121,14 +121,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="fEd-yG-B6c" firstAttribute="height" secondItem="5nu-ah-nb1" secondAttribute="height" id="3j5-c1-b3d"/>
-                            <constraint firstItem="fEd-yG-B6c" firstAttribute="leading" secondItem="5nu-ah-nb1" secondAttribute="leading" id="9iq-E0-l3S"/>
+                            <constraint firstItem="fEd-yG-B6c" firstAttribute="width" secondItem="5nu-ah-nb1" secondAttribute="width" multiplier="0.5" id="5BH-KW-GZW"/>
+                            <constraint firstItem="fEd-yG-B6c" firstAttribute="centerX" secondItem="5nu-ah-nb1" secondAttribute="centerX" id="CK3-zJ-jqW"/>
                             <constraint firstItem="XnG-M1-ctI" firstAttribute="top" secondItem="fEd-yG-B6c" secondAttribute="top" constant="45" id="E1u-Ep-hoN"/>
+                            <constraint firstItem="fEd-yG-B6c" firstAttribute="width" secondItem="5nu-ah-nb1" secondAttribute="width" id="HRi-Rt-m6p"/>
                             <constraint firstAttribute="trailing" secondItem="iKX-04-Ggf" secondAttribute="trailing" id="ZQQ-2C-sCs"/>
                             <constraint firstAttribute="bottom" secondItem="iKX-04-Ggf" secondAttribute="bottom" id="aBC-4b-qyA"/>
                             <constraint firstItem="iKX-04-Ggf" firstAttribute="top" secondItem="5nu-ah-nb1" secondAttribute="top" id="xt5-3R-ceX"/>
-                            <constraint firstAttribute="trailing" secondItem="fEd-yG-B6c" secondAttribute="trailing" id="y94-hP-nG1"/>
                             <constraint firstItem="iKX-04-Ggf" firstAttribute="leading" secondItem="5nu-ah-nb1" secondAttribute="leading" id="ymX-vW-201"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="5BH-KW-GZW"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <include reference="5BH-KW-GZW"/>
+                                <exclude reference="HRi-Rt-m6p"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="t15-IK-WMw">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="yuN-HQ-kww"/>
