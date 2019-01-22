@@ -55,25 +55,7 @@ final class FeedChartViewController: FormViewController {
 
   private func chartFormerSection() -> CustomRowFormer<ChartCell<LineChartView>> {
     let chartRow = CustomRowFormer<ChartCell<LineChartView>>(instantiateType: .Class) {
-      $0.chartView.noDataText = "No data"
-      $0.chartView.dragEnabled = false
-      $0.chartView.pinchZoomEnabled = false
-      $0.chartView.highlightPerTapEnabled = false
-      $0.chartView.setScaleEnabled(false)
-      $0.chartView.chartDescription = nil
-      $0.chartView.drawGridBackgroundEnabled = false
-      $0.chartView.legend.enabled = false
-      $0.chartView.rightAxis.enabled = false
-
-      let xAxis = $0.chartView.xAxis
-      xAxis.drawGridLinesEnabled = false
-      xAxis.labelPosition = .bottom
-      xAxis.valueFormatter = ChartDateValueFormatter(.auto)
-
-      let yAxis = $0.chartView.leftAxis
-      yAxis.drawGridLinesEnabled = false
-      yAxis.labelPosition = .outsideChart
-      yAxis.drawZeroLineEnabled = true
+      ChartHelpers.setupDefaultLineChart($0.chartView)
     }.configure {
         $0.rowHeight = 250
     }

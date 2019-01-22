@@ -12,6 +12,28 @@ import Charts
 
 final class ChartHelpers {
 
+  static func setupDefaultLineChart(_ lineChart: LineChartView) {
+    lineChart.noDataText = "No data"
+    lineChart.dragEnabled = false
+    lineChart.pinchZoomEnabled = false
+    lineChart.highlightPerTapEnabled = false
+    lineChart.setScaleEnabled(false)
+    lineChart.chartDescription = nil
+    lineChart.drawGridBackgroundEnabled = false
+    lineChart.legend.enabled = false
+    lineChart.rightAxis.enabled = false
+
+    let xAxis = lineChart.xAxis
+    xAxis.drawGridLinesEnabled = false
+    xAxis.labelPosition = .bottom
+    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
+
+    let yAxis = lineChart.leftAxis
+    yAxis.drawGridLinesEnabled = false
+    yAxis.labelPosition = .outsideChart
+    yAxis.drawZeroLineEnabled = true
+  }
+
   static func setupAppLineChart(_ lineChart: LineChartView) {
     lineChart.drawGridBackgroundEnabled = false
     lineChart.legend.enabled = false

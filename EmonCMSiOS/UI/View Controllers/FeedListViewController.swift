@@ -237,25 +237,7 @@ final class FeedListViewController: UIViewController {
 
   private func setupChartView() {
     let chartView = self.chartView!
-
-    chartView.dragEnabled = false
-    chartView.pinchZoomEnabled = false
-    chartView.highlightPerTapEnabled = false
-    chartView.setScaleEnabled(false)
-    chartView.chartDescription = nil
-    chartView.drawGridBackgroundEnabled = false
-    chartView.legend.enabled = false
-    chartView.rightAxis.enabled = false
-
-    let xAxis = chartView.xAxis
-    xAxis.drawGridLinesEnabled = false
-    xAxis.labelPosition = .bottom
-    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
-
-    let yAxis = chartView.leftAxis
-    yAxis.drawGridLinesEnabled = false
-    yAxis.labelPosition = .outsideChart
-    yAxis.drawZeroLineEnabled = true
+    ChartHelpers.setupDefaultLineChart(chartView)
   }
 
   private func setupBindings() {
