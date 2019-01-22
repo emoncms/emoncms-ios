@@ -1,5 +1,5 @@
 coverage:
   ignore:
     - "Pods"
-    - "EmonCMSiOS/.*ViewController.swift"
     - "EmonCMSiOSTests"
+    - "EmonCMSiOSUITests"
