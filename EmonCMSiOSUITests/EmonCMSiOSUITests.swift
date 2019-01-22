@@ -181,20 +181,28 @@ class EmonCMSiOSUITests: QuickSpec {
       it("should logout") {
         loginFromAccountListWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
-        expect(app.tables[AccessibilityIdentifiers.Settings].waitForExistence(timeout: 1)).to(equal(true))
-        app.tables[AccessibilityIdentifiers.Settings].staticTexts["Logout"].tap()
+
+        let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
+        expect(settingsTable.waitForExistence(timeout: 1)).to(equal(true))
+        settingsTable.staticTexts["Logout"].tap()
         app.sheets.buttons["Logout"].tap()
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].waitForExistence(timeout: 1)).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(0))
+
+        let accountTable = app.tables[AccessibilityIdentifiers.Lists.Account]
+        expect(accountTable.waitForExistence(timeout: 1)).to(equal(true))
+        expect(accountTable.cells.count).to(equal(0))
       }
 
       it("should switch account") {
         loginFromAccountListWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
-        expect(app.tables[AccessibilityIdentifiers.Settings].waitForExistence(timeout: 1)).to(equal(true))
-        app.tables[AccessibilityIdentifiers.Settings].staticTexts["Switch Account"].tap()
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].waitForExistence(timeout: 1)).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(1))
+
+        let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
+        expect(settingsTable.waitForExistence(timeout: 1)).to(equal(true))
+        settingsTable.staticTexts["Switch Account"].tap()
+
+        let accountTable = app.tables[AccessibilityIdentifiers.Lists.Account]
+        expect(accountTable.waitForExistence(timeout: 1)).to(equal(true))
+        expect(accountTable.cells.count).to(equal(1))
       }
     }
   }
