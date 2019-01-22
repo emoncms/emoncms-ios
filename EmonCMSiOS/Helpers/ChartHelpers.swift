@@ -52,7 +52,7 @@ final class ChartHelpers {
     xAxis.drawAxisLineEnabled = false
     xAxis.drawGridLinesEnabled = false
     xAxis.drawLabelsEnabled = true
-    xAxis.labelPosition = .bottomInside
+    xAxis.labelPosition = .bottom
     xAxis.labelTextColor = .black
     xAxis.valueFormatter = ChartDateValueFormatter(.auto)
     xAxis.granularity = 3600
