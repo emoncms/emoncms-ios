@@ -24,6 +24,7 @@ final class FeedChartViewController: FormViewController {
     super.viewDidLoad()
 
     self.title = "Chart"
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.FeedChartView
     self.navigationItem.largeTitleDisplayMode = .never
 
     self.tableView.refreshControl = UIRefreshControl()

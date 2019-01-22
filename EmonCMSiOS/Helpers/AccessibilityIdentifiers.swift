@@ -22,6 +22,11 @@ struct AccessibilityIdentifiers {
     static let MySolarDivert = "MySolarDivert"
   }
 
+  struct FeedList {
+    static let ChartContainer = "FeedListChartContainer"
+  }
+
+  static let FeedChartView = "FeedChartView"
   static let Settings = "Settings"
-  
+
 }

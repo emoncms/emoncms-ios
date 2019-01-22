@@ -146,8 +146,34 @@ class EmonCMSiOSUITests: QuickSpec {
       it("should show feeds screen") {
         loginFromAccountListWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
-        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].waitForExistence(timeout: 1)).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Feed].cells.count).to(equal(6))
+
+        let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
+        expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
+        expect(tableView.cells.count).to(equal(6))
+      }
+
+      it("should show feed chart when tapping on a cell") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Feeds"].tap()
+
+        let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
+        expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
+
+        let chartContainer = app.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer]
+        let chartContainerY = chartContainer.frame.minY
+        tableView.cells.element(boundBy: 0).tap()
+        expect(chartContainer.frame.minY).to(beLessThan(chartContainerY))
+      }
+
+      it("should show feed chart view when tapping on detail disclosure") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Feeds"].tap()
+
+        let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
+        expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
+
+        tableView.cells.element(boundBy: 0).buttons.element(boundBy: 0).tap()
+        expect(app.otherElements[AccessibilityIdentifiers.FeedChartView].waitForExistence(timeout: 1)).to(equal(true))
       }
     }
 
