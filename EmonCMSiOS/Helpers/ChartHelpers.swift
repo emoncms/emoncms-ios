@@ -32,6 +32,11 @@ final class ChartHelpers {
     yAxis.drawGridLinesEnabled = false
     yAxis.labelPosition = .outsideChart
     yAxis.drawZeroLineEnabled = true
+
+    let yAxisFormatter = NumberFormatter()
+    yAxisFormatter.minimumIntegerDigits = 1
+    yAxisFormatter.minimumSignificantDigits = 2
+    yAxis.valueFormatter = DefaultAxisValueFormatter(formatter: yAxisFormatter)
   }
 
   static func setupAppLineChart(_ lineChart: LineChartView) {
