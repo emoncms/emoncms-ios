@@ -50,7 +50,7 @@ class RxOperatorsTests: QuickSpec {
     }
 
     describe("log") {
-      it("should work") {
+      it("should work for a completed sequence") {
         var values = [String]()
         let logger = { (string: String) in
           values.append(string)
@@ -72,6 +72,31 @@ class RxOperatorsTests: QuickSpec {
           "RxTest.ColdObservable<Swift.Int>: onNext <2>",
           "RxTest.ColdObservable<Swift.Int>: onNext <3>",
           "RxTest.ColdObservable<Swift.Int>: onCompleted",
+          "RxTest.ColdObservable<Swift.Int>: onDispose",
+        ]
+
+        expect(values).to(equal(expected))
+      }
+
+      it("should work for an error sequence") {
+        var values = [String]()
+        let logger = { (string: String) in
+          values.append(string)
+        }
+
+        let observer = scheduler.createObserver(Int.self)
+
+        scheduler.createColdObservable([.error(10, NSError(domain: "TEST", code: 0, userInfo: nil))])
+          .log(logger)
+          .bind(to: observer)
+          .disposed(by: disposeBag)
+
+        scheduler.start()
+
+        let expected = [
+          "RxTest.ColdObservable<Swift.Int>: onSubscribe",
+          "RxTest.ColdObservable<Swift.Int>: onSubscribed",
+          "RxTest.ColdObservable<Swift.Int>: onError <Error Domain=TEST Code=0 \"(null)\">",
           "RxTest.ColdObservable<Swift.Int>: onDispose",
         ]
 
