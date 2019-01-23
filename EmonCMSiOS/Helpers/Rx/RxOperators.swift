@@ -10,33 +10,31 @@ import RxSwift
 
 extension ObservableType {
 
+  public typealias LoggerFunc = (_ string: String) -> Void
+
   public func becomeVoid() -> Observable<()> {
     return map { _ in () }
   }
 
-  public func becomeVoidAndIgnoreElements() -> Completable {
-    return becomeVoid().ignoreElements()
-  }
-
-  public func log() -> Observable<Self.E> {
+  public func log(_ logger: @escaping LoggerFunc) -> Observable<Self.E> {
     return self.do(
       onNext: {
-        print("\(self): onNext <\($0)>")
+        logger("\(self): onNext <\($0)>")
       },
       onError: {
-        print("\(self): onError <\($0)>")
+        logger("\(self): onError <\($0)>")
       },
       onCompleted: {
-        print("\(self): onCompleted")
+        logger("\(self): onCompleted")
       },
       onSubscribe: {
-        print("\(self): onSubscribe")
+        logger("\(self): onSubscribe")
       },
       onSubscribed: {
-        print("\(self): onSubscribed")
+        logger("\(self): onSubscribed")
       },
       onDispose: {
-        print("\(self): onDispose")
+        logger("\(self): onDispose")
       })
   }
 
