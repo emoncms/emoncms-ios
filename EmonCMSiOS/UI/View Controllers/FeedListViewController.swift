@@ -68,6 +68,8 @@ final class FeedListViewController: UIViewController {
     self.chartContainerView.layer.borderColor = UIColor(white: 0.7, alpha: 1.0).cgColor
     self.chartContainerView.layer.borderWidth = 1.0
 
+    self.chartContainerViewBottomConstraint.constant = self.chartContainerMinDisplacement
+
     self.setupDataSource()
     self.setupDragRecogniser()
     self.setupChartView()
