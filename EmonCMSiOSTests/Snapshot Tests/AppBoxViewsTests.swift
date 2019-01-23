@@ -7,7 +7,6 @@
 //
 
 import FBSnapshotTestCase
-import Nimble
 @testable import EmonCMSiOS
 
 class AppBoxViewsTests: FBSnapshotTestCase {
