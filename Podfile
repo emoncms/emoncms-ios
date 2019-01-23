@@ -7,6 +7,7 @@ def shared_pods
     pod 'RxDataSources', '~> 3.1'
     pod 'Realm', '~> 3.13'
     pod 'RealmSwift', '~> 3.13'
+    pod 'Charts', '~> 3.2'
 end
 
 def shared_app_pods
@@ -21,7 +22,6 @@ target 'EmonCMSiOS' do
     shared_app_pods
 
     pod 'Action', '~> 3.9'
-    pod 'Charts', '~> 3.2'
     pod 'Former', '~> 1.7'
 
     post_install do | installer |
