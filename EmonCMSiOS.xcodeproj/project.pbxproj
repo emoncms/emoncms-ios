@@ -387,22 +387,8 @@
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
-				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
-				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
-				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
-				C91747AD21F3C42B0054875D /* AppListViewModelTests.swift */,
-				C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */,
-				C91747A721F37A9A0054875D /* FeedListHelperTests.swift */,
-				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
-				C91747A921F37BA50054875D /* FeedUpdateHelperTests.swift */,
-				C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */,
-				C9E7A70121F52B05008BD497 /* InputUpdateHelperTests.swift */,
-				C9E7A70E21F864E1008BD497 /* ChartDateValueFormatterTests.swift */,
-				C9E7A71021F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift */,
-				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
-				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
-				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
+				C9E7A71521F8A577008BD497 /* Logic Tests */,
+				C9E7A71421F8A560008BD497 /* ViewModel Tests */,
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
 				C9E7A6F621F50873008BD497 /* Realms */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
@@ -600,6 +586,36 @@
 				C93C92B21D98196C009FE70D /* SharedConstants.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		C9E7A71421F8A560008BD497 /* ViewModel Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
+				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
+				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
+				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
+				C91747AD21F3C42B0054875D /* AppListViewModelTests.swift */,
+				C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */,
+				C91747A721F37A9A0054875D /* FeedListHelperTests.swift */,
+				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
+				C91747A921F37BA50054875D /* FeedUpdateHelperTests.swift */,
+				C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */,
+				C9E7A70121F52B05008BD497 /* InputUpdateHelperTests.swift */,
+			);
+			path = "ViewModel Tests";
+			sourceTree = "<group>";
+		};
+		C9E7A71521F8A577008BD497 /* Logic Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C9E7A70E21F864E1008BD497 /* ChartDateValueFormatterTests.swift */,
+				C9E7A71021F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift */,
+				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
+				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
+				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
+			);
+			path = "Logic Tests";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
