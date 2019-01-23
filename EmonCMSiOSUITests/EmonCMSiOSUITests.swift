@@ -63,10 +63,12 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(app.alerts["Error"].exists).to(equal(true))
       }
 
-      it("should show QR view properly") {
+      it("should show QR view and then cancel properly") {
         app.navigationBars["Accounts"].buttons["Add"].tap()
         app.tables.cells.staticTexts["Scan QR Code"].tap()
         expect(app.otherElements[AccessibilityIdentifiers.AddAccountQRView].waitForExistence(timeout: 1)).to(equal(true))
+        app.navigationBars["Scan Code"].buttons["Cancel"].tap()
+        expect(app.staticTexts["Scan QR Code"].waitForExistence(timeout: 1)).to(equal(true))
       }
     }
 
