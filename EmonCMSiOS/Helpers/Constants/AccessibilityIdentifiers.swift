@@ -26,6 +26,7 @@ struct AccessibilityIdentifiers {
     static let ChartContainer = "FeedListChartContainer"
   }
 
+  static let AddAccountQRView = "AddAccountQRView"
   static let FeedChartView = "FeedChartView"
   static let Settings = "Settings"
 

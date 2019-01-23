@@ -28,6 +28,7 @@ final class AddAccountQRViewController: UIViewController {
     super.viewDidLoad()
 
     self.title = "Scan Code"
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.AddAccountQRView
     self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
   }
 

@@ -61,6 +61,12 @@ class EmonCMSiOSUITests: QuickSpec {
         loginFromAccountList(name: "Test Instance", url: "https://localhost", apiKey: "notthekey")
         expect(app.alerts["Error"].exists).to(equal(true))
       }
+
+      it("should show QR view properly") {
+        app.navigationBars["Accounts"].buttons["Add"].tap()
+        app.tables.cells.staticTexts["Scan QR Code"].tap()
+        expect(app.otherElements[AccessibilityIdentifiers.AddAccountQRView].waitForExistence(timeout: 1)).to(equal(true))
+      }
     }
 
     describe("apps") {
