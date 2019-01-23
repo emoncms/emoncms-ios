@@ -46,8 +46,9 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("accounts") {
       it("should show empty accounts screen") {
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].exists).to(equal(true))
-        expect(app.tables[AccessibilityIdentifiers.Lists.Account].cells.count).to(equal(0))
+        let accountsTable = app.tables[AccessibilityIdentifiers.Lists.Account]
+        expect(accountsTable.exists).to(equal(true))
+        expect(accountsTable.cells.count).to(equal(0))
         let addAccountLabel = app.staticTexts["Tap + to add a new account"]
         expect(addAccountLabel.exists).to(equal(true))
       }
