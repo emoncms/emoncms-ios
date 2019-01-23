@@ -216,10 +216,10 @@ final class MyElectricAppViewModel: AppViewModel {
 
     return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        guard dataPoints.count > 1 else { return [] }
+        guard dataPoints.count > 0 else { return [] }
 
         var newDataPoints: [DataPoint] = []
-        var lastValue: Double = dataPoints[0].value
+        var lastValue: Double = dataPoints.first?.value ?? 0
 
         let extraPadding = daysToDisplay - dataPoints.count
         if extraPadding > 0 {
