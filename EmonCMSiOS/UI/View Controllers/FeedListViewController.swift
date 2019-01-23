@@ -250,12 +250,17 @@ final class FeedListViewController: UIViewController {
       .disposed(by: self.disposeBag)
 
     let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .none
-    dateFormatter.timeStyle = .medium
     self.viewModel.updateTime
       .map { time in
         var string = "Last updated: "
         if let time = time {
+          if time.timeIntervalSinceNow < -86400 {
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+          } else {
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .medium
+          }
           string += dateFormatter.string(from: time)
         } else {
           string += "Never"
