@@ -7,6 +7,7 @@
 //
 
 import RxSwift
+import XCGLogger
 
 extension ObservableType {
 
@@ -14,6 +15,14 @@ extension ObservableType {
 
   public func becomeVoid() -> Observable<()> {
     return map { _ in () }
+  }
+
+  public func log() -> Observable<Self.E> {
+    return self.log({ print($0) })
+  }
+
+  public func log(_ logger: XCGLogger, level: XCGLogger.Level = .debug) -> Observable<Self.E> {
+    return self.log({ logger.logln($0, level: level) })
   }
 
   public func log(_ logger: @escaping LoggerFunc) -> Observable<Self.E> {
