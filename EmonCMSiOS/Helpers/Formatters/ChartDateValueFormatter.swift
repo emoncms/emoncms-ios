@@ -20,6 +20,14 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
   private let dateFormatter: DateFormatter
   private let autoUpdateFormat: Bool
+  var timeZone: TimeZone {
+    get {
+      return dateFormatter.timeZone
+    }
+    set {
+      dateFormatter.timeZone = newValue
+    }
+  }
 
   static let posixLocale = Locale(identifier: "en_US_POSIX")
 

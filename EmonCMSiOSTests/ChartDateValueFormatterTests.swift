@@ -21,10 +21,11 @@ class ChartDateValueFormatterTests: QuickSpec {
     describe("chartDateValueFormatter") {
       it("should format properly for auto type") {
         let formatter = ChartDateValueFormatter(.auto)
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)!
         let axis = AxisBase()
 
         axis.axisRange = 1_000
-        expect(formatter.stringForValue(0, axis: axis)).to(equal("1:00 AM"))
+        expect(formatter.stringForValue(0, axis: axis)).to(equal("12:00 AM"))
 
         axis.axisRange = 1_000_000
         expect(formatter.stringForValue(0, axis: axis)).to(equal("1/1/70"))
@@ -32,7 +33,8 @@ class ChartDateValueFormatterTests: QuickSpec {
 
       it("should format properly for fixed format") {
         let formatter = ChartDateValueFormatter(.format("dd/MM/yyyy HH:mm:ss"))
-        expect(formatter.stringForValue(0, axis: nil)).to(equal("01/01/1970 01:00:00"))
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)!
+        expect(formatter.stringForValue(0, axis: nil)).to(equal("01/01/1970 00:00:00"))
       }
 
       it("should format properly with a given formatter") {
@@ -41,7 +43,8 @@ class ChartDateValueFormatterTests: QuickSpec {
         dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
 
         let formatter = ChartDateValueFormatter(.formatter(dateFormatter))
-        expect(formatter.stringForValue(0, axis: nil)).to(equal("01/01/1970 01:00:00"))
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)!
+        expect(formatter.stringForValue(0, axis: nil)).to(equal("01/01/1970 00:00:00"))
       }
     }
 
