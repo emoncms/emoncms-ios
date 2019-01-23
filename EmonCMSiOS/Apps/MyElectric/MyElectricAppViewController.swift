@@ -91,7 +91,7 @@ extension MyElectricAppViewController {
 
   private func updateLineChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
-      let data = (self.lineChart.data as? LineChartData) ?? LineChartData()
+      let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
 
       ChartHelpers.updateLineChart(withData: data, forSet: 0, withPoints: dataPoints) {
@@ -107,7 +107,7 @@ extension MyElectricAppViewController {
 
   private func updateBarChartData(_ dataPoints: [DataPoint]?) {
     if let dataPoints = dataPoints {
-      let data = (self.barChart.data as? BarChartData) ?? BarChartData()
+      let data = self.barChart.barData ?? BarChartData()
       self.barChart.data = data
 
       ChartHelpers.updateBarChart(withData: data, forSet: 0, withPoints: dataPoints) {
