@@ -58,7 +58,7 @@ final class LogController {
     self.fileManager = FileManager()
 
     let urls = self.fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
-    let url = urls[urls.endIndex - 1].appendingPathComponent("logs")
+    let url = urls.last!.appendingPathComponent("logs")
     self.logDirectory = url
   }
 
