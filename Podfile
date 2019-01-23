@@ -40,6 +40,8 @@ target 'EmonCMSiOSTests' do
     platform :ios, '11.0'
     shared_pods
     testing_pods
+
+    pod 'iOSSnapshotTestCase', '~> 5.0'
 end
 
 target 'EmonCMSiOSUITests' do
