@@ -169,9 +169,22 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
 
         let chartContainer = app.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer]
-        let chartContainerY = chartContainer.frame.minY
+        let chartContainerClosedY = chartContainer.frame.minY
+
         tableView.cells.element(boundBy: 0).tap()
-        expect(chartContainer.frame.minY).to(beLessThan(chartContainerY))
+
+        let chartContainerOpenY = chartContainer.frame.minY
+        expect(chartContainerOpenY).to(beLessThan(chartContainerClosedY))
+
+        let startPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let endPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.01))
+        startPoint1.press(forDuration: 0, thenDragTo: endPoint1)
+        expect(chartContainer.frame.minY).to(equal(chartContainerOpenY))
+
+        let startPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+        let endPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 1))
+        startPoint2.press(forDuration: 0, thenDragTo: endPoint2)
+        expect(chartContainer.frame.minY).to(equal(chartContainerClosedY))
       }
 
       it("should show feed chart view when tapping on detail disclosure") {
