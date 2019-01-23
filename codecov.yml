@@ -1,7 +1,7 @@
 coverage:
   range: "50...90"
   ignore:
-    - "EmonCMSiOS/Fake Server"
+    - "EmonCMSiOS/Fake\ Server"
     - "Pods"
     - "EmonCMSiOSTests"
     - "EmonCMSiOSUITests"
