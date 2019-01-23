@@ -295,13 +295,13 @@
 			path = EmonCMSiOS/Apps/MySolarDivert;
 			sourceTree = SOURCE_ROOT;
 		};
-		1EE02BF921EB4BBB00C6AE9A /* Fake Server */ = {
+		1EE02BF921EB4BBB00C6AE9A /* FakeServer */ = {
 			isa = PBXGroup;
 			children = (
 				1EE02C0021EB4BBB00C6AE9A /* FakeHTTPProvider.swift */,
 				C9E7A70921F666EC008BD497 /* FakeEmonCMSFeedEngine.swift */,
 			);
-			path = "Fake Server";
+			path = FakeServer;
 			sourceTree = "<group>";
 		};
 		1EE02C0921ECEFC000C6AE9A /* Views */ = {
@@ -391,9 +391,9 @@
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
 			isa = PBXGroup;
 			children = (
-				C9E7A71521F8A577008BD497 /* Logic Tests */,
-				C9E7A71421F8A560008BD497 /* ViewModel Tests */,
-				C9E7A71621F8A5AB008BD497 /* Snapshot Tests */,
+				C9E7A71521F8A577008BD497 /* LogicTests */,
+				C9E7A71421F8A560008BD497 /* ViewModelTests */,
+				C9E7A71621F8A5AB008BD497 /* SnapshotTests */,
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
 				C9E7A6F621F50873008BD497 /* Realms */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
@@ -401,21 +401,21 @@
 			path = EmonCMSiOSTests;
 			sourceTree = "<group>";
 		};
-		C98BD5C01DE9B589000B6344 /* Table Cells */ = {
+		C98BD5C01DE9B589000B6344 /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
 				C98BD5C31DE9B5BB000B6344 /* ValueCell.swift */,
 				C98BD5C11DE9B59D000B6344 /* ValueCell.xib */,
 			);
-			path = "Table Cells";
+			path = TableCells;
 			sourceTree = "<group>";
 		};
-		C99DF4121D9042C300BBF80D /* Custom Former Cells */ = {
+		C99DF4121D9042C300BBF80D /* FormerCells */ = {
 			isa = PBXGroup;
 			children = (
 				C99DF4131D9042CE00BBF80D /* ChartCell.swift */,
 			);
-			path = "Custom Former Cells";
+			path = FormerCells;
 			sourceTree = "<group>";
 		};
 		C9BB83461D869CB00058C059 /* Model */ = {
@@ -435,9 +435,9 @@
 		C9BB83471D869CB00058C059 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				C99DF4121D9042C300BBF80D /* Custom Former Cells */,
-				C98BD5C01DE9B589000B6344 /* Table Cells */,
-				C9C240B81D91730100BC302C /* View Controllers */,
+				C99DF4121D9042C300BBF80D /* FormerCells */,
+				C98BD5C01DE9B589000B6344 /* TableCells */,
+				C9C240B81D91730100BC302C /* ViewControllers */,
 				1EE02C0921ECEFC000C6AE9A /* Views */,
 			);
 			path = UI;
@@ -528,7 +528,7 @@
 				C9BB83471D869CB00058C059 /* UI */,
 				C92010F81D89FD2500C9974B /* Apps */,
 				C9BB83551D86B19C0058C059 /* Helpers */,
-				1EE02BF921EB4BBB00C6AE9A /* Fake Server */,
+				1EE02BF921EB4BBB00C6AE9A /* FakeServer */,
 				C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */,
 				C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */,
 				C92010F31D89F6AD00C9974B /* Apps.storyboard */,
@@ -540,7 +540,7 @@
 			path = EmonCMSiOS;
 			sourceTree = "<group>";
 		};
-		C9C240B81D91730100BC302C /* View Controllers */ = {
+		C9C240B81D91730100BC302C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				1EE02C1621ED262700C6AE9A /* AccountListViewController.swift */,
@@ -552,7 +552,7 @@
 				C98BD5B61DE63638000B6344 /* InputListViewController.swift */,
 				C9C240BF1D91730100BC302C /* SettingsViewController.swift */,
 			);
-			path = "View Controllers";
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		C9E7A6F621F50873008BD497 /* Realms */ = {
@@ -592,7 +592,7 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		C9E7A71421F8A560008BD497 /* ViewModel Tests */ = {
+		C9E7A71421F8A560008BD497 /* ViewModelTests */ = {
 			isa = PBXGroup;
 			children = (
 				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
@@ -607,10 +607,10 @@
 				C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */,
 				C9E7A70121F52B05008BD497 /* InputUpdateHelperTests.swift */,
 			);
-			path = "ViewModel Tests";
+			path = ViewModelTests;
 			sourceTree = "<group>";
 		};
-		C9E7A71521F8A577008BD497 /* Logic Tests */ = {
+		C9E7A71521F8A577008BD497 /* LogicTests */ = {
 			isa = PBXGroup;
 			children = (
 				C9E7A70E21F864E1008BD497 /* ChartDateValueFormatterTests.swift */,
@@ -621,15 +621,15 @@
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
 				C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */,
 			);
-			path = "Logic Tests";
+			path = LogicTests;
 			sourceTree = "<group>";
 		};
-		C9E7A71621F8A5AB008BD497 /* Snapshot Tests */ = {
+		C9E7A71621F8A5AB008BD497 /* SnapshotTests */ = {
 			isa = PBXGroup;
 			children = (
 				C9E7A71721F8A5EC008BD497 /* AppBoxViewsTests.swift */,
 			);
-			path = "Snapshot Tests";
+			path = SnapshotTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

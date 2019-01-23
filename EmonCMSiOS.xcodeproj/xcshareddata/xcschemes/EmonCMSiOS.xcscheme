@@ -85,7 +85,7 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "IMAGE_DIFF_DIR"
-            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/Snapshot Tests/FailureDiffs"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/SnapshotTests/FailureDiffs"
             isEnabled = "YES">
          </EnvironmentVariable>
          <EnvironmentVariable
@@ -95,7 +95,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "FB_REFERENCE_IMAGE_DIR"
-            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/Snapshot Tests/ReferenceImages"
+            value = "$(SOURCE_ROOT)/$(PROJECT_NAME)Tests/SnapshotTests/ReferenceImages"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
