@@ -81,6 +81,17 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(addAppLabel.exists).to(equal(true))
       }
 
+      it("should fail to add app if not all fields are selected") {
+        loginFromAccountListWithValidCredentials()
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
+        app.navigationBars["Apps"].buttons["Add"].tap()
+        app.sheets["Select a type"].buttons["MySolarDivert"].tap()
+
+        app.navigationBars["Configure"].buttons["Save"].tap()
+
+        expect(app.alerts["Error"].exists).to(equal(true))
+      }
+
       it("should add a MyElectric app successfully") {
         loginFromAccountListWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: 1)).to(equal(true))
@@ -140,10 +151,10 @@ class EmonCMSiOSUITests: QuickSpec {
         app.tables.staticTexts["solar_kwh"].tap()
 
         app.tables.staticTexts["Divert Feed"].tap()
-        app.tables.staticTexts["divert"].tap()
+        app.tables.staticTexts["immersion"].tap()
 
         app.tables.staticTexts["Divert kWh Feed"].tap()
-        app.tables.staticTexts["divert_kwh"].tap()
+        app.tables.staticTexts["immersion_kwh"].tap()
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
