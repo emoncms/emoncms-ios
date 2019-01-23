@@ -149,17 +149,30 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       let startString = query["start"],
       let start = TimeInterval(startString),
       let endString = query["end"],
-      let end = TimeInterval(endString),
-      let intervalString = query["interval"],
-      let interval = Int(intervalString)
+      let end = TimeInterval(endString)
       else {
         throw FakeHTTPProviderError.invalidParameters
     }
 
-    return self.feedEngine.getData(id: id, start: start, end: end, interval: interval)
-      .map { point in
-        return [point.time, point.value ?? 0]
+    if
+      let intervalString = query["interval"],
+      let interval = Int(intervalString)
+    {
+      return self.feedEngine.getData(id: id, start: start, end: end, interval: interval)
+        .map { point in
+          return [point.time, point.value ?? 0]
       }
+    } else if
+      let modeString = query["mode"],
+      let mode = FakeEmonCMSFeedEngine.DMYMode(rawValue: modeString)
+    {
+      return self.feedEngine.getDataDMY(id: id, start: start, end: end, mode: mode)
+        .map { point in
+          return [point.time, point.value ?? 0]
+      }
+    }
+
+    throw FakeHTTPProviderError.invalidParameters
   }
 
   private func feedValue(query: [String:String]) throws -> Any {

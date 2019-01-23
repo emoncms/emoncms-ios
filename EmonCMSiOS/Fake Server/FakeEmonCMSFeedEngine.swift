@@ -13,6 +13,10 @@ final class FakeEmonCMSFeedEngine {
   typealias FeedMeta = (interval: TimeInterval, startTime: TimeInterval?)
   typealias DataPoint = (time: TimeInterval, value: Double?)
 
+  enum DMYMode: String {
+    case daily
+  }
+
   final class FeedStorage {
     let interval: TimeInterval
     var startTime: TimeInterval? = nil
@@ -126,6 +130,16 @@ final class FakeEmonCMSFeedEngine {
     }
 
     return points
+  }
+
+  func getDataDMY(id: String, start: TimeInterval, end: TimeInterval, mode: DMYMode) -> [DataPoint] {
+    let startSec = start / 1000.0
+
+    let calendar = Calendar.current
+    let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date(timeIntervalSince1970: startSec))
+    let midnightStart = calendar.date(from: dateComponents)!
+
+    return self.getData(id: id, start: midnightStart.timeIntervalSince1970 * 1000.0, end: end, interval: 86400)
   }
 
 }
