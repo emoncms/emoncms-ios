@@ -95,7 +95,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MyElectric].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MyElectric].waitForExistence(timeout: 3)).to(equal(true))
       }
 
       it("should add a MySolar app successfully") {
@@ -118,7 +118,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolar].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolar].waitForExistence(timeout: 3)).to(equal(true))
       }
 
       it("should add a MySolarDivert app successfully") {
@@ -147,7 +147,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert].waitForExistence(timeout: 1)).to(equal(true))
+        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert].waitForExistence(timeout: 3)).to(equal(true))
       }
     }
 
