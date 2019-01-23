@@ -81,7 +81,6 @@
 		C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BB1D91730100BC302C /* AppListViewController.swift */; };
 		C9C240C31D91730100BC302C /* FeedChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BC1D91730100BC302C /* FeedChartViewController.swift */; };
 		C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BD1D91730100BC302C /* FeedListViewController.swift */; };
-		C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */; };
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
@@ -235,7 +234,6 @@
 		C9C240BB1D91730100BC302C /* AppListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppListViewController.swift; sourceTree = "<group>"; };
 		C9C240BC1D91730100BC302C /* FeedChartViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewController.swift; sourceTree = "<group>"; };
 		C9C240BD1D91730100BC302C /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
-		C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ScreenshotViewController.swift; sourceTree = "<group>"; };
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
@@ -552,7 +550,6 @@
 				C9C240BC1D91730100BC302C /* FeedChartViewController.swift */,
 				C9C240BD1D91730100BC302C /* FeedListViewController.swift */,
 				C98BD5B61DE63638000B6344 /* InputListViewController.swift */,
-				C9C240BE1D91730100BC302C /* ScreenshotViewController.swift */,
 				C9C240BF1D91730100BC302C /* SettingsViewController.swift */,
 			);
 			path = "View Controllers";
@@ -1050,7 +1047,6 @@
 				C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
-				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,
 				C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* AccountController.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
