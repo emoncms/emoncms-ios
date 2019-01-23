@@ -50,7 +50,7 @@
 		C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
 		C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631C21DA540A00FEF2B6 /* Apps.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
-		C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* Charts+Rx.swift */; };
+		C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
 		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
 		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
@@ -66,7 +66,6 @@
 		C9BB834D1D869CC80058C059 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* AccountController.swift */; };
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
-		C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */; };
 		C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83611D873E130058C059 /* FeedListViewModel.swift */; };
 		C9BB83671D87F52E0058C059 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83661D87F52E0058C059 /* MainController.swift */; };
 		C9BB83691D87F5630058C059 /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
@@ -191,7 +190,7 @@
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C957CCED1D9086E40039D707 /* Charts+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Charts+Rx.swift"; sourceTree = "<group>"; };
+		C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RowFormer+Rx.swift"; sourceTree = "<group>"; };
 		C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Emoncms.swift"; sourceTree = "<group>"; };
 		C97284D51DA594C20010C7B7 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DayRelativeToTodayValueFormatter.swift; sourceTree = "<group>"; };
@@ -212,7 +211,6 @@
 		C9BB834C1D869CC80058C059 /* AccountController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountController.swift; sourceTree = "<group>"; };
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
 		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
-		C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormatHelpers.swift; sourceTree = "<group>"; };
 		C9BB83611D873E130058C059 /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
 		C9BB83661D87F52E0058C059 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C9BB83681D87F5630058C059 /* KeychainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainController.swift; sourceTree = "<group>"; };
@@ -460,15 +458,9 @@
 		C9BB83551D86B19C0058C059 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */,
-				C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */,
-				C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */,
-				C957CCED1D9086E40039D707 /* Charts+Rx.swift */,
-				C9BB83561D86B1AA0058C059 /* FormatHelpers.swift */,
-				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
-				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
-				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
-				C93C92B21D98196C009FE70D /* SharedConstants.swift */,
+				C9E7A70D21F864B0008BD497 /* Constants */,
+				C9E7A70C21F86495008BD497 /* Formatters */,
+				C9E7A70B21F86489008BD497 /* Rx */,
 				C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */,
 				1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */,
 			);
@@ -570,6 +562,35 @@
 				C9E7A6F721F50873008BD497 /* v0.realm */,
 			);
 			path = Realms;
+			sourceTree = "<group>";
+		};
+		C9E7A70B21F86489008BD497 /* Rx */ = {
+			isa = PBXGroup;
+			children = (
+				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
+				C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */,
+				C91CC3441D8CAE1E0048A356 /* RxOperators.swift */,
+			);
+			path = Rx;
+			sourceTree = "<group>";
+		};
+		C9E7A70C21F86495008BD497 /* Formatters */ = {
+			isa = PBXGroup;
+			children = (
+				C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */,
+				C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */,
+			);
+			path = Formatters;
+			sourceTree = "<group>";
+		};
+		C9E7A70D21F864B0008BD497 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */,
+				C906B4561D8B045F007FE19A /* EmonCMSColors.swift */,
+				C93C92B21D98196C009FE70D /* SharedConstants.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -946,7 +967,7 @@
 				C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */,
 				1EA783C221EF78F8002D6A3A /* ChartHelpers.swift in Sources */,
 				C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */,
-				C957CCEE1D9086E40039D707 /* Charts+Rx.swift in Sources */,
+				C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
 				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
@@ -973,7 +994,6 @@
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
 				C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */,
-				C9BB83571D86B1AA0058C059 /* FormatHelpers.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
 				C9C240C51D91730100BC302C /* ScreenshotViewController.swift in Sources */,

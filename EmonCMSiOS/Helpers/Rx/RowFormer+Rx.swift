@@ -1,5 +1,5 @@
 //
-//  Charts+Rx.swift
+//  RowFormer+Rx.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 19/09/2016.
