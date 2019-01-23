@@ -95,6 +95,7 @@
 		C9E7A71321F86BA5008BD497 /* RxOperatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */; };
 		C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71721F8A5EC008BD497 /* AppBoxViewsTests.swift */; };
 		C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */; };
+		C9E7A71C21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -251,6 +252,7 @@
 		C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RxOperatorsTests.swift; sourceTree = "<group>"; };
 		C9E7A71721F8A5EC008BD497 /* AppBoxViewsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBoxViewsTests.swift; sourceTree = "<group>"; };
 		C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogControllerTests.swift; sourceTree = "<group>"; };
+		C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProviderTests.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -620,6 +622,7 @@
 				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
 				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
+				C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */,
 			);
 			path = "Logic Tests";
 			sourceTree = "<group>";
@@ -992,6 +995,7 @@
 				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
 				C9E7A71121F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift in Sources */,
 				C925518321F4B3F1008342D8 /* EmonCMSTestCase.swift in Sources */,
+				C9E7A71C21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift in Sources */,
 				C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */,
 				1EA783C821F04C9A002D6A3A /* FeedListViewModelTests.swift in Sources */,
 				C91747AA21F37BA50054875D /* FeedUpdateHelperTests.swift in Sources */,

@@ -15,14 +15,19 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
 
   private let session: URLSession
 
-  init() {
+  init(session: URLSession) {
+    self.session = session
+  }
+
+  convenience init() {
     let configuration = URLSessionConfiguration.default
     let session = URLSession(configuration: configuration)
-    self.session = session
+    self.init(session: session)
   }
 
   func request(url: URL) -> Observable<Data> {
     return self.session.rx.data(request: URLRequest(url: url))
+      .log(AppLog)
       .catchError { error -> Observable<Data> in
         let returnError: HTTPRequestProviderError
         if let error = error as? RxCocoaURLError {
