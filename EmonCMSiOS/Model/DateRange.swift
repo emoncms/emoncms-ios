@@ -20,10 +20,10 @@ enum DateRange {
   case relative(RelativeTime)
   case absolute(Date, Date)
 
-  func calculateDates() -> (Date, Date) {
+  func calculateDates(relativeTo: Date = Date()) -> (Date, Date) {
     switch self {
     case .relative(let relative):
-      let endDate = Date()
+      let endDate = relativeTo
 
       var dateComponents = DateComponents()
       switch relative {
