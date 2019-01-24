@@ -92,7 +92,7 @@ extension MyElectricAppViewController {
     ChartHelpers.setupAppBarChart(self.barChart)
   }
 
-  private func updateLineChartData(_ dataPoints: [DataPoint]?) {
+  private func updateLineChartData(_ dataPoints: [DataPoint<Double>]?) {
     if let dataPoints = dataPoints {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
@@ -108,7 +108,7 @@ extension MyElectricAppViewController {
     self.lineChart.notifyDataSetChanged()
   }
 
-  private func updateBarChartData(_ dataPoints: [DataPoint]?) {
+  private func updateBarChartData(_ dataPoints: [DataPoint<Double>]?) {
     if let dataPoints = dataPoints {
       let data = self.barChart.barData ?? BarChartData()
       self.barChart.data = data

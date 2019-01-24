@@ -43,10 +43,10 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 5), value: 34),
         ]
 
-        var out = [(TimeInterval, Date, [Double])]()
-        DataPoint.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
+        var out = [(TimeInterval, Date, [Int])]()
+        DataPoint<Int>.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
 
-        let expected: [(TimeInterval, Date, [Double])] = [
+        let expected: [(TimeInterval, Date, [Int])] = [
           (0, Date(timeIntervalSince1970: 0), [10, 20, 30]),
           (1, Date(timeIntervalSince1970: 1), [11, 21, 31]),
           (1, Date(timeIntervalSince1970: 2), [12, 22, 32]),
@@ -85,10 +85,10 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 10), value: 34),
         ]
 
-        var out = [(TimeInterval, Date, [Double])]()
-        DataPoint.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
+        var out = [(TimeInterval, Date, [Int])]()
+        DataPoint<Int>.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
 
-        let expected: [(TimeInterval, Date, [Double])] = [
+        let expected: [(TimeInterval, Date, [Int])] = [
           (0, Date(timeIntervalSince1970: 0), [10, 20, 30]),
           (1, Date(timeIntervalSince1970: 1), [11, 21, 31]),
           (6, Date(timeIntervalSince1970: 7), [14, 23, 32]),
@@ -125,10 +125,10 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 15), value: 34),
         ]
 
-        var out = [(TimeInterval, Date, [Double])]()
-        DataPoint.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
+        var out = [(TimeInterval, Date, [Int])]()
+        DataPoint<Int>.merge(pointsFrom: [a, b, c]) { out.append(($0, $1, $2)) }
 
-        let expected: [(TimeInterval, Date, [Double])] = [
+        let expected: [(TimeInterval, Date, [Int])] = [
         ]
 
         // Nimble seems to get confused on the `[(TimeInterval, Date, [Double])]` type, so we have to do this

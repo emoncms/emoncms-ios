@@ -8,16 +8,14 @@
 
 import Foundation
 
-struct DataPoint {
-
+struct DataPoint<E> {
   let time: Date
-  let value: Double
-
+  let value: E
 }
 
 extension DataPoint {
 
-  static func from(json: [Any]) -> DataPoint? {
+  static func from(json: [Any]) -> DataPoint<Double>? {
     guard json.count == 2 else { return nil }
 
     guard let timeDouble = Double.from(json[0]) else { return nil }
@@ -25,14 +23,14 @@ extension DataPoint {
 
     let time = Date(timeIntervalSince1970: timeDouble / 1000)
 
-    return DataPoint(time: time, value: value)
+    return DataPoint<Double>(time: time, value: value)
   }
 
 }
 
 extension DataPoint {
 
-  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [Double]) -> Void) {
+  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [E]) -> Void) {
     guard points.count > 0 else { return }
     var indices = points.map { $0.startIndex }
     var lastTime: Date?

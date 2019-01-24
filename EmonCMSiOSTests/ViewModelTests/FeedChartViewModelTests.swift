@@ -44,7 +44,7 @@ class FeedChartViewModelTests: EmonCMSTestCase {
 
     describe("dataHandling") {
       it("should fetch feed data") {
-        let dataPointsObserver = scheduler.createObserver([DataPoint].self)
+        let dataPointsObserver = scheduler.createObserver([DataPoint<Double>].self)
         viewModel.dataPoints
           .drive(dataPointsObserver)
           .disposed(by: disposeBag)
@@ -57,7 +57,7 @@ class FeedChartViewModelTests: EmonCMSTestCase {
       }
 
       it("should refresh when asked to") {
-        let dataPointsObserver = scheduler.createObserver([DataPoint].self)
+        let dataPointsObserver = scheduler.createObserver([DataPoint<Double>].self)
         viewModel.dataPoints
           .drive(dataPointsObserver)
           .disposed(by: disposeBag)

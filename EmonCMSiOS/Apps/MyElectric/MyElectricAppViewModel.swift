@@ -14,7 +14,7 @@ import RealmSwift
 
 final class MyElectricAppViewModel: AppViewModel {
 
-  typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint], barChartData: [DataPoint])
+  typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint<Double>], barChartData: [DataPoint<Double>])
 
   private let account: AccountController
   private let api: EmonCMSAPI
@@ -32,7 +32,7 @@ final class MyElectricAppViewModel: AppViewModel {
   private(set) var errors: Driver<AppError>
   private(set) var bannerBarState: Driver<AppBannerBarState>
 
-  private var startOfDayKwh: DataPoint?
+  private var startOfDayKwh: DataPoint<Double>?
   private let errorsSubject = PublishSubject<AppError>()
 
   init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
@@ -174,7 +174,7 @@ final class MyElectricAppViewModel: AppViewModel {
     let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
     let midnightToday = calendar.date(from: dateComponents)!
 
-    let startOfDayKwhSignal: Observable<DataPoint>
+    let startOfDayKwhSignal: Observable<DataPoint<Double>>
     if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
       startOfDayKwhSignal = Observable.just(startOfDayKwh)
     } else {
@@ -201,7 +201,7 @@ final class MyElectricAppViewModel: AppViewModel {
     }
   }
 
-  private func fetchLineChartHistory(useFeedId: String) -> Observable<[DataPoint]> {
+  private func fetchLineChartHistory(useFeedId: String) -> Observable<[DataPoint<Double>]> {
     let endTime = Date()
     let startTime = endTime - (60 * 60 * 8)
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
@@ -209,7 +209,7 @@ final class MyElectricAppViewModel: AppViewModel {
     return self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
   }
 
-  private func fetchBarChartHistory(kwhFeedId: String) -> Observable<[DataPoint]> {
+  private func fetchBarChartHistory(kwhFeedId: String) -> Observable<[DataPoint<Double>]> {
     let daysToDisplay = 15 // Needs to be 1 more than we actually want to ensure we get the right data
     let endTime = Date()
     let startTime = endTime - Double(daysToDisplay * 86400)
@@ -218,7 +218,7 @@ final class MyElectricAppViewModel: AppViewModel {
       .map { dataPoints in
         guard dataPoints.count > 0 else { return [] }
 
-        var newDataPoints: [DataPoint] = []
+        var newDataPoints: [DataPoint<Double>] = []
         var lastValue: Double = dataPoints.first?.value ?? 0
 
         let extraPadding = daysToDisplay - dataPoints.count

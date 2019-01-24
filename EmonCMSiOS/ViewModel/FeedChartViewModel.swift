@@ -23,7 +23,7 @@ final class FeedChartViewModel {
   let refresh = ReplaySubject<()>.create(bufferSize: 1)
 
   // Outputs
-  private(set) var dataPoints: Driver<[DataPoint]>
+  private(set) var dataPoints: Driver<[DataPoint<Double>]>
   private(set) var isRefreshing: Driver<Bool>
 
   init(account: AccountController, api: EmonCMSAPI, feedId: String) {
@@ -49,7 +49,7 @@ final class FeedChartViewModel {
     let dateRange = self.dateRange.asObservable()
 
     self.dataPoints = Observable.combineLatest(refreshSignal, dateRange) { $1 }
-      .flatMapLatest { [weak self] dateRange -> Observable<[DataPoint]> in
+      .flatMapLatest { [weak self] dateRange -> Observable<[DataPoint<Double>]> in
         guard let strongSelf = self else { return Observable.empty() }
 
         let feedId = strongSelf.feedId

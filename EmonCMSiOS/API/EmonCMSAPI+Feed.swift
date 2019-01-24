@@ -63,25 +63,25 @@ extension EmonCMSAPI {
     }
   }
 
-  private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint] {
+  private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint<Double>] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
       let dataPointsJson = json as? [Any] else {
         throw EmonCMSAPIError.invalidResponse
     }
 
-    var dataPoints: [DataPoint] = []
+    var dataPoints: [DataPoint<Double>] = []
     for dataPointJson in dataPointsJson {
       guard let typedDataPoint = dataPointJson as? [Double] else {
         continue
       }
-      if let dataPoint = DataPoint.from(json: typedDataPoint) {
+      if let dataPoint = DataPoint<Double>.from(json: typedDataPoint) {
         dataPoints.append(dataPoint)
       }
     }
     return dataPoints
   }
 
-  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint]> {
+  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint<Double>]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -89,12 +89,12 @@ extension EmonCMSAPI {
       "interval": "\(interval)"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint<Double>] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }
 
-  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint]> {
+  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint<Double>]> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -102,7 +102,7 @@ extension EmonCMSAPI {
       "mode": "daily"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint<Double>] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
   }

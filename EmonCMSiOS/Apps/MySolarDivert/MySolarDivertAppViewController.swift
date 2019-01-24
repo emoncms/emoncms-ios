@@ -130,12 +130,12 @@ extension MySolarDivertAppViewController {
     ChartHelpers.setupAppLineChart(self.lineChart)
   }
 
-  private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint])?) {
+  private func updateLineChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>])?) {
     if let dataPoints = dataPoints {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
 
-      var houseUse = [DataPoint]()
+      var houseUse = [DataPoint<Double>]()
       let bigDivert = dataPoints.use // We can't do a stacked line chart, so we're faking it
       DataPoint.merge(pointsFrom: [dataPoints.use, dataPoints.divert]) { (_, time, values) in
         houseUse.append(DataPoint(time: time, value: (values[0] - values[1])))
@@ -194,7 +194,7 @@ extension MySolarDivertAppViewController {
     self.gridToHouseArrowView.direction = .down
   }
 
-  private func updateBoxViewData(_ dataPoints: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint])?) {
+  private func updateBoxViewData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>])?) {
     guard let dataPoints = dataPoints else { return }
 
     let use = dataPoints.use

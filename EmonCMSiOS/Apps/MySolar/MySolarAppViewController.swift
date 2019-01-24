@@ -112,7 +112,7 @@ extension MySolarAppViewController {
     ChartHelpers.setupAppLineChart(self.lineChart)
   }
 
-  private func updateLineChartData(_ dataPoints: (use: [DataPoint], solar: [DataPoint])?) {
+  private func updateLineChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>])?) {
     if let dataPoints = dataPoints {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
@@ -159,7 +159,7 @@ extension MySolarAppViewController {
     self.gridToHouseArrowView.direction = .down
   }
 
-  private func updateBoxViewData(_ dataPoints: (use: [DataPoint], solar: [DataPoint])?) {
+  private func updateBoxViewData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>])?) {
     guard let dataPoints = dataPoints else { return }
 
     let use = dataPoints.use
@@ -173,7 +173,7 @@ extension MySolarAppViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    DataPoint.merge(pointsFrom: [use, solar]) { (timeDelta, _, values) in
+    DataPoint<Double>.merge(pointsFrom: [use, solar]) { (timeDelta, _, values) in
       let wattsToKWH = { (power: Double) -> Double in
         return (power / 1000.0) * (timeDelta / 3600.0)
       }

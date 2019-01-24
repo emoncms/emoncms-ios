@@ -14,7 +14,7 @@ import RealmSwift
 
 final class MySolarDivertAppViewModel: AppViewModel {
 
-  typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint], solar: [DataPoint], divert: [DataPoint]))
+  typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let account: AccountController
   private let api: EmonCMSAPI
@@ -179,7 +179,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
     }
   }
 
-  private func fetchLineChartHistory(useFeedId: String, solarFeedId: String, divertFeedId: String) -> Observable<([DataPoint], [DataPoint], [DataPoint])> {
+  private func fetchLineChartHistory(useFeedId: String, solarFeedId: String, divertFeedId: String) -> Observable<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>])> {
     let endTime = Date()
     let startTime = endTime - (60 * 60 * 8)
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
