@@ -18,6 +18,8 @@ final class InputListViewController: UITableViewController {
 
   private let disposeBag = DisposeBag()
 
+  @IBOutlet private var refreshButton: UIBarButtonItem!
+  @IBOutlet private var lastUpdatedLabel: UILabel!
   private var emptyLabel: UILabel?
 
   override func viewDidLoad() {
@@ -92,8 +94,30 @@ final class InputListViewController: UITableViewController {
   private func setupBindings() {
     let refreshControl = self.refreshControl!
 
-    refreshControl.rx.controlEvent(.valueChanged)
+    Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
+      .merge()
       .bind(to: self.viewModel.refresh)
+      .disposed(by: self.disposeBag)
+
+    let dateFormatter = DateFormatter()
+    self.viewModel.updateTime
+      .map { time in
+        var string = "Last updated: "
+        if let time = time {
+          if time.timeIntervalSinceNow < -86400 {
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+          } else {
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .medium
+          }
+          string += dateFormatter.string(from: time)
+        } else {
+          string += "Never"
+        }
+        return string
+      }
+      .drive(self.lastUpdatedLabel.rx.text)
       .disposed(by: self.disposeBag)
 
     self.viewModel.isRefreshing
@@ -106,6 +130,8 @@ final class InputListViewController: UITableViewController {
       }
       .drive(onNext: { [weak self] empty in
         guard let self = self else { return }
+
+        self.tableView.tableHeaderView?.isHidden = empty
 
         if empty {
           let emptyLabel = UILabel(frame: CGRect.zero)

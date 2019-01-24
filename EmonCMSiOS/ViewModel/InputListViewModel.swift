@@ -40,6 +40,7 @@ final class InputListViewModel {
 
   // Outputs
   private(set) var inputs: Driver<[Section]>
+  private(set) var updateTime: Driver<Date?>
   private(set) var isRefreshing: Driver<Bool>
 
   init(account: AccountController, api: EmonCMSAPI) {
@@ -49,6 +50,7 @@ final class InputListViewModel {
     self.inputUpdateHelper = InputUpdateHelper(account: account, api: api)
 
     self.inputs = Driver.never()
+    self.updateTime = Driver.never()
     self.isRefreshing = Driver.never()
 
     let inputsQuery = self.realm.objects(Input.self)
@@ -56,6 +58,11 @@ final class InputListViewModel {
     self.inputs = Observable.array(from: inputsQuery)
       .map(self.inputsToSections)
       .asDriver(onErrorJustReturn: [])
+
+    self.updateTime = self.inputs
+      .map { _ in Date() }
+      .startWith(nil)
+      .asDriver(onErrorJustReturn: Date())
 
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
