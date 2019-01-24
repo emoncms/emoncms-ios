@@ -51,7 +51,9 @@ final class InputListViewModel {
     self.inputs = Driver.never()
     self.isRefreshing = Driver.never()
 
-    self.inputs = Observable.array(from: self.realm.objects(Input.self))
+    let inputsQuery = self.realm.objects(Input.self)
+      .sorted(by: [SortDescriptor(keyPath: #keyPath(Input.nodeid)), SortDescriptor(keyPath: #keyPath(Input.name))])
+    self.inputs = Observable.array(from: inputsQuery)
       .map(self.inputsToSections)
       .asDriver(onErrorJustReturn: [])
 
@@ -66,8 +68,8 @@ final class InputListViewModel {
     Observable.of(self.refresh, becameActive)
       .merge()
       .flatMapLatest { [weak self] () -> Observable<()> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.inputUpdateHelper.updateInputs()
+        guard let self = self else { return Observable.empty() }
+        return self.inputUpdateHelper.updateInputs()
           .catchErrorJustReturn(())
           .trackActivity(isRefreshing)
       }

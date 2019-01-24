@@ -98,6 +98,13 @@
 		C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */; };
 		C9E7A72021F92363008BD497 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71F21F92363008BD497 /* DataPointTests.swift */; };
 		C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72121FA4F17008BD497 /* AppTitleAndValueView.swift */; };
+		C9E7A72321FA6B62008BD497 /* InputListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5B61DE63638000B6344 /* InputListViewController.swift */; };
+		C9E7A72521FA6B6D008BD497 /* EmonCMSAPI+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70521F6627B008BD497 /* EmonCMSAPI+Input.swift */; };
+		C9E7A72821FA6B71008BD497 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BA1DE636FA000B6344 /* Input.swift */; };
+		C9E7A72921FA6B71008BD497 /* InputListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */; };
+		C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */; };
+		C9E7A72B21FA6B77008BD497 /* InputListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */; };
+		C9E7A72C21FA6B77008BD497 /* InputUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70121F52B05008BD497 /* InputUpdateHelperTests.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -999,6 +1006,7 @@
 				C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */,
 				C9E7A71321F86BA5008BD497 /* RxOperatorsTests.swift in Sources */,
 				C9E7A72021F92363008BD497 /* DataPointTests.swift in Sources */,
+				C9E7A72B21FA6B77008BD497 /* InputListViewModelTests.swift in Sources */,
 				C9AE4CBA1DB6CD4800F3A629 /* AddAccountViewModelTests.swift in Sources */,
 				C9E7A71121F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift in Sources */,
 				C925518321F4B3F1008342D8 /* EmonCMSTestCase.swift in Sources */,
@@ -1014,6 +1022,7 @@
 				C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */,
 				C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */,
 				1EA783C621EFD8E3002D6A3A /* AccountListViewModelTests.swift in Sources */,
+				C9E7A72C21FA6B77008BD497 /* InputUpdateHelperTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
 				C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */,
 			);
@@ -1054,15 +1063,19 @@
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
 				1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */,
+				C9E7A72521FA6B6D008BD497 /* EmonCMSAPI+Input.swift in Sources */,
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
 				C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
+				C9E7A72321FA6B62008BD497 /* InputListViewController.swift in Sources */,
 				C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */,
 				C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* AccountController.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
+				C9E7A72821FA6B71008BD497 /* Input.swift in Sources */,
+				C9E7A72921FA6B71008BD497 /* InputListViewModel.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
@@ -1074,6 +1087,7 @@
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
 				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
+				C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */,
 				C925518721F4BC40008342D8 /* AccessibilityIdentifiers.swift in Sources */,
 				1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,

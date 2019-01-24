@@ -212,6 +212,7 @@
                     </tabBar>
                     <connections>
                         <segue destination="jai-SN-rB0" kind="relationship" relationship="viewControllers" id="BPI-Mu-E7c"/>
+                        <segue destination="ebM-v0-Itg" kind="relationship" relationship="viewControllers" id="FnL-Ik-Jfq"/>
                         <segue destination="3au-Y7-kRv" kind="relationship" relationship="viewControllers" id="2d8-Xe-r2b"/>
                         <segue destination="QF4-pp-Rv7" kind="relationship" relationship="viewControllers" id="Yeu-uQ-fDq"/>
                     </connections>

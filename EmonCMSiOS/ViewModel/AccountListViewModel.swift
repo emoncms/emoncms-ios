@@ -110,16 +110,17 @@ final class AccountListViewModel {
   }
 
   func mainViewModels(forAccountWithId id: String) ->
-    (appList: AppListViewModel, feedList: FeedListViewModel, settings: SettingsViewModel)? {
+    (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel, settings: SettingsViewModel)? {
       guard
         let accountController = self.accountController(forAccountWithId: id)
         else {
           return nil
       }
       let appListViewModel = AppListViewModel(account: accountController, api: self.api)
+      let inputListViewModel = InputListViewModel(account: accountController, api: self.api)
       let feedListViewModel = FeedListViewModel(account: accountController, api: self.api)
       let settingsViewModel = SettingsViewModel(account: accountController, api: self.api)
-      return (appListViewModel, feedListViewModel, settingsViewModel)
+      return (appListViewModel, inputListViewModel, feedListViewModel, settingsViewModel)
   }
 
   func addAccountViewModel() -> AddAccountViewModel {

@@ -178,11 +178,15 @@ final class AccountListViewController: UITableViewController {
     let appListViewController = appListNavController.topViewController! as! AppListViewController
     appListViewController.viewModel = viewModels.appList
 
-    let feedListNavController = tabBarViewControllers[1] as! UINavigationController
+    let inputListNavController = tabBarViewControllers[1] as! UINavigationController
+    let inputListViewController = inputListNavController.topViewController! as! InputListViewController
+    inputListViewController.viewModel = viewModels.inputList
+
+    let feedListNavController = tabBarViewControllers[2] as! UINavigationController
     let feedListViewController = feedListNavController.topViewController! as! FeedListViewController
     feedListViewController.viewModel = viewModels.feedList
 
-    let settingsNavController = tabBarViewControllers[2] as! UINavigationController
+    let settingsNavController = tabBarViewControllers[3] as! UINavigationController
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.viewModel = viewModels.settings
     settingsViewController.switchAccount

@@ -16,7 +16,9 @@ final class InputListViewController: UITableViewController {
 
   var viewModel: InputListViewModel!
 
-  fileprivate let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
+
+  private var emptyLabel: UILabel?
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -31,8 +33,11 @@ final class InputListViewController: UITableViewController {
     self.setupBindings()
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    // Annoyingly this has to be in DIDappear and not WILLappear, otherwise it causes a weird
+    // navigation bar bug when going back to the feed list view from a feed detail view.
     self.viewModel.active.accept(true)
   }
 
@@ -92,6 +97,63 @@ final class InputListViewController: UITableViewController {
 
     self.viewModel.isRefreshing
       .drive(refreshControl.rx.isRefreshing)
+      .disposed(by: self.disposeBag)
+
+    Driver.combineLatest(self.viewModel.inputs, self.viewModel.isRefreshing)
+      .map { inputs, isRefreshing in
+        inputs.count == 0 && !isRefreshing
+      }
+      .drive(onNext: { [weak self] empty in
+        guard let self = self else { return }
+
+        if empty {
+          let emptyLabel = UILabel(frame: CGRect.zero)
+          emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+          emptyLabel.text = "Cannot fetch inputs.\n\nYou may need to upgrade Emoncms to be able to fetch inputs. Please check that your Emoncms is up-to-date and then try again."
+          emptyLabel.numberOfLines = 0
+          emptyLabel.textColor = .lightGray
+          emptyLabel.textAlignment = .center
+          self.emptyLabel = emptyLabel
+
+          self.view.addSubview(emptyLabel)
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: self.view,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .leading,
+            relatedBy: .greaterThanOrEqual,
+            toItem: self.view,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 8))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .trailing,
+            relatedBy: .lessThanOrEqual,
+            toItem: self.view,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 8))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: self.view,
+            attribute: .top,
+            multiplier: 1,
+            constant: 44.0 * 1.5))
+        } else {
+          if let emptyLabel = self.emptyLabel {
+            emptyLabel.removeFromSuperview()
+          }
+        }
+      })
       .disposed(by: self.disposeBag)
   }
 
