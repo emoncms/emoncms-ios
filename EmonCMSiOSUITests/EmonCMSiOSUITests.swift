@@ -180,7 +180,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Dashboard]
         expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
-        expect(tableView.cells.count).to(equal(4))
+        expect(tableView.cells.count).to(equal(2))
       }
     }
 
