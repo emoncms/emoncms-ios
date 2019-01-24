@@ -18,8 +18,8 @@ final class MyElectricAppViewController: AppViewController {
     return self.viewModel as! MyElectricAppViewModel
   }
 
-  @IBOutlet private var powerLabel: UILabel!
-  @IBOutlet private var usageTodayLabel: UILabel!
+  @IBOutlet private var powerLabelView: AppTitleAndValueView!
+  @IBOutlet private var usageTodayLabelView: AppTitleAndValueView!
   @IBOutlet private var lineChart: LineChartView!
   @IBOutlet private var barChart: BarChartView!
 
@@ -29,6 +29,9 @@ final class MyElectricAppViewController: AppViewController {
     super.viewDidLoad()
 
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MyElectric
+
+    self.powerLabelView.alignment = .left
+    self.usageTodayLabelView.alignment = .right
 
     self.setupCharts()
     self.setupBindings()
@@ -46,7 +49,7 @@ final class MyElectricAppViewController: AppViewController {
         }
         return value + "W"
       }
-      .drive(self.powerLabel.rx.text)
+      .drive(self.powerLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
@@ -60,7 +63,7 @@ final class MyElectricAppViewController: AppViewController {
         }
         return value + "kWh"
       }
-      .drive(self.usageTodayLabel.rx.text)
+      .drive(self.usageTodayLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data

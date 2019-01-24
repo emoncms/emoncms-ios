@@ -97,6 +97,7 @@
 		C9E7A71C21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */; };
 		C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */; };
 		C9E7A72021F92363008BD497 /* DataPointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A71F21F92363008BD497 /* DataPointTests.swift */; };
+		C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72121FA4F17008BD497 /* AppTitleAndValueView.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -255,6 +256,7 @@
 		C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProviderTests.swift; sourceTree = "<group>"; };
 		C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeTests.swift; sourceTree = "<group>"; };
 		C9E7A71F21F92363008BD497 /* DataPointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointTests.swift; sourceTree = "<group>"; };
+		C9E7A72121FA4F17008BD497 /* AppTitleAndValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleAndValueView.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 			children = (
 				1EE02C0A21ECEFE800C6AE9A /* AppBoxesFeedView.swift */,
 				1EE02C0C21ECF49900C6AE9A /* AppBoxesArrowView.swift */,
+				C9E7A72121FA4F17008BD497 /* AppTitleAndValueView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1031,6 +1034,7 @@
 				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
 				1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */,
+				C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */,
 				C9C240C01D91730100BC302C /* AddAccountQRViewController.swift in Sources */,
 				C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */,
 				C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */,

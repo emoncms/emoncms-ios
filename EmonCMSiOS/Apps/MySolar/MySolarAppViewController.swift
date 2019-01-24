@@ -18,10 +18,9 @@ final class MySolarAppViewController: AppViewController {
     return self.viewModel as! MySolarAppViewModel
   }
 
-  @IBOutlet private var useLabel: UILabel!
-  @IBOutlet private var importTitleLabel: UILabel!
-  @IBOutlet private var importLabel: UILabel!
-  @IBOutlet private var solarLabel: UILabel!
+  @IBOutlet private var useLabelView: AppTitleAndValueView!
+  @IBOutlet private var importLabelView: AppTitleAndValueView!
+  @IBOutlet private var solarLabelView: AppTitleAndValueView!
   @IBOutlet private var lineChart: LineChartView!
   @IBOutlet private var solarBoxView: AppBoxesFeedView!
   @IBOutlet private var gridBoxView: AppBoxesFeedView!
@@ -36,6 +35,10 @@ final class MySolarAppViewController: AppViewController {
     super.viewDidLoad()
 
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolar
+
+    self.useLabelView.alignment = .left
+    self.importLabelView.alignment = .center
+    self.solarLabelView.alignment = .right
 
     self.setupCharts()
     self.setupBoxView()
@@ -56,7 +59,7 @@ final class MySolarAppViewController: AppViewController {
     self.typedViewModel.data
       .map { $0?.useNow }
       .map(powerFormat)
-      .drive(self.useLabel.rx.text)
+      .drive(self.useLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
@@ -70,7 +73,7 @@ final class MySolarAppViewController: AppViewController {
           return "EXPORT"
         }
       }
-      .drive(self.importTitleLabel.rx.text)
+      .drive(self.importLabelView.rx.title)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
@@ -82,13 +85,13 @@ final class MySolarAppViewController: AppViewController {
         }
       }
       .map(powerFormat)
-      .drive(self.importLabel.rx.text)
+      .drive(self.importLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
       .map { $0?.solarNow }
       .map(powerFormat)
-      .drive(self.solarLabel.rx.text)
+      .drive(self.solarLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data

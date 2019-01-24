@@ -18,12 +18,11 @@ final class MySolarDivertAppViewController: AppViewController {
     return self.viewModel as! MySolarDivertAppViewModel
   }
 
-  @IBOutlet private var houseLabel: UILabel!
-  @IBOutlet private var divertLabel: UILabel!
-  @IBOutlet private var totalUseLabel: UILabel!
-  @IBOutlet private var importTitleLabel: UILabel!
-  @IBOutlet private var importLabel: UILabel!
-  @IBOutlet private var solarLabel: UILabel!
+  @IBOutlet private var houseLabelView: AppTitleAndValueView!
+  @IBOutlet private var divertLabelView: AppTitleAndValueView!
+  @IBOutlet private var totalUseLabelView: AppTitleAndValueView!
+  @IBOutlet private var importLabelView: AppTitleAndValueView!
+  @IBOutlet private var solarLabelView: AppTitleAndValueView!
   @IBOutlet private var lineChart: LineChartView!
   @IBOutlet private var solarBoxView: AppBoxesFeedView!
   @IBOutlet private var gridBoxView: AppBoxesFeedView!
@@ -40,6 +39,12 @@ final class MySolarDivertAppViewController: AppViewController {
     super.viewDidLoad()
 
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolarDivert
+
+    self.houseLabelView.alignment = .left
+    self.divertLabelView.alignment = .center
+    self.totalUseLabelView.alignment = .right
+    self.importLabelView.alignment = .left
+    self.solarLabelView.alignment = .right
 
     self.setupCharts()
     self.setupBoxView()
@@ -60,19 +65,19 @@ final class MySolarDivertAppViewController: AppViewController {
     self.typedViewModel.data
       .map { $0?.houseNow }
       .map(powerFormat)
-      .drive(self.houseLabel.rx.text)
+      .drive(self.houseLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
       .map { $0?.divertNow }
       .map(powerFormat)
-      .drive(self.divertLabel.rx.text)
+      .drive(self.divertLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
       .map { $0?.totalUseNow }
       .map(powerFormat)
-      .drive(self.totalUseLabel.rx.text)
+      .drive(self.totalUseLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
@@ -86,7 +91,7 @@ final class MySolarDivertAppViewController: AppViewController {
           return "EXPORT"
         }
       }
-      .drive(self.importTitleLabel.rx.text)
+      .drive(self.importLabelView.rx.title)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
@@ -98,13 +103,13 @@ final class MySolarDivertAppViewController: AppViewController {
         }
       }
       .map(powerFormat)
-      .drive(self.importLabel.rx.text)
+      .drive(self.importLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
       .map { $0?.solarNow }
       .map(powerFormat)
-      .drive(self.solarLabel.rx.text)
+      .drive(self.solarLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
