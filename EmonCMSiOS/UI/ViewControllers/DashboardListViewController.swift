@@ -27,8 +27,6 @@ final class DashboardListViewController: UITableViewController {
     self.title = "Dashboards"
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Lists.Dashboard
 
-    self.tableView.tableHeaderView = UIView()
-
     self.setupDataSource()
     self.setupBindings()
   }
