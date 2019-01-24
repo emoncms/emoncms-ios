@@ -10,9 +10,9 @@ import UIKit
 
 final class AppBoxesFeedView: UIView {
 
-  var feedName: String = "FEED" { didSet { self.setNeedsLayout() } }
-  var feedValue: Double = 0 { didSet { self.setNeedsLayout() } }
-  var feedUnit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  var name: String = "FEED" { didSet { self.setNeedsLayout() } }
+  var value: Double = 0 { didSet { self.setNeedsLayout() } }
+  var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
 
   private var nameLabel: UILabel!
   private var valueLabel: UILabel!
@@ -48,8 +48,8 @@ final class AppBoxesFeedView: UIView {
     self.nameLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height / 2.0)
     self.valueLabel.frame = CGRect(x: 0, y: bounds.height / 2.0, width: bounds.width, height: bounds.height / 2.0)
 
-    self.nameLabel.text = self.feedName.uppercased()
-    self.valueLabel.text = "\(self.feedValue.prettyFormat(decimals: 1)) \(self.feedUnit)"
+    self.nameLabel.text = self.name.uppercased()
+    self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
   }
 
 }

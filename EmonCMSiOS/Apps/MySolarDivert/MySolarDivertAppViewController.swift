@@ -161,20 +161,20 @@ extension MySolarDivertAppViewController {
 
   private func setupBoxView() {
     self.solarBoxView.backgroundColor = EmonCMSColors.Apps.Solar
-    self.solarBoxView.feedName = "SOLAR"
-    self.solarBoxView.feedUnit = "kWh"
+    self.solarBoxView.name = "SOLAR"
+    self.solarBoxView.unit = "kWh"
 
     self.divertBoxView.backgroundColor = EmonCMSColors.Apps.Divert
-    self.divertBoxView.feedName = "DIVERT"
-    self.divertBoxView.feedUnit = "kWh"
+    self.divertBoxView.name = "DIVERT"
+    self.divertBoxView.unit = "kWh"
 
     self.gridBoxView.backgroundColor = EmonCMSColors.Apps.Grid
-    self.gridBoxView.feedName = "GRID"
-    self.gridBoxView.feedUnit = "kWh"
+    self.gridBoxView.name = "GRID"
+    self.gridBoxView.unit = "kWh"
 
     self.houseBoxView.backgroundColor = EmonCMSColors.Apps.House
-    self.houseBoxView.feedName = "HOUSE"
-    self.houseBoxView.feedUnit = "kWh"
+    self.houseBoxView.name = "HOUSE"
+    self.houseBoxView.unit = "kWh"
 
     self.solarToDivertArrowView.unit = "kWh"
     self.solarToDivertArrowView.direction = .down
@@ -232,10 +232,10 @@ extension MySolarDivertAppViewController {
       }
     }
 
-    self.solarBoxView.feedValue = totalSolar
-    self.gridBoxView.feedValue = totalImport
-    self.divertBoxView.feedValue = totalDivert
-    self.houseBoxView.feedValue = totalHouse
+    self.solarBoxView.value = totalSolar
+    self.gridBoxView.value = totalImport
+    self.divertBoxView.value = totalDivert
+    self.houseBoxView.value = totalHouse
     self.solarToGridArrowView.value = solarToGrid
     self.solarToDivertArrowView.value = solarToDivert
     self.solarToHouseArrowView.value = solarToHouse

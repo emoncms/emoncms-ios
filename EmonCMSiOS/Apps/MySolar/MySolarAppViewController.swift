@@ -135,16 +135,16 @@ extension MySolarAppViewController {
 
   private func setupBoxView() {
     self.solarBoxView.backgroundColor = EmonCMSColors.Apps.Solar
-    self.solarBoxView.feedName = "SOLAR"
-    self.solarBoxView.feedUnit = "kWh"
+    self.solarBoxView.name = "SOLAR"
+    self.solarBoxView.unit = "kWh"
 
     self.gridBoxView.backgroundColor = EmonCMSColors.Apps.Grid
-    self.gridBoxView.feedName = "GRID"
-    self.gridBoxView.feedUnit = "kWh"
+    self.gridBoxView.name = "GRID"
+    self.gridBoxView.unit = "kWh"
 
     self.houseBoxView.backgroundColor = EmonCMSColors.Apps.House
-    self.houseBoxView.feedName = "HOUSE"
-    self.houseBoxView.feedUnit = "kWh"
+    self.houseBoxView.name = "HOUSE"
+    self.houseBoxView.unit = "kWh"
 
     self.solarToHouseArrowView.unit = "kWh"
     self.solarToHouseArrowView.direction = .down
@@ -192,9 +192,9 @@ extension MySolarAppViewController {
       }
     }
 
-    self.solarBoxView.feedValue = totalSolar
-    self.gridBoxView.feedValue = totalImport
-    self.houseBoxView.feedValue = totalUse
+    self.solarBoxView.value = totalSolar
+    self.gridBoxView.value = totalImport
+    self.houseBoxView.value = totalUse
     self.solarToGridArrowView.value = solarToGrid
     self.solarToHouseArrowView.value = solarToHouse
     self.gridToHouseArrowView.value = gridToHouse

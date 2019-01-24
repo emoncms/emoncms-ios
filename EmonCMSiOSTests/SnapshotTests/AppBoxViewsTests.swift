@@ -65,9 +65,9 @@ class AppBoxViewsTests: FBSnapshotTestCase {
   func testFeedView() {
     let view = AppBoxesFeedView(frame: CGRect(x: 0, y: 0, width: 200, height: 200))
     view.backgroundColor = .red
-    view.feedName = "Feed"
-    view.feedUnit = "kWh"
-    view.feedValue = 100
+    view.name = "Feed"
+    view.unit = "kWh"
+    view.value = 100
     FBSnapshotVerifyView(view)
   }
 
