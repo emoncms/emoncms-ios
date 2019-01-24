@@ -9,7 +9,7 @@
 import UIKit
 import CoreGraphics
 
-final class AppBoxesArrowView: UIView {
+@IBDesignable final class AppBoxesArrowView: UIView {
 
   enum Direction {
     case up
@@ -18,10 +18,10 @@ final class AppBoxesArrowView: UIView {
     case right
   }
 
-  var value: Double = 0.0 { didSet { self.setNeedsLayout() } }
-  var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var value: Double = 0.0 { didSet { self.setNeedsLayout() } }
+  @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
   var direction: Direction = .up { didSet { self.setNeedsLayout(); self.setNeedsDisplay() } }
-  var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
 
   private var valueLabel: UILabel!
 

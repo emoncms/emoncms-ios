@@ -8,11 +8,11 @@
 
 import UIKit
 
-final class AppBoxesFeedView: UIView {
+@IBDesignable final class AppBoxesFeedView: UIView {
 
-  var name: String = "FEED" { didSet { self.setNeedsLayout() } }
-  var value: Double = 0 { didSet { self.setNeedsLayout() } }
-  var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var name: String = "FEED" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var value: Double = 0 { didSet { self.setNeedsLayout() } }
+  @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
 
   private var nameLabel: UILabel!
   private var valueLabel: UILabel!
