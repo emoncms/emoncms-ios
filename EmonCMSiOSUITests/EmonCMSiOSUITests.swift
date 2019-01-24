@@ -173,6 +173,17 @@ class EmonCMSiOSUITests: QuickSpec {
       }
     }
 
+    describe("dashboards") {
+      it("should show dashboards screen") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Dashboards"].tap()
+
+        let tableView = app.tables[AccessibilityIdentifiers.Lists.Dashboard]
+        expect(tableView.waitForExistence(timeout: 1)).to(equal(true))
+        expect(tableView.cells.count).to(equal(4))
+      }
+    }
+
     describe("feeds") {
       it("should show feeds screen") {
         loginFromAccountListWithValidCredentials()

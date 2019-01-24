@@ -49,6 +49,8 @@
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
 		C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
 		C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631C21DA540A00FEF2B6 /* Apps.swift */; };
+		C949985621FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */; };
+		C949985721FA7FFA008FB8AE /* DashboardListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
@@ -105,6 +107,11 @@
 		C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */; };
 		C9E7A72B21FA6B77008BD497 /* InputListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70221F52B05008BD497 /* InputListViewModelTests.swift */; };
 		C9E7A72C21FA6B77008BD497 /* InputUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70121F52B05008BD497 /* InputUpdateHelperTests.swift */; };
+		C9E7A72E21FA72CA008BD497 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
+		C9E7A73021FA7346008BD497 /* DashboardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72F21FA7346008BD497 /* DashboardListViewModel.swift */; };
+		C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */; };
+		C9E7A73421FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
+		C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */; };
 		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
@@ -202,6 +209,8 @@
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
 		C941631421D65A6F00FEF2B6 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C941631C21DA540A00FEF2B6 /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
+		C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelperTests.swift; sourceTree = "<group>"; };
+		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -264,6 +273,11 @@
 		C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeTests.swift; sourceTree = "<group>"; };
 		C9E7A71F21F92363008BD497 /* DataPointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPointTests.swift; sourceTree = "<group>"; };
 		C9E7A72121FA4F17008BD497 /* AppTitleAndValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTitleAndValueView.swift; sourceTree = "<group>"; };
+		C9E7A72D21FA72CA008BD497 /* Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dashboard.swift; sourceTree = "<group>"; };
+		C9E7A72F21FA7346008BD497 /* DashboardListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModel.swift; sourceTree = "<group>"; };
+		C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelper.swift; sourceTree = "<group>"; };
+		C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Dashboard.swift"; sourceTree = "<group>"; };
+		C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewController.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -439,6 +453,7 @@
 				1EE02C1021ED10E800C6AE9A /* Account.swift */,
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
 				C98BD5BA1DE636FA000B6344 /* Input.swift */,
+				C9E7A72D21FA72CA008BD497 /* Dashboard.swift */,
 				C9F53E351D9297FD00E9724D /* Chart.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
 				C9C240CD1D917CA500BC302C /* DateRange.swift */,
@@ -463,6 +478,7 @@
 				C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */,
 				C9E7A70721F662AA008BD497 /* EmonCMSAPI+Feed.swift */,
 				C9E7A70521F6627B008BD497 /* EmonCMSAPI+Input.swift */,
+				C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */,
 				C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */,
 				C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */,
 			);
@@ -487,6 +503,7 @@
 				C9BB83611D873E130058C059 /* FeedListViewModel.swift */,
 				C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */,
 				C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */,
+				C9E7A72F21FA7346008BD497 /* DashboardListViewModel.swift */,
 				1EE02C1421ED251000C6AE9A /* AccountListViewModel.swift */,
 				C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */,
 				C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */,
@@ -494,6 +511,7 @@
 				C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */,
 				C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */,
 				C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */,
+				C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -564,6 +582,7 @@
 				C9C240BC1D91730100BC302C /* FeedChartViewController.swift */,
 				C9C240BD1D91730100BC302C /* FeedListViewController.swift */,
 				C98BD5B61DE63638000B6344 /* InputListViewController.swift */,
+				C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */,
 				C9C240BF1D91730100BC302C /* SettingsViewController.swift */,
 			);
 			path = ViewControllers;
@@ -614,6 +633,8 @@
 				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
 				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
 				C91747AD21F3C42B0054875D /* AppListViewModelTests.swift */,
+				C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */,
+				C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */,
 				C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */,
 				C91747A721F37A9A0054875D /* FeedListHelperTests.swift */,
 				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
@@ -1014,7 +1035,9 @@
 				C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */,
 				C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */,
 				1EA783C821F04C9A002D6A3A /* FeedListViewModelTests.swift in Sources */,
+				C949985621FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift in Sources */,
 				C91747AA21F37BA50054875D /* FeedUpdateHelperTests.swift in Sources */,
+				C949985721FA7FFA008FB8AE /* DashboardListViewModelTests.swift in Sources */,
 				C91747A821F37A9A0054875D /* FeedListHelperTests.swift in Sources */,
 				C91747AC21F3B9620054875D /* FeedChartViewModelTests.swift in Sources */,
 				C91747AE21F3C42B0054875D /* AppListViewModelTests.swift in Sources */,
@@ -1035,6 +1058,7 @@
 				1E7C55F921EEFFED0009809C /* MySolarDivertAppViewModel.swift in Sources */,
 				C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */,
 				C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */,
+				C9E7A73421FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift in Sources */,
 				C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */,
 				1EA783C221EF78F8002D6A3A /* ChartHelpers.swift in Sources */,
 				C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */,
@@ -1073,11 +1097,14 @@
 				C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */,
 				C9BB834D1D869CC80058C059 /* AccountController.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
+				C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9E7A72821FA6B71008BD497 /* Input.swift in Sources */,
 				C9E7A72921FA6B71008BD497 /* InputListViewModel.swift in Sources */,
+				C9E7A73021FA7346008BD497 /* DashboardListViewModel.swift in Sources */,
 				C9C0419B1D85F7D600E3CEC4 /* AppDelegate.swift in Sources */,
 				C92010FA1D89FD6300C9974B /* MyElectricAppViewModel.swift in Sources */,
+				C9E7A72E21FA72CA008BD497 /* Dashboard.swift in Sources */,
 				C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */,
 				1EE02C1721ED262700C6AE9A /* AccountListViewController.swift in Sources */,
 				C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */,
@@ -1093,6 +1120,7 @@
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
+				C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
 				1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,

@@ -205,6 +205,15 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     ]
   }
 
+  private func dashboardList(query: [String:String]) throws -> Any {
+    return [
+      ["id": 1, "name": "Dashboard 1", "alias": "", "description": ""],
+      ["id": 2, "name": "Dashboard 1", "alias": "", "description": ""],
+      ["id": 3, "name": "Dashboard 1", "alias": "", "description": ""],
+      ["id": 4, "name": "Dashboard 1", "alias": "", "description": ""],
+    ]
+  }
+
   private func error(query: [String:String]) throws -> Any {
     throw FakeHTTPProviderError.unknown
   }
@@ -247,6 +256,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       routeFunc = feedFetch
     case "/input/list.json":
       routeFunc = inputList
+    case "/dashboard/list.json":
+      routeFunc = dashboardList
     default:
       routeFunc = error
       break
