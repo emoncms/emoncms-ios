@@ -61,7 +61,7 @@ final class FeedListViewModel {
         if trimmedSearchTerm != "" {
           results = results.filter("name CONTAINS[c] %@", trimmedSearchTerm)
         }
-        results = results.sorted(byKeyPath: "name")
+        results = results.sorted(byKeyPath: #keyPath(Feed.name))
         return Observable.array(from: results)
       }
       .map(self.feedsToSections)
