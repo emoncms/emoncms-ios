@@ -196,6 +196,15 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     return feedValues
   }
 
+  private func inputList(query: [String:String]) throws -> Any {
+    return [
+      ["id": "1", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "2", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "3", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "4", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
+    ]
+  }
+
   private func error(query: [String:String]) throws -> Any {
     throw FakeHTTPProviderError.unknown
   }
@@ -236,6 +245,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       routeFunc = feedValue
     case "/feed/fetch.json":
       routeFunc = feedFetch
+    case "/input/list.json":
+      routeFunc = inputList
     default:
       routeFunc = error
       break

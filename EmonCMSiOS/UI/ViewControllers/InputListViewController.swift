@@ -24,6 +24,7 @@ final class InputListViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Inputs"
+    self.view.accessibilityIdentifier = AccessibilityIdentifiers.Lists.Input
 
     self.tableView.estimatedRowHeight = 68.0
     self.tableView.rowHeight = UITableView.automaticDimension
