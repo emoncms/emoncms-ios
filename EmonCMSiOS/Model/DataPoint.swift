@@ -8,9 +8,17 @@
 
 import Foundation
 
-struct DataPoint<E> {
+struct DataPoint<E: Equatable> {
   let time: Date
   let value: E
+}
+
+extension DataPoint: Equatable {
+
+  static func ==(lhs: DataPoint, rhs: DataPoint) -> Bool {
+    return lhs.time == rhs.time && lhs.value == rhs.value
+  }
+
 }
 
 extension DataPoint {
@@ -30,10 +38,13 @@ extension DataPoint {
 
 extension DataPoint {
 
-  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [E]) -> Void) {
-    guard points.count > 0 else { return }
+  @discardableResult
+  static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [E]) -> Void) -> [DataPoint<[E]>] {
+    guard points.count > 0 else { return [] }
     var indices = points.map { $0.startIndex }
     var lastTime: Date?
+
+    var outputPoints = [DataPoint<[E]>]()
 
     while true {
       let finished = indices.enumerated().reduce(false) { (result, item) in
@@ -61,10 +72,14 @@ extension DataPoint {
       let timeDelta = time.timeIntervalSince(unwrappedLastTime)
       lastTime = time
 
-      mergeBlock(timeDelta, time, thisPoints.map { $0.value })
+      let thisValues = thisPoints.map { $0.value }
+      mergeBlock(timeDelta, time, thisValues)
+      outputPoints.append(DataPoint<[E]>(time: time, value: thisValues))
 
       indices = indices.map { $0.advanced(by: 1) }
     }
+
+    return outputPoints
   }
 
 }
