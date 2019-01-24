@@ -16,7 +16,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/list").map { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       var feeds: [Feed] = []
@@ -40,7 +40,7 @@ extension EmonCMSAPI {
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       return feed
@@ -56,7 +56,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/get", queryItems: queryItems).map { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = json as? String else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       return value
@@ -66,7 +66,7 @@ extension EmonCMSAPI {
   private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint<Double>] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
       let dataPointsJson = json as? [Any] else {
-        throw EmonCMSAPIError.invalidResponse
+        throw APIError.invalidResponse
     }
 
     var dataPoints: [DataPoint<Double>] = []
@@ -115,7 +115,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/value", queryItems: queryItems).map { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = Double.from(json) else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       return value
@@ -130,13 +130,13 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/fetch", queryItems: queryItems).map { resultData -> [String:Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let array = json as? [Any] else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       var results: [String:Double] = [:]
       for (id, valueAny) in zip(ids, array) {
         guard let value = Double.from(valueAny) else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
         }
 
         results[id] = value

@@ -48,7 +48,7 @@ final class AddAccountViewModel {
     return self.api.feedList(accountCredentials)
       .catchError { error -> Observable<[Feed]> in
         let returnError: AddAccountError
-        if let error = error as? EmonCMSAPI.EmonCMSAPIError {
+        if let error = error as? EmonCMSAPI.APIError {
           switch error {
           case .invalidCredentials:
             returnError = .invalidCredentials

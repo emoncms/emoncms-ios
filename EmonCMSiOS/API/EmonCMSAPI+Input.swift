@@ -16,7 +16,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "input/list").map { resultData -> [Input] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
-          throw EmonCMSAPIError.invalidResponse
+          throw APIError.invalidResponse
       }
 
       var inputs: [Input] = []

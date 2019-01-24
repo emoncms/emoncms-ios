@@ -14,7 +14,7 @@ final class EmonCMSAPI {
 
   private let requestProvider: HTTPRequestProvider
 
-  enum EmonCMSAPIError: Error {
+  enum APIError: Error {
     case failedToCreateURL
     case requestFailed
     case atsFailed
@@ -29,7 +29,7 @@ final class EmonCMSAPI {
   private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) throws -> URL {
     let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
-      throw EmonCMSAPIError.failedToCreateURL
+      throw APIError.failedToCreateURL
     }
 
     var allQueryItems = queryItems
@@ -39,7 +39,7 @@ final class EmonCMSAPI {
     if let url = urlBuilder.url {
       return url
     } else {
-      throw EmonCMSAPIError.failedToCreateURL
+      throw APIError.failedToCreateURL
     }
   }
 
@@ -55,7 +55,7 @@ final class EmonCMSAPI {
       .catchError { error -> Observable<Data> in
         AppLog.info("Network request error: \(error)")
 
-        let returnError: EmonCMSAPIError
+        let returnError: APIError
         if let error = error as? HTTPRequestProviderError {
           switch error {
           case .httpError(let code):
