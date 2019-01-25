@@ -39,7 +39,7 @@ class AddAccountViewModelTests: EmonCMSTestCase {
       viewModel = AddAccountViewModel(realmController: realmController, api: api)
     }
 
-    describe("validate") {
+    describe("saveAccount") {
       it("should error for invalid details") {
         let url = "https://test"
         let apiKey = "invalid"
@@ -49,7 +49,7 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         viewModel.apiKey.accept(apiKey)
 
         waitUntil { done in
-          viewModel.validate()
+          viewModel.saveAccount()
             .subscribe(
               onError: { error in
                 if let typedError = error as? AddAccountViewModel.AddAccountError {
@@ -78,11 +78,10 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         viewModel.password.accept(password)
 
         waitUntil { done in
-          viewModel.validate()
+          viewModel.saveAccount()
             .subscribe(
-              onNext: { credentials in
-                expect(credentials.url).to(equal(url))
-                expect(credentials.apiKey).to(equal("abcdef"))
+              onNext: {
+                expect($0).toNot(equal(""))
             },
               onError: { error in
                 fail(error.localizedDescription)
@@ -104,11 +103,10 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         viewModel.apiKey.accept(apiKey)
 
         waitUntil { done in
-          viewModel.validate()
+          viewModel.saveAccount()
             .subscribe(
-              onNext: { credentials in
-                expect(credentials.url).to(equal(url))
-                expect(credentials.apiKey).to(equal(apiKey))
+              onNext: {
+                expect($0).toNot(equal(""))
             },
               onError: { error in
                 fail(error.localizedDescription)
@@ -181,22 +179,6 @@ class AddAccountViewModelTests: EmonCMSTestCase {
           .disposed(by: disposeBag)
 
         expect(result).to(equal(true))
-      }
-    }
-
-    describe("saveAccount") {
-      it("should save an account successfully for api key") {
-        viewModel.saveAccount(withUrl: "http://emoncms.org", apiKey: "abcdef")
-          .subscribe(
-            onNext: {
-              expect($0.count).toNot(equal(0))
-            },
-            onError: { error in
-              fail(error.localizedDescription)
-            },
-            onCompleted: {
-            })
-          .disposed(by: disposeBag)
       }
     }
     
