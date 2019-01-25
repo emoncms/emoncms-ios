@@ -30,12 +30,12 @@ final class FeedListViewController: UIViewController {
   @IBOutlet private var chartControlsContainerView: UIView!
   @IBOutlet private var chartSegmentedControl: UISegmentedControl!
 
-  fileprivate let searchController = UISearchController(searchResultsController: nil)
-  fileprivate let searchSubject = BehaviorSubject<String>(value: "")
+  private let searchController = UISearchController(searchResultsController: nil)
+  private let searchSubject = BehaviorSubject<String>(value: "")
 
-  fileprivate let disposeBag = DisposeBag()
+  private let disposeBag = DisposeBag()
 
-  fileprivate enum Segues: String {
+  private enum Segues: String {
     case showFeed
   }
 
