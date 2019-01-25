@@ -11,6 +11,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
+import RxAppState
 import Charts
 
 final class FeedListViewController: UIViewController {
@@ -245,8 +246,10 @@ final class FeedListViewController: UIViewController {
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
-
-    Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
+    let appBecameActive = UIApplication.shared.rx.applicationDidBecomeActive.becomeVoid()
+    Observable.of(self.refreshButton.rx.tap.asObservable(),
+                  refreshControl.rx.controlEvent(.valueChanged).asObservable(),
+                  appBecameActive)
       .merge()
       .bind(to: self.viewModel.refresh)
       .disposed(by: self.disposeBag)
