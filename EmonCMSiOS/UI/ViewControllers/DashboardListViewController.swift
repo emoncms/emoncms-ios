@@ -18,6 +18,7 @@ final class DashboardListViewController: UITableViewController {
   var viewModel: DashboardListViewModel!
 
   private var emptyLabel: UILabel?
+  @IBOutlet private var refreshButton: UIBarButtonItem!
 
   private let disposeBag = DisposeBag()
 
@@ -68,7 +69,8 @@ final class DashboardListViewController: UITableViewController {
   private func setupBindings() {
     let refreshControl = self.refreshControl!
 
-    refreshControl.rx.controlEvent(.valueChanged)
+    Observable.of(self.refreshButton.rx.tap, refreshControl.rx.controlEvent(.valueChanged))
+      .merge()
       .bind(to: self.viewModel.refresh)
       .disposed(by: self.disposeBag)
 
