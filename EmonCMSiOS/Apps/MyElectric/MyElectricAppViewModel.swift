@@ -23,6 +23,7 @@ final class MyElectricAppViewModel: AppViewModel {
 
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)
+  let dateRange = BehaviorRelay<DateRange>(value: .relative(.hour8))
 
   // Outputs
   private(set) var title: Driver<String>
@@ -80,7 +81,8 @@ final class MyElectricAppViewModel: AppViewModel {
 
     let refreshSignal = Observable.of(
         timerIfActive.map { false },
-        feedsChangedSignal.map { true }
+        feedsChangedSignal.map { true },
+        self.dateRange.map { _ in return false }
       )
       .merge()
 
@@ -151,9 +153,11 @@ final class MyElectricAppViewModel: AppViewModel {
         return Observable.error(AppError.notConfigured)
     }
 
+    let dateRange = self.dateRange.value
+
     return Observable.zip(
       self.fetchPowerNowAndUsageToday(useFeedId: useFeedId, kwhFeedId: kwhFeedId),
-      self.fetchLineChartHistory(useFeedId: useFeedId),
+      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId),
       self.fetchBarChartHistory(kwhFeedId: kwhFeedId))
     {
       (powerNowAndUsageToday, lineChartData, barChartData) in
@@ -201,9 +205,10 @@ final class MyElectricAppViewModel: AppViewModel {
     }
   }
 
-  private func fetchLineChartHistory(useFeedId: String) -> Observable<[DataPoint<Double>]> {
-    let endTime = Date()
-    let startTime = endTime - (60 * 60 * 8)
+  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String) -> Observable<[DataPoint<Double>]> {
+    let dates = dateRange.calculateDates()
+    let startTime = dates.0
+    let endTime = dates.1
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
 
     return self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)

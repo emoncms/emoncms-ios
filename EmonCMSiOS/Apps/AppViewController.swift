@@ -20,6 +20,7 @@ class AppViewController: UIViewController {
   @IBOutlet private var bannerView: UIView!
   @IBOutlet private var bannerLabel: UILabel!
   @IBOutlet private var bannerSpinner: UIActivityIndicatorView!
+  @IBOutlet private var dateSegmentedControl: UISegmentedControl!
 
   private let disposeBag = DisposeBag()
 
@@ -43,6 +44,14 @@ class AppViewController: UIViewController {
   private func setupBindings() {
     self.viewModel.title
       .drive(self.rx.title)
+      .disposed(by: self.disposeBag)
+
+    self.dateSegmentedControl.rx.selectedSegmentIndex
+      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+      .map {
+        DateRange.relative(DateRange.RelativeTime(rawValue: $0) ?? .hour1)
+      }
+      .bind(to: viewModel.dateRange)
       .disposed(by: self.disposeBag)
 
     self.viewModel.errors

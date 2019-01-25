@@ -23,6 +23,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)
+  let dateRange = BehaviorRelay<DateRange>(value: .relative(.hour1))
 
   // Outputs
   private(set) var title: Driver<String>
@@ -79,7 +80,8 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
     let refreshSignal = Observable.of(
         timerIfActive.map { false },
-        feedsChangedSignal.map { true }
+        feedsChangedSignal.map { true },
+        self.dateRange.map { _ in return false }
       )
       .merge()
 
@@ -151,9 +153,11 @@ final class MySolarDivertAppViewModel: AppViewModel {
       return Observable.error(AppError.notConfigured)
     }
 
+    let dateRange = self.dateRange.value
+
     return Observable.zip(
       self.fetchPowerNow(useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId),
-      self.fetchLineChartHistory(useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId))
+      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId))
     {
       (powerNow, lineChartData) in
       return MySolarDivertData(updateTime: Date(),
@@ -179,9 +183,10 @@ final class MySolarDivertAppViewModel: AppViewModel {
     }
   }
 
-  private func fetchLineChartHistory(useFeedId: String, solarFeedId: String, divertFeedId: String) -> Observable<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>])> {
-    let endTime = Date()
-    let startTime = endTime - (60 * 60 * 8)
+  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String, divertFeedId: String) -> Observable<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>])> {
+    let dates = dateRange.calculateDates()
+    let startTime = dates.0
+    let endTime = dates.1
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
 
     let use = self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
