@@ -13,6 +13,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
 
   let mainController: MainController
 
+  #if DEBUG
   private static func isRunningTests() -> Bool {
     return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
   }
@@ -20,6 +21,10 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
   private static func isRunningUITests() -> Bool {
     return CommandLine.arguments.contains("--uitesting")
   }
+  #else
+  private static func isRunningTests() -> Bool { return false }
+  private static func isRunningUITests() -> Bool { return false }
+  #endif
 
   override init() {
     LogController.shared.initialise()
