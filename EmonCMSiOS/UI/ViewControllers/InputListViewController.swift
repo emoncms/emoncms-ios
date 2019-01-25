@@ -124,9 +124,9 @@ final class InputListViewController: UITableViewController {
       .drive(refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
 
-    Driver.combineLatest(self.viewModel.inputs, self.viewModel.isRefreshing)
-      .map { inputs, isRefreshing in
-        inputs.count == 0 && !isRefreshing
+    self.viewModel.inputs
+      .map {
+        $0.count == 0
       }
       .drive(onNext: { [weak self] empty in
         guard let self = self else { return }
