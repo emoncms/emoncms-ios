@@ -19,6 +19,7 @@ final class DashboardListViewController: UITableViewController {
 
   private var emptyLabel: UILabel?
   @IBOutlet private var refreshButton: UIBarButtonItem!
+  @IBOutlet private var lastUpdatedLabel: UILabel!
 
   private let disposeBag = DisposeBag()
 
@@ -74,6 +75,27 @@ final class DashboardListViewController: UITableViewController {
       .bind(to: self.viewModel.refresh)
       .disposed(by: self.disposeBag)
 
+    let dateFormatter = DateFormatter()
+    self.viewModel.updateTime
+      .map { time in
+        var string = "Last updated: "
+        if let time = time {
+          if time.timeIntervalSinceNow < -86400 {
+            dateFormatter.dateStyle = .medium
+            dateFormatter.timeStyle = .short
+          } else {
+            dateFormatter.dateStyle = .none
+            dateFormatter.timeStyle = .medium
+          }
+          string += dateFormatter.string(from: time)
+        } else {
+          string += "Never"
+        }
+        return string
+      }
+      .drive(self.lastUpdatedLabel.rx.text)
+      .disposed(by: self.disposeBag)
+
     self.viewModel.isRefreshing
       .drive(refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
@@ -92,6 +114,8 @@ final class DashboardListViewController: UITableViewController {
       }
       .drive(onNext: { [weak self] empty in
         guard let self = self else { return }
+
+        self.tableView.tableHeaderView?.isHidden = empty
 
         if empty {
           let emptyLabel = UILabel(frame: CGRect.zero)

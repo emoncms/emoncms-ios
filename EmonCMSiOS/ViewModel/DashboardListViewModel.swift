@@ -38,6 +38,7 @@ final class DashboardListViewModel {
 
   // Outputs
   private(set) var dashboards: Driver<[ListItem]>
+  private(set) var updateTime: Driver<Date?>
   private(set) var isRefreshing: Driver<Bool>
 
   init(account: AccountController, api: EmonCMSAPI) {
@@ -47,12 +48,18 @@ final class DashboardListViewModel {
     self.dashboardUpdateHelper = DashboardUpdateHelper(account: account, api: api)
 
     self.dashboards = Driver.never()
+    self.updateTime = Driver.never()
     self.isRefreshing = Driver.never()
 
     let dashboardsQuery = self.realm.objects(Dashboard.self).sorted(byKeyPath: #keyPath(Dashboard.id))
     self.dashboards = Observable.array(from: dashboardsQuery)
       .map(self.dashboardsToListItems)
       .asDriver(onErrorJustReturn: [])
+
+    self.updateTime = self.dashboards
+      .map { _ in Date() }
+      .startWith(nil)
+      .asDriver(onErrorJustReturn: Date())
 
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
