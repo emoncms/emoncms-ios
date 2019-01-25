@@ -111,16 +111,14 @@ final class DashboardListViewController: UITableViewController {
       })
       .disposed(by: self.disposeBag)
 
-    self.viewModel.dashboards
-      .map {
-        $0.count == 0
-      }
-      .drive(onNext: { [weak self] empty in
+    self.viewModel.serverNeedsUpdate
+      .distinctUntilChanged()
+      .drive(onNext: { [weak self] serverNeedsUpdate in
         guard let self = self else { return }
 
-        self.tableView.tableHeaderView?.isHidden = empty
+        self.tableView.tableHeaderView?.isHidden = serverNeedsUpdate
 
-        if empty {
+        if serverNeedsUpdate {
           let emptyLabel = UILabel(frame: CGRect.zero)
           emptyLabel.translatesAutoresizingMaskIntoConstraints = false
           emptyLabel.text = "Cannot fetch dashboards.\n\nYou may need to upgrade Emoncms to be able to fetch dashboards. Please check that your Emoncms is up-to-date and then try again."
@@ -162,6 +160,7 @@ final class DashboardListViewController: UITableViewController {
             attribute: .top,
             multiplier: 1,
             constant: 44.0 * 1.5))
+          self.view.layoutIfNeeded()
         } else {
           if let emptyLabel = self.emptyLabel {
             emptyLabel.removeFromSuperview()

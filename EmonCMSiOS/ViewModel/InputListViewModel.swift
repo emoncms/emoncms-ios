@@ -42,6 +42,10 @@ final class InputListViewModel {
   private(set) var inputs: Driver<[Section]>
   private(set) var updateTime: Driver<Date?>
   private(set) var isRefreshing: Driver<Bool>
+  lazy var serverNeedsUpdate: Driver<Bool> = {
+    return self.serverNeedsUpdateSubject.asDriver(onErrorJustReturn: true).distinctUntilChanged()
+  }()
+  private var serverNeedsUpdateSubject = PublishSubject<Bool>()
 
   init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
@@ -77,6 +81,12 @@ final class InputListViewModel {
       .flatMapLatest { [weak self] () -> Observable<()> in
         guard let self = self else { return Observable.empty() }
         return self.inputUpdateHelper.updateInputs()
+          .catchError { [weak self] error in
+            if error == EmonCMSAPI.APIError.invalidResponse {
+              self?.serverNeedsUpdateSubject.onNext(true)
+            }
+            throw error
+          }
           .catchErrorJustReturn(())
           .trackActivity(isRefreshing)
       }
