@@ -24,7 +24,10 @@ final class AddAccountViewController: FormViewController {
 
   private var nameRow: TextFieldRowFormer<FormTextFieldCell>?
   private var urlRow: TextFieldRowFormer<FormTextFieldCell>?
-  private var apikeyRow: TextFieldRowFormer<FormTextFieldCell>?
+  private var usernameRow: TextFieldRowFormer<FormTextFieldCell>?
+  private var passwordRow: TextFieldRowFormer<FormTextFieldCell>?
+  private var unamepwordApiKeySeperatorView: LabelViewFormer<FormLabelFooterView>?
+  private var apiKeyRow: TextFieldRowFormer<FormTextFieldCell>?
   private var scanQRRow: LabelRowFormer<FormLabelCell>?
 
   private let disposeBag = DisposeBag()
@@ -56,7 +59,7 @@ final class AddAccountViewController: FormViewController {
     let nameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       }.configure {
-        $0.placeholder = "Emoncms instance name"
+        $0.placeholder = "Name"
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.name.accept(text)
@@ -68,21 +71,44 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
       }.configure {
-        $0.placeholder = "Emoncms instance URL"
+        $0.placeholder = "URL"
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.url.accept(text)
     }
 
-    let apikeyRow = TextFieldRowFormer<FormTextFieldCell>() {
+    let usernameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
       }.configure {
-        $0.placeholder = "Emoncms API read Key"
+        $0.placeholder = "Username"
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
-        strongSelf.viewModel.apikey.accept(text)
+        strongSelf.viewModel.username.accept(text)
+    }
+
+    let passwordRow = TextFieldRowFormer<FormTextFieldCell>() {
+      $0.textField.font = .systemFont(ofSize: 15)
+      $0.textField.isSecureTextEntry = true
+      $0.textField.autocapitalizationType = .none
+      $0.textField.autocorrectionType = .no
+      }.configure {
+        $0.placeholder = "Password"
+      }.onTextChanged { [weak self] text in
+        guard let strongSelf = self else { return }
+        strongSelf.viewModel.password.accept(text)
+    }
+
+    let apiKeyRow = TextFieldRowFormer<FormTextFieldCell>() {
+      $0.textField.font = .systemFont(ofSize: 15)
+      $0.textField.autocapitalizationType = .none
+      $0.textField.autocorrectionType = .no
+      }.configure {
+        $0.placeholder = "API read key"
+      }.onTextChanged { [weak self] text in
+        guard let strongSelf = self else { return }
+        strongSelf.viewModel.apiKey.accept(text)
     }
 
     let scanQRRow = LabelRowFormer<FormLabelCell>() {
@@ -93,13 +119,26 @@ final class AddAccountViewController: FormViewController {
         self?.presentScanQR()
     }
 
+    let unamepwordApiKeySeperatorView = LabelViewFormer<FormLabelFooterView>() {
+      $0.titleLabel.textColor = .darkGray
+      }.configure {
+        $0.text = "\u{2014} or \u{2014}"
+    }
+
     self.nameRow = nameRow
     self.urlRow = urlRow
-    self.apikeyRow = apikeyRow
+    self.usernameRow = usernameRow
+    self.passwordRow = passwordRow
+    self.unamepwordApiKeySeperatorView = unamepwordApiKeySeperatorView
+    self.apiKeyRow = apiKeyRow
     self.scanQRRow = scanQRRow
 
-    let section = SectionFormer(rowFormer: nameRow, urlRow, apikeyRow, scanQRRow)
-    self.former.append(sectionFormer: section)
+    let section1 = SectionFormer(rowFormer: nameRow, urlRow)
+    let section2 = SectionFormer(rowFormer: usernameRow, passwordRow)
+      .set(footerViewFormer: unamepwordApiKeySeperatorView)
+    let section3 = SectionFormer(rowFormer: apiKeyRow)
+    let section4 = SectionFormer(rowFormer: scanQRRow)
+    self.former.append(sectionFormer: section1, section2, section3, section4)
   }
 
   private func setupBindings() {
@@ -151,11 +190,11 @@ final class AddAccountViewController: FormViewController {
 
   fileprivate func updateWithAccountCredentials(_ accountCredentials: AccountCredentials) {
     self.viewModel.url.accept(accountCredentials.url)
-    self.viewModel.apikey.accept(accountCredentials.apiKey)
+    self.viewModel.apiKey.accept(accountCredentials.apiKey)
     self.urlRow?.text = accountCredentials.url
     self.urlRow?.update()
-    self.apikeyRow?.text = accountCredentials.apiKey
-    self.apikeyRow?.update()
+    self.apiKeyRow?.text = accountCredentials.apiKey
+    self.apiKeyRow?.update()
   }
 
 }

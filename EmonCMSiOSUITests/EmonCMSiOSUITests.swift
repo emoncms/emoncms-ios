@@ -30,11 +30,11 @@ class EmonCMSiOSUITests: QuickSpec {
       app.navigationBars["Accounts"].buttons["Add"].tap()
 
       let tablesQuery = app.tables
-      tablesQuery.textFields["Emoncms instance name"].tap()
+      tablesQuery.textFields["Name"].tap()
       app.typeText(name)
-      tablesQuery.textFields["Emoncms instance URL"].tap()
+      tablesQuery.textFields["URL"].tap()
       app.typeText(url)
-      tablesQuery.textFields["Emoncms API read Key"].tap()
+      tablesQuery.textFields["API read key"].tap()
       app.typeText(apiKey)
 
       app.navigationBars["Account Details"].buttons["Save"].tap()

@@ -43,6 +43,38 @@ final class EmonCMSAPI {
     }
   }
 
+  private func convertNetworkError(_ error: Error) -> APIError {
+    if let error = error as? HTTPRequestProviderError {
+      switch error {
+      case .httpError(let code):
+        if code == 401 {
+          return .invalidCredentials
+        } else {
+          return .requestFailed
+        }
+      case .atsFailed:
+        return .atsFailed
+      case .networkError, .unknown:
+        return .requestFailed
+      }
+    }
+    return .requestFailed
+  }
+
+  func request(_ baseUrl: String, path: String, username: String, password: String) -> Observable<Data> {
+    let fullUrlString = baseUrl + "/" + path + ".json"
+    guard let url = URL(string: fullUrlString) else {
+      return Observable.error(APIError.requestFailed)
+    }
+
+    return self.requestProvider.request(url: url, formData: ["username":username, "password":password])
+      .catchError { [weak self] error -> Observable<Data> in
+        guard let self = self else { return Observable.error(APIError.requestFailed) }
+        AppLog.info("Network request error: \(error)")
+        return Observable.error(self.convertNetworkError(error))
+    }
+  }
+
   func request(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
     let url: URL
     do {
@@ -52,28 +84,10 @@ final class EmonCMSAPI {
     }
 
     return self.requestProvider.request(url: url)
-      .catchError { error -> Observable<Data> in
+      .catchError { [weak self] error -> Observable<Data> in
+        guard let self = self else { return Observable.error(APIError.requestFailed) }
         AppLog.info("Network request error: \(error)")
-
-        let returnError: APIError
-        if let error = error as? HTTPRequestProviderError {
-          switch error {
-          case .httpError(let code):
-            if code == 401 {
-              returnError = .invalidCredentials
-            } else {
-              returnError = .requestFailed
-            }
-          case .atsFailed:
-            returnError = .atsFailed
-          case .networkError, .unknown:
-            returnError = .requestFailed
-          }
-        } else {
-          returnError = .requestFailed
-        }
-
-        return Observable.error(returnError)
+        return Observable.error(self.convertNetworkError(error))
       }
   }
 

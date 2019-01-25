@@ -20,5 +20,6 @@ enum HTTPRequestProviderError: Error {
 protocol HTTPRequestProvider {
 
   func request(url: URL) -> Observable<Data>
+  func request(url: URL, formData: [String:String]) -> Observable<Data>
 
 }

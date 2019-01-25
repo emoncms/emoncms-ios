@@ -212,6 +212,10 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     ]
   }
 
+  private func userAuth(query: [String:String]) throws -> Any {
+    return ["success": true, "apikey_read": "abcdef"]
+  }
+
   private func error(query: [String:String]) throws -> Any {
     throw FakeHTTPProviderError.unknown
   }
@@ -232,8 +236,11 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       return mutableDictionary
     }
 
-    guard queryValues["apikey"] == "ilikecats" else {
-      return Observable.error(HTTPRequestProviderError.httpError(code: 401))
+    guard
+      queryValues["apikey"] == "ilikecats" ||
+        (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
+      else {
+        return Observable.error(HTTPRequestProviderError.httpError(code: 401))
     }
 
     self.createFeedData(untilTime: Date())
@@ -256,6 +263,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       routeFunc = inputList
     case "/dashboard/list.json":
       routeFunc = dashboardList
+    case "/user/auth.json":
+      routeFunc = userAuth
     default:
       routeFunc = error
       break
@@ -269,6 +278,16 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     }
 
     return Observable.error(HTTPRequestProviderError.unknown)
+  }
+
+  func request(url: URL, formData: [String:String]) -> Observable<Data> {
+    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Observable.error(HTTPRequestProviderError.unknown) }
+
+    var queryItems = components.queryItems ?? [URLQueryItem]()
+    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )
+    components.queryItems = queryItems
+
+    return self.request(url: components.url!)
   }
 
 }

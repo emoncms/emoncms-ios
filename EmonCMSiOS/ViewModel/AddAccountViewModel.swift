@@ -27,7 +27,9 @@ final class AddAccountViewModel {
 
   let name = BehaviorRelay<String>(value: "")
   let url = BehaviorRelay<String>(value: "")
-  let apikey = BehaviorRelay<String>(value: "")
+  let username = BehaviorRelay<String>(value: "")
+  let password = BehaviorRelay<String>(value: "")
+  let apiKey = BehaviorRelay<String>(value: "")
 
   init(realmController: RealmController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -37,16 +39,48 @@ final class AddAccountViewModel {
 
   func canSave() -> Observable<Bool> {
     return Observable
-      .combineLatest(self.name.asObservable(), self.url.asObservable(), self.apikey.asObservable()) { name, url, apikey in
-        return !name.isEmpty && !url.isEmpty && !apikey.isEmpty
+      .combineLatest(self.name.asObservable(),
+                     self.url.asObservable(),
+                     self.username.asObservable(),
+                     self.password.asObservable(),
+                     self.apiKey.asObservable())
+      { name, url, username, password, apiKey in
+        if name.isEmpty || url.isEmpty {
+          return false
+        }
+        if !username.isEmpty && !password.isEmpty {
+          return true
+        } else if !apiKey.isEmpty {
+          return true
+        }
+        return false
       }
       .distinctUntilChanged()
   }
 
   func validate() -> Observable<AccountCredentials> {
-    let accountCredentials = AccountCredentials(url: self.url.value, apiKey: self.apikey.value)
-    return self.api.feedList(accountCredentials)
-      .catchError { error -> Observable<[Feed]> in
+    let url = self.url.value
+    let username = self.username.value
+    let password = self.password.value
+    let apiKey = self.apiKey.value
+
+    let loginObservable: Observable<AccountCredentials>
+
+    if !apiKey.isEmpty {
+      let accountCredentials = AccountCredentials(url: url, apiKey: apiKey)
+      loginObservable = self.api.feedList(accountCredentials)
+        .map { _ in
+          return accountCredentials
+      }
+    } else {
+      loginObservable = self.api.userAuth(url: url, username: username, password: password)
+        .map { apiKey in
+          return AccountCredentials(url: url, apiKey: apiKey)
+      }
+    }
+
+    return loginObservable
+      .catchError { error in
         let returnError: AddAccountError
         if let error = error as? EmonCMSAPI.APIError {
           switch error {
@@ -62,9 +96,6 @@ final class AddAccountViewModel {
         }
 
         return Observable.error(returnError)
-      }
-      .map { _ in
-        return accountCredentials
     }
   }
 

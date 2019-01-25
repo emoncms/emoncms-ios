@@ -27,7 +27,10 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
       return mutableDictionary
     }
 
-    guard queryValues["apikey"] == "ilikecats" else {
+    guard
+      queryValues["apikey"] == "ilikecats" ||
+      (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
+    else {
       return Observable.error(HTTPRequestProviderError.httpError(code: 401))
     }
 
@@ -53,6 +56,8 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
       responseString = "[{\"id\":\"1\",\"nodeid\":\"1\",\"name\":\"use\",\"description\":\"\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"1186\"},{\"id\":\"2\",\"nodeid\":\"1\",\"name\":\"use_kwh\",\"description\":\"\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"189.12940747385\"}]"
     case "/dashboard/list.json":
       responseString = "[{\"id\":1,\"alias\":\"\",\"name\":\"dash1\",\"description\":\"\"},{\"id\":2,\"alias\":\"\",\"name\":\"dash2\",\"description\":\"\"}]"
+    case "/user/auth.json":
+      responseString = "{\"success\":true,\"apikey_read\":\"abcdef\"}"
     default:
       break
     }
@@ -62,6 +67,16 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
     }
 
     return Observable.empty()
+  }
+
+  func request(url: URL, formData: [String:String]) -> Observable<Data> {
+    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Observable.error(HTTPRequestProviderError.unknown) }
+
+    var queryItems = components.queryItems ?? [URLQueryItem]()
+    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )
+    components.queryItems = queryItems
+
+    return self.request(url: components.url!)
   }
 
 }
