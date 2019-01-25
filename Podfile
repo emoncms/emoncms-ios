@@ -14,6 +14,7 @@ def shared_app_pods
     pod 'XCGLogger', '~> 6.1'
     pod 'Locksmith', '~> 4.0'
     pod 'RxRealm', '~> 0.7'
+    pod 'RxAppState', '~> 1.4'
 end
 
 target 'EmonCMSiOS' do
