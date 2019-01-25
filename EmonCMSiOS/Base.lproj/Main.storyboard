@@ -476,7 +476,7 @@
         <scene sceneID="aAq-Kx-yeV">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ebM-v0-Itg" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Inputs" image="tab_list" id="UjD-9J-ctJ"/>
+                    <tabBarItem key="tabBarItem" title="Inputs" image="tab_right_arrow" id="UjD-9J-ctJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="ifd-KW-BSh">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
@@ -634,7 +634,7 @@
         <scene sceneID="mvM-W8-JjT">
             <objects>
                 <navigationController id="PfM-wd-F5L" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Dashboards" image="tab_list" id="5pr-7q-w7w"/>
+                    <tabBarItem key="tabBarItem" title="Dashboards" image="tab_dashboard" id="5pr-7q-w7w"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="4ij-eZ-FW4">
                         <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -649,8 +649,10 @@
         </scene>
     </scenes>
     <resources>
+        <image name="tab_dashboard" width="25" height="25"/>
         <image name="tab_leaf" width="25" height="25"/>
         <image name="tab_list" width="25" height="25"/>
+        <image name="tab_right_arrow" width="25" height="25"/>
         <image name="tab_wrench" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
