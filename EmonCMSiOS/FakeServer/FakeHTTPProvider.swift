@@ -199,18 +199,16 @@ final class FakeHTTPProvider: HTTPRequestProvider {
   private func inputList(query: [String:String]) throws -> Any {
     return [
       ["id": "1", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
-      ["id": "2", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
-      ["id": "3", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
-      ["id": "4", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "2", "name": "Input 2", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "3", "name": "Input 3", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "4", "name": "Input 4", "nodeid": "1", "description": "", "time": 0, "value": 0],
     ]
   }
 
   private func dashboardList(query: [String:String]) throws -> Any {
     return [
       ["id": 1, "name": "Dashboard 1", "alias": "", "description": ""],
-      ["id": 2, "name": "Dashboard 1", "alias": "", "description": ""],
-      ["id": 3, "name": "Dashboard 1", "alias": "", "description": ""],
-      ["id": 4, "name": "Dashboard 1", "alias": "", "description": ""],
+      ["id": 2, "name": "Dashboard 2", "alias": "", "description": ""],
     ]
   }
 
