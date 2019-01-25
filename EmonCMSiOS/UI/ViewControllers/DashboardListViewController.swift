@@ -31,6 +31,19 @@ final class DashboardListViewController: UITableViewController {
     self.setupBindings()
   }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    // Annoyingly this has to be in DIDappear and not WILLappear, otherwise it causes a weird
+    // navigation bar bug when going back to the feed list view from a feed detail view.
+    self.viewModel.active.accept(true)
+  }
+
+  override func viewDidDisappear(_ animated: Bool) {
+    super.viewDidDisappear(animated)
+    self.viewModel.active.accept(false)
+  }
+
   private func setupDataSource() {
     let dataSource = RxTableViewSectionedReloadDataSource<DashboardListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
