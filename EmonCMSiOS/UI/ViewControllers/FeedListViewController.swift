@@ -18,16 +18,16 @@ final class FeedListViewController: UIViewController {
   var viewModel: FeedListViewModel!
   let chartViewModel = BehaviorRelay<FeedChartViewModel?>(value: nil)
 
-  @IBOutlet fileprivate var tableView: UITableView!
-  @IBOutlet fileprivate var refreshButton: UIBarButtonItem!
-  @IBOutlet fileprivate var lastUpdatedLabel: UILabel!
-  @IBOutlet fileprivate var chartContainerView: UIView!
-  @IBOutlet fileprivate var chartContainerViewBottomConstraint: NSLayoutConstraint!
-  @IBOutlet fileprivate var chartView: LineChartView!
-  @IBOutlet fileprivate var chartSpinner: UIActivityIndicatorView!
-  @IBOutlet fileprivate var chartLabelContainerView: UIView!
-  @IBOutlet fileprivate var chartControlsContainerView: UIView!
-  @IBOutlet fileprivate var chartSegmentedControl: UISegmentedControl!
+  @IBOutlet private var tableView: UITableView!
+  @IBOutlet private var refreshButton: UIBarButtonItem!
+  @IBOutlet private var lastUpdatedLabel: UILabel!
+  @IBOutlet private var chartContainerView: UIView!
+  @IBOutlet private var chartContainerViewBottomConstraint: NSLayoutConstraint!
+  @IBOutlet private var chartView: LineChartView!
+  @IBOutlet private var chartSpinner: UIActivityIndicatorView!
+  @IBOutlet private var chartLabelContainerView: UIView!
+  @IBOutlet private var chartControlsContainerView: UIView!
+  @IBOutlet private var chartSegmentedControl: UISegmentedControl!
 
   fileprivate let searchController = UISearchController(searchResultsController: nil)
   fileprivate let searchSubject = BehaviorSubject<String>(value: "")
