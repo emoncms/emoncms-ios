@@ -19,11 +19,14 @@ final class AddAccountViewModel {
     case httpsRequired
     case networkFailed
     case invalidCredentials
+    case saveFailed
   }
 
   private let realmController: RealmController
   private let keychainController: KeychainController
   private let api: EmonCMSAPI
+  private let realm: Realm
+  private let account: Account?
 
   let name = BehaviorRelay<String>(value: "")
   let url = BehaviorRelay<String>(value: "")
@@ -31,10 +34,19 @@ final class AddAccountViewModel {
   let password = BehaviorRelay<String>(value: "")
   let apiKey = BehaviorRelay<String>(value: "")
 
-  init(realmController: RealmController, api: EmonCMSAPI) {
+  init(realmController: RealmController, api: EmonCMSAPI, accountId: String? = nil) {
     self.realmController = realmController
     self.keychainController = KeychainController()
     self.api = api
+    self.realm = realmController.createRealm()
+    if let accountId = accountId {
+      let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId)!
+      self.account = account
+      self.name.accept(account.name)
+      self.url.accept(account.url)
+    } else {
+      self.account = nil
+    }
   }
 
   func canSave() -> Observable<Bool> {
@@ -44,27 +56,34 @@ final class AddAccountViewModel {
                      self.username.asObservable(),
                      self.password.asObservable(),
                      self.apiKey.asObservable())
-      { name, url, username, password, apiKey in
+      { [weak self] name, url, username, password, apiKey in
+        guard let self = self else { return false }
+
         if name.isEmpty || url.isEmpty {
           return false
         }
+
+        if self.account != nil {
+          return true
+        }
+
         if !username.isEmpty && !password.isEmpty {
           return true
         } else if !apiKey.isEmpty {
           return true
         }
+
         return false
       }
       .distinctUntilChanged()
   }
 
-  func validate() -> Observable<AccountCredentials> {
-    let url = self.url.value
-    let username = self.username.value
-    let password = self.password.value
-    let apiKey = self.apiKey.value
+  private func validate(name: String, url: String, username: String, password: String, apiKey: String) -> Observable<AccountCredentials?> {
+    if self.account != nil {
+      return Observable.just(nil)
+    }
 
-    let loginObservable: Observable<AccountCredentials>
+    let loginObservable: Observable<AccountCredentials?>
 
     if !apiKey.isEmpty {
       let accountCredentials = AccountCredentials(url: url, apiKey: apiKey)
@@ -99,27 +118,38 @@ final class AddAccountViewModel {
     }
   }
 
-  func saveAccount(withUrl url: String, apiKey: String) -> Observable<String> {
-    return Observable.create { observer -> Disposable in
-      let realm = self.realmController.createRealm()
+  func saveAccount() -> Observable<String> {
+    let name = self.name.value
+    let url = self.url.value
+    let username = self.username.value
+    let password = self.password.value
+    let apiKey = self.apiKey.value
 
-      let account = Account()
-      account.name = self.name.value
-      account.url = url
+    return self.validate(name: name, url: url, username: username, password: password, apiKey: apiKey)
+      .observeOn(MainScheduler.asyncInstance)
+      .map { [weak self] credentials in
+        guard let self = self else { throw AddAccountError.saveFailed }
 
-      do {
-        try self.keychainController.saveAccount(forId: account.uuid, apiKey: apiKey)
-        try realm.write {
-          realm.add(account)
+        let account = self.account ?? Account()
+
+        do {
+          if let credentials = credentials {
+            try self.keychainController.saveAccount(forId: account.uuid, apiKey: credentials.apiKey)
+          }
+
+          try self.realm.write {
+            account.name = name
+            account.url = url
+            if account.realm == nil {
+              self.realm.add(account)
+            }
+          }
+        } catch {
+          throw AddAccountError.saveFailed
         }
-        observer.onNext(account.uuid)
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
-      }
 
-      return Disposables.create()
-    }
+        return account.uuid
+      }
   }
 
 }

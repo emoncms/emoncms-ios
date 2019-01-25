@@ -124,8 +124,8 @@ final class AccountListViewModel {
       return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
   }
 
-  func addAccountViewModel() -> AddAccountViewModel {
-    return AddAccountViewModel(realmController: self.realmController, api: self.api)
+  func addAccountViewModel(accountId: String? = nil) -> AddAccountViewModel {
+    return AddAccountViewModel(realmController: self.realmController, api: self.api, accountId: accountId)
   }
 
   func deleteAccount(withId id: String) -> Observable<()> {

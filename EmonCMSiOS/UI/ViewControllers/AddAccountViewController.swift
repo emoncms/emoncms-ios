@@ -56,10 +56,13 @@ final class AddAccountViewController: FormViewController {
   }
 
   private func setupFormer() {
+    let viewModel = self.viewModel!
+
     let nameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       }.configure {
         $0.placeholder = "Name"
+        $0.text = viewModel.name.value
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.name.accept(text)
@@ -72,6 +75,7 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "URL"
+        $0.text = viewModel.url.value
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.url.accept(text)
@@ -83,6 +87,7 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Username"
+        $0.text = viewModel.username.value
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.username.accept(text)
@@ -95,6 +100,7 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Password"
+        $0.text = viewModel.password.value
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.password.accept(text)
@@ -106,6 +112,7 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "API read key"
+        $0.text = viewModel.apiKey.value
       }.onTextChanged { [weak self] text in
         guard let strongSelf = self else { return }
         strongSelf.viewModel.apiKey.accept(text)
@@ -145,12 +152,7 @@ final class AddAccountViewController: FormViewController {
     let action = CocoaAction(enabledIf: self.viewModel.canSave()) { [weak self] _ -> Observable<Void> in
       guard let strongSelf = self else { return Observable.empty() }
 
-      return strongSelf.viewModel.validate()
-        .observeOn(MainScheduler.asyncInstance)
-        .flatMap { [weak self] account -> Observable<String> in
-          guard let strongSelf = self else { return Observable.empty() }
-          return strongSelf.viewModel.saveAccount(withUrl: account.url, apiKey: account.apiKey)
-        }
+      return strongSelf.viewModel.saveAccount()
         .do(onNext: { [weak self] accountId in
           guard let strongSelf = self else { return }
           strongSelf.finishedSubject.onNext(accountId)
@@ -169,6 +171,8 @@ final class AddAccountViewController: FormViewController {
               message = "The credentials are invalid."
             case .networkFailed:
               message = "The connection failed. Please try again."
+            case .saveFailed:
+              message = "Something failed. Please try again."
             }
           } else {
             message = "An unknown error ocurred."

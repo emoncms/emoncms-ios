@@ -72,7 +72,11 @@ final class AccountListViewController: UITableViewController {
       .modelSelected(AccountListViewModel.ListItem.self)
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
-        self.login(toAccountWithId: $0.accountId)
+        if self.tableView.isEditing {
+          self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: $0.accountId)
+        } else {
+          self.login(toAccountWithId: $0.accountId)
+        }
       })
       .disposed(by: self.disposeBag)
 
@@ -218,15 +222,18 @@ extension AccountListViewController {
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.addAccount.rawValue {
+      let editAccountId = sender as? String
       let addAccountViewController = segue.destination as! AddAccountViewController
-      let viewModel = self.viewModel.addAccountViewModel()
+      let viewModel = self.viewModel.addAccountViewModel(accountId: editAccountId)
       addAccountViewController.viewModel = viewModel
       addAccountViewController.finished
         .drive(onNext: { [weak self] accountId in
           guard let self = self else { return }
-          guard let accountId = accountId else { return }
           self.navigationController?.popToViewController(self, animated: true)
-          self.login(toAccountWithId: accountId)
+          if editAccountId == nil {
+            guard let accountId = accountId else { return }
+            self.login(toAccountWithId: accountId)
+          }
         })
         .disposed(by: self.disposeBag)
     }
