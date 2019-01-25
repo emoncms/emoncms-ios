@@ -55,9 +55,6 @@ final class AddAccountViewController: FormViewController {
   private func setupFormer() {
     let nameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
-      $0.textField.keyboardType = .URL
-      $0.textField.autocapitalizationType = .none
-      $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Emoncms instance name"
       }.onTextChanged { [weak self] text in
