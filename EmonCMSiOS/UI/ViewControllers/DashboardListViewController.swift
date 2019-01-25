@@ -136,6 +136,7 @@ final class DashboardListViewController: UITableViewController {
     }
 
     let viewController = SFSafariViewController(url: url)
+    viewController.dismissButtonStyle = .close
     self.present(viewController, animated: true, completion: nil)
   }
 
