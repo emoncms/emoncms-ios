@@ -45,7 +45,7 @@ final class InputListViewModel {
   lazy var serverNeedsUpdate: Driver<Bool> = {
     return self.serverNeedsUpdateSubject.asDriver(onErrorJustReturn: true).distinctUntilChanged()
   }()
-  private var serverNeedsUpdateSubject = PublishSubject<Bool>()
+  private var serverNeedsUpdateSubject = ReplaySubject<Bool>.create(bufferSize: 1)
 
   init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
@@ -92,6 +92,8 @@ final class InputListViewModel {
       }
       .subscribe()
       .disposed(by: self.disposeBag)
+
+    self.serverNeedsUpdateSubject.onNext(false)
   }
 
   private func inputsToSections(_ inputs: [Input]) -> [Section] {

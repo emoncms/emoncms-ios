@@ -43,7 +43,7 @@ final class DashboardListViewModel {
   lazy var serverNeedsUpdate: Driver<Bool> = {
     return self.serverNeedsUpdateSubject.asDriver(onErrorJustReturn: true).distinctUntilChanged()
   }()
-  private var serverNeedsUpdateSubject = PublishSubject<Bool>()
+  private var serverNeedsUpdateSubject = ReplaySubject<Bool>.create(bufferSize: 1)
 
   init(account: AccountController, api: EmonCMSAPI) {
     self.account = account
@@ -89,6 +89,8 @@ final class DashboardListViewModel {
       }
       .subscribe()
       .disposed(by: self.disposeBag)
+
+    self.serverNeedsUpdateSubject.onNext(false)
   }
 
   private func dashboardsToListItems(_ dashboards: [Dashboard]) -> [ListItem] {

@@ -111,21 +111,33 @@ final class DashboardListViewController: UITableViewController {
       })
       .disposed(by: self.disposeBag)
 
-    self.viewModel.serverNeedsUpdate
-      .distinctUntilChanged()
-      .drive(onNext: { [weak self] serverNeedsUpdate in
+    Driver.combineLatest(
+      self.viewModel.serverNeedsUpdate
+        .distinctUntilChanged(),
+      self.viewModel.dashboards
+        .map { $0.isEmpty }
+        .distinctUntilChanged()
+      )
+      .drive(onNext: { [weak self] serverNeedsUpdate, dashboardsEmpty in
         guard let self = self else { return }
 
-        self.tableView.tableHeaderView?.isHidden = serverNeedsUpdate
+        let showLabel = serverNeedsUpdate || dashboardsEmpty
 
-        if serverNeedsUpdate {
-          let emptyLabel = UILabel(frame: CGRect.zero)
+        self.tableView.tableHeaderView?.isHidden = showLabel
+
+        if showLabel {
+          let emptyLabel = self.emptyLabel ?? UILabel(frame: CGRect.zero)
+          self.emptyLabel = emptyLabel
           emptyLabel.translatesAutoresizingMaskIntoConstraints = false
-          emptyLabel.text = "Cannot fetch dashboards.\n\nYou may need to upgrade Emoncms to be able to fetch dashboards. Please check that your Emoncms is up-to-date and then try again."
           emptyLabel.numberOfLines = 0
           emptyLabel.textColor = .lightGray
           emptyLabel.textAlignment = .center
-          self.emptyLabel = emptyLabel
+
+          if serverNeedsUpdate {
+            emptyLabel.text = "Cannot fetch dashboards.\n\nYou may need to upgrade Emoncms to be able to fetch dashboards. Please check that your Emoncms is up-to-date and then try again."
+          } else {
+            emptyLabel.text = "No dashboards"
+          }
 
           self.view.addSubview(emptyLabel)
           self.view.addConstraint(NSLayoutConstraint(

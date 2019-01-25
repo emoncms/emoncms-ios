@@ -35,6 +35,8 @@ final class FeedListViewController: UIViewController {
 
   private let disposeBag = DisposeBag()
 
+  private var emptyLabel: UILabel?
+
   private enum Segues: String {
     case showFeed
   }
@@ -286,6 +288,65 @@ final class FeedListViewController: UIViewController {
 
     self.searchSubject
       .bind(to: self.viewModel.searchTerm)
+      .disposed(by: self.disposeBag)
+
+    self.viewModel.feeds
+      .map {
+        $0.count == 0
+      }
+      .drive(onNext: { [weak self] empty in
+        guard let self = self else { return }
+
+        self.tableView.tableHeaderView?.isHidden = empty
+
+        if empty {
+          let emptyLabel = UILabel(frame: CGRect.zero)
+          emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+          emptyLabel.text = "No feeds"
+          emptyLabel.numberOfLines = 0
+          emptyLabel.textColor = .lightGray
+          self.emptyLabel = emptyLabel
+
+          let tableView = self.tableView!
+          tableView.addSubview(emptyLabel)
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: tableView,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .leading,
+            relatedBy: .greaterThanOrEqual,
+            toItem: tableView,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 8))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .trailing,
+            relatedBy: .lessThanOrEqual,
+            toItem: tableView,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 8))
+          tableView.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: tableView,
+            attribute: .top,
+            multiplier: 1,
+            constant: 44.0 * 1.5))
+        } else {
+          if let emptyLabel = self.emptyLabel {
+            emptyLabel.removeFromSuperview()
+          }
+        }
+      })
       .disposed(by: self.disposeBag)
   }
 
