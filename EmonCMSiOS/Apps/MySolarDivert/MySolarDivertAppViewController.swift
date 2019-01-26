@@ -41,10 +41,15 @@ final class MySolarDivertAppViewController: AppViewController {
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolarDivert
 
     self.houseLabelView.alignment = .left
+    self.houseLabelView.valueColor = EmonCMSColors.Apps.House
     self.divertLabelView.alignment = .center
+    self.divertLabelView.valueColor = EmonCMSColors.Apps.Divert
     self.totalUseLabelView.alignment = .right
+    self.totalUseLabelView.valueColor = EmonCMSColors.Apps.House
     self.importLabelView.alignment = .left
+    self.importLabelView.valueColor = EmonCMSColors.Apps.Grid
     self.solarLabelView.alignment = .right
+    self.solarLabelView.valueColor = EmonCMSColors.Apps.Solar
 
     self.setupCharts()
     self.setupBoxView()
