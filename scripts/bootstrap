@@ -1,2 +1,2 @@
 #!/bin/bash
-carthage bootstrap $@ --platform ios --no-use-binaries || exit $?
+carthage bootstrap $@ --platform ios --no-use-binaries --verbose || exit $?
