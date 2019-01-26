@@ -1,0 +1,16 @@
+github "ReactiveX/RxSwift" ~> 4.4
+github "realm/realm-cocoa" ~> 3.13
+github "danielgindi/Charts" ~> 3.2
+github "ra1028/Former" ~> 1.7
+github "DaveWoodCom/XCGLogger" ~> 6.1
+github "matthewpalmer/Locksmith" ~> 4.0
+github "pixeldock/RxAppState" ~> 1.4
+
+github "RxSwiftCommunity/Action" ~> 3.9
+github "RxSwiftCommunity/RxRealm" ~> 0.7
+github "RxSwiftCommunity/RxDataSources" ~> 3.1
+
+# Tests
+github "Quick/Quick" ~> 1.3
+github "Quick/Nimble" ~> 7.3
+github "uber/ios-snapshot-test-case" ~> 5.0

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="gBp-2p-Zj2">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="MwZ-pf-NHd">
+            <objects>
+                <navigationController id="gBp-2p-Zj2" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="7rg-kL-XY8">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="dJY-Br-IiE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nxZ-xO-ip6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-112" y="408"/>
+        </scene>
+        <!--Action demo-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController title="Action demo" id="BYZ-38-t0r" customClass="ViewController" customModule="Demo" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZL-3G-VZh">
+                                <rect key="frame" x="151" y="31" width="73" height="30"/>
+                                <state key="normal" title="Show alert"/>
+                            </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Doing some work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ulN-2s-mAd">
+                                <rect key="frame" x="121" y="534" width="133" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="OrY-7C-i77">
+                                <rect key="frame" x="290" y="496" width="20" height="20"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rn7-U4-1tI">
+                                <rect key="frame" x="131" y="107" width="113" height="30"/>
+                                <state key="normal" title="Custom button 1"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KoY-Sn-0Iw">
+                                <rect key="frame" x="130" y="145" width="115" height="30"/>
+                                <state key="normal" title="Custom button 2"/>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dQM-dN-bIX">
+                                <rect key="frame" x="0.0" y="195" width="375" height="319"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scroll me down to see some refreshing!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uj3-gB-bND">
+                                        <rect key="frame" x="20" y="20" width="302" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.89098590349999995" green="0.89098590349999995" blue="0.89098590349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstItem="Uj3-gB-bND" firstAttribute="leading" secondItem="dQM-dN-bIX" secondAttribute="leading" constant="20" id="PYI-Ur-wcb"/>
+                                    <constraint firstAttribute="trailing" secondItem="Uj3-gB-bND" secondAttribute="trailing" constant="20" id="gCD-VB-WIR"/>
+                                    <constraint firstAttribute="bottom" secondItem="Uj3-gB-bND" secondAttribute="bottom" constant="1000" id="tvW-mI-xT5"/>
+                                    <constraint firstItem="Uj3-gB-bND" firstAttribute="top" secondItem="dQM-dN-bIX" secondAttribute="top" constant="20" id="x0u-j9-4qQ"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="Rn7-U4-1tI" firstAttribute="centerX" secondItem="SZL-3G-VZh" secondAttribute="centerX" id="2z3-Ib-Bzb"/>
+                            <constraint firstItem="OrY-7C-i77" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Dyl-A6-bud"/>
+                            <constraint firstItem="KoY-Sn-0Iw" firstAttribute="centerX" secondItem="Rn7-U4-1tI" secondAttribute="centerX" id="Esh-u5-4Vv"/>
+                            <constraint firstItem="KoY-Sn-0Iw" firstAttribute="top" secondItem="Rn7-U4-1tI" secondAttribute="bottom" constant="8" id="Gph-05-VIV"/>
+                            <constraint firstItem="Rn7-U4-1tI" firstAttribute="top" secondItem="SZL-3G-VZh" secondAttribute="bottom" constant="46" id="Hhn-4d-Hi7"/>
+                            <constraint firstItem="ulN-2s-mAd" firstAttribute="top" secondItem="dQM-dN-bIX" secondAttribute="bottom" constant="20" id="NXR-0l-QTf"/>
+                            <constraint firstItem="SZL-3G-VZh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="Np0-fa-c3f"/>
+                            <constraint firstAttribute="trailing" secondItem="dQM-dN-bIX" secondAttribute="trailing" id="Qlt-09-8eQ"/>
+                            <constraint firstItem="ulN-2s-mAd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="a5T-qt-gDR"/>
+                            <constraint firstItem="OrY-7C-i77" firstAttribute="top" secondItem="ulN-2s-mAd" secondAttribute="bottom" constant="8" id="eqf-Tp-OJd"/>
+                            <constraint firstItem="SZL-3G-VZh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="hb0-j9-0rK"/>
+                            <constraint firstItem="dQM-dN-bIX" firstAttribute="top" secondItem="KoY-Sn-0Iw" secondAttribute="bottom" constant="20" id="jLV-Ir-dwc"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="OrY-7C-i77" secondAttribute="bottom" constant="20" id="jhU-Jj-aCX"/>
+                            <constraint firstItem="dQM-dN-bIX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rEh-Uh-96f"/>
+                        </constraints>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" title="Action demo" id="6DL-Fh-JcF">
+                        <barButtonItem key="leftBarButtonItem" title="Custom3" id="piR-Gf-7t2"/>
+                        <barButtonItem key="rightBarButtonItem" title="Bar Item" id="7hK-lr-Izl"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="activityIndicator" destination="OrY-7C-i77" id="VCS-wT-Lb8"/>
+                        <outlet property="button" destination="SZL-3G-VZh" id="IT1-GJ-Qic"/>
+                        <outlet property="button1" destination="Rn7-U4-1tI" id="zLN-qN-lSH"/>
+                        <outlet property="button2" destination="KoY-Sn-0Iw" id="AUC-hM-Glv"/>
+                        <outlet property="scrollView" destination="dQM-dN-bIX" id="kmJ-G9-uda"/>
+                        <outlet property="workingLabel" destination="ulN-2s-mAd" id="17Y-xo-0lM"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="648" y="408"/>
+        </scene>
+    </scenes>
+</document>

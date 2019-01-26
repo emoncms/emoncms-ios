@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		041A5BD40389B995856B5719 /* Pods_EmonCMSiOSUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C80089414F7846041813D799 /* Pods_EmonCMSiOSUITests.framework */; };
 		1E7C55F921EEFFED0009809C /* MySolarDivertAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7C55F721EEFFED0009809C /* MySolarDivertAppViewModel.swift */; };
 		1E7C55FA21EEFFED0009809C /* MySolarDivertAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */; };
 		1EA783C221EF78F8002D6A3A /* ChartHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */; };
@@ -21,7 +20,6 @@
 		1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		1EE02C1521ED251000C6AE9A /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1421ED251000C6AE9A /* AccountListViewModel.swift */; };
 		1EE02C1721ED262700C6AE9A /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1621ED262700C6AE9A /* AccountListViewController.swift */; };
-		672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
@@ -43,7 +41,6 @@
 		C925518821F4BD99008342D8 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
 		C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */; };
 		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
-		C92A5C4921C9996800B1D5CD /* Pods_EmonCMSiOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */; };
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
@@ -52,6 +49,30 @@
 		C949985621FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */; };
 		C949985721FA7FFA008FB8AE /* DashboardListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
+		C949986621FBD6FE008FB8AE /* RxAppState.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985B21FBD6FE008FB8AE /* RxAppState.framework */; };
+		C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985C21FBD6FE008FB8AE /* RxCocoa.framework */; };
+		C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985D21FBD6FE008FB8AE /* Realm.framework */; };
+		C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
+		C949986A21FBD6FE008FB8AE /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985F21FBD6FE008FB8AE /* RxRealm.framework */; };
+		C949986B21FBD6FE008FB8AE /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986021FBD6FE008FB8AE /* RealmSwift.framework */; };
+		C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986121FBD6FE008FB8AE /* Former.framework */; };
+		C949986D21FBD6FE008FB8AE /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; };
+		C949986E21FBD6FE008FB8AE /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986321FBD6FE008FB8AE /* XCGLogger.framework */; };
+		C949986F21FBD6FE008FB8AE /* Action.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986421FBD6FE008FB8AE /* Action.framework */; };
+		C949987021FBD6FE008FB8AE /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986521FBD6FE008FB8AE /* RxSwift.framework */; };
+		C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; };
+		C949987521FBD717008FB8AE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; };
+		C949987621FBD717008FB8AE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; };
+		C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987721FBD8D9008FB8AE /* RxDataSources.framework */; };
+		C949987A21FBD900008FB8AE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; };
+		C949987B21FBD900008FB8AE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; };
+		C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987C21FBD94B008FB8AE /* Differentiator.framework */; };
+		C949988121FBDA65008FB8AE /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */; };
+		C94998AB21FC65C9008FB8AE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94998AC21FC65CD008FB8AE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94998AF21FC65DB008FB8AE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94998B021FC65DE008FB8AE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
@@ -134,6 +155,29 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		C94998AA21FC65BB008FB8AE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */,
+				C94998AC21FC65CD008FB8AE /* Quick.framework in CopyFiles */,
+				C94998AB21FC65C9008FB8AE /* Nimble.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C94998AE21FC65D4008FB8AE /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C94998B021FC65DE008FB8AE /* Quick.framework in CopyFiles */,
+				C94998AF21FC65DB008FB8AE /* Nimble.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C97284E41DA594C20010C7B7 /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -157,7 +201,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSToday.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E7C55F721EEFFED0009809C /* MySolarDivertAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppViewModel.swift; sourceTree = "<group>"; };
 		1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppViewController.swift; sourceTree = "<group>"; };
 		1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHelpers.swift; sourceTree = "<group>"; };
@@ -171,17 +214,6 @@
 		1EE02C1221ED116900C6AE9A /* RealmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmController.swift; sourceTree = "<group>"; };
 		1EE02C1421ED251000C6AE9A /* AccountListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewModel.swift; sourceTree = "<group>"; };
 		1EE02C1621ED262700C6AE9A /* AccountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
-		29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.release.xcconfig"; sourceTree = "<group>"; };
-		67F4204E6A2CDCD577342B5E /* Pods-EmonCMSiOSUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSUITests/Pods-EmonCMSiOSUITests.release.xcconfig"; sourceTree = "<group>"; };
-		73EE7C16F303D6BC48C8C1AC /* Pods-EmonCMSToday.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSToday.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSToday/Pods-EmonCMSToday.debug.xcconfig"; sourceTree = "<group>"; };
-		813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		81A559E6ED8F91EC2FBF7532 /* Pods-EmonCMSiOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		8F5242184EE98DEE83793B01 /* Pods_EmonCMSWatch_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSWatch_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		93CB7B88FA88A66E1910F1B8 /* Pods-EmonCMSiOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.debug.xcconfig"; sourceTree = "<group>"; };
-		9B2032E8E38F1F567EC3D272 /* Pods-EmonCMSiOSUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSUITests/Pods-EmonCMSiOSUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		ACFF4FEDDBF5BF5145039E6D /* Pods-EmonCMSWatch Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.release.xcconfig"; sourceTree = "<group>"; };
-		C80089414F7846041813D799 /* Pods_EmonCMSiOSUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_EmonCMSiOSUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDateValueFormatter.swift; sourceTree = "<group>"; };
@@ -204,7 +236,6 @@
 		C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigViewModel.swift; sourceTree = "<group>"; };
 		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
-		C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_EmonCMSiOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewController.swift; sourceTree = "<group>"; };
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
@@ -213,6 +244,23 @@
 		C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+User.swift"; sourceTree = "<group>"; };
+		C949985B21FBD6FE008FB8AE /* RxAppState.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxAppState.framework; path = Carthage/Build/iOS/RxAppState.framework; sourceTree = "<group>"; };
+		C949985C21FBD6FE008FB8AE /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
+		C949985D21FBD6FE008FB8AE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
+		C949985E21FBD6FE008FB8AE /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
+		C949985F21FBD6FE008FB8AE /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
+		C949986021FBD6FE008FB8AE /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
+		C949986121FBD6FE008FB8AE /* Former.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Former.framework; path = Carthage/Build/iOS/Former.framework; sourceTree = "<group>"; };
+		C949986221FBD6FE008FB8AE /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
+		C949986321FBD6FE008FB8AE /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
+		C949986421FBD6FE008FB8AE /* Action.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Action.framework; path = Carthage/Build/iOS/Action.framework; sourceTree = "<group>"; };
+		C949986521FBD6FE008FB8AE /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
+		C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
+		C949987221FBD717008FB8AE /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		C949987321FBD717008FB8AE /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
+		C949987721FBD8D9008FB8AE /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
+		C949987C21FBD94B008FB8AE /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
+		C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -281,9 +329,6 @@
 		C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Dashboard.swift"; sourceTree = "<group>"; };
 		C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewController.swift; sourceTree = "<group>"; };
 		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
-		DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOSTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSWatch Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSWatch Extension/Pods-EmonCMSWatch Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		F33631D57532244DE5CCDFC3 /* Pods-EmonCMSiOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-EmonCMSiOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -291,7 +336,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				041A5BD40389B995856B5719 /* Pods_EmonCMSiOSUITests.framework in Frameworks */,
+				C949987A21FBD900008FB8AE /* Nimble.framework in Frameworks */,
+				C949987B21FBD900008FB8AE /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,7 +345,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				672E76AD5564773332A9D758 /* Pods_EmonCMSiOSTests.framework in Frameworks */,
+				C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */,
+				C949987521FBD717008FB8AE /* Nimble.framework in Frameworks */,
+				C949987621FBD717008FB8AE /* Quick.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,7 +355,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C92A5C4921C9996800B1D5CD /* Pods_EmonCMSiOS.framework in Frameworks */,
+				C949986621FBD6FE008FB8AE /* RxAppState.framework in Frameworks */,
+				C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */,
+				C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */,
+				C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */,
+				C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */,
+				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
+				C949986A21FBD6FE008FB8AE /* RxRealm.framework in Frameworks */,
+				C949986B21FBD6FE008FB8AE /* RealmSwift.framework in Frameworks */,
+				C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */,
+				C949986D21FBD6FE008FB8AE /* Charts.framework in Frameworks */,
+				C949986E21FBD6FE008FB8AE /* XCGLogger.framework in Frameworks */,
+				C949986F21FBD6FE008FB8AE /* Action.framework in Frameworks */,
+				C949987021FBD6FE008FB8AE /* RxSwift.framework in Frameworks */,
+				C949988121FBDA65008FB8AE /* ObjcExceptionBridging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,33 +404,27 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7DD291A48ED452A793DCA3EE /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				EF6E057265E72ED593EB7EDE /* Pods-EmonCMSWatch Extension.debug.xcconfig */,
-				ACFF4FEDDBF5BF5145039E6D /* Pods-EmonCMSWatch Extension.release.xcconfig */,
-				93CB7B88FA88A66E1910F1B8 /* Pods-EmonCMSiOS.debug.xcconfig */,
-				F33631D57532244DE5CCDFC3 /* Pods-EmonCMSiOS.release.xcconfig */,
-				DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */,
-				81A559E6ED8F91EC2FBF7532 /* Pods-EmonCMSiOSTests.release.xcconfig */,
-				73EE7C16F303D6BC48C8C1AC /* Pods-EmonCMSToday.debug.xcconfig */,
-				29F29F3BF2A030155A1AD837 /* Pods-EmonCMSToday.release.xcconfig */,
-				9B2032E8E38F1F567EC3D272 /* Pods-EmonCMSiOSUITests.debug.xcconfig */,
-				67F4204E6A2CDCD577342B5E /* Pods-EmonCMSiOSUITests.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		83130A8D04C98BB39AF4F2A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C92A5C4821C9996800B1D5CD /* Pods_EmonCMSiOS.framework */,
-				8F5242184EE98DEE83793B01 /* Pods_EmonCMSWatch_Extension.framework */,
-				813B493DA07473AF39800BD3 /* Pods_EmonCMSiOS.framework */,
-				90ADB691ED3009EAD9C3AB49 /* Pods_EmonCMSiOSTests.framework */,
+				C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */,
+				C949987C21FBD94B008FB8AE /* Differentiator.framework */,
+				C949987721FBD8D9008FB8AE /* RxDataSources.framework */,
+				C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */,
+				C949987221FBD717008FB8AE /* Nimble.framework */,
+				C949987321FBD717008FB8AE /* Quick.framework */,
+				C949986421FBD6FE008FB8AE /* Action.framework */,
+				C949986221FBD6FE008FB8AE /* Charts.framework */,
+				C949986121FBD6FE008FB8AE /* Former.framework */,
+				C949985E21FBD6FE008FB8AE /* Locksmith.framework */,
+				C949985D21FBD6FE008FB8AE /* Realm.framework */,
+				C949986021FBD6FE008FB8AE /* RealmSwift.framework */,
+				C949985B21FBD6FE008FB8AE /* RxAppState.framework */,
+				C949985C21FBD6FE008FB8AE /* RxCocoa.framework */,
+				C949985F21FBD6FE008FB8AE /* RxRealm.framework */,
+				C949986521FBD6FE008FB8AE /* RxSwift.framework */,
+				C949986321FBD6FE008FB8AE /* XCGLogger.framework */,
 				C97284D51DA594C20010C7B7 /* NotificationCenter.framework */,
-				17CB5DEE6D5E0F868ED2C3DE /* Pods_EmonCMSToday.framework */,
-				C80089414F7846041813D799 /* Pods_EmonCMSiOSUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -537,7 +592,6 @@
 				C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */,
 				C925517921F4AB2A008342D8 /* EmonCMSiOSUITests */,
 				C9C041981D85F7D600E3CEC4 /* Products */,
-				7DD291A48ED452A793DCA3EE /* Pods */,
 				83130A8D04C98BB39AF4F2A0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -679,11 +733,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C925518121F4AB2A008342D8 /* Build configuration list for PBXNativeTarget "EmonCMSiOSUITests" */;
 			buildPhases = (
-				01333675878E62292601ED08 /* [CP] Check Pods Manifest.lock */,
 				C925517421F4AB2A008342D8 /* Sources */,
 				C925517521F4AB2A008342D8 /* Frameworks */,
 				C925517621F4AB2A008342D8 /* Resources */,
-				C29AC15C2BEF623046D0FD09 /* [CP] Embed Pods Frameworks */,
+				C94998AE21FC65D4008FB8AE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -699,11 +752,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C95640B31D8A9C7D003B9757 /* Build configuration list for PBXNativeTarget "EmonCMSiOSTests" */;
 			buildPhases = (
-				6178F835D9EFB93DFB27BC10 /* [CP] Check Pods Manifest.lock */,
 				C95640A61D8A9C7D003B9757 /* Sources */,
 				C95640A71D8A9C7D003B9757 /* Frameworks */,
 				C95640A81D8A9C7D003B9757 /* Resources */,
-				D3C6226F06343FA01F174AF8 /* [CP] Embed Pods Frameworks */,
+				C94998AA21FC65BB008FB8AE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -719,13 +771,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C9C041A91D85F7D600E3CEC4 /* Build configuration list for PBXNativeTarget "EmonCMSiOS" */;
 			buildPhases = (
-				222414EEEA60BA63308A49DD /* [CP] Check Pods Manifest.lock */,
 				C9C041931D85F7D600E3CEC4 /* Sources */,
 				C9C041941D85F7D600E3CEC4 /* Frameworks */,
 				C9C041951D85F7D600E3CEC4 /* Resources */,
 				C9D6923B1D95B55B00E0B249 /* Embed Watch Content */,
-				7EA407F0228622A839AC933D /* [CP] Embed Pods Frameworks */,
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
+				C949985A21FBD1AF008FB8AE /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -827,7 +878,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		01333675878E62292601ED08 /* [CP] Check Pods Manifest.lock */ = {
+		C949985A21FBD1AF008FB8AE /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -835,183 +886,42 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
+				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/XCGLogger.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxAppState.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Action.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Former.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Differentiator.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/ObjcExceptionBridging.framework",
 			);
-			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmonCMSiOSUITests-checkManifestLockResult.txt",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Realm.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RealmSwift.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/XCGLogger.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxAppState.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxDataSources.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxRealm.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Action.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Charts.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Former.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Differentiator.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ObjcExceptionBridging.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		222414EEEA60BA63308A49DD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmonCMSiOS-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		6178F835D9EFB93DFB27BC10 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-EmonCMSiOSTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		7EA407F0228622A839AC933D /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Action/Action.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/Former/Former.framework",
-				"${BUILT_PRODUCTS_DIR}/Locksmith/Locksmith.framework",
-				"${BUILT_PRODUCTS_DIR}/ObjcExceptionBridging/ObjcExceptionBridging.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAppState/RxAppState.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxRealm/RxRealm.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/XCGLogger/XCGLogger.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Action.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Former.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Locksmith.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ObjcExceptionBridging.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAppState.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxRealm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/XCGLogger.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOS/Pods-EmonCMSiOS-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C29AC15C2BEF623046D0FD09 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSUITests/Pods-EmonCMSiOSUITests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSUITests/Pods-EmonCMSiOSUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D3C6226F06343FA01F174AF8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxAtomic/RxAtomic.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework",
-				"${BUILT_PRODUCTS_DIR}/Quick/Quick.framework",
-				"${BUILT_PRODUCTS_DIR}/RxTest/RxTest.framework",
-				"${BUILT_PRODUCTS_DIR}/iOSSnapshotTestCase/FBSnapshotTestCase.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxAtomic.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Nimble.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Quick.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxTest.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSnapshotTestCase.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-EmonCMSiOSTests/Pods-EmonCMSiOSTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1179,7 +1089,6 @@
 /* Begin XCBuildConfiguration section */
 		C925517F21F4AB2A008342D8 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B2032E8E38F1F567EC3D272 /* Pods-EmonCMSiOSUITests.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1188,6 +1097,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = EmonCMSiOSUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -1204,7 +1117,6 @@
 		};
 		C925518021F4AB2A008342D8 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 67F4204E6A2CDCD577342B5E /* Pods-EmonCMSiOSUITests.release.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1213,6 +1125,10 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = EmonCMSiOSUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -1228,11 +1144,14 @@
 		};
 		C95640B11D8A9C7D003B9757 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCC37429AAD1EE2A25C26A54 /* Pods-EmonCMSiOSTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSTests;
@@ -1244,11 +1163,14 @@
 		};
 		C95640B21D8A9C7D003B9757 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 81A559E6ED8F91EC2FBF7532 /* Pods-EmonCMSiOSTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				DEVELOPMENT_TEAM = KGUUH6BP8Y;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EmonCMSiOSTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSTests;
@@ -1375,11 +1297,14 @@
 		};
 		C9C041AA1D85F7D600E3CEC4 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93CB7B88FA88A66E1910F1B8 /* Pods-EmonCMSiOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
 				DEVELOPMENT_TEAM = 4C898RE43H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms;
@@ -1392,11 +1317,14 @@
 		};
 		C9C041AB1D85F7D600E3CEC4 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F33631D57532244DE5CCDFC3 /* Pods-EmonCMSiOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = EmonCMSiOS/EmonCMSiOS.entitlements;
 				DEVELOPMENT_TEAM = 4C898RE43H;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = EmonCMSiOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms;
