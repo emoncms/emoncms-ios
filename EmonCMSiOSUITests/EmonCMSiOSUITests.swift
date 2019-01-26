@@ -10,6 +10,22 @@ import Quick
 import Nimble
 @testable import EmonCMSiOS
 
+extension XCUIElement {
+
+  func clearAndEnterText(text: String) {
+    guard let stringValue = self.value as? String else {
+      XCTFail("Tried to clear and enter text into a non string value")
+      return
+    }
+
+    self.tap()
+    let deleteString = stringValue.map { _ in XCUIKeyboardKey.delete.rawValue }.joined()
+    self.typeText(deleteString)
+    self.typeText(text)
+  }
+
+}
+
 class EmonCMSiOSUITests: QuickSpec {
 
   static let WaitTimeout: TimeInterval = 5
@@ -32,12 +48,9 @@ class EmonCMSiOSUITests: QuickSpec {
       app.navigationBars["Accounts"].buttons["Add"].tap()
 
       let tablesQuery = app.tables
-      tablesQuery.textFields["Name"].tap()
-      app.typeText(name)
-      tablesQuery.textFields["URL"].tap()
-      app.typeText(url)
-      tablesQuery.textFields["API read key"].tap()
-      app.typeText(apiKey)
+      tablesQuery.textFields.element(boundBy: 0).clearAndEnterText(text: name)
+      tablesQuery.textFields.element(boundBy: 1).clearAndEnterText(text: url)
+      tablesQuery.textFields.element(boundBy: 3).clearAndEnterText(text: apiKey)
 
       app.navigationBars["Account Details"].buttons["Save"].tap()
     }

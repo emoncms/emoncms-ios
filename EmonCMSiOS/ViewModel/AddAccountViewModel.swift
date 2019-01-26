@@ -30,7 +30,7 @@ final class AddAccountViewModel {
   private let account: Account?
 
   let name = BehaviorRelay<String>(value: "")
-  let url = BehaviorRelay<String>(value: "")
+  let url = BehaviorRelay<String>(value: SharedConstants.EmonCMSdotOrgURL)
   let username = BehaviorRelay<String>(value: "")
   let password = BehaviorRelay<String>(value: "")
   let apiKey = BehaviorRelay<String>(value: "")

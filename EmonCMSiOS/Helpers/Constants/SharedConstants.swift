@@ -22,4 +22,6 @@ struct SharedConstants {
     case lastSelectedAccountUUID
   }
 
+  static let EmonCMSdotOrgURL = "https://www.emoncms.org/"
+
 }
