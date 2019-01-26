@@ -10,9 +10,9 @@ import UIKit
 
 @IBDesignable final class AppBoxesFeedView: UIView {
 
-  @IBInspectable var name: String = "FEED" { didSet { self.setNeedsLayout() } }
-  @IBInspectable var value: Double = 0 { didSet { self.setNeedsLayout() } }
-  @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var name: String = "FEED" { didSet { self.updateLabels() } }
+  @IBInspectable var value: Double = 0 { didSet { self.updateLabels() } }
+  @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
 
   private let containerView = UIView(frame: .zero)
   private let nameLabel = UILabel(frame: .zero)
@@ -46,11 +46,11 @@ import UIKit
     self.valueLabel.textAlignment = .center
     self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
     self.containerView.addSubview(self.valueLabel)
+
+    self.updateLabels()
   }
 
-  override func layoutSubviews() {
-    super.layoutSubviews()
-
+  private func updateLabels() {
     self.nameLabel.text = self.name.uppercased()
     self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
   }

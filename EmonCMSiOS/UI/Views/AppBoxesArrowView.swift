@@ -18,8 +18,8 @@ import CoreGraphics
     case right
   }
 
-  @IBInspectable var value: Double = 0.0 { didSet { self.setNeedsLayout() } }
-  @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
+  @IBInspectable var value: Double = 0.0 { didSet { self.updateLabels() } }
+  @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
   @IBInspectable var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
   @IBInspectable var arrowSize: CGFloat = 10.0 { didSet { self.setNeedsUpdateConstraints() } }
   var direction: Direction = .up { didSet { self.setNeedsUpdateConstraints(); self.setNeedsDisplay() } }
@@ -44,10 +44,11 @@ import CoreGraphics
     self.valueLabel.textAlignment = .center
     self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
     self.addSubview(self.valueLabel)
+
+    self.updateLabels()
   }
 
-  override func layoutSubviews() {
-    super.layoutSubviews()
+  private func updateLabels() {
     self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
   }
 
