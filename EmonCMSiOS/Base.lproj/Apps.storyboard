@@ -510,7 +510,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WAg-j6-FjF" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="7.9999999999999964" y="100.66666666666666" width="59.666666666666657" height="48.666666666666657"/>
+                                        <rect key="frame" x="8" y="100.66666666666666" width="59.666666666666657" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="IMPORT"/>
@@ -686,10 +686,13 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="BT7-tt-xfX" secondAttribute="bottom" id="2Bm-I0-J2T"/>
+                                    <constraint firstItem="WAg-j6-FjF" firstAttribute="leading" secondItem="9Qr-ZH-sxc" secondAttribute="trailing" constant="16" id="6YZ-cH-P8U"/>
                                     <constraint firstItem="9Qr-ZH-sxc" firstAttribute="leading" secondItem="4Rw-tX-sAM" secondAttribute="leading" constant="8" id="7E9-7G-DRX"/>
+                                    <constraint firstItem="qvc-Ca-twe" firstAttribute="leading" secondItem="9Lm-7Y-6Pm" secondAttribute="trailing" constant="16" id="Ejm-Jq-HaA"/>
                                     <constraint firstAttribute="trailing" secondItem="9Lm-7Y-6Pm" secondAttribute="trailing" constant="8" id="GZp-M0-3Aj"/>
                                     <constraint firstItem="qvc-Ca-twe" firstAttribute="top" secondItem="4gu-Nl-wKs" secondAttribute="bottom" constant="8" id="Jey-9w-JiP"/>
                                     <constraint firstItem="rYV-46-l7V" firstAttribute="top" secondItem="4gu-Nl-wKs" secondAttribute="bottom" constant="8" id="Kq6-bP-pOv"/>
+                                    <constraint firstItem="WAg-j6-FjF" firstAttribute="top" secondItem="4gu-Nl-wKs" secondAttribute="bottom" constant="8" id="NHV-UQ-AKZ"/>
                                     <constraint firstItem="4gu-Nl-wKs" firstAttribute="top" secondItem="4Rw-tX-sAM" secondAttribute="top" id="NXX-kE-tHF"/>
                                     <constraint firstItem="rYV-46-l7V" firstAttribute="centerX" secondItem="4Rw-tX-sAM" secondAttribute="centerX" id="RQ5-co-j1F"/>
                                     <constraint firstAttribute="trailing" secondItem="qvc-Ca-twe" secondAttribute="trailing" constant="8" id="Vw4-Cb-M5A"/>
@@ -699,10 +702,31 @@
                                     <constraint firstItem="BT7-tt-xfX" firstAttribute="leading" secondItem="4Rw-tX-sAM" secondAttribute="leading" id="bmZ-VD-FKj"/>
                                     <constraint firstItem="4gu-Nl-wKs" firstAttribute="leading" secondItem="4Rw-tX-sAM" secondAttribute="leading" id="dje-Mf-eBR"/>
                                     <constraint firstItem="9Qr-ZH-sxc" firstAttribute="top" secondItem="4gu-Nl-wKs" secondAttribute="bottom" constant="8" id="fhx-Oq-yTE"/>
+                                    <constraint firstItem="9Lm-7Y-6Pm" firstAttribute="top" secondItem="4gu-Nl-wKs" secondAttribute="bottom" constant="8" id="oJJ-ge-X1D"/>
                                     <constraint firstAttribute="trailing" secondItem="4gu-Nl-wKs" secondAttribute="trailing" id="okd-59-uDc"/>
                                     <constraint firstItem="9Lm-7Y-6Pm" firstAttribute="top" secondItem="qvc-Ca-twe" secondAttribute="bottom" constant="8" id="ouq-o2-Hph"/>
                                     <constraint firstItem="WAg-j6-FjF" firstAttribute="leading" secondItem="4Rw-tX-sAM" secondAttribute="leading" constant="8" id="ths-GY-xm9"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="6YZ-cH-P8U"/>
+                                        <exclude reference="NHV-UQ-AKZ"/>
+                                        <exclude reference="oJJ-ge-X1D"/>
+                                        <exclude reference="Ejm-Jq-HaA"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="6YZ-cH-P8U"/>
+                                        <include reference="NHV-UQ-AKZ"/>
+                                        <exclude reference="biw-SF-jtP"/>
+                                        <exclude reference="ths-GY-xm9"/>
+                                        <exclude reference="GZp-M0-3Aj"/>
+                                        <include reference="oJJ-ge-X1D"/>
+                                        <exclude reference="ouq-o2-Hph"/>
+                                        <include reference="Ejm-Jq-HaA"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
