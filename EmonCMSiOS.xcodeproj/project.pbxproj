@@ -49,7 +49,6 @@
 		C949985621FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */; };
 		C949985721FA7FFA008FB8AE /* DashboardListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
-		C949986621FBD6FE008FB8AE /* RxAppState.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985B21FBD6FE008FB8AE /* RxAppState.framework */; };
 		C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985C21FBD6FE008FB8AE /* RxCocoa.framework */; };
 		C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985D21FBD6FE008FB8AE /* Realm.framework */; };
 		C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
@@ -355,7 +354,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C949986621FBD6FE008FB8AE /* RxAppState.framework in Frameworks */,
 				C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */,
 				C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */,
 				C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */,
@@ -892,7 +890,6 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/XCGLogger.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxAppState.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Action.framework",
@@ -910,7 +907,6 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RealmSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/XCGLogger.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxAppState.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxDataSources.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxRealm.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Action.framework",

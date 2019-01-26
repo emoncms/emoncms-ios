@@ -1,1 +1,0 @@
-carthage update --platform iOS

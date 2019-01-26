@@ -11,7 +11,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxAppState
 
 final class InputListViewController: UITableViewController {
 
@@ -94,7 +93,7 @@ final class InputListViewController: UITableViewController {
 
   private func setupBindings() {
     let refreshControl = self.refreshControl!
-    let appBecameActive = UIApplication.shared.rx.applicationDidBecomeActive.becomeVoid()
+    let appBecameActive = NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification).becomeVoid()
     Observable.of(self.refreshButton.rx.tap.asObservable(),
                   refreshControl.rx.controlEvent(.valueChanged).asObservable(),
                   appBecameActive)

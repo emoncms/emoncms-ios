@@ -11,7 +11,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 import RxDataSources
-import RxAppState
 import Charts
 
 final class FeedListViewController: UIViewController {
@@ -248,7 +247,7 @@ final class FeedListViewController: UIViewController {
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
-    let appBecameActive = UIApplication.shared.rx.applicationDidBecomeActive.becomeVoid()
+    let appBecameActive = NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification).becomeVoid()
     Observable.of(self.refreshButton.rx.tap.asObservable(),
                   refreshControl.rx.controlEvent(.valueChanged).asObservable(),
                   appBecameActive)
