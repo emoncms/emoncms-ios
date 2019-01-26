@@ -203,7 +203,7 @@ final class MyElectricAppViewModel: AppViewModel {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1
-    let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 1500))
+    let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 500))
 
     return self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
   }
