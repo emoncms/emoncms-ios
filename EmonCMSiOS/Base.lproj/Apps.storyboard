@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecl-1d-C7C">
-                                        <rect key="frame" x="94.666666666666671" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
+                                        <rect key="frame" x="94.666666666666686" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -205,7 +205,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zud-Jk-C2c">
-                                        <rect key="frame" x="94.666666666666671" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
+                                        <rect key="frame" x="94.666666666666686" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -351,6 +351,7 @@
                                                 <exclude reference="Lgd-Qa-p3u"/>
                                                 <include reference="ec3-oM-Ntn"/>
                                                 <include reference="hGq-fC-zBe"/>
+                                                <exclude reference="qa4-Kh-FVq"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -458,7 +459,7 @@
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRD-17-0vn">
-                                        <rect key="frame" x="94.666666666666671" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
+                                        <rect key="frame" x="94.666666666666686" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -616,6 +617,7 @@
                                             <constraint firstItem="jjm-AM-5pZ" firstAttribute="top" secondItem="5S6-I3-LFa" secondAttribute="bottom" id="7ng-rh-mFx"/>
                                             <constraint firstAttribute="trailing" secondItem="5S6-I3-LFa" secondAttribute="trailing" id="GrV-Gv-RRT"/>
                                             <constraint firstItem="jjm-AM-5pZ" firstAttribute="width" secondItem="5S6-I3-LFa" secondAttribute="width" id="MPl-YF-ks4"/>
+                                            <constraint firstItem="jjm-AM-5pZ" firstAttribute="top" secondItem="BT7-tt-xfX" secondAttribute="top" id="Tfd-Bc-vle"/>
                                             <constraint firstItem="5S6-I3-LFa" firstAttribute="leading" secondItem="BT7-tt-xfX" secondAttribute="leading" id="bPS-U9-mt7"/>
                                             <constraint firstItem="jjm-AM-5pZ" firstAttribute="height" secondItem="5S6-I3-LFa" secondAttribute="height" multiplier="2:3" id="cka-FL-1Sw"/>
                                             <constraint firstItem="5S6-I3-LFa" firstAttribute="top" secondItem="BT7-tt-xfX" secondAttribute="top" id="dCx-nW-nsw"/>
@@ -628,6 +630,7 @@
                                             <mask key="constraints">
                                                 <exclude reference="mQO-Lz-9Br"/>
                                                 <exclude reference="MPl-YF-ks4"/>
+                                                <exclude reference="Tfd-Bc-vle"/>
                                                 <exclude reference="w8l-f8-207"/>
                                             </mask>
                                         </variation>
@@ -637,6 +640,8 @@
                                                 <include reference="mQO-Lz-9Br"/>
                                                 <exclude reference="7ng-rh-mFx"/>
                                                 <include reference="MPl-YF-ks4"/>
+                                                <include reference="Tfd-Bc-vle"/>
+                                                <exclude reference="cka-FL-1Sw"/>
                                                 <exclude reference="kG7-29-Hjk"/>
                                                 <include reference="w8l-f8-207"/>
                                             </mask>
