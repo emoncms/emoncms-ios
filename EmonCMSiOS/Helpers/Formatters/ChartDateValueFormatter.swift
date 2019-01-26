@@ -68,10 +68,10 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
     let range = self.dateRange ?? 0
 
-    if range < 86400 {
-      dateFormatter.timeStyle = .short
-      dateFormatter.dateStyle = .none
+    if range < 86_400 { //< 1 day
+      dateFormatter.dateFormat = "h:mm a"
     } else {
+      dateFormatter.dateFormat = nil
       dateFormatter.timeStyle = .none
       dateFormatter.dateStyle = .short
     }
@@ -80,7 +80,21 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
   func stringForValue(_ value: Double, axis: AxisBase?) -> String {
     self.dateRange = axis?.axisRange
     let date = Date(timeIntervalSince1970: value)
-    return self.dateFormatter.string(from: date)
+    var string = self.dateFormatter.string(from: date)
+
+    if self.autoUpdateFormat {
+      let range = self.dateRange ?? 0
+      if range > 86_400 {
+        let components = string.split(separator: "/")
+        if components.count == 3 {
+          if range < 31_536_000 { //< 1 year
+            string = components[0...1].joined(separator: "/")
+          }
+        }
+      }
+    }
+
+    return string
   }
 
 }

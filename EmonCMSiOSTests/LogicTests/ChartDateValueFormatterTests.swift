@@ -28,6 +28,9 @@ class ChartDateValueFormatterTests: QuickSpec {
         expect(formatter.stringForValue(0, axis: axis)).to(equal("12:00 AM"))
 
         axis.axisRange = 1_000_000
+        expect(formatter.stringForValue(0, axis: axis)).to(equal("1/1"))
+
+        axis.axisRange = 1_000_000_000
         expect(formatter.stringForValue(0, axis: axis)).to(equal("1/1/70"))
       }
 
