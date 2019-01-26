@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_5" orientation="landscape">
+    <device id="retina6_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -15,14 +15,14 @@
             <objects>
                 <viewController storyboardIdentifier="myElectric" id="h2X-DV-T2I" customClass="MyElectricAppViewController" customModule="EmonCMSiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VTd-Pe-WWb">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Wp3-8u-qEg">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ecl-1d-C7C">
-                                        <rect key="frame" x="291.66666666666669" y="140" width="224.66666666666669" height="20.333333333333343"/>
+                                        <rect key="frame" x="94.666666666666686" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -37,7 +37,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MkX-D2-g1x">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RdW-C1-gL3" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
                                         <rect key="frame" x="8" y="44" width="96.333333333333329" height="48.666666666666657"/>
@@ -51,7 +51,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EeW-nD-G7k" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="696.33333333333337" y="44" width="103.66666666666663" height="48.666666666666657"/>
+                                        <rect key="frame" x="302.33333333333331" y="44" width="103.66666666666669" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="TOTAL TODAY"/>
@@ -62,14 +62,14 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SFz-rN-Orh">
-                                        <rect key="frame" x="0.0" y="100.66666666666664" width="808" height="199.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="100.66666666666669" width="414" height="624.33333333333326"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fdg-ew-n0d" customClass="LineChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="374.66666666666669"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3y-mo-Cjj" customClass="BarChartView" customModule="Charts">
-                                                <rect key="frame" x="404" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="374.66666666666674" width="414" height="249.66666666666663"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                         </subviews>
@@ -110,19 +110,19 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ooA-uW-tb9" userLabel="Banner View">
-                                        <rect key="frame" x="0.0" y="0.0" width="808" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fTM-n7-hhI">
-                                                <rect key="frame" x="8" y="9.6666666666666643" width="35.333333333333336" height="17"/>
+                                                <rect key="frame" x="8" y="9.6666666666666714" width="35.333333333333336" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="SCg-Cg-UrX">
-                                                <rect key="frame" x="626" y="8" width="20" height="20"/>
+                                                <rect key="frame" x="232" y="8" width="20" height="20"/>
                                             </activityIndicatorView>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="i3p-JE-VIr">
-                                                <rect key="frame" x="650" y="4" width="154" height="29"/>
+                                                <rect key="frame" x="256" y="4" width="154" height="29"/>
                                                 <segments>
                                                     <segment title="1h"/>
                                                     <segment title="8h"/>
@@ -198,14 +198,14 @@
             <objects>
                 <viewController storyboardIdentifier="mySolar" id="1cB-LG-0OD" customClass="MySolarAppViewController" customModule="EmonCMSiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="93I-h8-z8Y">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OY8-qa-O9x">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zud-Jk-C2c">
-                                        <rect key="frame" x="291.66666666666669" y="140" width="224.66666666666669" height="20.333333333333343"/>
+                                        <rect key="frame" x="94.666666666666686" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -220,7 +220,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pMy-K4-oek">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3K4-8K-JbU" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
                                         <rect key="frame" x="8" y="44" width="39.333333333333336" height="48.666666666666657"/>
@@ -234,7 +234,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f8I-MC-0Fp" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="374.33333333333331" y="44" width="59.666666666666686" height="48.666666666666657"/>
+                                        <rect key="frame" x="177.33333333333334" y="44" width="59.666666666666657" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="IMPORT"/>
@@ -245,7 +245,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B2Z-dY-v15" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="748.66666666666663" y="44" width="51.333333333333371" height="48.666666666666657"/>
+                                        <rect key="frame" x="354.66666666666669" y="44" width="51.333333333333314" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="SOLAR"/>
@@ -256,37 +256,37 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vkg-48-rIn">
-                                        <rect key="frame" x="0.0" y="100.66666666666664" width="808" height="199.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="100.66666666666669" width="414" height="624.33333333333326"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9re-Re-BAP" customClass="LineChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="458.66666666666669"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZTe-CV-15R">
-                                                <rect key="frame" x="404" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="458.6666666666668" width="414" height="165.66666666666669"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b2F-13-74A" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="8" width="124" height="61"/>
+                                                        <rect key="frame" x="7.9999999999999929" y="7.9999999999999964" width="127.33333333333331" height="48.666666666666657"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bZU-Mp-s4X" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="140" y="8" width="124" height="61"/>
+                                                        <rect key="frame" x="143.33333333333334" y="7.9999999999999964" width="127.33333333333334" height="48.666666666666657"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68Z-2T-evZ" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="77" width="124" height="45.333333333333343"/>
+                                                        <rect key="frame" x="7.9999999999999929" y="64.666666666666629" width="127.33333333333331" height="36.333333333333343"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KgR-D7-N8X" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="272" y="8" width="124" height="61"/>
+                                                        <rect key="frame" x="278.66666666666669" y="7.9999999999999964" width="127.33333333333331" height="48.666666666666657"/>
                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PYS-jG-9qC" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="130.33333333333334" width="388" height="61"/>
+                                                        <rect key="frame" x="8" y="109.00000000000001" width="398" height="48.666666666666671"/>
                                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HrJ-zu-G3q" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="272" y="77" width="124" height="45.333333333333343"/>
+                                                        <rect key="frame" x="278.66666666666669" y="64.666666666666629" width="127.33333333333331" height="36.333333333333343"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
@@ -354,16 +354,16 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TmD-9u-8t2" userLabel="Banner View">
-                                        <rect key="frame" x="0.0" y="0.0" width="808" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yyQ-cM-RAE">
-                                                <rect key="frame" x="8" y="9.6666666666666643" width="35.333333333333336" height="17"/>
+                                                <rect key="frame" x="8" y="9.6666666666666714" width="35.333333333333336" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="mBF-Ht-VIy">
-                                                <rect key="frame" x="650" y="4" width="154" height="29"/>
+                                                <rect key="frame" x="256" y="4" width="154" height="29"/>
                                                 <segments>
                                                     <segment title="1h"/>
                                                     <segment title="8h"/>
@@ -373,7 +373,7 @@
                                                 </segments>
                                             </segmentedControl>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="RoM-Rg-IeR">
-                                                <rect key="frame" x="626" y="8" width="20" height="20"/>
+                                                <rect key="frame" x="232" y="8" width="20" height="20"/>
                                             </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
@@ -450,14 +450,14 @@
             <objects>
                 <viewController storyboardIdentifier="mySolarDivert" id="8Qy-1J-X2J" customClass="MySolarDivertAppViewController" customModule="EmonCMSiOS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="CUB-GD-Iwi">
-                        <rect key="frame" x="0.0" y="0.0" width="896" height="414"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RPY-tt-5DA">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap Configure to select feeds" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IRD-17-0vn">
-                                        <rect key="frame" x="291.66666666666669" y="140" width="224.66666666666669" height="20.333333333333343"/>
+                                        <rect key="frame" x="94.666666666666671" y="352.33333333333331" width="224.66666666666663" height="20.333333333333314"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -472,7 +472,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Rw-tX-sAM">
-                                <rect key="frame" x="44" y="44" width="808" height="300"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9Qr-ZH-sxc" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
                                         <rect key="frame" x="8.0000000000000036" y="44" width="53.333333333333343" height="48.666666666666657"/>
@@ -486,7 +486,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="rYV-46-l7V" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="376.33333333333331" y="44" width="55.333333333333314" height="48.666666666666657"/>
+                                        <rect key="frame" x="179.33333333333334" y="44" width="55.333333333333343" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="DIVERT"/>
@@ -497,7 +497,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="qvc-Ca-twe" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="717.66666666666663" y="44" width="82.333333333333371" height="48.666666666666657"/>
+                                        <rect key="frame" x="323.66666666666669" y="44" width="82.333333333333314" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="TOTAL USE"/>
@@ -508,7 +508,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="WAg-j6-FjF" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="77.333333333333329" y="44" width="59.666666666666671" height="48.666666666666657"/>
+                                        <rect key="frame" x="7.9999999999999964" y="100.66666666666666" width="59.666666666666657" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="IMPORT"/>
@@ -519,7 +519,7 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="9Lm-7Y-6Pm" customClass="AppTitleAndValueView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                        <rect key="frame" x="650.33333333333337" y="44" width="51.333333333333371" height="48.666666666666657"/>
+                                        <rect key="frame" x="354.66666666666669" y="100.66666666666666" width="51.333333333333314" height="48.666666666666657"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="string" keyPath="title" value="SOLAR"/>
@@ -530,81 +530,77 @@
                                         </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BT7-tt-xfX">
-                                        <rect key="frame" x="0.0" y="100.66666666666664" width="808" height="199.33333333333337"/>
+                                        <rect key="frame" x="0.0" y="157.33333333333331" width="414" height="567.66666666666674"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5S6-I3-LFa" customClass="LineChartView" customModule="Charts">
-                                                <rect key="frame" x="0.0" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="404.33333333333331"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jjm-AM-5pZ">
-                                                <rect key="frame" x="404" y="0.0" width="404" height="199.33333333333334"/>
+                                                <rect key="frame" x="0.0" y="404.33333333333326" width="414" height="163.33333333333337"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dKb-Ap-bUY" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="8" width="169" height="69.333333333333329"/>
+                                                        <rect key="frame" x="8" y="7.9999999999999964" width="139.33333333333334" height="48.666666666666657"/>
                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ksd-nQ-LF1" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="185" y="8" width="101.66666666666669" height="69.333333333333329"/>
+                                                        <rect key="frame" x="155.33333333333334" y="7.9999999999999964" width="121.33333333333334" height="48.666666666666657"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXE-US-AgD" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="85.333333333333343" width="80.666666666666671" height="28.666666666666671"/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCR-R6-Vj9" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="96.666666666666629" y="85.333333333333343" width="80.333333333333314" height="28.666666666666671"/>
+                                                        <rect key="frame" x="8" y="64.666666666666742" width="67.666666666666671" height="34"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="r5V-SJ-UhX" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="294.66666666666663" y="8" width="101.33333333333331" height="69.333333333333329"/>
+                                                        <rect key="frame" x="284.66666666666669" y="8.0000000000000036" width="121.33333333333331" height="49.333333333333343"/>
                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Dn-x6-xFo" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="96.666666666666629" y="122.00000000000003" width="299.33333333333331" height="69.333333333333343"/>
+                                                        <rect key="frame" x="83.666666666666657" y="106.66666666666676" width="322.33333333333337" height="48.666666666666671"/>
                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WoC-Df-Yb8" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="294.66666666666663" y="85.333333333333343" width="101.33333333333331" height="28.666666666666671"/>
+                                                        <rect key="frame" x="313.66666666666669" y="65.333333333333371" width="63.666666666666686" height="33.333333333333343"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c4M-hu-CjR" customClass="AppBoxesFeedView" customModule="EmonCMSiOS" customModuleProvider="target">
-                                                        <rect key="frame" x="8" y="122.00000000000003" width="80.666666666666671" height="69.333333333333343"/>
+                                                        <rect key="frame" x="8" y="106.66666666666676" width="67.666666666666671" height="48.666666666666671"/>
                                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aCR-R6-Vj9" customClass="AppBoxesArrowView" customModule="EmonCMSiOS" customModuleProvider="target">
+                                                        <rect key="frame" x="83.666666666666671" y="64.666666666666742" width="63.666666666666671" height="33.333333333333343"/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </view>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="27d-J2-Hfl"/>
-                                                    <constraint firstItem="WoC-Df-Yb8" firstAttribute="width" secondItem="r5V-SJ-UhX" secondAttribute="width" id="44B-hM-V8N"/>
-                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="width" secondItem="zXE-US-AgD" secondAttribute="width" id="4ag-1s-8tH"/>
-                                                    <constraint firstItem="zXE-US-AgD" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="8ju-lR-iej"/>
-                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="top" secondItem="dKb-Ap-bUY" secondAttribute="bottom" constant="8" id="8rt-qg-EXa"/>
-                                                    <constraint firstAttribute="trailing" secondItem="2Dn-x6-xFo" secondAttribute="trailing" constant="8" id="9NX-5H-WuC"/>
-                                                    <constraint firstItem="zXE-US-AgD" firstAttribute="width" secondItem="dKb-Ap-bUY" secondAttribute="width" multiplier="1:2" constant="-4" id="ANv-GW-AUA"/>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="height" secondItem="2Dn-x6-xFo" secondAttribute="height" id="ED6-4j-9So"/>
-                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="trailing" secondItem="dKb-Ap-bUY" secondAttribute="trailing" id="HjW-jl-eFq"/>
-                                                    <constraint firstItem="zXE-US-AgD" firstAttribute="top" secondItem="dKb-Ap-bUY" secondAttribute="bottom" constant="8" id="J4Z-or-moY"/>
-                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="leading" secondItem="c4M-hu-CjR" secondAttribute="trailing" constant="8" id="Niw-cX-bel"/>
-                                                    <constraint firstItem="WoC-Df-Yb8" firstAttribute="top" secondItem="r5V-SJ-UhX" secondAttribute="bottom" constant="8" id="Noh-FC-dL8"/>
-                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="PBS-uH-8fd"/>
-                                                    <constraint firstItem="r5V-SJ-UhX" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="RXW-cA-SXg"/>
-                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="Rvi-7f-k2e"/>
-                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="width" secondItem="zXE-US-AgD" secondAttribute="width" id="UhA-RC-4tw"/>
-                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="top" secondItem="zXE-US-AgD" secondAttribute="bottom" constant="8" id="Unk-kT-Kjc"/>
-                                                    <constraint firstAttribute="bottom" secondItem="2Dn-x6-xFo" secondAttribute="bottom" constant="8" id="WoF-eT-LBm"/>
-                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="azZ-sg-Yme"/>
-                                                    <constraint firstAttribute="bottom" secondItem="c4M-hu-CjR" secondAttribute="bottom" constant="8" id="bLn-qG-neG"/>
-                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="width" secondItem="ksd-nQ-LF1" secondAttribute="width" multiplier="5:3" id="fCo-aS-Gd8"/>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="height" secondItem="dKb-Ap-bUY" secondAttribute="height" id="gHR-sE-dJW"/>
-                                                    <constraint firstAttribute="trailing" secondItem="WoC-Df-Yb8" secondAttribute="trailing" constant="8" id="if4-0Y-yh8"/>
-                                                    <constraint firstItem="r5V-SJ-UhX" firstAttribute="leading" secondItem="ksd-nQ-LF1" secondAttribute="trailing" constant="8" id="jIb-nf-BEU"/>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="width" secondItem="r5V-SJ-UhX" secondAttribute="width" id="lQQ-67-Zoc"/>
-                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="height" secondItem="2Dn-x6-xFo" secondAttribute="height" id="lf9-vs-yYp"/>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="height" secondItem="r5V-SJ-UhX" secondAttribute="height" id="lkU-sV-pIy"/>
-                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="top" secondItem="aCR-R6-Vj9" secondAttribute="bottom" constant="8" id="mXg-tK-eMd"/>
-                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="leading" secondItem="dKb-Ap-bUY" secondAttribute="trailing" constant="8" id="x9J-CP-0yy"/>
-                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="top" secondItem="WoC-Df-Yb8" secondAttribute="bottom" constant="8" id="xsp-eH-mst"/>
-                                                    <constraint firstAttribute="trailing" secondItem="r5V-SJ-UhX" secondAttribute="trailing" constant="8" id="zdg-rB-Vdw"/>
+                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="2IZ-V4-DrN"/>
+                                                    <constraint firstItem="WoC-Df-Yb8" firstAttribute="top" secondItem="r5V-SJ-UhX" secondAttribute="bottom" constant="8" id="4ji-n0-y64"/>
+                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="width" secondItem="zXE-US-AgD" secondAttribute="width" id="6Hc-0c-7Ar"/>
+                                                    <constraint firstItem="r5V-SJ-UhX" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="A3C-Xq-X17"/>
+                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="AR2-Az-mvV"/>
+                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="height" secondItem="ksd-nQ-LF1" secondAttribute="height" id="C7w-HI-2Km"/>
+                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="top" secondItem="WoC-Df-Yb8" secondAttribute="bottom" constant="8" id="Hcf-NR-qkF"/>
+                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="top" secondItem="aCR-R6-Vj9" secondAttribute="bottom" constant="8.6699999999999999" id="IWa-5C-Nt8"/>
+                                                    <constraint firstItem="zXE-US-AgD" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="J8t-Ov-Qpr"/>
+                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="leading" secondItem="zXE-US-AgD" secondAttribute="trailing" constant="8" id="JB4-I7-Nac"/>
+                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="leading" secondItem="dKb-Ap-bUY" secondAttribute="trailing" constant="8" id="JtN-FR-bYW"/>
+                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="height" secondItem="dKb-Ap-bUY" secondAttribute="height" id="M21-tZ-cVf"/>
+                                                    <constraint firstAttribute="bottom" secondItem="2Dn-x6-xFo" secondAttribute="bottom" constant="8" id="OBO-t0-SEQ"/>
+                                                    <constraint firstItem="2Dn-x6-xFo" firstAttribute="leading" secondItem="c4M-hu-CjR" secondAttribute="trailing" constant="8" id="Q1Y-gA-I88"/>
+                                                    <constraint firstAttribute="trailing" secondItem="2Dn-x6-xFo" secondAttribute="trailing" constant="8" id="QS2-Tc-p7f"/>
+                                                    <constraint firstItem="r5V-SJ-UhX" firstAttribute="leading" secondItem="ksd-nQ-LF1" secondAttribute="trailing" constant="8" id="QnH-wo-V0p"/>
+                                                    <constraint firstAttribute="bottom" secondItem="c4M-hu-CjR" secondAttribute="bottom" constant="8" id="Unt-Wg-kMV"/>
+                                                    <constraint firstItem="ksd-nQ-LF1" firstAttribute="width" secondItem="r5V-SJ-UhX" secondAttribute="width" id="VI1-E0-qxN"/>
+                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="trailing" secondItem="dKb-Ap-bUY" secondAttribute="trailing" id="YYv-23-N7E"/>
+                                                    <constraint firstAttribute="trailing" secondItem="r5V-SJ-UhX" secondAttribute="trailing" constant="8" id="e6A-0C-BJm"/>
+                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="leading" secondItem="jjm-AM-5pZ" secondAttribute="leading" constant="8" id="gp6-rR-KG0"/>
+                                                    <constraint firstItem="dKb-Ap-bUY" firstAttribute="top" secondItem="jjm-AM-5pZ" secondAttribute="top" constant="8" id="jQX-JA-PmD"/>
+                                                    <constraint firstItem="zXE-US-AgD" firstAttribute="top" secondItem="dKb-Ap-bUY" secondAttribute="bottom" constant="8" id="lvd-DP-R5l"/>
+                                                    <constraint firstItem="WoC-Df-Yb8" firstAttribute="centerX" secondItem="r5V-SJ-UhX" secondAttribute="centerX" id="nr8-0M-uuW"/>
+                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="top" secondItem="zXE-US-AgD" secondAttribute="bottom" constant="8" id="ppG-xK-U8U"/>
+                                                    <constraint firstItem="c4M-hu-CjR" firstAttribute="height" secondItem="2Dn-x6-xFo" secondAttribute="height" id="qlk-hC-2UB"/>
+                                                    <constraint firstItem="aCR-R6-Vj9" firstAttribute="top" secondItem="dKb-Ap-bUY" secondAttribute="bottom" constant="8" id="rLH-sF-ncd"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -643,19 +639,19 @@
                                         </variation>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gu-Nl-wKs" userLabel="Banner View">
-                                        <rect key="frame" x="0.0" y="0.0" width="808" height="36"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="36"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q8h-lo-f9Y">
-                                                <rect key="frame" x="8" y="9.6666666666666643" width="35" height="17"/>
+                                                <rect key="frame" x="8" y="9.6666666666666714" width="35" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="YSY-hz-hAx">
-                                                <rect key="frame" x="626" y="8" width="20" height="20"/>
+                                                <rect key="frame" x="232" y="8" width="20" height="20"/>
                                             </activityIndicatorView>
                                             <segmentedControl opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="wpJ-d9-pqS">
-                                                <rect key="frame" x="650" y="4" width="154" height="29"/>
+                                                <rect key="frame" x="256" y="4" width="154" height="29"/>
                                                 <segments>
                                                     <segment title="1h"/>
                                                     <segment title="8h"/>
@@ -764,7 +760,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uiF-Ef-rE5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1763.1696428571429" y="101.44927536231884"/>
+            <point key="canvasLocation" x="1762.3188405797102" y="101.11607142857143"/>
         </scene>
     </scenes>
 </document>

@@ -64,12 +64,12 @@ import UIKit
     let views = ["containerView": self.containerView, "nameLabel": self.nameLabel, "valueLabel": self.valueLabel]
 
     self.internalConstraints +=
-      NSLayoutConstraint.constraints(withVisualFormat: "V:|->=4-[containerView]->=4-|",
+      NSLayoutConstraint.constraints(withVisualFormat: "V:|-(>=4)-[containerView]-(>=4)-|",
                                      options: [],
                                      metrics: nil,
                                      views: views)
     self.internalConstraints +=
-      NSLayoutConstraint.constraints(withVisualFormat: "H:|->=4-[containerView]->=4-|",
+      NSLayoutConstraint.constraints(withVisualFormat: "H:|-(>=4)-[containerView]-(>=4)-|",
                                      options: [],
                                      metrics: nil,
                                      views: views)
