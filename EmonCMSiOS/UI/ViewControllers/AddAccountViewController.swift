@@ -165,6 +165,8 @@ final class AddAccountViewController: FormViewController {
           let message: String
           if let error = error as? AddAccountViewModel.AddAccountError {
             switch error {
+            case .urlNotValid:
+              message = "URL is not valid"
             case .httpsRequired:
               message = "HTTPS is required."
             case .invalidCredentials:

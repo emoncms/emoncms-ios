@@ -16,6 +16,7 @@ import RealmSwift
 final class AddAccountViewModel {
 
   enum AddAccountError: Error {
+    case urlNotValid
     case httpsRequired
     case networkFailed
     case invalidCredentials
@@ -119,6 +120,8 @@ final class AddAccountViewModel {
   }
 
   func saveAccount() -> Observable<String> {
+    guard let _ = URL(string: self.url.value) else { return Observable.error(AddAccountError.urlNotValid) }
+
     let name = self.name.value
     let url = self.url.value
     let username = self.username.value
