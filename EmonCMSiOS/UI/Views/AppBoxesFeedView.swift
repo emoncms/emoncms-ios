@@ -14,8 +14,12 @@ import UIKit
   @IBInspectable var value: Double = 0 { didSet { self.setNeedsLayout() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
 
-  private var nameLabel: UILabel!
-  private var valueLabel: UILabel!
+  private let containerView = UIView(frame: .zero)
+  private let nameLabel = UILabel(frame: .zero)
+  private let valueLabel = UILabel(frame: .zero)
+  private var internalConstraints: [NSLayoutConstraint] = []
+
+  override class var requiresConstraintBasedLayout: Bool { return true }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -28,28 +32,67 @@ import UIKit
   }
 
   private func setupLabels() {
-    let nameLabel = UILabel(frame: .zero)
-    nameLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
-    nameLabel.textAlignment = .center
-    self.addSubview(nameLabel)
-    self.nameLabel = nameLabel
+    self.translatesAutoresizingMaskIntoConstraints = false
 
-    let valueLabel = UILabel(frame: .zero)
-    valueLabel.font = UIFont.systemFont(ofSize: 16.0)
-    valueLabel.textAlignment = .center
-    self.addSubview(valueLabel)
-    self.valueLabel = valueLabel
+    self.containerView.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(self.containerView)
+
+    self.nameLabel.font = UIFont.systemFont(ofSize: 16.0, weight: .bold)
+    self.nameLabel.textAlignment = .center
+    self.nameLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.containerView.addSubview(self.nameLabel)
+
+    self.valueLabel.font = UIFont.systemFont(ofSize: 16.0)
+    self.valueLabel.textAlignment = .center
+    self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.containerView.addSubview(self.valueLabel)
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
 
-    let bounds = self.bounds
-    self.nameLabel.frame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height / 2.0)
-    self.valueLabel.frame = CGRect(x: 0, y: bounds.height / 2.0, width: bounds.width, height: bounds.height / 2.0)
-
     self.nameLabel.text = self.name.uppercased()
     self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
+  }
+
+  override func updateConstraints() {
+    super.updateConstraints()
+
+    self.removeConstraints(self.internalConstraints)
+    self.internalConstraints.removeAll()
+
+    let views = ["containerView": self.containerView, "nameLabel": self.nameLabel, "valueLabel": self.valueLabel]
+
+    self.internalConstraints +=
+      NSLayoutConstraint.constraints(withVisualFormat: "V:|->=4-[containerView]->=4-|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: views)
+    self.internalConstraints +=
+      NSLayoutConstraint.constraints(withVisualFormat: "H:|->=4-[containerView]->=4-|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: views)
+    self.internalConstraints +=
+      [NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
+       NSLayoutConstraint(item: self.containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)]
+    self.internalConstraints +=
+      NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel]-2-[valueLabel]|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: views)
+    self.internalConstraints +=
+      NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[nameLabel]-(0)-|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: views)
+    self.internalConstraints +=
+      NSLayoutConstraint.constraints(withVisualFormat: "H:|-(0)-[valueLabel]-(0)-|",
+                                     options: [],
+                                     metrics: nil,
+                                     views: views)
+
+    self.addConstraints(self.internalConstraints)
   }
 
 }

@@ -21,9 +21,11 @@ import CoreGraphics
   @IBInspectable var value: Double = 0.0 { didSet { self.setNeedsLayout() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.setNeedsLayout() } }
   @IBInspectable var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
-  var direction: Direction = .up { didSet { self.setNeedsLayout(); self.setNeedsDisplay() } }
+  @IBInspectable var arrowSize: CGFloat = 10.0 { didSet { self.setNeedsUpdateConstraints() } }
+  var direction: Direction = .up { didSet { self.setNeedsUpdateConstraints(); self.setNeedsDisplay() } }
 
-  private var valueLabel: UILabel!
+  private let valueLabel = UILabel(frame: .zero)
+  private var internalConstraints = [NSLayoutConstraint]()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -36,32 +38,16 @@ import CoreGraphics
   }
 
   private func setupLabels() {
-    let valueLabel = UILabel(frame: .zero)
-    valueLabel.font = UIFont.systemFont(ofSize: 16.0)
-    valueLabel.textAlignment = .center
-    self.addSubview(valueLabel)
-    self.valueLabel = valueLabel
+    self.translatesAutoresizingMaskIntoConstraints = false
+
+    self.valueLabel.font = UIFont.systemFont(ofSize: 16.0)
+    self.valueLabel.textAlignment = .center
+    self.valueLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.addSubview(self.valueLabel)
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
-
-    let bounds = self.bounds
-    let arrowSize = bounds.height / 4.0
-
-    let valueFrame: CGRect
-    switch direction {
-    case .up:
-      valueFrame = CGRect(x: 0, y: arrowSize, width: bounds.width, height: bounds.height - arrowSize)
-    case .down:
-      valueFrame = CGRect(x: 0, y: 0, width: bounds.width, height: bounds.height - arrowSize)
-    case .left:
-      valueFrame = CGRect(x: arrowSize, y: 0, width: bounds.width - arrowSize, height: bounds.height)
-    case .right:
-      valueFrame = CGRect(x: 0, y: 0, width: bounds.width - arrowSize, height: bounds.height)
-    }
-    self.valueLabel.frame = valueFrame
-
     self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
   }
 
@@ -75,7 +61,7 @@ import CoreGraphics
     defer { UIGraphicsPopContext() }
 
     let bounds = self.bounds
-    let sizeA = bounds.height / 4.0
+    let sizeA = self.arrowSize
     let sizeB = sizeA / 1.5
 
     let path = CGMutablePath.init()
@@ -101,6 +87,60 @@ import CoreGraphics
     context.addPath(path)
     context.setFillColor(self.arrowColor.cgColor)
     context.fillPath()
+  }
+
+  override func updateConstraints() {
+    super.updateConstraints()
+
+    self.removeConstraints(self.internalConstraints)
+    self.internalConstraints.removeAll()
+
+    let views = ["valueLabel": self.valueLabel]
+    let metrics = ["spacing": self.arrowSize + 2]
+
+    switch self.direction {
+    case .up:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "V:|-spacing-[valueLabel]-2-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    case .down:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[valueLabel]-spacing-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    case .left, .right:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[valueLabel]-2-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    }
+
+    switch self.direction {
+    case .up, .down:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "H:|-2-[valueLabel]-2-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    case .left:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "H:|-spacing-[valueLabel]-2-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    case .right:
+      self.internalConstraints +=
+        NSLayoutConstraint.constraints(withVisualFormat: "H:|-2-[valueLabel]-spacing-|",
+                                       options: [],
+                                       metrics: metrics,
+                                       views: views)
+    }
+
+    self.addConstraints(self.internalConstraints)
   }
 
 }
