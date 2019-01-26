@@ -37,7 +37,7 @@ final class MySolarAppViewController: AppViewController {
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MySolar
 
     self.useLabelView.alignment = .left
-    self.useLabelView.valueColor = EmonCMSColors.Apps.House
+    self.useLabelView.valueColor = EmonCMSColors.Apps.Use
     self.importLabelView.alignment = .center
     self.importLabelView.valueColor = EmonCMSColors.Apps.Grid
     self.solarLabelView.alignment = .right

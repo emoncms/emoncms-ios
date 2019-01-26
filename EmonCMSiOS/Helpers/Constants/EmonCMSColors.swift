@@ -22,6 +22,7 @@ struct EmonCMSColors {
     static let Solar = UIColor(hexString: "dccc1f")
     static let Grid = UIColor(hexString: "d52e2e")
     static let House = UIColor(hexString: "82cbfc")
+    static let Use = UIColor(hexString: "0598fa")
     static let Divert = UIColor(hexString: "fb7b50")
   }
 

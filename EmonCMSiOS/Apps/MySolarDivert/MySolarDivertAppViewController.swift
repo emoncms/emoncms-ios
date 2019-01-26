@@ -45,7 +45,7 @@ final class MySolarDivertAppViewController: AppViewController {
     self.divertLabelView.alignment = .center
     self.divertLabelView.valueColor = EmonCMSColors.Apps.Divert
     self.totalUseLabelView.alignment = .right
-    self.totalUseLabelView.valueColor = EmonCMSColors.Apps.House
+    self.totalUseLabelView.valueColor = EmonCMSColors.Apps.Use
     self.importLabelView.alignment = .left
     self.importLabelView.valueColor = EmonCMSColors.Apps.Grid
     self.solarLabelView.alignment = .right

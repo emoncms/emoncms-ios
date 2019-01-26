@@ -31,9 +31,9 @@ final class MyElectricAppViewController: AppViewController {
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Apps.MyElectric
 
     self.powerLabelView.alignment = .left
-    self.powerLabelView.valueColor = EmonCMSColors.Apps.House
+    self.powerLabelView.valueColor = EmonCMSColors.Apps.Use
     self.usageTodayLabelView.alignment = .right
-    self.usageTodayLabelView.valueColor = EmonCMSColors.Apps.House
+    self.usageTodayLabelView.valueColor = EmonCMSColors.Apps.Use
 
     self.setupCharts()
     self.setupBindings()
