@@ -30,10 +30,10 @@ final class MySolarAppViewModel: AppViewModel {
   private(set) var data: Driver<MySolarData?>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
-  private(set) var errors: Driver<AppError>
+  private(set) var errors: Driver<AppError?>
   private(set) var bannerBarState: Driver<AppBannerBarState>
 
-  private let errorsSubject = PublishSubject<AppError>()
+  private let errorsSubject = PublishSubject<AppError?>()
 
   init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.account = account
@@ -98,6 +98,9 @@ final class MySolarAppViewModel: AppViewModel {
             self?.errorsSubject.onNext(typedError)
             return Observable.empty()
           }
+          .do(onNext: { [weak self] _ in
+            self?.errorsSubject.onNext(nil)
+          })
           .map { $0 }
           .trackActivity(isRefreshing)
 
@@ -114,17 +117,8 @@ final class MySolarAppViewModel: AppViewModel {
     let errors = self.errors.asObservable()
     let loading = self.isRefreshing.asObservable()
     let updateTime = self.data.map { $0?.updateTime }.asObservable()
-    let lastErrorOrNil = Observable.combineLatest(errors, loading) { ($0, $1) }
-      .map { tuple -> AppError? in
-        if tuple.1 {
-          return nil
-        } else {
-          return tuple.0
-        }
-      }
-      .startWith(nil)
 
-    self.bannerBarState = Observable.combineLatest(loading, lastErrorOrNil, updateTime) { ($0, $1, $2) }
+    self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
       .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading

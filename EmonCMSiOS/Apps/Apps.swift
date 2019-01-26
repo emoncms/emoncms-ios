@@ -30,7 +30,7 @@ protocol AppViewModel: AnyObject {
 
   var active: BehaviorRelay<Bool> { get }
   var title: Driver<String> { get }
-  var errors: Driver<AppError> { get }
+  var errors: Driver<AppError?> { get }
   var isRefreshing: Driver<Bool> { get }
   var isReady: Driver<Bool> { get }
   var bannerBarState: Driver<AppBannerBarState> { get }
