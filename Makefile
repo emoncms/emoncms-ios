@@ -1,6 +1,6 @@
 bootstrap:
-	carthage bootstrap --platform iOS
+	carthage bootstrap --platform iOS --no-use-binaries
 
 update:
-	carthage update --platform iOS
+	carthage update --platform iOS --no-use-binaries
 	./ackack.py
