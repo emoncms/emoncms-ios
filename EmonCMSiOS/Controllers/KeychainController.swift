@@ -13,6 +13,7 @@ import Locksmith
 final class KeychainController {
 
   static let ServiceIdentifier = "org.openenergymonitor.emoncms"
+  static let SharedKeychainIdentifier = "4C898RE43H.org.openenergymonitor.emoncms"
 
   enum KeychainControllerError: Error {
     case Generic
@@ -27,7 +28,17 @@ final class KeychainController {
   {
     let service = KeychainController.ServiceIdentifier
     let account: String
-    var data: [String:Any]
+    let data: [String:Any]
+    let useShared: Bool
+    var accessGroup: String? {
+      return self.useShared ? KeychainController.SharedKeychainIdentifier : nil
+    }
+
+    init(account: String, data: [String:Any], useShared: Bool = true) {
+      self.account = account
+      self.data = data
+      self.useShared = useShared
+    }
   }
 
   init() {
