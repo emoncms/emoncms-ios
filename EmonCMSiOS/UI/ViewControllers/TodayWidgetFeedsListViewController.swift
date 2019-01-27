@@ -38,20 +38,20 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
     let dataSource = RxTableViewSectionedReloadDataSource<TodayWidgetFeedsListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ??
-          UITableViewCell(style: .default, reuseIdentifier: "Cell")
+          UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.textLabel?.text = item.feedName
+        cell.detailTextLabel?.text = item.accountName
         return cell
     },
-      titleForHeaderInSection: { (ds, index) in
-        return ds.sectionModels[index].model
-    },
+      titleForHeaderInSection: { _,_ in "" },
       canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in false })
+      canMoveRowAtIndexPath: { _,_  in true })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
     self.viewModel.feeds
+      .map { [TodayWidgetFeedsListViewModel.Section(model: "", items: $0)] }
       .drive(self.tableView.rx.items(dataSource: dataSource))
       .disposed(by: self.disposeBag)
   }
@@ -65,6 +65,16 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
       }
       .flatMap { [unowned self] in
         self.viewModel.deleteTodayWidgetFeed(withId: $0)
+          .catchErrorJustReturn(())
+      }
+      .subscribe()
+      .disposed(by: self.disposeBag)
+
+    self.tableView.rx
+      .itemMoved
+      .flatMap { [weak self] event -> Observable<()> in
+        guard let self = self else { return Observable.empty() }
+        return self.viewModel.moveTodayWidgetFeed(fromIndex: event.sourceIndex.row, toIndex: event.destinationIndex.row)
           .catchErrorJustReturn(())
       }
       .subscribe()
@@ -151,7 +161,7 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
         self.navigationController?.popViewController(animated: true)
       })
       .disposed(by: self.disposeBag)
-    self.navigationItem.rightBarButtonItem = rightBarButtonItem
+    self.navigationItem.rightBarButtonItems = [self.editButtonItem, rightBarButtonItem]
   }
 
 }

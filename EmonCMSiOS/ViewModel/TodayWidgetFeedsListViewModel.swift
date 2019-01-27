@@ -38,7 +38,7 @@ final class TodayWidgetFeedsListViewModel {
   // Inputs
 
   // Outputs
-  private(set) var feeds: Driver<[Section]>
+  private(set) var feeds: Driver<[ListItem]>
 
   init(realmController: RealmController, accountController: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -52,15 +52,14 @@ final class TodayWidgetFeedsListViewModel {
     let todayWidgetFeedsQuery = self.realm.objects(TodayWidgetFeed.self)
       .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
     self.feeds = Observable.array(from: todayWidgetFeedsQuery)
-      .map(self.todayWidgetFeedsToSections)
+      .map(self.todayWidgetFeedsToListItems)
       .asDriver(onErrorJustReturn: [])
   }
 
-  private func todayWidgetFeedsToSections(_ todayWidgetFeeds: [TodayWidgetFeed]) -> [Section] {
-    var sectionBuilder = [String:[ListItem]]()
+  private func todayWidgetFeedsToListItems(_ todayWidgetFeeds: [TodayWidgetFeed]) -> [ListItem] {
     var accountIdToName = [String:String]()
 
-    todayWidgetFeeds.forEach { todayWidgetFeed in
+    let listItems = todayWidgetFeeds.map { todayWidgetFeed -> ListItem in
       let accountId = todayWidgetFeed.accountId
       let feedId = todayWidgetFeed.feedId
 
@@ -83,32 +82,10 @@ final class TodayWidgetFeedsListViewModel {
         feedName = "FAILED TO FIND FEED"
       }
 
-      let listItem = ListItem(todayWidgetFeedId: todayWidgetFeed.uuid, accountId: accountId, accountName: accountName, feedId: feedId, feedName: feedName)
-
-      let sectionItems: [ListItem]
-      if let existingItems = sectionBuilder[accountId] {
-        sectionItems = existingItems
-      } else {
-        sectionItems = []
-      }
-      sectionBuilder[accountId] = sectionItems + [listItem]
+      return ListItem(todayWidgetFeedId: todayWidgetFeed.uuid, accountId: accountId, accountName: accountName, feedId: feedId, feedName: feedName)
     }
 
-    let sections = sectionBuilder.keys
-      .sorted { (a, b) in
-        if a == self.accountController.uuid {
-          return true
-        }
-        if b == self.accountController.uuid {
-          return false
-        }
-        return a > b
-      }
-      .map {
-        Section(model: accountIdToName[$0]!, items: sectionBuilder[$0]!)
-      }
-
-    return sections
+    return listItems
   }
 
   func addTodayWidgetFeed(forFeedId feedId: String) -> Observable<()> {
@@ -117,6 +94,13 @@ final class TodayWidgetFeedsListViewModel {
       let todayWidgetFeed = TodayWidgetFeed()
       todayWidgetFeed.accountId = self.accountController.uuid
       todayWidgetFeed.feedId = feedId
+
+      let maxOrderObject = realm.objects(TodayWidgetFeed.self)
+        .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: false)
+        .first
+      let maxOrder = maxOrderObject?.order ?? 0
+
+      todayWidgetFeed.order = maxOrder + 1
 
       try realm.write {
         realm.add(todayWidgetFeed)
@@ -132,6 +116,30 @@ final class TodayWidgetFeedsListViewModel {
       if let todayWidgetFeed = realm.object(ofType: TodayWidgetFeed.self, forPrimaryKey: id) {
         try realm.write {
           realm.delete(todayWidgetFeed)
+        }
+      }
+
+      return Observable.just(())
+    }
+  }
+
+  func moveTodayWidgetFeed(fromIndex oldIndex: Int, toIndex newIndex: Int) -> Observable<()> {
+    let realm = self.realm
+    return Observable.deferred { () -> Observable<()> in
+      let query = self.realm.objects(TodayWidgetFeed.self)
+        .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
+
+      var objects = Array(query)
+      guard oldIndex < objects.count && newIndex < objects.count else { return Observable.empty() }
+
+      let moveObject = objects.remove(at: oldIndex)
+      objects.insert(moveObject, at: newIndex)
+
+      try realm.write {
+        var i = 0
+        objects.forEach { item in
+          item.order = i
+          i += 1
         }
       }
 
