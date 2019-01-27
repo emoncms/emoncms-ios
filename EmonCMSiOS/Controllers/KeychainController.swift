@@ -12,22 +12,55 @@ import Locksmith
 
 final class KeychainController {
 
+  static let ServiceIdentifier = Bundle.main.infoDictionary![String(kCFBundleIdentifierKey)] as? String ?? "com.locksmith.defaultService"
+
   enum KeychainControllerError: Error {
     case Generic
     case KeychainFailed
   }
 
+  struct AccountSecureStorable:
+    ReadableSecureStorable,
+    CreateableSecureStorable,
+    DeleteableSecureStorable,
+    GenericPasswordSecureStorable
+  {
+    let service = KeychainController.ServiceIdentifier
+    let account: String
+    var data: [String:Any]
+  }
+
   init() {
+  }
+
+  private func save(data: [String:Any], forUserAccount account: String) throws {
+    let storable = AccountSecureStorable(account: account, data: data)
+    try storable.createInSecureStore()
+  }
+
+  private func update(data: [String:Any], forUserAccount account: String) throws {
+    let storable = AccountSecureStorable(account: account, data: data)
+    try storable.updateInSecureStore()
+  }
+
+  private func loadData(forUserAccount account: String) -> [String:Any]? {
+    let storable = AccountSecureStorable(account: account, data: [:])
+    return storable.readFromSecureStore()?.data
+  }
+
+  private func deleteData(forUserAccount account: String) throws {
+    let storable = AccountSecureStorable(account: account, data: [:])
+    try storable.deleteFromSecureStore()
   }
 
   func saveAccount(forId id: String, apiKey: String) throws {
     do {
       let data = ["apikey": apiKey]
       do {
-        try Locksmith.saveData(data: data, forUserAccount: id)
+        try self.save(data: data, forUserAccount: id)
       } catch LocksmithError.duplicate {
         // We already have it, let's try updating it
-        try Locksmith.updateData(data: data, forUserAccount: id)
+        try self.update(data: data, forUserAccount: id)
       }
     } catch {
       throw KeychainControllerError.KeychainFailed
@@ -36,7 +69,7 @@ final class KeychainController {
 
   func apiKey(forAccountWithId id: String) -> String? {
     guard
-      let data = Locksmith.loadDataForUserAccount(userAccount: id),
+      let data = self.loadData(forUserAccount: id),
       let apiKey = data["apikey"] as? String else {
         return nil
     }
@@ -45,7 +78,7 @@ final class KeychainController {
 
   func logout(ofAccountWithId id: String) throws {
     do {
-      try Locksmith.deleteDataForUserAccount(userAccount: id)
+      try self.deleteData(forUserAccount: id)
     } catch LocksmithError.notFound {
       // This is OK - it wasn't there anyway
     } catch {
