@@ -23,6 +23,7 @@ final class AppListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -34,10 +35,11 @@ final class AppListViewModel {
   // Outputs
   private(set) var apps: Driver<[ListItem]>
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
 
     self.apps = Driver.never()
 
@@ -80,15 +82,15 @@ final class AppListViewModel {
 
     switch category {
     case .myElectric:
-      let viewModel = MyElectricAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let viewModel = MyElectricAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
       let appVC = viewController as! MyElectricAppViewController
       appVC.viewModel = viewModel
     case .mySolar:
-      let viewModel = MySolarAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let viewModel = MySolarAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
       let appVC = viewController as! MySolarAppViewController
       appVC.viewModel = viewModel
     case .mySolarDivert:
-      let viewModel = MySolarDivertAppViewModel(account: self.account, api: self.api, appDataId: id)
+      let viewModel = MySolarDivertAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
       let appVC = viewController as! MySolarDivertAppViewController
       appVC.viewModel = viewModel
     }
@@ -97,7 +99,7 @@ final class AppListViewModel {
   }
 
   func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {
-    return AppConfigViewModel(account: self.account, api: self.api, appDataId: nil, appCategory: category)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: nil, appCategory: category)
   }
 
 }

@@ -25,7 +25,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
 
     beforeEach {
       realmController = RealmController(dataDirectory: self.dataDirectory)
-      realm = realmController.createRealm()
+      realm = realmController.createMainRealm()
       try! realm.write {
         realm.deleteAll()
       }

@@ -14,11 +14,13 @@ import RealmSwift
 
 final class InputUpdateHelper {
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let scheduler: SerialDispatchQueueScheduler
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
     self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.InputUpdateHelper")
@@ -28,8 +30,9 @@ final class InputUpdateHelper {
     return Observable.deferred {
       return self.api.inputList(self.account.credentials)
         .observeOn(self.scheduler)
-        .flatMap { inputs -> Observable<()> in
-          let realm = self.account.createRealm()
+        .flatMap { [weak self] inputs -> Observable<()> in
+          guard let self = self else { return Observable.empty() }
+          let realm = self.realmController.createAccountRealm(forAccountId: self.account.uuid)
           return self.saveInputs(inputs, inRealm: realm)
         }
         .observeOn(MainScheduler.asyncInstance)

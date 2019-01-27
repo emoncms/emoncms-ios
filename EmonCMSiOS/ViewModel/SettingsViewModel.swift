@@ -31,9 +31,9 @@ final class SettingsViewModel {
     self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
 
-    self.feedList = FeedListHelper(account: account, api: api)
+    self.feedList = FeedListHelper(realmController: realmController, account: account, api: api)
 
     self.active.asObservable()
       .distinctUntilChanged()

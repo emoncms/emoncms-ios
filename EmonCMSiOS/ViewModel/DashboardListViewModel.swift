@@ -25,6 +25,7 @@ final class DashboardListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -45,11 +46,12 @@ final class DashboardListViewModel {
   }()
   private var serverNeedsUpdateSubject = ReplaySubject<Bool>.create(bufferSize: 1)
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
-    self.dashboardUpdateHelper = DashboardUpdateHelper(account: account, api: api)
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
+    self.dashboardUpdateHelper = DashboardUpdateHelper(realmController: realmController, account: account, api: api)
 
     self.dashboards = Driver.never()
     self.updateTime = Driver.never()

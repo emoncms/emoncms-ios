@@ -27,6 +27,7 @@ final class InputListViewModel {
 
   typealias Section = SectionModel<String, ListItem>
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -47,11 +48,12 @@ final class InputListViewModel {
   }()
   private var serverNeedsUpdateSubject = ReplaySubject<Bool>.create(bufferSize: 1)
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
-    self.inputUpdateHelper = InputUpdateHelper(account: account, api: api)
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
+    self.inputUpdateHelper = InputUpdateHelper(realmController: realmController, account: account, api: api)
 
     self.inputs = Driver.never()
     self.updateTime = Driver.never()

@@ -26,7 +26,7 @@ enum AppError: Error {
 
 protocol AppViewModel: AnyObject {
 
-  init(account: AccountController, api: EmonCMSAPI, appDataId: String)
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
   var active: BehaviorRelay<Bool> { get }
   var title: Driver<String> { get }

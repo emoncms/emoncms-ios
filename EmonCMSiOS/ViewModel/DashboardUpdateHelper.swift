@@ -14,11 +14,13 @@ import RealmSwift
 
 final class DashboardUpdateHelper {
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let scheduler: SerialDispatchQueueScheduler
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
     self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.DashboardUpdateHelper")
@@ -28,8 +30,9 @@ final class DashboardUpdateHelper {
     return Observable.deferred {
       return self.api.dashboardList(self.account.credentials)
         .observeOn(self.scheduler)
-        .flatMap { dashboards -> Observable<()> in
-          let realm = self.account.createRealm()
+        .flatMap { [weak self] dashboards -> Observable<()> in
+          guard let self = self else { return Observable.empty() }
+          let realm = self.realmController.createAccountRealm(forAccountId: self.account.uuid)
           return self.saveDashboards(dashboards, inRealm: realm)
         }
         .observeOn(MainScheduler.asyncInstance)

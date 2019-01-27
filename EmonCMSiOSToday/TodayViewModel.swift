@@ -50,7 +50,7 @@ final class TodayViewModel {
     self.realmController = realmController
     self.keychainController = KeychainController()
     self.api = api
-    self.realm = realmController.createRealm()
+    self.realm = realmController.createMainRealm()
   }
 
   func updateData() -> Observable<Bool> {
@@ -73,8 +73,7 @@ final class TodayViewModel {
 
         let accountName = account.name
         let accountCredentials = AccountCredentials(url: account.url, apiKey: apiKey)
-        let accountController = AccountController(uuid: accountId, dataDirectory: self.realmController.dataDirectory, credentials: accountCredentials)
-        let accountRealm = accountController.createRealm()
+        let accountRealm = self.realmController.createAccountRealm(forAccountId: accountId)
 
         guard let feed = accountRealm.object(ofType: Feed.self, forPrimaryKey: feedId) else { return nil }
 

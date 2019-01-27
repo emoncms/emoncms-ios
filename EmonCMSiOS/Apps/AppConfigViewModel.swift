@@ -17,6 +17,7 @@ final class AppConfigViewModel {
     case missingFields([AppConfigField])
   }
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -24,13 +25,14 @@ final class AppConfigViewModel {
   private let appCategory: AppCategory
 
   lazy var feedListHelper: FeedListHelper = {
-    return FeedListHelper(account: self.account, api: self.api)
+    return FeedListHelper(realmController: self.realmController, account: self.account, api: self.api)
   }()
 
-  init(account: AccountController, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
+    self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     if let appDataId = appDataId {
       self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
     } else {
@@ -109,7 +111,7 @@ final class AppConfigViewModel {
   }
 
   func feedListViewModel() -> FeedListViewModel {
-    return FeedListViewModel(account: self.account, api: self.api)
+    return FeedListViewModel(realmController: self.realmController, account: self.account, api: self.api)
   }
 
 }

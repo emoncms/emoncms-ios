@@ -39,7 +39,7 @@ final class AddAccountViewModel {
     self.realmController = realmController
     self.keychainController = KeychainController()
     self.api = api
-    self.realm = realmController.createRealm()
+    self.realm = realmController.createMainRealm()
     if let accountId = accountId {
       let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId)!
       self.account = account

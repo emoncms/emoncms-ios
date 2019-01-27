@@ -34,15 +34,15 @@ class AccountControllerTests: QuickSpec {
     describe("accountController") {
       it("equality should be true for equal objects") {
         let credentials = AccountCredentials(url: "url", apiKey: "apiKey")
-        let a = AccountController(uuid: "uuid", dataDirectory: URL(string: "file:///")!, credentials: credentials)
-        let b = AccountController(uuid: "uuid", dataDirectory: URL(string: "file:///")!, credentials: credentials)
+        let a = AccountController(uuid: "uuid", credentials: credentials)
+        let b = AccountController(uuid: "uuid", credentials: credentials)
         expect(a == b).to(equal(true))
       }
 
       it("equality should be false for non-equal objects") {
         let credentials = AccountCredentials(url: "url", apiKey: "apiKey")
-        let a = AccountController(uuid: "uuid1", dataDirectory: URL(string: "file:///")!, credentials: credentials)
-        let b = AccountController(uuid: "uuid2", dataDirectory: URL(string: "file:///")!, credentials: credentials)
+        let a = AccountController(uuid: "uuid1", credentials: credentials)
+        let b = AccountController(uuid: "uuid2", credentials: credentials)
         expect(a == b).to(equal(false))
       }
     }

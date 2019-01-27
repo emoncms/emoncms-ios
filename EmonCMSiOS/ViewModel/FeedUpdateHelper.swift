@@ -14,11 +14,13 @@ import RealmSwift
 
 final class FeedUpdateHelper {
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let scheduler: SerialDispatchQueueScheduler
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
     self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.FeedUpdateHelper")
@@ -28,8 +30,9 @@ final class FeedUpdateHelper {
     return Observable.deferred {
       return self.api.feedList(self.account.credentials)
         .observeOn(self.scheduler)
-        .flatMap { feeds -> Observable<()> in
-          let realm = self.account.createRealm()
+        .flatMap { [weak self] feeds -> Observable<()> in
+          guard let self = self else { return Observable.empty() }
+          let realm = self.realmController.createAccountRealm(forAccountId: self.account.uuid)
           return self.saveFeeds(feeds, inRealm: realm)
         }
         .observeOn(MainScheduler.asyncInstance)

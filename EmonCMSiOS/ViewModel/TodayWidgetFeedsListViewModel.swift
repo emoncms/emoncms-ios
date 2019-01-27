@@ -45,7 +45,7 @@ final class TodayWidgetFeedsListViewModel {
     self.accountController = accountController
     self.keychainController = KeychainController()
     self.api = api
-    self.realm = realmController.createRealm()
+    self.realm = realmController.createMainRealm()
 
     self.feeds = Driver.never()
 
@@ -74,8 +74,7 @@ final class TodayWidgetFeedsListViewModel {
         accountName = "FAILED TO FIND ACCOUNT"
       }
 
-      let accountController = AccountController(uuid: accountId, dataDirectory: self.realmController.dataDirectory, credentials: AccountCredentials(url: "", apiKey: ""))
-      let accountRealm = accountController.createRealm()
+      let accountRealm = self.realmController.createAccountRealm(forAccountId: accountId)
 
       let feedName: String
       if let feed = accountRealm.object(ofType: Feed.self, forPrimaryKey: feedId) {
@@ -141,7 +140,7 @@ final class TodayWidgetFeedsListViewModel {
   }
 
   func feedListViewModel() -> FeedListViewModel {
-    return FeedListViewModel(account: self.accountController, api: self.api)
+    return FeedListViewModel(realmController: self.realmController, account: self.accountController, api: self.api)
   }
 
 }

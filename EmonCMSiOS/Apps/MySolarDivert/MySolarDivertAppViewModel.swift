@@ -16,6 +16,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
   typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -35,10 +36,11 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
   private let errorsSubject = PublishSubject<AppError?>()
 
-  init(account: AccountController, api: EmonCMSAPI, appDataId: String) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String) {
+    self.realmController = realmController
     self.account = account
     self.api = api
-    self.realm = account.createRealm()
+    self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
 
     self.title = Driver.empty()
@@ -135,7 +137,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
   }
 
   func configViewModel() -> AppConfigViewModel {
-    return AppConfigViewModel(account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolarDivert)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolarDivert)
   }
 
   private func update() -> Observable<MySolarDivertData> {

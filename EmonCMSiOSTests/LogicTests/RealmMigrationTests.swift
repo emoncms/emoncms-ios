@@ -20,12 +20,12 @@ class RealmMigrationTests: QuickSpec {
 
     describe("accounts") {
 
-      var accountController: AccountController!
+      var realmController: RealmController!
+      var uuid: String!
 
       beforeEach {
-        let uuid = UUID().uuidString
-        let credentials = AccountCredentials(url: "fake", apiKey: "fake")
-        accountController = AccountController(uuid: uuid, dataDirectory: self.dataDirectory, credentials: credentials)
+        realmController = RealmController(dataDirectory: self.dataDirectory)
+        uuid = UUID().uuidString
       }
 
       it("should migrate from v0 to v1") {
@@ -33,10 +33,10 @@ class RealmMigrationTests: QuickSpec {
           fail("Failed to find Realm file!")
           return
         }
-        try! FileManager.default.createDirectory(at: accountController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
-        try! FileManager.default.copyItem(at: oldRealmFileURL, to: accountController.realmFileURL)
+        try! FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+        try! FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.realmFileURL(forAccountId: uuid))
 
-        let realm = accountController.createRealm()
+        let realm = realmController.createAccountRealm(forAccountId: uuid)
 
         let feeds = realm.objects(Feed.self)
         expect(feeds.count).to(equal(2))
