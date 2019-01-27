@@ -12,7 +12,7 @@ import Locksmith
 
 final class KeychainController {
 
-  static let ServiceIdentifier = Bundle.main.infoDictionary![String(kCFBundleIdentifierKey)] as? String ?? "com.locksmith.defaultService"
+  static let ServiceIdentifier = "org.openenergymonitor.emoncms"
 
   enum KeychainControllerError: Error {
     case Generic
