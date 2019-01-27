@@ -58,7 +58,6 @@
 		C945F8DF21FE1E3B00B99D35 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
 		C945F8E021FE2A5900B99D35 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BA1DE636FA000B6344 /* Input.swift */; };
 		C945F8E121FE2A5900B99D35 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
-		C945F8E221FE2A5900B99D35 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 		C945F8E321FE2A5900B99D35 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
 		C945F8E421FE2A5900B99D35 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		C945F8E521FE2A6000B99D35 /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
@@ -178,7 +177,6 @@
 		C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */; };
 		C9E7A73421FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
 		C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */; };
-		C9F53E361D9297FD00E9724D /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -396,7 +394,6 @@
 		C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelper.swift; sourceTree = "<group>"; };
 		C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Dashboard.swift"; sourceTree = "<group>"; };
 		C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewController.swift; sourceTree = "<group>"; };
-		C9F53E351D9297FD00E9724D /* Chart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chart.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -617,7 +614,6 @@
 			children = (
 				C945F8FB21FE623300B99D35 /* RealmObjects */,
 				C9BB834C1D869CC80058C059 /* AccountController.swift */,
-				C9F53E351D9297FD00E9724D /* Chart.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
 				C9C240CD1D917CA500BC302C /* DateRange.swift */,
 			);
@@ -1111,7 +1107,6 @@
 				C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */,
 				C945F8D721FE1B5100B99D35 /* EmonCMSAPI+User.swift in Sources */,
 				C945F8DD21FE1C4E00B99D35 /* TodayWidgetFeed.swift in Sources */,
-				C945F8E221FE2A5900B99D35 /* Chart.swift in Sources */,
 				C945F8D921FE1B5100B99D35 /* EmonCMSAPI+Input.swift in Sources */,
 				C945F8EA21FE2A9000B99D35 /* LogController.swift in Sources */,
 				C945F8DE21FE1DD500B99D35 /* AccountController.swift in Sources */,
@@ -1213,7 +1208,6 @@
 				C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */,
 				C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */,
 				C9BB83721D8883480058C059 /* DataPoint.swift in Sources */,
-				C9F53E361D9297FD00E9724D /* Chart.swift in Sources */,
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
 				C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */,
 				C925518721F4BC40008342D8 /* AccessibilityIdentifiers.swift in Sources */,
