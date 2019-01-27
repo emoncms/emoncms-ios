@@ -69,7 +69,9 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
     let range = self.dateRange ?? 0
 
     if range < 86_400 { //< 1 day
-      dateFormatter.dateFormat = "h:mm a"
+      dateFormatter.dateFormat = nil
+      dateFormatter.timeStyle = .short
+      dateFormatter.dateStyle = .none
     } else {
       dateFormatter.dateFormat = nil
       dateFormatter.timeStyle = .none
