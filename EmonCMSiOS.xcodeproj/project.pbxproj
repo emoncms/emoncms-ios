@@ -556,6 +556,18 @@
 			path = MySolar;
 			sourceTree = "<group>";
 		};
+		C945F8FB21FE623300B99D35 /* RealmObjects */ = {
+			isa = PBXGroup;
+			children = (
+				1EE02C1021ED10E800C6AE9A /* Account.swift */,
+				C9BB83531D86AA3E0058C059 /* Feed.swift */,
+				C98BD5BA1DE636FA000B6344 /* Input.swift */,
+				C9E7A72D21FA72CA008BD497 /* Dashboard.swift */,
+				C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */,
+			);
+			path = RealmObjects;
+			sourceTree = "<group>";
+		};
 		C94998C021FD0D08008FB8AE /* EmonCMSiOSToday */ = {
 			isa = PBXGroup;
 			children = (
@@ -603,12 +615,8 @@
 		C9BB83461D869CB00058C059 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C945F8FB21FE623300B99D35 /* RealmObjects */,
 				C9BB834C1D869CC80058C059 /* AccountController.swift */,
-				1EE02C1021ED10E800C6AE9A /* Account.swift */,
-				C9BB83531D86AA3E0058C059 /* Feed.swift */,
-				C98BD5BA1DE636FA000B6344 /* Input.swift */,
-				C9E7A72D21FA72CA008BD497 /* Dashboard.swift */,
-				C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */,
 				C9F53E351D9297FD00E9724D /* Chart.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
 				C9C240CD1D917CA500BC302C /* DateRange.swift */,
