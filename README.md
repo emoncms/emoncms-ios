@@ -27,6 +27,6 @@
   - [x] My Solar PV + Divert app
 - [x] Multi-account
 - [ ] watchOS app
-- [ ] Today extension
+- [x] Today extension
 - [ ] tvOS app
 
