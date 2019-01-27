@@ -59,7 +59,7 @@ final class AppDelegate: UIResponder, UIApplicationDelegate {
       )
       requestProvider = FakeHTTPProvider(config: config)
     } else {
-      dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: "group.org.openenergymonitor.emoncms")!
+      dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
       requestProvider = NSURLSessionHTTPRequestProvider()
     }
 

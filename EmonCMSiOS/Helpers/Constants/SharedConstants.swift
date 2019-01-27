@@ -22,6 +22,7 @@ struct SharedConstants {
     case lastSelectedAccountUUID
   }
 
+  static let SharedApplicationGroupIdentifier = "group.org.openenergymonitor.emoncms"
   static let EmonCMSdotOrgURL = "https://www.emoncms.org/"
 
 }
