@@ -12,7 +12,7 @@ import Locksmith
 
 final class KeychainController {
 
-  enum LoginControllerError: Error {
+  enum KeychainControllerError: Error {
     case Generic
     case KeychainFailed
   }
@@ -30,7 +30,7 @@ final class KeychainController {
         try Locksmith.updateData(data: data, forUserAccount: id)
       }
     } catch {
-      throw LoginControllerError.KeychainFailed
+      throw KeychainControllerError.KeychainFailed
     }
   }
 
@@ -49,7 +49,7 @@ final class KeychainController {
     } catch LocksmithError.notFound {
       // This is OK - it wasn't there anyway
     } catch {
-      throw LoginControllerError.KeychainFailed
+      throw KeychainControllerError.KeychainFailed
     }
   }
 
