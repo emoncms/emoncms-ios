@@ -78,6 +78,7 @@
 		C94998B521FC9CDF008FB8AE /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; };
 		C94998B621FC9CE8008FB8AE /* RxTest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998B721FC9CEB008FB8AE /* Charts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
@@ -270,6 +271,7 @@
 		C949987C21FBD94B008FB8AE /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
 		C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		C94998B421FC9CDF008FB8AE /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
+		C94998D521FDF903008FB8AE /* AccountControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountControllerTests.swift; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -717,6 +719,7 @@
 		C9E7A71521F8A577008BD497 /* LogicTests */ = {
 			isa = PBXGroup;
 			children = (
+				C94998D521FDF903008FB8AE /* AccountControllerTests.swift */,
 				C9E7A70E21F864E1008BD497 /* ChartDateValueFormatterTests.swift */,
 				C9E7A71F21F92363008BD497 /* DataPointTests.swift */,
 				C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */,
@@ -971,6 +974,7 @@
 				C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */,
 				1EA783C621EFD8E3002D6A3A /* AccountListViewModelTests.swift in Sources */,
 				C9E7A72C21FA6B77008BD497 /* InputUpdateHelperTests.swift in Sources */,
+				C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
 				C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */,
 			);
