@@ -14,6 +14,10 @@
 
 ![](images/app1.png) ![](images/app2.png) ![](images/app3.png)
 
+### Today Widget
+
+![](images/today1.png)
+
 ## Todo list
 
 - [x] Basic app structure
