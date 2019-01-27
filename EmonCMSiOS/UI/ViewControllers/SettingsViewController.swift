@@ -44,8 +44,6 @@ final class SettingsViewController: FormViewController {
   }
 
   private func setupFormer() {
-    var sections: [SectionFormer] = []
-
     let logoutRow = LabelRowFormer<FormLabelCell>() {
       $0.accessoryType = .disclosureIndicator
       }.configure {
@@ -77,6 +75,16 @@ final class SettingsViewController: FormViewController {
         strongSelf.switchAccountSubject.onNext(false)
     }
 
+    let configureTodayWidgetsRow = LabelRowFormer<FormLabelCell>() {
+      $0.accessoryType = .disclosureIndicator
+      }.configure {
+        $0.text = "Configure Today Widget"
+      }.onSelected { [weak self] _ in
+        guard let strongSelf = self else { return }
+        strongSelf.showTodayWidgetsView()
+        strongSelf.former.deselect(animated: true)
+    }
+
     let feedbackRow = LabelRowFormer<FormLabelCell>() {
       $0.accessoryType = .disclosureIndicator
       }.configure {
@@ -94,11 +102,12 @@ final class SettingsViewController: FormViewController {
         $0.text = "App Version: \(appVersion) (\(buildNumber))"
     }
 
-    let logoutSection = SectionFormer(rowFormer: logoutRow, switchAccountRow, feedbackRow)
+    let section1 = SectionFormer(rowFormer: logoutRow, switchAccountRow)
+    let section2 = SectionFormer(rowFormer: configureTodayWidgetsRow)
+    let section3 = SectionFormer(rowFormer: feedbackRow)
       .set(footerViewFormer: detailsFooter)
-    sections.append(logoutSection)
 
-    self.former.add(sectionFormers: sections)
+    self.former.append(sectionFormer: section1, section2, section3)
   }
 
   private func sendFeedback() {
@@ -125,6 +134,13 @@ final class SettingsViewController: FormViewController {
     }
 
     self.present(mailComposer, animated: true, completion: nil)
+  }
+
+  private func showTodayWidgetsView() {
+    let viewController = TodayWidgetFeedsListViewController()
+    let viewModel = self.viewModel.todayWidgetFeedsListViewModel()
+    viewController.viewModel = viewModel
+    self.navigationController?.pushViewController(viewController, animated: true)
   }
 
 }

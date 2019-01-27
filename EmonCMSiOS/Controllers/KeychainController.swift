@@ -34,7 +34,7 @@ final class KeychainController {
       return self.useShared ? KeychainController.SharedKeychainIdentifier : nil
     }
 
-    init(account: String, data: [String:Any], useShared: Bool = true) {
+    init(account: String, data: [String:Any], useShared: Bool = false) {
       self.account = account
       self.data = data
       self.useShared = useShared

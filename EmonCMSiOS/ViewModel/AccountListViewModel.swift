@@ -120,7 +120,7 @@ final class AccountListViewModel {
       let inputListViewModel = InputListViewModel(account: accountController, api: self.api)
       let feedListViewModel = FeedListViewModel(account: accountController, api: self.api)
       let dashboardListViewModel = DashboardListViewModel(account: accountController, api: self.api)
-      let settingsViewModel = SettingsViewModel(account: accountController, api: self.api)
+      let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController, api: self.api)
       return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
   }
 

@@ -46,6 +46,33 @@
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
 		C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
 		C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631C21DA540A00FEF2B6 /* Apps.swift */; };
+		C945F8D521FE1AE100B99D35 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8D421FE1AE100B99D35 /* TodayViewModel.swift */; };
+		C945F8D621FE1B5100B99D35 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
+		C945F8D721FE1B5100B99D35 /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
+		C945F8D821FE1B5100B99D35 /* EmonCMSAPI+Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70721F662AA008BD497 /* EmonCMSAPI+Feed.swift */; };
+		C945F8D921FE1B5100B99D35 /* EmonCMSAPI+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70521F6627B008BD497 /* EmonCMSAPI+Input.swift */; };
+		C945F8DA21FE1B5100B99D35 /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
+		C945F8DC21FE1BFA00B99D35 /* TodayWidgetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */; };
+		C945F8DD21FE1C4E00B99D35 /* TodayWidgetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */; };
+		C945F8DE21FE1DD500B99D35 /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* AccountController.swift */; };
+		C945F8DF21FE1E3B00B99D35 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
+		C945F8E021FE2A5900B99D35 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BA1DE636FA000B6344 /* Input.swift */; };
+		C945F8E121FE2A5900B99D35 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
+		C945F8E221FE2A5900B99D35 /* Chart.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F53E351D9297FD00E9724D /* Chart.swift */; };
+		C945F8E321FE2A5900B99D35 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
+		C945F8E421FE2A5900B99D35 /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
+		C945F8E521FE2A6000B99D35 /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
+		C945F8E621FE2A6000B99D35 /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
+		C945F8E721FE2A7100B99D35 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
+		C945F8E821FE2A7100B99D35 /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C945F8E921FE2A8000B99D35 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
+		C945F8EA21FE2A9000B99D35 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
+		C945F8EC21FE2ABF00B99D35 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
+		C945F8EF21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8EE21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift */; };
+		C945F8F121FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F021FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift */; };
+		C945F8F821FE52C300B99D35 /* TodayViewFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C945F8F621FE52C300B99D35 /* TodayViewFeedCell.xib */; };
+		C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */; };
+		C945F8FA21FE54BE00B99D35 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; };
 		C949985621FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */; };
 		C949985721FA7FFA008FB8AE /* DashboardListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
@@ -78,7 +105,6 @@
 		C94998B521FC9CDF008FB8AE /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; };
 		C94998B621FC9CE8008FB8AE /* RxTest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998B721FC9CEB008FB8AE /* Charts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
 		C94998C221FD0D08008FB8AE /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998C121FD0D08008FB8AE /* TodayViewController.swift */; };
 		C94998C521FD0D08008FB8AE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C94998C321FD0D08008FB8AE /* MainInterface.storyboard */; };
@@ -90,6 +116,7 @@
 		C94998D121FD12CC008FB8AE /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C94998D321FD1C8B008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
 		C94998D421FD1C93008FB8AE /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
+		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C95640AD1D8A9C7D003B9757 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Rx.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Rx.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
@@ -269,6 +296,12 @@
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
 		C941631421D65A6F00FEF2B6 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C941631C21DA540A00FEF2B6 /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
+		C945F8D421FE1AE100B99D35 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWidgetFeed.swift; sourceTree = "<group>"; };
+		C945F8EE21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWidgetFeedsListViewController.swift; sourceTree = "<group>"; };
+		C945F8F021FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWidgetFeedsListViewModel.swift; sourceTree = "<group>"; };
+		C945F8F621FE52C300B99D35 /* TodayViewFeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TodayViewFeedCell.xib; sourceTree = "<group>"; };
+		C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewFeedCell.swift; sourceTree = "<group>"; };
 		C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+User.swift"; sourceTree = "<group>"; };
@@ -290,12 +323,12 @@
 		C949987C21FBD94B008FB8AE /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
 		C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
 		C94998B421FC9CDF008FB8AE /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
-		C94998D521FDF903008FB8AE /* AccountControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountControllerTests.swift; sourceTree = "<group>"; };
 		C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C94998C121FD0D08008FB8AE /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		C94998C421FD0D08008FB8AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		C94998C621FD0D08008FB8AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C94998D221FD1301008FB8AE /* EmonCMSiOSToday.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSiOSToday.entitlements; sourceTree = "<group>"; };
+		C94998D521FDF903008FB8AE /* AccountControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountControllerTests.swift; sourceTree = "<group>"; };
 		C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EmonCMSiOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPITests.swift; sourceTree = "<group>"; };
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -384,6 +417,7 @@
 				C94998CD21FD10D8008FB8AE /* Realm.framework in Frameworks */,
 				C94998CE21FD10D8008FB8AE /* RealmSwift.framework in Frameworks */,
 				C94998D321FD1C8B008FB8AE /* Locksmith.framework in Frameworks */,
+				C945F8FA21FE54BE00B99D35 /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +561,9 @@
 			children = (
 				C94998D221FD1301008FB8AE /* EmonCMSiOSToday.entitlements */,
 				C94998C121FD0D08008FB8AE /* TodayViewController.swift */,
+				C945F8D421FE1AE100B99D35 /* TodayViewModel.swift */,
+				C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */,
+				C945F8F621FE52C300B99D35 /* TodayViewFeedCell.xib */,
 				C94998C321FD0D08008FB8AE /* MainInterface.storyboard */,
 				C94998C621FD0D08008FB8AE /* Info.plist */,
 			);
@@ -571,6 +608,7 @@
 				C9BB83531D86AA3E0058C059 /* Feed.swift */,
 				C98BD5BA1DE636FA000B6344 /* Input.swift */,
 				C9E7A72D21FA72CA008BD497 /* Dashboard.swift */,
+				C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */,
 				C9F53E351D9297FD00E9724D /* Chart.swift */,
 				C9BB83711D8883480058C059 /* DataPoint.swift */,
 				C9C240CD1D917CA500BC302C /* DateRange.swift */,
@@ -630,6 +668,7 @@
 				C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */,
 				C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */,
 				C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */,
+				C945F8F021FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -703,6 +742,7 @@
 				C98BD5B61DE63638000B6344 /* InputListViewController.swift */,
 				C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */,
 				C9C240BF1D91730100BC302C /* SettingsViewController.swift */,
+				C945F8EE21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -953,6 +993,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C945F8F821FE52C300B99D35 /* TodayViewFeedCell.xib in Resources */,
 				C94998C521FD0D08008FB8AE /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1040,10 +1081,32 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C945F8E621FE2A6000B99D35 /* NSURLSessionHTTPRequestProvider.swift in Sources */,
+				C945F8E321FE2A5900B99D35 /* DataPoint.swift in Sources */,
+				C945F8E021FE2A5900B99D35 /* Input.swift in Sources */,
+				C945F8D821FE1B5100B99D35 /* EmonCMSAPI+Feed.swift in Sources */,
+				C945F8E821FE2A7100B99D35 /* EmonCMSColors.swift in Sources */,
+				C945F8E121FE2A5900B99D35 /* Dashboard.swift in Sources */,
+				C945F8E721FE2A7100B99D35 /* AccessibilityIdentifiers.swift in Sources */,
+				C945F8E921FE2A8000B99D35 /* Double+Emoncms.swift in Sources */,
 				C94998D121FD12CC008FB8AE /* SharedConstants.swift in Sources */,
+				C945F8D621FE1B5100B99D35 /* EmonCMSAPI.swift in Sources */,
+				C945F8DF21FE1E3B00B99D35 /* Feed.swift in Sources */,
+				C945F8E421FE2A5900B99D35 /* DateRange.swift in Sources */,
 				C94998C221FD0D08008FB8AE /* TodayViewController.swift in Sources */,
+				C945F8EC21FE2ABF00B99D35 /* AppData.swift in Sources */,
+				C945F8D521FE1AE100B99D35 /* TodayViewModel.swift in Sources */,
+				C945F8DA21FE1B5100B99D35 /* EmonCMSAPI+Dashboard.swift in Sources */,
 				C94998CF21FD10ED008FB8AE /* RealmController.swift in Sources */,
+				C945F8E521FE2A6000B99D35 /* HTTPRequestProvider.swift in Sources */,
 				C94998D421FD1C93008FB8AE /* KeychainController.swift in Sources */,
+				C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */,
+				C945F8D721FE1B5100B99D35 /* EmonCMSAPI+User.swift in Sources */,
+				C945F8DD21FE1C4E00B99D35 /* TodayWidgetFeed.swift in Sources */,
+				C945F8E221FE2A5900B99D35 /* Chart.swift in Sources */,
+				C945F8D921FE1B5100B99D35 /* EmonCMSAPI+Input.swift in Sources */,
+				C945F8EA21FE2A9000B99D35 /* LogController.swift in Sources */,
+				C945F8DE21FE1DD500B99D35 /* AccountController.swift in Sources */,
 				C94998D021FD1221008FB8AE /* Account.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1146,6 +1209,7 @@
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
 				C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */,
 				C925518721F4BC40008342D8 /* AccessibilityIdentifiers.swift in Sources */,
+				C945F8F121FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift in Sources */,
 				1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */,
@@ -1153,7 +1217,9 @@
 				C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
 				1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */,
+				C945F8DC21FE1BFA00B99D35 /* TodayWidgetFeed.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
+				C945F8EF21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift in Sources */,
 				C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

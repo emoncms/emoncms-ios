@@ -16,6 +16,7 @@ struct AccessibilityIdentifiers {
     static let Feed = "FeedList"
     static let Input = "InputList"
     static let Dashboard = "DashboardList"
+    static let TodayWidgetFeed = "TodayWidgetFeedList"
   }
 
   struct Apps {

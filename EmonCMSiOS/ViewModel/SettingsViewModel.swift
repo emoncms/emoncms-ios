@@ -14,6 +14,7 @@ import RealmSwift
 
 final class SettingsViewModel {
 
+  private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
   private let realm: Realm
@@ -26,7 +27,8 @@ final class SettingsViewModel {
   // Outputs
   let feedList: FeedListHelper
 
-  init(account: AccountController, api: EmonCMSAPI) {
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
+    self.realmController = realmController
     self.account = account
     self.api = api
     self.realm = account.createRealm()
@@ -39,6 +41,10 @@ final class SettingsViewModel {
       .becomeVoid()
       .subscribe(self.feedList.refresh)
       .disposed(by: self.disposeBag)
+  }
+
+  func todayWidgetFeedsListViewModel() -> TodayWidgetFeedsListViewModel {
+    return TodayWidgetFeedsListViewModel(realmController: self.realmController, accountController: self.account, api: self.api)
   }
 
 }

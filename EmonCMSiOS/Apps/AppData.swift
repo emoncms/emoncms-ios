@@ -10,6 +10,14 @@ import Foundation
 
 import RealmSwift
 
+enum AppCategory: String, CaseIterable {
+
+  case myElectric
+  case mySolar
+  case mySolarDivert
+
+}
+
 final class AppData: Object {
 
   @objc dynamic var uuid: String = UUID().uuidString

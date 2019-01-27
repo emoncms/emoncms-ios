@@ -42,11 +42,7 @@ protocol AppViewModel: AnyObject {
 
 typealias AppUUIDAndCategory = (uuid: String, category: AppCategory)
 
-enum AppCategory: String, CaseIterable {
-
-  case myElectric
-  case mySolar
-  case mySolarDivert
+extension AppCategory {
 
   struct Info {
     let displayName: String
