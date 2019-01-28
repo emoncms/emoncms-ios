@@ -3,4 +3,4 @@ bootstrap:
 
 update:
 	carthage update --platform iOS --no-use-binaries
-	./ackack.py
+	./scripts/ackack.py
