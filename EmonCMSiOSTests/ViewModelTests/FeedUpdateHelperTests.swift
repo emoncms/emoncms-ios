@@ -84,7 +84,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         }
 
         let result = realm.object(ofType: Feed.self, forPrimaryKey: newFeedId)
-        expect(result).toEventually(beNil())
+        expect(result).toEventually(beNil(), timeout: 1)
       }
     }
 
