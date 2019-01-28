@@ -95,12 +95,13 @@ extension TodayViewController {
   }
 
   func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
-    self.tableView.reloadData()
-    switch activeDisplayMode {
-    case .compact:
-      self.preferredContentSize = maxSize;
-    default:
-      self.preferredContentSize = self.tableView.contentSize;
+    UIView.animate(withDuration: 0.3) {
+      switch activeDisplayMode {
+      case .compact:
+        self.preferredContentSize = maxSize;
+      default:
+        self.preferredContentSize = self.tableView.contentSize;
+      }
     }
   }
 
