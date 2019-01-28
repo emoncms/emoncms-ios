@@ -18,7 +18,7 @@ import CoreGraphics
     case right
   }
 
-  @IBInspectable var value: Double = 0.0 { didSet { self.updateLabels() } }
+  @IBInspectable var value: Double = 0 { didSet { hasSetValue = true; self.updateLabels() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
   @IBInspectable var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
   @IBInspectable var arrowSize: CGFloat = 10.0 { didSet { self.setNeedsUpdateConstraints() } }
@@ -26,6 +26,7 @@ import CoreGraphics
 
   private let valueLabel = UILabel(frame: .zero)
   private var internalConstraints = [NSLayoutConstraint]()
+  private var hasSetValue = false;
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -49,7 +50,11 @@ import CoreGraphics
   }
 
   private func updateLabels() {
-    self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
+    if self.hasSetValue {
+      self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
+    } else {
+      self.valueLabel.text = "-"
+    }
   }
 
   override func draw(_ rect: CGRect) {

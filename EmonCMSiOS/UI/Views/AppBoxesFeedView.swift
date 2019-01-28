@@ -11,13 +11,14 @@ import UIKit
 @IBDesignable final class AppBoxesFeedView: UIView {
 
   @IBInspectable var name: String = "FEED" { didSet { self.updateLabels() } }
-  @IBInspectable var value: Double = 0 { didSet { self.updateLabels() } }
+  @IBInspectable var value: Double = 0 { didSet { hasSetValue = true; self.updateLabels() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
 
   private let containerView = UIView(frame: .zero)
   private let nameLabel = UILabel(frame: .zero)
   private let valueLabel = UILabel(frame: .zero)
   private var internalConstraints: [NSLayoutConstraint] = []
+  private var hasSetValue = false
 
   override class var requiresConstraintBasedLayout: Bool { return true }
 
@@ -52,7 +53,11 @@ import UIKit
 
   private func updateLabels() {
     self.nameLabel.text = self.name.uppercased()
-    self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
+    if self.hasSetValue {
+      self.valueLabel.text = "\(self.value.prettyFormat(decimals: 1)) \(self.unit)"
+    } else {
+      self.valueLabel.text = "-"
+    }
   }
 
   override func updateConstraints() {
