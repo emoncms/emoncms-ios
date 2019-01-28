@@ -95,13 +95,18 @@ final class TodayViewModel {
           }
       }
 
-      return Observable.zip(listItemObservables)
-        .do(onNext: { [weak self] in
-          guard let self = self else { return }
-          let nonNils = $0.compactMap { $0 }
-          self.feedsSubject.onNext(nonNils)
-        })
-        .map { _ in return true }
+      if listItemObservables.count == 0 {
+        self.feedsSubject.onNext([])
+        return Observable.just(true)
+      } else {
+        return Observable.zip(listItemObservables)
+          .do(onNext: { [weak self] in
+            guard let self = self else { return }
+            let nonNils = $0.compactMap { $0 }
+            self.feedsSubject.onNext(nonNils)
+          })
+          .map { _ in return true }
+      }
     }
   }
 

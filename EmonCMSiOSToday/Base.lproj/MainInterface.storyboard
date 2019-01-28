@@ -18,7 +18,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RQW-fU-oCt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4IR-1G-KD8">
+                                <rect key="frame" x="139" y="140" width="42" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="RQW-fU-oCt">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
@@ -55,10 +61,14 @@
                             </tableView>
                         </subviews>
                         <constraints>
+                            <constraint firstItem="4IR-1G-KD8" firstAttribute="centerX" secondItem="S3S-Oj-5AN" secondAttribute="centerX" id="36V-RA-43z"/>
                             <constraint firstAttribute="bottom" secondItem="RQW-fU-oCt" secondAttribute="bottom" id="LMS-QW-aV8"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="4IR-1G-KD8" secondAttribute="trailing" constant="20" id="MSL-Lv-Iqm"/>
                             <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="RQW-fU-oCt" secondAttribute="trailing" id="Nvd-cX-dNc"/>
                             <constraint firstItem="RQW-fU-oCt" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" id="aZX-CA-IAA"/>
+                            <constraint firstItem="4IR-1G-KD8" firstAttribute="centerY" secondItem="S3S-Oj-5AN" secondAttribute="centerY" id="gb0-0R-5RC"/>
                             <constraint firstItem="RQW-fU-oCt" firstAttribute="top" secondItem="S3S-Oj-5AN" secondAttribute="top" id="kng-V1-RQp"/>
+                            <constraint firstItem="4IR-1G-KD8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="20" id="uUh-4P-ZFb"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
                     </view>
@@ -66,6 +76,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="300"/>
                     <connections>
+                        <outlet property="emptyLabel" destination="4IR-1G-KD8" id="PEg-Ys-2zu"/>
                         <outlet property="tableView" destination="RQW-fU-oCt" id="JRM-D9-zyJ"/>
                     </connections>
                 </viewController>

@@ -18,7 +18,8 @@ import Charts
 
 class TodayViewController: UIViewController, NCWidgetProviding {
 
-  @IBOutlet var tableView: UITableView!
+  @IBOutlet private var tableView: UITableView!
+  @IBOutlet private var emptyLabel: UILabel!
 
   private var viewModel: TodayViewModel!
 
@@ -72,6 +73,27 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     self.viewModel.feeds
       .map { [TodayViewModel.Section(model: "", items: $0)] }
       .drive(self.tableView.rx.items(dataSource: dataSource))
+      .disposed(by: self.disposeBag)
+
+    self.viewModel.feeds
+      .map { $0.count == 0 }
+      .drive(self.tableView.rx.isHidden)
+      .disposed(by: self.disposeBag)
+
+    self.viewModel.feeds
+      .map { $0.count != 0 }
+      .drive(self.emptyLabel.rx.isHidden)
+      .disposed(by: self.disposeBag)
+
+    self.viewModel.feeds
+      .asObservable()
+      .take(1)
+      .map { _ in return true }
+      .startWith(false)
+      .map {
+        $0 ? "Select some feeds in Emoncms app" : "Loading\u{2026}"
+      }
+      .subscribe(self.emptyLabel.rx.text)
       .disposed(by: self.disposeBag)
   }
 
