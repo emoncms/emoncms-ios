@@ -30,7 +30,9 @@
   - [x] My Solar PV app
   - [x] My Solar PV + Divert app
 - [x] Multi-account
-- [ ] watchOS app
-- [x] Today extension
-- [ ] tvOS app
+- [ ] Extensions
+  - [ ] Universal app (for iPad)
+  - [ ] watchOS app
+  - [x] Today extension
+  - [ ] tvOS app
 
