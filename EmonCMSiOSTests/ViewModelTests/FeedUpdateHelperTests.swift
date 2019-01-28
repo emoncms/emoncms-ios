@@ -62,6 +62,42 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
       }
     }
 
+    describe("todayWidgetFeeds") {
+      it("should delete ones for old feeds") {
+        let newFeedId = "differentId"
+
+        try! realm.write {
+          let feed = Feed()
+          feed.id = newFeedId
+          realm.add(feed)
+        }
+
+        let mainRealm = realmController.createMainRealm()
+        try! mainRealm.write {
+          let todayWidgetFeed = TodayWidgetFeed()
+          todayWidgetFeed.accountId = accountController.uuid
+          todayWidgetFeed.feedId = newFeedId
+          mainRealm.add(todayWidgetFeed)
+        }
+
+        waitUntil { done in
+          viewModel.updateFeeds()
+            .subscribe(
+              onError: {
+                fail($0.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
+
+        let results = realm.objects(TodayWidgetFeed.self)
+        expect(results.count).toEventually(equal(0))
+      }
+    }
+
   }
 
 }

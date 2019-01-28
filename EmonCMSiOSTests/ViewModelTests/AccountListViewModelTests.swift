@@ -102,16 +102,51 @@ class AccountListViewModelTests: EmonCMSTestCase {
         let accountQuery1 = realm.objects(Account.self)
         expect(accountQuery1.count).to(equal(1))
 
-        viewModel.deleteAccount(withId: uuid)
-          .subscribe(
-            onError: { error in
-              fail(error.localizedDescription)
-          },
-            onCompleted: {
-              let accountQuery2 = realm.objects(Account.self)
-              expect(accountQuery2.count).to(equal(0))
-          })
-          .disposed(by: disposeBag)
+        waitUntil { (done) in
+          viewModel.deleteAccount(withId: uuid)
+            .subscribe(
+              onError: { error in
+                fail(error.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                let accountQuery2 = realm.objects(Account.self)
+                expect(accountQuery2.count).to(equal(0))
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
+      }
+
+      it("should delete today widget feeds for deleted accounts") {
+        var uuid: String = ""
+        try! realm.write {
+          let account = Account()
+          account.name = "Account"
+          account.url = "URL"
+          uuid = account.uuid
+          realm.add(account)
+
+          let todayWidgetFeed = TodayWidgetFeed()
+          todayWidgetFeed.accountId = account.uuid
+          todayWidgetFeed.feedId = "feedId"
+          realm.add(todayWidgetFeed)
+        }
+
+        waitUntil { (done) in
+          viewModel.deleteAccount(withId: uuid)
+            .subscribe(
+              onError: { error in
+                fail(error.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                let query = realm.objects(TodayWidgetFeed.self)
+                expect(query.count).to(equal(0))
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
       }
     }
 

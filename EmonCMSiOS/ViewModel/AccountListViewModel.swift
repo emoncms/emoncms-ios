@@ -134,8 +134,11 @@ final class AccountListViewModel {
       do {
         if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
           try self.keychainController.logout(ofAccountWithId: id)
+
+          let todayWidgetFeeds = realm.objects(TodayWidgetFeed.self).filter("accountId = %@", account.uuid)
           try realm.write {
             realm.delete(account)
+            realm.delete(todayWidgetFeeds)
           }
         }
         observer.onNext(())
