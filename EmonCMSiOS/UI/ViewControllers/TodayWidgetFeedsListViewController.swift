@@ -26,6 +26,7 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
 
     self.title = "Today Widget Feeds"
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.Lists.TodayWidgetFeed
+    self.navigationItem.largeTitleDisplayMode = .never
 
     self.tableView.allowsSelection = false
 
