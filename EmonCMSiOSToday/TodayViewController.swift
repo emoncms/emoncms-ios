@@ -66,6 +66,9 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
+    self.tableView.rx.setDelegate(self)
+      .disposed(by: self.disposeBag)
+
     self.viewModel.feeds
       .map { [TodayViewModel.Section(model: "", items: $0)] }
       .drive(self.tableView.rx.items(dataSource: dataSource))
@@ -92,12 +95,27 @@ extension TodayViewController {
   }
 
   func widgetActiveDisplayModeDidChange(_ activeDisplayMode: NCWidgetDisplayMode, withMaximumSize maxSize: CGSize) {
+    self.tableView.reloadData()
     switch activeDisplayMode {
     case .compact:
       self.preferredContentSize = maxSize;
     default:
-      self.preferredContentSize = CGSize(width: self.tableView.contentSize.width, height: self.tableView.contentSize.height + 20);
+      self.preferredContentSize = self.tableView.contentSize;
     }
+  }
+
+}
+
+extension TodayViewController: UITableViewDelegate {
+
+  static let CellMinimumHeight: CGFloat = 50
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    guard let size = self.extensionContext?.widgetMaximumSize(for: .compact) else { return TodayViewController.CellMinimumHeight }
+
+    let countToShowInCompact = floor(size.height / TodayViewController.CellMinimumHeight)
+    let height = size.height / countToShowInCompact
+    return height
   }
 
 }
