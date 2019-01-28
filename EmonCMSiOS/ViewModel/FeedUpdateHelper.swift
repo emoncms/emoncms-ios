@@ -40,36 +40,31 @@ final class FeedUpdateHelper {
   }
 
   private func saveFeeds(_ feeds: [Feed], inRealm realm: Realm) -> Observable<()> {
-    return Observable.create() { [weak self] observer in
-      guard let self = self else { return Disposables.create() }
-      do {
-        let goneAwayFeeds = realm.objects(Feed.self).filter {
-          var inNewArray = false
-          for feed in feeds {
-            if feed.id == $0.id {
-              inNewArray = true
-              break
-            }
-          }
-          return !inNewArray
-        }
+    return Observable.deferred { [weak self] in
+      guard let self = self else { return Observable.empty() }
 
-        try realm.write {
-          if goneAwayFeeds.count > 0 {
-            realm.delete(goneAwayFeeds)
-            let todayWidgetFeedsForGoneAwayFeeds = realm.objects(TodayWidgetFeed.self)
-              .filter("accountId = %@ AND feedId IN %@", self.account.uuid, Array(goneAwayFeeds.map { $0.id }))
-            realm.delete(todayWidgetFeedsForGoneAwayFeeds)
+      let goneAwayFeeds = realm.objects(Feed.self).filter {
+        var inNewArray = false
+        for feed in feeds {
+          if feed.id == $0.id {
+            inNewArray = true
+            break
           }
-          realm.add(feeds, update: true)
         }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
+        return !inNewArray
       }
 
-      return Disposables.create()
+      try realm.write {
+        if goneAwayFeeds.count > 0 {
+          realm.delete(goneAwayFeeds)
+          let todayWidgetFeedsForGoneAwayFeeds = realm.objects(TodayWidgetFeed.self)
+            .filter("accountId = %@ AND feedId IN %@", self.account.uuid, Array(goneAwayFeeds.map { $0.id }))
+          realm.delete(todayWidgetFeedsForGoneAwayFeeds)
+        }
+        realm.add(feeds, update: true)
+      }
+
+      return Observable.just(())
     }
   }
 

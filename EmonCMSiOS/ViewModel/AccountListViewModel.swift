@@ -130,24 +130,18 @@ final class AccountListViewModel {
 
   func deleteAccount(withId id: String) -> Observable<()> {
     let realm = self.realm
-    return Observable.create() { observer in
-      do {
-        if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
-          try self.keychainController.logout(ofAccountWithId: id)
+    return Observable.deferred {
+      if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
+        try self.keychainController.logout(ofAccountWithId: id)
 
-          let todayWidgetFeeds = realm.objects(TodayWidgetFeed.self).filter("accountId = %@", account.uuid)
-          try realm.write {
-            realm.delete(account)
-            realm.delete(todayWidgetFeeds)
-          }
+        let todayWidgetFeeds = realm.objects(TodayWidgetFeed.self).filter("accountId = %@", account.uuid)
+        try realm.write {
+          realm.delete(account)
+          realm.delete(todayWidgetFeeds)
         }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
       }
 
-      return Disposables.create()
+      return Observable.just(())
     }
   }
 

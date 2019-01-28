@@ -40,30 +40,24 @@ final class InputUpdateHelper {
   }
 
   private func saveInputs(_ inputs: [Input], inRealm realm: Realm) -> Observable<()> {
-    return Observable.create() { observer in
-      do {
-        let existingInputs = realm.objects(Input.self).filter {
-          var inNewArray = false
-          for input in inputs {
-            if input.id == $0.id {
-              inNewArray = true
-              break
-            }
+    return Observable.deferred {
+      let existingInputs = realm.objects(Input.self).filter {
+        var inNewArray = false
+        for input in inputs {
+          if input.id == $0.id {
+            inNewArray = true
+            break
           }
-          return !inNewArray
         }
-
-        try realm.write {
-          realm.delete(existingInputs)
-          realm.add(inputs, update: true)
-        }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
+        return !inNewArray
       }
 
-      return Disposables.create()
+      try realm.write {
+        realm.delete(existingInputs)
+        realm.add(inputs, update: true)
+      }
+
+      return Observable.just(())
     }
   }
 

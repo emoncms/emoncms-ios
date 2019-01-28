@@ -59,20 +59,13 @@ final class AppListViewModel {
 
   func deleteApp(withId id: String) -> Observable<()> {
     let realm = self.realm
-    return Observable.create() { observer in
-      do {
-        if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
-          try realm.write {
-            realm.delete(app)
-          }
+    return Observable.deferred {
+      if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
+        try realm.write {
+          realm.delete(app)
         }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
       }
-
-      return Disposables.create()
+      return Observable.just(())
     }
   }
 

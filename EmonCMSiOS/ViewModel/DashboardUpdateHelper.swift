@@ -40,30 +40,24 @@ final class DashboardUpdateHelper {
   }
 
   private func saveDashboards(_ dashboards: [Dashboard], inRealm realm: Realm) -> Observable<()> {
-    return Observable.create() { observer in
-      do {
-        let existingDashboards = realm.objects(Dashboard.self).filter {
-          var inNewArray = false
-          for dashboard in dashboards {
-            if dashboard.id == $0.id {
-              inNewArray = true
-              break
-            }
+    return Observable.deferred {
+      let existingDashboards = realm.objects(Dashboard.self).filter {
+        var inNewArray = false
+        for dashboard in dashboards {
+          if dashboard.id == $0.id {
+            inNewArray = true
+            break
           }
-          return !inNewArray
         }
-
-        try realm.write {
-          realm.delete(existingDashboards)
-          realm.add(dashboards, update: true)
-        }
-        observer.onNext(())
-        observer.onCompleted()
-      } catch {
-        observer.onError(error)
+        return !inNewArray
       }
 
-      return Disposables.create()
+      try realm.write {
+        realm.delete(existingDashboards)
+        realm.add(dashboards, update: true)
+      }
+
+      return Observable.just(())
     }
   }
 
