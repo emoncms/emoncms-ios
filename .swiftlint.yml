@@ -1,2 +1,4 @@
 excluded:
   - Carthage
+  - EmonCMSiOSTests
+  - EmonCMSiOSUITests
