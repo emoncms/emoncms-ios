@@ -9,10 +9,8 @@
 import Foundation
 
 struct AccountCredentials {
-
   let url: String
   let apiKey: String
-
 }
 
 extension AccountCredentials: Equatable {
@@ -24,16 +22,9 @@ extension AccountCredentials: Equatable {
 
 }
 
-final class AccountController {
-
+struct AccountController {
   let uuid: String
   let credentials: AccountCredentials
-
-  init(uuid: String, credentials: AccountCredentials) {
-    self.uuid = uuid
-    self.credentials = credentials
-  }
-
 }
 
 extension AccountController: Equatable {
