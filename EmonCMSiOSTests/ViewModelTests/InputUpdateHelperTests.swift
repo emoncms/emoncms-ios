@@ -83,8 +83,8 @@ class InputUpdateHelperTests: EmonCMSTestCase {
             .disposed(by: disposeBag)
         }
 
-        let result = realm.object(ofType: Input.self, forPrimaryKey: newInputId)
-        expect(result).toEventually(beNil(), timeout: 1)
+        expect { realm.object(ofType: Input.self, forPrimaryKey: newInputId) }
+          .toEventually(beNil())
       }
     }
 

@@ -83,8 +83,8 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
             .disposed(by: disposeBag)
         }
 
-        let result = realm.object(ofType: Dashboard.self, forPrimaryKey: newDashboardId)
-        expect(result).toEventually(beNil(), timeout: 1)
+        expect { realm.object(ofType: Dashboard.self, forPrimaryKey: newDashboardId) }
+          .toEventually(beNil())
       }
     }
 
