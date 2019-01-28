@@ -29,7 +29,7 @@ class RealmMigrationTests: QuickSpec {
       }
 
       it("should migrate from v0 to v1") {
-        guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: "v0", withExtension: "realm") else {
+        guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: "account_v0", withExtension: "realm") else {
           fail("Failed to find Realm file!")
           return
         }
