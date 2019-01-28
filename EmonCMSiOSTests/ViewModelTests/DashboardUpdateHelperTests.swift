@@ -60,6 +60,32 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
         let results = realm.objects(Dashboard.self)
         expect(results.count).toEventually(equal(2))
       }
+
+      it("should delete missing dashboards") {
+        let newDashboardId = "differentId"
+
+        try! realm.write {
+          let dashboard = Dashboard()
+          dashboard.id = newDashboardId
+          realm.add(dashboard)
+        }
+
+        waitUntil { done in
+          viewModel.updateDashboards()
+            .subscribe(
+              onError: {
+                fail($0.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
+
+        let result = realm.object(ofType: Dashboard.self, forPrimaryKey: newDashboardId)
+        expect(result).toEventually(beNil())
+      }
     }
 
   }
