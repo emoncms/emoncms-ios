@@ -4,6 +4,8 @@
 
 <a href="https://itunes.apple.com/us/app/emoncms/id1169483587?ls=1&mt=8"><img alt="Download on the App Store" src="https://emoncms.org/Modules/site/appstore.png" /></a>
 
+Emoncms for iOS is an app that allows you to connect to an [Emoncms](https://www.emoncms.org/) instance. This can either be through the official [emoncms.org](https://www.emoncms.org/), through a custom server that you run yourself, or direct to an [emonPi](https://openenergymonitor.com/emonpi-3/).
+
 ## Screenshots
 
 ### Main screens
