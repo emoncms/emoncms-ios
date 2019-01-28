@@ -30,6 +30,7 @@ final class AppSelectFeedViewController: UITableViewController {
     super.viewDidLoad()
 
     self.title = "Select Feed"
+    self.tableView.accessibilityIdentifier = AccessibilityIdentifiers.Lists.AppSelectFeed
 
     self.tableView.estimatedRowHeight = 44.0
     self.tableView.rowHeight = UITableView.automaticDimension

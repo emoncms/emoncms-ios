@@ -274,6 +274,27 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(accountTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         expect(accountTable.cells.count).to(equal(1))
       }
+
+      it("should show today widgets list") {
+        loginFromAccountListWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+
+        let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
+        expect(settingsTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        settingsTable.staticTexts["Configure Today Widget"].tap()
+
+        let todayWidgetFeedTable = app.tables[AccessibilityIdentifiers.Lists.TodayWidgetFeed]
+        expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(todayWidgetFeedTable.cells.count).to(equal(0))
+
+        app.navigationBars.buttons["Add"].tap()
+        let selectFeedTable = app.tables[AccessibilityIdentifiers.Lists.AppSelectFeed]
+        expect(selectFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+
+        app.tables.staticTexts["solar"].tap()
+        expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(todayWidgetFeedTable.cells.count).to(equal(1))
+      }
     }
   }
 
