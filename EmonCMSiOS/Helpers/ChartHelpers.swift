@@ -64,7 +64,8 @@ final class ChartHelpers {
     yAxis.drawGridLinesEnabled = false
     yAxis.drawAxisLineEnabled = false
     yAxis.labelTextColor = .black
-    yAxis.axisMinimum = 0
+    yAxis.spaceTop = 0.01
+    yAxis.spaceBottom = 0.01
   }
 
   static func setupAppBarChart(_ barChart: BarChartView) {
