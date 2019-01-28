@@ -294,6 +294,46 @@ class EmonCMSiOSUITests: QuickSpec {
         app.tables.staticTexts["solar"].tap()
         expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         expect(todayWidgetFeedTable.cells.count).to(equal(1))
+
+        app.navigationBars.buttons["Add"].tap()
+        app.tables.staticTexts["solar"].tap()
+        expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(todayWidgetFeedTable.cells.count).to(equal(1))
+
+        app.navigationBars.buttons["Add"].tap()
+        app.tables.staticTexts["use"].tap()
+        expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(todayWidgetFeedTable.cells.count).to(equal(2))
+
+        app.navigationBars.buttons["Add"].tap()
+        app.tables.staticTexts["immersion"].tap()
+        expect(todayWidgetFeedTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(todayWidgetFeedTable.cells.count).to(equal(3))
+
+        let solar = app.tables.staticTexts["solar"]
+        let use = app.tables.staticTexts["use"]
+        let immersion = app.tables.staticTexts["immersion"]
+
+        expect(solar.frame.minY).to(beLessThan(use.frame.minY))
+        expect(use.frame.minY).to(beLessThan(immersion.frame.minY))
+
+        app.navigationBars.buttons["Edit"].tap()
+        let reorderSolar = app.tables.buttons["Reorder solar, Test Instance"]
+        let reorderUse = app.tables.buttons["Reorder use, Test Instance"]
+        let reorderImmersion = app.tables.buttons["Reorder immersion, Test Instance"]
+
+        reorderImmersion.press(forDuration: 0.5, thenDragTo: reorderSolar)
+        expect(immersion.frame.minY).to(beLessThan(solar.frame.minY))
+        expect(solar.frame.minY).to(beLessThan(use.frame.minY))
+
+        reorderSolar.press(forDuration: 0.5, thenDragTo: reorderUse)
+        expect(immersion.frame.minY).to(beLessThan(use.frame.minY))
+        expect(use.frame.minY).to(beLessThan(solar.frame.minY))
+
+        let deleteUse = app.tables.buttons["Delete immersion, Test Instance"]
+        deleteUse.tap()
+        app.tables.buttons["Delete"].tap()
+        expect(todayWidgetFeedTable.cells.count).to(equal(2))
       }
     }
   }
