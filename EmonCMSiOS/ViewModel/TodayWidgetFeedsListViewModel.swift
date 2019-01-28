@@ -88,9 +88,12 @@ final class TodayWidgetFeedsListViewModel {
     return listItems
   }
 
-  func addTodayWidgetFeed(forFeedId feedId: String) -> Observable<()> {
+  func addTodayWidgetFeed(forFeedId feedId: String) -> Observable<Bool> {
     let realm = self.realm
-    return Observable.deferred { () -> Observable<()> in
+    return Observable.deferred { () -> Observable<Bool> in
+      let query = realm.objects(TodayWidgetFeed.self).filter("accountId = %@ AND feedId = %@", self.accountController.uuid, feedId)
+      guard query.count == 0 else { return Observable.just(false) }
+
       let todayWidgetFeed = TodayWidgetFeed()
       todayWidgetFeed.accountId = self.accountController.uuid
       todayWidgetFeed.feedId = feedId
@@ -106,7 +109,7 @@ final class TodayWidgetFeedsListViewModel {
         realm.add(todayWidgetFeed)
       }
 
-      return Observable.just(())
+      return Observable.just(true)
     }
   }
 

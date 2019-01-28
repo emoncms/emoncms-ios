@@ -142,8 +142,8 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
   private func setupNavigation() {
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
     rightBarButtonItem.rx.tap
-      .flatMapLatest { [weak self] _ -> Observable<()> in
-        guard let self = self else { return Observable.just(()) }
+      .flatMapLatest { [weak self] _ -> Observable<Bool> in
+        guard let self = self else { return Observable.just(false) }
 
         let viewController = AppSelectFeedViewController()
         viewController.viewModel = self.viewModel.feedListViewModel()
@@ -151,9 +151,9 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
 
         return viewController.finished
           .asObservable()
-          .flatMap { [weak self] feedId -> Observable<()> in
-            guard let self = self else { return Observable.just(()) }
-            guard let feedId = feedId else { return Observable.just(()) }
+          .flatMap { [weak self] feedId -> Observable<Bool> in
+            guard let self = self else { return Observable.just(false) }
+            guard let feedId = feedId else { return Observable.just(false) }
             return self.viewModel.addTodayWidgetFeed(forFeedId: feedId)
           }
       }
