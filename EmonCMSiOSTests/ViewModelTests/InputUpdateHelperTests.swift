@@ -60,6 +60,32 @@ class InputUpdateHelperTests: EmonCMSTestCase {
         let results = realm.objects(Input.self)
         expect(results.count).toEventually(equal(2))
       }
+
+      it("should delete missing inputs") {
+        let newInputId = "differentId"
+
+        try! realm.write {
+          let input = Input()
+          input.id = newInputId
+          realm.add(input)
+        }
+
+        waitUntil { done in
+          viewModel.updateInputs()
+            .subscribe(
+              onError: {
+                fail($0.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
+
+        let result = realm.object(ofType: Input.self, forPrimaryKey: newInputId)
+        expect(result).toEventually(beNil())
+      }
     }
 
   }

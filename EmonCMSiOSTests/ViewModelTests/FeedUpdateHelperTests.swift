@@ -60,6 +60,32 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         let results = realm.objects(Feed.self)
         expect(results.count).toEventually(equal(2))
       }
+
+      it("should delete missing feeds") {
+        let newFeedId = "differentId"
+
+        try! realm.write {
+          let feed = Feed()
+          feed.id = newFeedId
+          realm.add(feed)
+        }
+
+        waitUntil { done in
+          viewModel.updateFeeds()
+            .subscribe(
+              onError: {
+                fail($0.localizedDescription)
+                done()
+            },
+              onCompleted: {
+                done()
+            })
+            .disposed(by: disposeBag)
+        }
+
+        let result = realm.object(ofType: Feed.self, forPrimaryKey: newFeedId)
+        expect(result).toEventually(beNil())
+      }
     }
 
     describe("todayWidgetFeeds") {
