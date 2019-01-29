@@ -44,9 +44,7 @@ class EmonCMSiOSUITests: QuickSpec {
       app.launch()
     }
 
-    func loginFromAccountList(name: String, url: String, apiKey: String) {
-      app.navigationBars["Accounts"].buttons["Add"].tap()
-
+    func loginFromAppStart(name: String, url: String, apiKey: String) {
       let tablesQuery = app.tables
       tablesQuery.textFields.element(boundBy: 0).clearAndEnterText(text: name)
       tablesQuery.textFields.element(boundBy: 1).clearAndEnterText(text: url)
@@ -55,8 +53,8 @@ class EmonCMSiOSUITests: QuickSpec {
       app.navigationBars["Account Details"].buttons["Save"].tap()
     }
 
-    func loginFromAccountListWithValidCredentials() {
-      loginFromAccountList(name: "Test Instance", url: "https://localhost", apiKey: "ilikecats")
+    func loginFromAppStartWithValidCredentials() {
+      loginFromAppStart(name: "Test Instance", url: "https://localhost", apiKey: "ilikecats")
     }
 
     describe("accounts") {
@@ -69,12 +67,12 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should add account successfully for valid details") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
       }
 
       it("should error for invalid credentials") {
-        loginFromAccountList(name: "Test Instance", url: "https://localhost", apiKey: "notthekey")
+        loginFromAppStart(name: "Test Instance", url: "https://localhost", apiKey: "notthekey")
         expect(app.alerts["Error"].exists).to(equal(true))
       }
 
@@ -89,7 +87,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("apps") {
       it("should show empty apps screen") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         expect(app.tables[AccessibilityIdentifiers.Lists.App].cells.count).to(equal(0))
         let addAppLabel = app.staticTexts["Tap + to add a new app"]
@@ -97,7 +95,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should fail to add app if not all fields are selected") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolarDivert"].tap()
@@ -108,7 +106,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should add a MyElectric app successfully") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MyElectric"].tap()
@@ -125,7 +123,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should add a MySolar app successfully") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolar"].tap()
@@ -148,7 +146,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should add a MySolarDivert app successfully") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolarDivert"].tap()
@@ -179,7 +177,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("inputs") {
       it("should show inputs screen") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Inputs"].tap()
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Input]
@@ -190,7 +188,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("dashboards") {
       it("should show dashboards screen") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Dashboards"].tap()
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Dashboard]
@@ -201,7 +199,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("feeds") {
       it("should show feeds screen") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
@@ -210,7 +208,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should show feed chart when tapping on a cell") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
@@ -236,7 +234,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should show feed chart view when tapping on detail disclosure") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
 
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
@@ -249,7 +247,7 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("settings") {
       it("should logout") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
 
         let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
@@ -263,7 +261,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should switch account") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
 
         let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
@@ -276,7 +274,7 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should show today widgets list") {
-        loginFromAccountListWithValidCredentials()
+        loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
 
         let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
