@@ -192,6 +192,32 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
       }
     }
 
+    it("should return data for a form request") {
+      let observer = scheduler.createObserver(Data.self)
+      let url = URL(string: "http://localhost")!
+      let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
+
+      session.nextData = data
+      session.nextResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "2.0", headerFields: nil)
+      session.nextError = nil
+
+      scheduler.scheduleAt(10, action: {
+        provider.request(url: url, formData: ["foo":"bar"])
+          .subscribe(observer)
+          .disposed(by: disposeBag)
+      })
+
+      scheduler.start()
+
+      let expected: [Recorded<Event<Data>>] = [
+        .next(10, data),
+        .completed(10)
+      ]
+
+      expect(observer.events).toEventually(equal(expected), timeout: 1)
+    }
+
+
   }
 
 }
