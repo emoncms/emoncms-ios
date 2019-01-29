@@ -59,9 +59,12 @@ class EmonCMSiOSUITests: QuickSpec {
 
     describe("accounts") {
       it("should show empty accounts screen") {
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
         let accountsTable = app.tables[AccessibilityIdentifiers.Lists.Account]
         expect(accountsTable.exists).to(equal(true))
         expect(accountsTable.cells.count).to(equal(0))
+
         let addAccountLabel = app.staticTexts["Tap + to add a new account"]
         expect(addAccountLabel.exists).to(equal(true))
       }
@@ -77,7 +80,6 @@ class EmonCMSiOSUITests: QuickSpec {
       }
 
       it("should show QR view and then cancel properly") {
-        app.navigationBars["Accounts"].buttons["Add"].tap()
         app.tables.cells.staticTexts["Scan QR Code"].tap()
         expect(app.otherElements[AccessibilityIdentifiers.AddAccountQRView].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Scan Code"].buttons["Cancel"].tap()
