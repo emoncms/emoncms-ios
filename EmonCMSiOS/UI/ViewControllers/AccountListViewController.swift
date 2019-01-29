@@ -25,6 +25,11 @@ final class AccountListViewController: UITableViewController {
     case addAccount
   }
 
+  private struct AddAccountSegueData {
+    let accountId: String?
+    let animated: Bool
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -34,16 +39,6 @@ final class AccountListViewController: UITableViewController {
     self.setupDataSource()
     self.setupBindings()
     self.setupNavigation()
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    if self.firstLoad {
-      self.firstLoad = false
-      if let selectedAccountId = self.viewModel.lastSelectedAccountId {
-        self.login(toAccountWithId: selectedAccountId, animated: false)
-      }
-    }
   }
 
   private func setupDataSource() {
@@ -73,7 +68,7 @@ final class AccountListViewController: UITableViewController {
       .subscribe(onNext: { [weak self] in
         guard let self = self else { return }
         if self.tableView.isEditing {
-          self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: $0.accountId)
+          self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: $0.accountId, animated: true))
         } else {
           self.login(toAccountWithId: $0.accountId)
         }
@@ -99,6 +94,15 @@ final class AccountListViewController: UITableViewController {
       }
       .drive(onNext: { [weak self] empty in
         guard let strongSelf = self else { return }
+
+        if strongSelf.firstLoad {
+          strongSelf.firstLoad = false
+          if empty {
+            strongSelf.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: false))
+          } else if let selectedAccountId = strongSelf.viewModel.lastSelectedAccountId {
+            strongSelf.login(toAccountWithId: selectedAccountId, animated: false)
+          }
+        }
 
         if empty {
           let emptyLabel = UILabel(frame: CGRect.zero)
@@ -158,7 +162,7 @@ final class AccountListViewController: UITableViewController {
     rightBarButtonItem.rx.tap
       .subscribe(onNext: { [weak self] _ in
         guard let self = self else { return }
-        self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: self)
+        self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: true))
       })
       .disposed(by: self.disposeBag)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
@@ -222,15 +226,15 @@ extension AccountListViewController {
 
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.addAccount.rawValue {
-      let editAccountId = sender as? String
+      let data = sender as? AddAccountSegueData
       let addAccountViewController = segue.destination as! AddAccountViewController
-      let viewModel = self.viewModel.addAccountViewModel(accountId: editAccountId)
+      let viewModel = self.viewModel.addAccountViewModel(accountId: data?.accountId)
       addAccountViewController.viewModel = viewModel
       addAccountViewController.finished
         .drive(onNext: { [weak self] accountId in
           guard let self = self else { return }
-          self.navigationController?.popToViewController(self, animated: true)
-          if editAccountId == nil {
+          self.navigationController?.popToViewController(self, animated: (data?.animated ?? true))
+          if data?.accountId == nil {
             guard let accountId = accountId else { return }
             self.login(toAccountWithId: accountId)
           }
