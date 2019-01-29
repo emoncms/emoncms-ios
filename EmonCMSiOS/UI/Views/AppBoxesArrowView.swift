@@ -39,6 +39,7 @@ import CoreGraphics
   }
 
   private func setupLabels() {
+    self.contentMode = .redraw
     self.translatesAutoresizingMaskIntoConstraints = false
 
     self.valueLabel.font = UIFont.systemFont(ofSize: 16.0)
