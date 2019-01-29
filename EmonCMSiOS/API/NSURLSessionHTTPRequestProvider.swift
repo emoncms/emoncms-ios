@@ -46,11 +46,8 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
   }
 
   func request(url: URL) -> Observable<Data> {
-    return self.session.rx.data(request: URLRequest(url: url))
-      .catchError { [weak self] error in
-        guard let self = self else { return Observable.error(HTTPRequestProviderError.unknown) }
-        return Observable.error(self.convertError(error))
-      }
+    let request = URLRequest(url: url)
+    return self.data(forRequest: request)
   }
 
   func request(url: URL, formData: [String:String]) -> Observable<Data> {
@@ -60,11 +57,15 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
     let postString = formData.map { "\($0)=\($1)" }.joined(separator: "&")
     request.httpBody = postString.data(using: .utf8)
 
+    return self.data(forRequest: request)
+  }
+
+  private func data(forRequest request: URLRequest) -> Observable<Data> {
     return self.session.rx.data(request: request)
       .catchError { [weak self] error in
         guard let self = self else { return Observable.error(HTTPRequestProviderError.unknown) }
         return Observable.error(self.convertError(error))
-    }
+      }
   }
 
 }
