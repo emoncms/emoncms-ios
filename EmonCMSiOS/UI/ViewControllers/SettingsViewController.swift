@@ -58,7 +58,7 @@ final class SettingsViewController: FormViewController {
           }
           strongSelf.switchAccountSubject.onNext(true)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: { _ in
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
             strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
           }
