@@ -18,19 +18,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="59.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nf7-n4-hii">
-                        <rect key="frame" x="220" y="19.5" width="43" height="21"/>
-                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHn-K1-qV1" customClass="LineChartView" customModule="Charts">
-                        <rect key="frame" x="271" y="4" width="100" height="51.5"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="100" id="L8V-bC-Xhh"/>
-                        </constraints>
-                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v4A-vL-jWx">
                         <rect key="frame" x="8" y="10.5" width="44.5" height="38.5"/>
                         <subviews>
@@ -58,14 +45,28 @@
                             <constraint firstAttribute="trailing" secondItem="ROA-u7-9FI" secondAttribute="trailing" id="uDr-ER-yqA"/>
                         </constraints>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nf7-n4-hii">
+                        <rect key="frame" x="224" y="19.5" width="43" height="21"/>
+                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pHn-K1-qV1" customClass="LineChartView" customModule="Charts">
+                        <rect key="frame" x="271" y="4" width="100" height="51.5"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="100" id="L8V-bC-Xhh"/>
+                        </constraints>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="pHn-K1-qV1" firstAttribute="top" secondItem="9Ot-5m-RrL" secondAttribute="top" constant="4" id="1Gg-Xu-Mua"/>
                     <constraint firstItem="v4A-vL-jWx" firstAttribute="leading" secondItem="9Ot-5m-RrL" secondAttribute="leading" constant="8" id="B4Q-J8-9YA"/>
-                    <constraint firstItem="pHn-K1-qV1" firstAttribute="leading" secondItem="nf7-n4-hii" secondAttribute="trailing" constant="8" id="Khc-c1-40f"/>
+                    <constraint firstItem="pHn-K1-qV1" firstAttribute="leading" secondItem="nf7-n4-hii" secondAttribute="trailing" constant="4" id="Khc-c1-40f"/>
                     <constraint firstAttribute="bottom" secondItem="pHn-K1-qV1" secondAttribute="bottom" constant="4" id="My4-rG-nR1"/>
                     <constraint firstItem="nf7-n4-hii" firstAttribute="centerY" secondItem="9Ot-5m-RrL" secondAttribute="centerY" id="OeK-gW-iMs"/>
                     <constraint firstItem="v4A-vL-jWx" firstAttribute="centerY" secondItem="9Ot-5m-RrL" secondAttribute="centerY" id="Yc7-G2-cXQ"/>
+                    <constraint firstItem="nf7-n4-hii" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="v4A-vL-jWx" secondAttribute="trailing" constant="8" id="bd7-0z-MtG"/>
                     <constraint firstAttribute="trailing" secondItem="pHn-K1-qV1" secondAttribute="trailing" constant="4" id="vqF-oG-QW7"/>
                 </constraints>
             </tableViewCellContentView>
