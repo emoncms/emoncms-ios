@@ -85,6 +85,27 @@ class EmonCMSiOSUITests: QuickSpec {
         app.navigationBars["Scan Code"].buttons["Cancel"].tap()
         expect(app.staticTexts["Scan QR Code"].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
       }
+
+      it("should edit account successfully") {
+        loginFromAppStartWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+        app.tables[AccessibilityIdentifiers.Settings].staticTexts["Switch Account"].tap()
+
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+
+        let accountTable = app.tables[AccessibilityIdentifiers.Lists.Account]
+        accountTable.cells.element(boundBy: 0).tap()
+
+        expect(app.tables.textFields.element(boundBy: 0).value as? String).to(equal("Test Instance"))
+        expect(app.tables.textFields.element(boundBy: 1).value as? String).to(equal("https://localhost"))
+        expect(app.tables.textFields.element(boundBy: 3).value as? String).to(equal("ilikecats"))
+
+        app.tables.textFields.element(boundBy: 0).clearAndEnterText(text: "New Name")
+
+        app.navigationBars.buttons["Save"].tap()
+
+        expect(accountTable.cells.staticTexts["New Name"].exists).to(equal(true))
+      }
     }
 
     describe("apps") {
