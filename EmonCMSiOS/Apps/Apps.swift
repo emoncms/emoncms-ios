@@ -34,7 +34,6 @@ protocol AppViewModel: AnyObject {
   var isRefreshing: Driver<Bool> { get }
   var isReady: Driver<Bool> { get }
   var bannerBarState: Driver<AppBannerBarState> { get }
-  var dateRange: BehaviorRelay<DateRange> { get }
 
   func configViewModel() -> AppConfigViewModel
 

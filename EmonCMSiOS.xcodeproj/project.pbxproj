@@ -41,6 +41,14 @@
 		C925518821F4BD99008342D8 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
 		C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */; };
 		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
+		C936955E2200F3ED0094FDA2 /* MySolarAppPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */; };
+		C9369560220103110094FDA2 /* MySolarAppPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */; };
+		C9369562220269A70094FDA2 /* MySolarAppPage1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */; };
+		C936956422038C7A0094FDA2 /* MySolarAppPage2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956322038C7A0094FDA2 /* MySolarAppPage2ViewModel.swift */; };
+		C936956722039B850094FDA2 /* MySolarDivertAppPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956522039B850094FDA2 /* MySolarDivertAppPage1ViewController.swift */; };
+		C936956822039B850094FDA2 /* MySolarDivertAppPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956622039B850094FDA2 /* MySolarDivertAppPage2ViewController.swift */; };
+		C936956B22039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956922039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift */; };
+		C936956C22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956A22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
 		C941631021D52EB700FEF2B6 /* MySolarAppViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */; };
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
@@ -289,6 +297,14 @@
 		C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigViewModel.swift; sourceTree = "<group>"; };
 		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
+		C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage2ViewController.swift; sourceTree = "<group>"; };
+		C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewController.swift; sourceTree = "<group>"; };
+		C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewModel.swift; sourceTree = "<group>"; };
+		C936956322038C7A0094FDA2 /* MySolarAppPage2ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage2ViewModel.swift; sourceTree = "<group>"; };
+		C936956522039B850094FDA2 /* MySolarDivertAppPage1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage1ViewController.swift; sourceTree = "<group>"; };
+		C936956622039B850094FDA2 /* MySolarDivertAppPage2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage2ViewController.swift; sourceTree = "<group>"; };
+		C936956922039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage1ViewModel.swift; sourceTree = "<group>"; };
+		C936956A22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage2ViewModel.swift; sourceTree = "<group>"; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
 		C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewController.swift; sourceTree = "<group>"; };
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
@@ -458,7 +474,11 @@
 			isa = PBXGroup;
 			children = (
 				1E7C55F721EEFFED0009809C /* MySolarDivertAppViewModel.swift */,
+				C936956922039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift */,
+				C936956A22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift */,
 				1E7C55F821EEFFED0009809C /* MySolarDivertAppViewController.swift */,
+				C936956522039B850094FDA2 /* MySolarDivertAppPage1ViewController.swift */,
+				C936956622039B850094FDA2 /* MySolarDivertAppPage2ViewController.swift */,
 			);
 			name = MySolarDivert;
 			path = EmonCMSiOS/Apps/MySolarDivert;
@@ -547,7 +567,11 @@
 			isa = PBXGroup;
 			children = (
 				C941630C21D52EB700FEF2B6 /* MySolarAppViewController.swift */,
+				C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */,
+				C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */,
 				C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */,
+				C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */,
+				C936956322038C7A0094FDA2 /* MySolarAppPage2ViewModel.swift */,
 			);
 			path = MySolar;
 			sourceTree = "<group>";
@@ -1165,6 +1189,7 @@
 				C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */,
 				C9C240C01D91730100BC302C /* AddAccountQRViewController.swift in Sources */,
 				C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */,
+				C9369562220269A70094FDA2 /* MySolarAppPage1ViewModel.swift in Sources */,
 				C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */,
 				C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */,
 				C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */,
@@ -1184,8 +1209,11 @@
 				C91CC3451D8CAE1E0048A356 /* RxOperators.swift in Sources */,
 				1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */,
 				C9E7A72521FA6B6D008BD497 /* EmonCMSAPI+Input.swift in Sources */,
+				C936956822039B850094FDA2 /* MySolarDivertAppPage2ViewController.swift in Sources */,
 				C9C240C11D91730100BC302C /* AddAccountViewController.swift in Sources */,
+				C936955E2200F3ED0094FDA2 /* MySolarAppPage2ViewController.swift in Sources */,
 				C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */,
+				C936956C22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift in Sources */,
 				C9E7A70A21F666EC008BD497 /* FakeEmonCMSFeedEngine.swift in Sources */,
 				C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */,
 				C9E7A72321FA6B62008BD497 /* InputListViewController.swift in Sources */,
@@ -1211,18 +1239,22 @@
 				C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */,
 				C9E7A72A21FA6B71008BD497 /* InputUpdateHelper.swift in Sources */,
 				C925518721F4BC40008342D8 /* AccessibilityIdentifiers.swift in Sources */,
+				C936956722039B850094FDA2 /* MySolarDivertAppPage1ViewController.swift in Sources */,
 				C945F8F121FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift in Sources */,
 				1EE02C0D21ECF49900C6AE9A /* AppBoxesArrowView.swift in Sources */,
 				C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */,
 				1EE02C0621EB4BBB00C6AE9A /* FakeHTTPProvider.swift in Sources */,
+				C9369560220103110094FDA2 /* MySolarAppPage1ViewController.swift in Sources */,
 				C92010FE1D89FD8D00C9974B /* MyElectricAppViewController.swift in Sources */,
 				C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */,
 				C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */,
 				1EA783C421EF7B84002D6A3A /* AppViewController.swift in Sources */,
 				C945F8DC21FE1BFA00B99D35 /* TodayWidgetFeed.swift in Sources */,
 				C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */,
+				C936956422038C7A0094FDA2 /* MySolarAppPage2ViewModel.swift in Sources */,
 				C945F8EF21FE437200B99D35 /* TodayWidgetFeedsListViewController.swift in Sources */,
 				C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */,
+				C936956B22039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

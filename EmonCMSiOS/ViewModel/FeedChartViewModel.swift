@@ -31,7 +31,7 @@ final class FeedChartViewModel {
     self.api = api
     self.feedId = feedId
 
-    self.dateRange = BehaviorRelay<DateRange>(value: DateRange.relative(.hour8))
+    self.dateRange = BehaviorRelay<DateRange>(value: DateRange.relative { $0.hour = -8 })
 
     self.dataPoints = Driver.empty()
 

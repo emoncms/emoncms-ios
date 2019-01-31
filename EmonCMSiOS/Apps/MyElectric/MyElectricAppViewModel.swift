@@ -24,7 +24,7 @@ final class MyElectricAppViewModel: AppViewModel {
 
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)
-  let dateRange = BehaviorRelay<DateRange>(value: .relative(.hour8))
+  let dateRange = BehaviorRelay<DateRange>(value: DateRange.relative { $0.hour = -8 })
 
   // Outputs
   private(set) var title: Driver<String>
@@ -217,30 +217,7 @@ final class MyElectricAppViewModel: AppViewModel {
 
     return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        guard dataPoints.count > 0 else { return [] }
-
-        var newDataPoints: [DataPoint<Double>] = []
-        var lastValue: Double = dataPoints.first?.value ?? 0
-
-        let extraPadding = daysToDisplay - dataPoints.count
-        if extraPadding > 0 {
-          let thisDataPoint = dataPoints[0]
-          newDataPoints.append(thisDataPoint)
-          var time = thisDataPoint.time
-          for _ in 1..<extraPadding {
-            time = time - Double(86400)
-            newDataPoints.append(DataPoint(time: time, value: 0))
-          }
-        }
-
-        for i in 1..<dataPoints.count {
-          let thisDataPoint = dataPoints[i]
-          let differenceValue = thisDataPoint.value - lastValue
-          lastValue = thisDataPoint.value
-          newDataPoints.append(DataPoint(time: thisDataPoint.time, value: differenceValue))
-        }
-
-        return newDataPoints
+        return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: 86400)
       }
   }
 

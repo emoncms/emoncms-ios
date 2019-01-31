@@ -146,4 +146,31 @@ final class ChartHelpers {
     }
   }
 
+  static func processKWHData(_ dataPoints: [DataPoint<Double>], padTo: Int, interval: TimeInterval) -> [DataPoint<Double>] {
+    guard dataPoints.count > 0 else { return [] }
+
+    var newDataPoints: [DataPoint<Double>] = []
+    var lastValue: Double = dataPoints.first?.value ?? 0
+
+    let extraPadding = padTo - dataPoints.count
+    if extraPadding > 0 {
+      let thisDataPoint = dataPoints[0]
+      newDataPoints.append(thisDataPoint)
+      var time = thisDataPoint.time
+      for _ in 1..<extraPadding {
+        time = time - Double(interval)
+        newDataPoints.append(DataPoint<Double>(time: time, value: 0))
+      }
+    }
+
+    for i in 1..<dataPoints.count {
+      let thisDataPoint = dataPoints[i]
+      let differenceValue = thisDataPoint.value - lastValue
+      lastValue = thisDataPoint.value
+      newDataPoints.append(DataPoint<Double>(time: thisDataPoint.time, value: differenceValue))
+    }
+
+    return newDataPoints
+  }
+
 }

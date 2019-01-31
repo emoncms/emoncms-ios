@@ -112,25 +112,14 @@ final class FeedChartViewController: FormViewController {
       $0.titleLabel.font = .boldSystemFont(ofSize: 15)
       }.configure {
         $0.segmentTitles = ["1h", "8h", "D", "M", "Y"]
-        let selectedIndex: Int
+        let selectedIndex: Int?
         switch startDateRange {
         case .relative(let relativeTime):
-          switch relativeTime {
-          case .hour1:
-            selectedIndex = 0
-          case .hour8:
-            selectedIndex = 1
-          case .day:
-            selectedIndex = 2
-          case .month:
-            selectedIndex = 3
-          case .year:
-            selectedIndex = 4
-          }
+          selectedIndex = DateRange.to1h8hDMYSegmentedControlIndex(relativeTime)
         default:
-          selectedIndex = 0
+          selectedIndex = nil
         }
-        $0.selectedIndex = selectedIndex
+        $0.selectedIndex = selectedIndex ?? 0
     }
 
     return (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
@@ -173,8 +162,7 @@ final class FeedChartViewController: FormViewController {
         dateRangeType, startDate, endDate, dateRelative -> DateRange in
         switch dateRangeType {
         case 1:
-          let relativeTime = DateRange.RelativeTime(rawValue: dateRelative) ?? .hour1
-          return .relative(relativeTime)
+          return DateRange.from1h8hDMYSegmentedControlIndex(dateRelative)
         /*case 0:*/
         default:
           return .absolute(startDate, endDate)

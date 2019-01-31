@@ -395,7 +395,7 @@ final class FeedListViewController: UIViewController {
           let disposable1 = self.chartSegmentedControl.rx.selectedSegmentIndex
             .startWith(self.chartSegmentedControl.selectedSegmentIndex)
             .map {
-              DateRange.relative(DateRange.RelativeTime(rawValue: $0) ?? .hour1)
+              DateRange.from1h8hDMYSegmentedControlIndex($0)
             }
             .bind(to: chartViewModel.dateRange)
           _ = disposeBag.insert(disposable1)

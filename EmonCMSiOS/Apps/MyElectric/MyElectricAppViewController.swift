@@ -18,6 +18,7 @@ final class MyElectricAppViewController: AppViewController {
     return self.viewModel as! MyElectricAppViewModel
   }
 
+  @IBOutlet private var dateSegmentedControl: UISegmentedControl!
   @IBOutlet private var powerLabelView: AppTitleAndValueView!
   @IBOutlet private var usageTodayLabelView: AppTitleAndValueView!
   @IBOutlet private var lineChart: LineChartView!
@@ -40,6 +41,14 @@ final class MyElectricAppViewController: AppViewController {
   }
 
   private func setupBindings() {
+    self.dateSegmentedControl.rx.selectedSegmentIndex
+      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+      .map {
+        DateRange.from1h8hDMYSegmentedControlIndex($0)
+      }
+      .bind(to: self.typedViewModel.dateRange)
+      .disposed(by: self.disposeBag)
+
     self.typedViewModel.data
       .map { $0?.powerNow }
       .map {
