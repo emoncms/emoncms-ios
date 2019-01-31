@@ -45,6 +45,9 @@ final class AddAccountViewModel {
       self.account = account
       self.name.accept(account.name)
       self.url.accept(account.url)
+      if let apiKey = self.keychainController.apiKey(forAccountWithId: account.uuid) {
+        self.apiKey.accept(apiKey)
+      }
     } else {
       self.account = nil
     }
