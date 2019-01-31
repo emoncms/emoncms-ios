@@ -20,7 +20,7 @@ class DateRangeTests: QuickSpec {
     describe("calculateDates") {
       it("should calculate -1 hour") {
         let relativeTimestamp = 475372800.0
-        let range = DateRange.relative(.hour1)
+        let range = DateRange.relative() { $0.hour = -1 }
         let calculatedRange = range.calculateDates(relativeTo: Date(timeIntervalSince1970: relativeTimestamp))
         expect(calculatedRange.0.timeIntervalSince1970).to(equal(475369200.0))
         expect(calculatedRange.1.timeIntervalSince1970).to(equal(relativeTimestamp))
@@ -28,7 +28,7 @@ class DateRangeTests: QuickSpec {
 
       it("should calculate -8 hour") {
         let relativeTimestamp = 475372800.0
-        let range = DateRange.relative(.hour8)
+        let range = DateRange.relative() { $0.hour = -8 }
         let calculatedRange = range.calculateDates(relativeTo: Date(timeIntervalSince1970: relativeTimestamp))
         expect(calculatedRange.0.timeIntervalSince1970).to(equal(475344000.0))
         expect(calculatedRange.1.timeIntervalSince1970).to(equal(relativeTimestamp))
@@ -36,7 +36,7 @@ class DateRangeTests: QuickSpec {
 
       it("should calculate -1 day") {
         let relativeTimestamp = 475372800.0
-        let range = DateRange.relative(.day)
+        let range = DateRange.relative() { $0.day = -1 }
         let calculatedRange = range.calculateDates(relativeTo: Date(timeIntervalSince1970: relativeTimestamp))
         expect(calculatedRange.0.timeIntervalSince1970).to(equal(475286400.0))
         expect(calculatedRange.1.timeIntervalSince1970).to(equal(relativeTimestamp))
@@ -44,7 +44,7 @@ class DateRangeTests: QuickSpec {
 
       it("should calculate -1 month") {
         let relativeTimestamp = 475372800.0
-        let range = DateRange.relative(.month)
+        let range = DateRange.relative() { $0.month = -1 }
         let calculatedRange = range.calculateDates(relativeTo: Date(timeIntervalSince1970: relativeTimestamp))
         expect(calculatedRange.0.timeIntervalSince1970).to(equal(472694400.0))
         expect(calculatedRange.1.timeIntervalSince1970).to(equal(relativeTimestamp))
@@ -52,7 +52,7 @@ class DateRangeTests: QuickSpec {
 
       it("should calculate -1 year") {
         let relativeTimestamp = 475372800.0
-        let range = DateRange.relative(.year)
+        let range = DateRange.relative() { $0.year = -1 }
         let calculatedRange = range.calculateDates(relativeTo: Date(timeIntervalSince1970: relativeTimestamp))
         expect(calculatedRange.0.timeIntervalSince1970).to(equal(443750400.0))
         expect(calculatedRange.1.timeIntervalSince1970).to(equal(relativeTimestamp))
