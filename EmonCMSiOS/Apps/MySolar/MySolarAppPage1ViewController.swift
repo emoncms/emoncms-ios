@@ -12,9 +12,11 @@ import RxSwift
 import RxCocoa
 import Charts
 
-final class MySolarAppPage1ViewController: UIViewController {
+final class MySolarAppPage1ViewController: AppPageViewController {
 
-  var viewModel: MySolarAppPage1ViewModel!
+  var typedViewModel: MySolarAppPage1ViewModel {
+    return self.viewModel as! MySolarAppPage1ViewModel
+  }
 
   @IBOutlet private var dateSegmentedControl: UISegmentedControl!
   @IBOutlet private var useLabelView: AppTitleAndValueView!
@@ -45,16 +47,6 @@ final class MySolarAppPage1ViewController: UIViewController {
     self.setupBindings()
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
-  }
-
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
-  }
-
   private func setupBindings() {
     self.dateSegmentedControl.rx.selectedSegmentIndex
       .startWith(self.dateSegmentedControl.selectedSegmentIndex)
@@ -74,13 +66,13 @@ final class MySolarAppPage1ViewController: UIViewController {
       return value + "W"
     }
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.useNow }
       .map(powerFormat)
       .drive(self.useLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         guard let value = $0?.importNow else { return "-" }
 
@@ -94,7 +86,7 @@ final class MySolarAppPage1ViewController: UIViewController {
       .drive(self.importLabelView.rx.title)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         if let value = $0?.importNow {
           return abs(value)
@@ -106,13 +98,13 @@ final class MySolarAppPage1ViewController: UIViewController {
       .drive(self.importLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.solarNow }
       .map(powerFormat)
       .drive(self.solarLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let self = self else { return }

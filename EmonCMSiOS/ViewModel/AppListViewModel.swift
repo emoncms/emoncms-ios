@@ -71,24 +71,20 @@ final class AppListViewModel {
 
   func viewController(forDataWithId id: String, ofCategory category: AppCategory) -> UIViewController {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
-    let viewController = storyboard.instantiateViewController(withIdentifier: category.info.storyboardId)
+    let appViewController = storyboard.instantiateInitialViewController() as! AppViewController
 
+    let viewModel: AppViewModel
     switch category {
     case .myElectric:
-      let viewModel = MyElectricAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-      let appVC = viewController as! MyElectricAppViewController
-      appVC.viewModel = viewModel
+      viewModel = MyElectricAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
     case .mySolar:
-      let viewModel = MySolarAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-      let appVC = viewController as! MySolarAppViewController
-      appVC.viewModel = viewModel
+      viewModel = MySolarAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
     case .mySolarDivert:
-      let viewModel = MySolarDivertAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-      let appVC = viewController as! MySolarDivertAppViewController
-      appVC.viewModel = viewModel
+      viewModel = MySolarDivertAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
     }
+    appViewController.viewModel = viewModel
 
-    return viewController
+    return appViewController
   }
 
   func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {

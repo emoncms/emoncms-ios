@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-final class MySolarAppPage2ViewModel {
+final class MySolarAppPage2ViewModel: AppPageViewModel {
 
   typealias Data = (updateTime: Date, barChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>]))
 
@@ -30,6 +30,7 @@ final class MySolarAppPage2ViewModel {
   private(set) var data: Driver<Data?>
   private(set) var isRefreshing: Driver<Bool>
   private(set) var errors: Driver<AppError?>
+  private(set) var bannerBarState: Driver<AppBannerBarState>
 
   private let errorsSubject = PublishSubject<AppError?>()
 
@@ -42,6 +43,7 @@ final class MySolarAppPage2ViewModel {
 
     self.data = Driver.empty()
     self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic("Unknown"))
+    self.bannerBarState = Driver.empty()
 
     let isRefreshing = ActivityIndicator()
     self.isRefreshing = isRefreshing.asDriver()
@@ -64,19 +66,20 @@ final class MySolarAppPage2ViewModel {
       .becomeVoid()
 
     let refreshSignal = Observable.of(
-        timerIfActive.map { false },
-        feedsChangedSignal.map { true }
+      timerIfActive.map { AppPageRefreshKind.update },
+      feedsChangedSignal.map { AppPageRefreshKind.initial },
+      self.dateRange.map { _ in AppPageRefreshKind.dateRangeChange }
       )
       .merge()
 
     self.data = Observable.combineLatest(refreshSignal, self.dateRange)
-      .flatMap { [weak self] isFirst, dateRange -> Observable<Data?> in
+      .flatMap { [weak self] refreshKind, dateRange -> Observable<Data?> in
         guard let strongSelf = self else { return Observable.empty() }
 
         let update: Observable<Data?> = strongSelf.update(dateRange: dateRange)
           .catchError { [weak self] error in
             var typedError = error as? AppError ?? .generic("\(error)")
-            if typedError == AppError.updateFailed && isFirst {
+            if typedError == AppError.updateFailed && refreshKind == .initial {
               typedError = .initialFailed
             }
             self?.errorsSubject.onNext(typedError)
@@ -89,7 +92,7 @@ final class MySolarAppPage2ViewModel {
           .takeUntil(strongSelf.dateRange.skip(1))
           .trackActivity(isRefreshing)
 
-        if isFirst {
+        if refreshKind == .initial {
           return Observable<Data?>.just(nil)
             .concat(update)
         } else {
@@ -98,6 +101,25 @@ final class MySolarAppPage2ViewModel {
       }
       .startWith(nil)
       .asDriver(onErrorJustReturn: nil)
+
+    let errors = self.errors.asObservable()
+    let loading = self.isRefreshing.asObservable()
+    let updateTime = self.data.asObservable().map { $0?.updateTime }
+
+    self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
+      .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
+        if loading {
+          return .loading
+        }
+
+        if let updateTime = updateTime, error == nil {
+          return .loaded(updateTime)
+        }
+
+        // TODO: Could check `error` and return something more helpful
+        return .error("Error")
+      }
+      .asDriver(onErrorJustReturn: .error("Error"))
   }
 
   private func update(dateRange: DateRange) -> Observable<Data> {

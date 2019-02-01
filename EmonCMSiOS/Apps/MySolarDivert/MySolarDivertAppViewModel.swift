@@ -27,10 +27,19 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
   // Outputs
   private(set) var title: Driver<String>
-  private(set) var isRefreshing: Driver<Bool>
   private(set) var isReady: Driver<Bool>
-  private(set) var errors: Driver<AppError?>
-  private(set) var bannerBarState: Driver<AppBannerBarState>
+
+  var accessibilityIdentifier: String {
+    return AccessibilityIdentifiers.Apps.MySolarDivert
+  }
+
+  var pageViewControllerStoryboardIdentifiers: [String] {
+    return ["mySolarDivertPage1", "mySolarDivertPage2"]
+  }
+
+  var pageViewModels: [AppPageViewModel] {
+    return [self.page1ViewModel, self.page2ViewModel]
+  }
 
   let page1ViewModel: MySolarDivertAppPage1ViewModel
   let page2ViewModel: MySolarDivertAppPage2ViewModel
@@ -47,62 +56,17 @@ final class MySolarDivertAppViewModel: AppViewModel {
 
     self.title = Driver.empty()
     self.isReady = Driver.empty()
-    self.errors = Driver.empty()
-    self.bannerBarState = Driver.empty()
 
     self.title = self.appData.rx
       .observe(String.self, #keyPath(AppData.name))
       .map { $0 ?? "" }
       .asDriver(onErrorJustReturn: "")
 
-    self.isRefreshing = Observable.combineLatest(
-      self.page1ViewModel.isRefreshing.asObservable(),
-      self.page2ViewModel.isRefreshing.asObservable()) { $0 || $1 }
-      .asDriver(onErrorJustReturn: false)
-
     self.isReady = self.appData.rx.observe(String.self, #keyPath(AppData.name))
       .map {
         $0 != nil
       }
       .asDriver(onErrorJustReturn: false)
-
-    self.errors = Observable.merge(
-      self.page1ViewModel.errors.asObservable(),
-      self.page2ViewModel.errors.asObservable())
-      .asDriver(onErrorJustReturn: nil)
-
-    let errors = self.errors.asObservable()
-    let loading = self.isRefreshing.asObservable()
-    let updateTime = Observable.combineLatest(
-      self.page1ViewModel.data.map { $0?.updateTime }.asObservable(),
-      self.page2ViewModel.data.map { $0?.updateTime }.asObservable())
-      .map { updateTimes -> Date? in
-        switch updateTimes {
-        case (.some(let a), .some(let b)):
-          return max(a, b)
-        case (.some(let a), nil):
-          return a
-        case (nil, .some(let b)):
-          return b
-        case (nil, nil):
-          return nil
-        }
-    }
-
-    self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
-      .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
-        if loading {
-          return .loading
-        }
-
-        if let updateTime = updateTime, error == nil {
-          return .loaded(updateTime)
-        }
-
-        // TODO: Could check `error` and return something more helpful
-        return .error("Error")
-      }
-      .asDriver(onErrorJustReturn: .error("Error"))
   }
 
   func configViewModel() -> AppConfigViewModel {

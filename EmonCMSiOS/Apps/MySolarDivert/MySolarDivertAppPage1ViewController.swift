@@ -12,9 +12,11 @@ import RxSwift
 import RxCocoa
 import Charts
 
-final class MySolarDivertAppPage1ViewController: UIViewController {
+final class MySolarDivertAppPage1ViewController: AppPageViewController {
 
-  var viewModel: MySolarDivertAppPage1ViewModel!
+  var typedViewModel: MySolarDivertAppPage1ViewModel {
+    return self.viewModel as! MySolarDivertAppPage1ViewModel
+  }
 
   @IBOutlet private var dateSegmentedControl: UISegmentedControl!
   @IBOutlet private var houseLabelView: AppTitleAndValueView!
@@ -74,25 +76,25 @@ final class MySolarDivertAppPage1ViewController: UIViewController {
       return value + "W"
     }
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.houseNow }
       .map(powerFormat)
       .drive(self.houseLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.divertNow }
       .map(powerFormat)
       .drive(self.divertLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.totalUseNow }
       .map(powerFormat)
       .drive(self.totalUseLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         guard let value = $0?.importNow else { return "-" }
 
@@ -106,7 +108,7 @@ final class MySolarDivertAppPage1ViewController: UIViewController {
       .drive(self.importLabelView.rx.title)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map {
         if let value = $0?.importNow {
           return abs(value)
@@ -118,13 +120,13 @@ final class MySolarDivertAppPage1ViewController: UIViewController {
       .drive(self.importLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.solarNow }
       .map(powerFormat)
       .drive(self.solarLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.lineChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let strongSelf = self else { return }

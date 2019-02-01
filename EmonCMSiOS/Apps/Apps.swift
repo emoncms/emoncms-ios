@@ -24,18 +24,35 @@ enum AppError: Error {
   case updateFailed
 }
 
+enum AppPageRefreshKind {
+  case initial
+  case update
+  case dateRangeChange
+}
+
 protocol AppViewModel: AnyObject {
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
-  var active: BehaviorRelay<Bool> { get }
   var title: Driver<String> { get }
-  var errors: Driver<AppError?> { get }
-  var isRefreshing: Driver<Bool> { get }
   var isReady: Driver<Bool> { get }
-  var bannerBarState: Driver<AppBannerBarState> { get }
+  var accessibilityIdentifier: String { get }
+  var pageViewControllerStoryboardIdentifiers: [String] { get }
+  var pageViewModels: [AppPageViewModel] { get }
 
   func configViewModel() -> AppConfigViewModel
+
+}
+
+protocol AppPageViewModel: AnyObject {
+
+  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
+
+  var active: BehaviorRelay<Bool> { get }
+  var dateRange: BehaviorRelay<DateRange> { get }
+  var errors: Driver<AppError?> { get }
+  var isRefreshing: Driver<Bool> { get }
+  var bannerBarState: Driver<AppBannerBarState> { get }
 
 }
 
@@ -43,28 +60,14 @@ typealias AppUUIDAndCategory = (uuid: String, category: AppCategory)
 
 extension AppCategory {
 
-  struct Info {
-    let displayName: String
-    let storyboardId: String
-  }
-
-  var info: Info {
+  var displayName: String {
     switch self {
     case .myElectric:
-      return Info(
-        displayName: "MyElectric",
-        storyboardId: "myElectric"
-      )
+      return "MyElectric"
     case .mySolar:
-      return Info(
-        displayName: "MySolar",
-        storyboardId: "mySolar"
-      )
+      return "MySolar"
     case .mySolarDivert:
-      return Info(
-        displayName: "MySolarDivert",
-        storyboardId: "mySolarDivert"
-      )
+      return "MySolarDivert"
     }
   }
 

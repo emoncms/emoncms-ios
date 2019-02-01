@@ -36,7 +36,7 @@ final class AppListViewController: UITableViewController {
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
-        cell.detailTextLabel?.text = item.category.info.displayName
+        cell.detailTextLabel?.text = item.category.displayName
         return cell
     },
       titleForHeaderInSection: { _,_  in "" },
@@ -147,7 +147,7 @@ final class AppListViewController: UITableViewController {
           })
 
           AppCategory.allCases.forEach { appCategory in
-            alert.addAction(UIAlertAction(title: appCategory.info.displayName, style: .default) { _ in
+            alert.addAction(UIAlertAction(title: appCategory.displayName, style: .default) { _ in
               observer.on(.next(appCategory))
               observer.on(.completed)
             })

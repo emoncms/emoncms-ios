@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import Charts
 
-final class MyElectricAppViewController: AppViewController {
+final class MyElectricAppViewController: AppPageViewController {
 
   var typedViewModel: MyElectricAppViewModel {
     return self.viewModel as! MyElectricAppViewModel

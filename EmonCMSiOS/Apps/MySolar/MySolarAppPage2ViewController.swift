@@ -12,9 +12,11 @@ import RxSwift
 import RxCocoa
 import Charts
 
-final class MySolarAppPage2ViewController: UIViewController {
+final class MySolarAppPage2ViewController: AppPageViewController {
 
-  var viewModel: MySolarAppPage2ViewModel!
+  var typedViewModel: MySolarAppPage2ViewModel {
+    return self.viewModel as! MySolarAppPage2ViewModel
+  }
 
   @IBOutlet private var dateSegmentedControl: UISegmentedControl!
   @IBOutlet private var useBarChart: BarChartView!
@@ -48,7 +50,7 @@ final class MySolarAppPage2ViewController: UIViewController {
       .bind(to: self.viewModel.dateRange)
       .disposed(by: self.disposeBag)
 
-    self.viewModel.data
+    self.typedViewModel.data
       .map { $0?.barChartData }
       .drive(onNext: { [weak self] dataPoints in
         guard let self = self else { return }

@@ -12,7 +12,7 @@ import RxSwift
 import RxCocoa
 import RealmSwift
 
-final class MyElectricAppViewModel: AppViewModel {
+final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
 
   typealias MyElectricData = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint<Double>], barChartData: [DataPoint<Double>])
 
@@ -21,6 +21,18 @@ final class MyElectricAppViewModel: AppViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
   private let appData: AppData
+
+  var accessibilityIdentifier: String {
+    return AccessibilityIdentifiers.Apps.MyElectric
+  }
+
+  var pageViewControllerStoryboardIdentifiers: [String] {
+    return ["myElectric"]
+  }
+
+  var pageViewModels: [AppPageViewModel] {
+    return [self]
+  }
 
   // Inputs
   let active = BehaviorRelay<Bool>(value: false)

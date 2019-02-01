@@ -17,72 +17,32 @@ class AppViewController: UIViewController {
 
   @IBOutlet private var mainView: UIView!
   @IBOutlet private var configureView: UIView!
-  @IBOutlet private var bannerView: UIView!
-  @IBOutlet private var bannerLabel: UILabel!
-  @IBOutlet private var bannerSpinner: UIActivityIndicatorView!
+
+  private var pageViewController: UIPageViewController!
+  private var pages = [UIViewController]()
 
   private let disposeBag = DisposeBag()
 
+  private enum Segues: String {
+    case pageVC
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    self.view.accessibilityIdentifier = self.viewModel.accessibilityIdentifier
+
+    let pageControlAppearance = UIPageControl.appearance(whenContainedInInstancesOf: [AppViewController.self])
+    pageControlAppearance.pageIndicatorTintColor = .lightGray
+    pageControlAppearance.currentPageIndicatorTintColor = .black
 
     self.setupBindings()
     self.setupNavigation()
   }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
-  }
-
-  override func viewDidDisappear(_ animated: Bool) {
-    super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
-  }
-
   private func setupBindings() {
     self.viewModel.title
       .drive(self.rx.title)
-      .disposed(by: self.disposeBag)
-
-    self.viewModel.errors
-      .drive(onNext: { [weak self] error in
-        guard let strongSelf = self else { return }
-        guard let error = error else { return }
-
-        switch error {
-        case .initialFailed:
-          let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.", preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
-        default:
-          break
-        }
-      })
-      .disposed(by: self.disposeBag)
-
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateStyle = .none
-    dateFormatter.timeStyle = .medium
-    self.viewModel.bannerBarState
-      .drive(onNext: { [weak self] state in
-        guard let strongSelf = self else { return }
-
-        switch state {
-        case .loading:
-          strongSelf.bannerSpinner.startAnimating()
-          strongSelf.bannerLabel.text = "Loading"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
-        case .error(let message):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = message
-          strongSelf.bannerView.backgroundColor = EmonCMSColors.ErrorRed
-        case .loaded(let updateTime):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
-        }
-      })
       .disposed(by: self.disposeBag)
 
     self.viewModel.isReady
@@ -114,6 +74,57 @@ class AppViewController: UIViewController {
       })
       .disposed(by: self.disposeBag)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
+
+    if segue.identifier == Segues.pageVC.rawValue {
+      if let pageViewController = segue.destination as? UIPageViewController {
+        let identifiers = self.viewModel.pageViewControllerStoryboardIdentifiers
+        let viewModels = self.viewModel.pageViewModels
+        let pages = zip(identifiers, viewModels).map { arg -> UIViewController in
+          let (identifier, viewModel) = arg
+          let page = self.storyboard?.instantiateViewController(withIdentifier: identifier) as! AppPageViewController
+          page.viewModel = viewModel
+          return page
+        }
+        self.pages = pages
+
+        if let firstPage = pages.first {
+          pageViewController.dataSource = self
+          pageViewController.setViewControllers([firstPage], direction: .forward, animated: false, completion: nil)
+          self.pageViewController = pageViewController
+        }
+      }
+    }
+  }
+
+}
+
+extension AppViewController: UIPageViewControllerDataSource {
+
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    guard let index = self.pages.firstIndex(of: viewController), index > 0 else { return nil }
+    return self.pages[index - 1]
+  }
+
+  func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+    guard let index = self.pages.firstIndex(of: viewController), index < (self.pages.count - 1) else { return nil }
+    return self.pages[index + 1]
+  }
+
+  func presentationCount(for pageViewController: UIPageViewController) -> Int {
+    return self.pages.count
+  }
+
+  func presentationIndex(for pageViewController: UIPageViewController) -> Int {
+    guard
+      let topViewController = pageViewController.viewControllers?.first,
+      let index = self.pages.firstIndex(of: topViewController)
+      else { return 0 }
+
+    return index
   }
 
 }
