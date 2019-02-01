@@ -30,6 +30,7 @@ class AppViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.navigationItem.largeTitleDisplayMode = .never
     self.view.accessibilityIdentifier = self.viewModel.accessibilityIdentifier
 
     let pageControlAppearance = UIPageControl.appearance(whenContainedInInstancesOf: [AppViewController.self])
