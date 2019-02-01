@@ -33,7 +33,7 @@ Emoncms for iOS is an app that allows you to connect to an [Emoncms](https://www
   - [x] My Solar PV + Divert app
 - [x] Multi-account
 - [ ] Extensions
-  - [ ] Universal app (for iPad)
+  - [x] Universal app (for iPad)
   - [ ] watchOS app
   - [x] Today extension
   - [ ] tvOS app
