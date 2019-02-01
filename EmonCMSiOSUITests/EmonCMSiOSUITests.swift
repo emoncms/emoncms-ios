@@ -142,7 +142,14 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MyElectric].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MyElectric]
+        expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+
+        viewQuery.segmentedControls.buttons["1h"].tap()
+        viewQuery.segmentedControls.buttons["8h"].tap()
+        viewQuery.segmentedControls.buttons["D"].tap()
+        viewQuery.segmentedControls.buttons["M"].tap()
+        viewQuery.segmentedControls.buttons["Y"].tap()
       }
 
       it("should add a MySolar app successfully") {
@@ -165,7 +172,18 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolar].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MySolar]
+        expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+
+        viewQuery.segmentedControls.buttons["1h"].tap()
+        viewQuery.segmentedControls.buttons["8h"].tap()
+        viewQuery.segmentedControls.buttons["D"].tap()
+        viewQuery.segmentedControls.buttons["M"].tap()
+        viewQuery.segmentedControls.buttons["Y"].tap()
+
+        let startPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 1.0, dy: 0.5))
+        let endPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.5))
+        startPoint.press(forDuration: 0, thenDragTo: endPoint)
       }
 
       it("should add a MySolarDivert app successfully") {
@@ -194,7 +212,18 @@ class EmonCMSiOSUITests: QuickSpec {
 
         app.navigationBars["Configure"].buttons["Save"].tap()
 
-        expect(app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert]
+        expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+
+        viewQuery.segmentedControls.buttons["1h"].tap()
+        viewQuery.segmentedControls.buttons["8h"].tap()
+        viewQuery.segmentedControls.buttons["D"].tap()
+        viewQuery.segmentedControls.buttons["M"].tap()
+        viewQuery.segmentedControls.buttons["Y"].tap()
+
+        let startPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 1.0, dy: 0.5))
+        let endPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.5))
+        startPoint.press(forDuration: 0, thenDragTo: endPoint)
       }
     }
 
