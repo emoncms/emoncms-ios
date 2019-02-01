@@ -87,4 +87,17 @@ enum DateRange {
     return .relative(dateComponents)
   }
 
+  static func toWMYSegmentedControlIndex(_ dateComponents: DateComponents) -> Int? {
+    if dateComponents == DateComponents(calendar: nil, timeZone: nil, era: nil, year: nil, month: nil, day: nil, hour: nil, minute: nil, second: nil, nanosecond: nil, weekday: nil, weekdayOrdinal: nil, quarter: nil, weekOfMonth: nil, weekOfYear: -1, yearForWeekOfYear: nil) {
+      return 0
+    }
+    if dateComponents == DateComponents(calendar: nil, timeZone: nil, era: nil, year: nil, month: -1, day: nil, hour: nil, minute: nil, second: nil, nanosecond: nil, weekday: nil, weekdayOrdinal: nil, quarter: nil, weekOfMonth: nil, weekOfYear: nil, yearForWeekOfYear: nil) {
+      return 1
+    }
+    if dateComponents == DateComponents(calendar: nil, timeZone: nil, era: nil, year: -1, month: nil, day: nil, hour: nil, minute: nil, second: nil, nanosecond: nil, weekday: nil, weekdayOrdinal: nil, quarter: nil, weekOfMonth: nil, weekOfYear: nil, yearForWeekOfYear: nil) {
+      return 2
+    }
+    return nil
+  }
+
 }
