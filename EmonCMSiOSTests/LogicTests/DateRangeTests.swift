@@ -68,6 +68,36 @@ class DateRangeTests: QuickSpec {
       }
     }
 
+    describe("1h8hDMYSegmentedControlIndex") {
+      it("should convert to and from correctly") {
+        for i in 0...4 {
+          let dateRange = DateRange.from1h8hDMYSegmentedControlIndex(i)
+          switch dateRange {
+          case .relative(let dateComponents):
+            let index = DateRange.to1h8hDMYSegmentedControlIndex(dateComponents)
+            expect(index).to(equal(i))
+          default:
+            fail("Unexpected case")
+          }
+        }
+      }
+    }
+
+    describe("WMYSegmentedControlIndex") {
+      it("should convert to and from correctly") {
+        for i in 0...2 {
+          let dateRange = DateRange.fromWMYSegmentedControlIndex(i)
+          switch dateRange {
+          case .relative(let dateComponents):
+            let index = DateRange.toWMYSegmentedControlIndex(dateComponents)
+            expect(index).to(equal(i))
+          default:
+            fail("Unexpected case")
+          }
+        }
+      }
+    }
+
   }
 
 }
