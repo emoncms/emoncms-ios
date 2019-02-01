@@ -152,6 +152,9 @@ final class AddAccountViewController: FormViewController {
     let action = CocoaAction(enabledIf: self.viewModel.canSave()) { [weak self] _ -> Observable<Void> in
       guard let strongSelf = self else { return Observable.empty() }
 
+      strongSelf.tableView.resignFirstResponder()
+      strongSelf.tableView.isUserInteractionEnabled = false
+
       return strongSelf.viewModel.saveAccount()
         .do(onNext: { [weak self] accountId in
           guard let strongSelf = self else { return }
@@ -161,6 +164,8 @@ final class AddAccountViewController: FormViewController {
           guard let strongSelf = self else { return Observable.empty() }
 
           AppLog.info("Login failed: \(error)")
+
+          strongSelf.tableView.isUserInteractionEnabled = true
 
           let message: String
           if let error = error as? AddAccountViewModel.AddAccountError {
