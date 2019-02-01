@@ -153,6 +153,10 @@ final class AppListViewController: UITableViewController {
             })
           }
 
+          if let popoverController = alert.popoverPresentationController {
+            popoverController.barButtonItem = rightBarButtonItem
+          }
+
           strongSelf.present(alert, animated: true, completion: nil)
 
           return Disposables.create {

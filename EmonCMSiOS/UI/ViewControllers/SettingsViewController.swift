@@ -48,9 +48,11 @@ final class SettingsViewController: FormViewController {
       $0.accessoryType = .disclosureIndicator
       }.configure {
         $0.text = "Logout"
-      }.onSelected { [weak self] _ in
+      }.onSelected { [weak self] former in
         guard let strongSelf = self else { return }
+
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
+
         actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
           strongSelf.former.deselect(animated: true)
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
@@ -58,11 +60,18 @@ final class SettingsViewController: FormViewController {
           }
           strongSelf.switchAccountSubject.onNext(true)
         }))
+
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
           if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
             strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
           }
         }))
+
+        if let popoverController = actionSheet.popoverPresentationController {
+          popoverController.sourceView = former.cell
+          popoverController.sourceRect = CGRect(x: former.cell.bounds.midX, y: former.cell.bounds.midY, width: 0, height: 0)
+        }
+
         strongSelf.present(actionSheet, animated: true, completion: nil)
     }
 
