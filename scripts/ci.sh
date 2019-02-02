@@ -12,5 +12,5 @@ xcodebuild \
 	-destination "platform=iOS Simulator,OS=${OS},name=${NAME}" \
 	CODE_SIGN_IDENTITY="" \
 	CODE_SIGNING_REQUIRED=NO \
-	test \
+	clean build test \
 	| ${XCPRETTY} && exit ${PIPESTATUS[0]}
