@@ -8,7 +8,7 @@ scripts/intelligent-bootstrap
 xcodebuild \
 	-project EmonCMSiOS.xcodeproj \
 	-scheme EmonCMSiOS \
-	-sdk ${TEST_SDK}
+	-sdk ${TEST_SDK} \
 	-destination "platform=iOS Simulator,OS=${OS},name=${NAME}" \
 	CODE_SIGN_IDENTITY="" \
 	CODE_SIGNING_REQUIRED=NO \
