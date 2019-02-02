@@ -8,9 +8,9 @@ scripts/intelligent-bootstrap
 xcodebuild \
 	-project EmonCMSiOS.xcodeproj \
 	-scheme EmonCMSiOS \
-	-destination "platform=iOS Simulator,name=iPhone XR" \
-	-destination "platform=iOS Simulator,name=iPad Air 2" \
+	-sdk ${TEST_SDK}
+	-destination "platform=iOS Simulator,OS=${OS},name=${NAME}" \
 	CODE_SIGN_IDENTITY="" \
 	CODE_SIGNING_REQUIRED=NO \
-	clean build test \
+	test \
 	| ${XCPRETTY} && exit ${PIPESTATUS[0]}
