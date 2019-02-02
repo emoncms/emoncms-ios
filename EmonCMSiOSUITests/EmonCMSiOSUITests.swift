@@ -28,7 +28,7 @@ extension XCUIElement {
 
 class EmonCMSiOSUITests: QuickSpec {
 
-  static let WaitTimeout: TimeInterval = 5
+  static let WaitTimeout: TimeInterval = 10
 
   override func setUp() {
     super.setUp()
@@ -277,12 +277,12 @@ class EmonCMSiOSUITests: QuickSpec {
         let startPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let endPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.01))
         startPoint1.press(forDuration: 0, thenDragTo: endPoint1)
-        expect(chartContainer.frame.minY).toEventually(equal(chartContainerOpenY), timeout: 3)
+        expect(chartContainer.frame.minY).toEventually(equal(chartContainerOpenY), timeout: EmonCMSiOSUITests.WaitTimeout)
 
         let startPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let endPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 1))
         startPoint2.press(forDuration: 0, thenDragTo: endPoint2)
-        expect(chartContainer.frame.minY).toEventually(equal(chartContainerClosedY), timeout: 3)
+        expect(chartContainer.frame.minY).toEventually(equal(chartContainerClosedY), timeout: EmonCMSiOSUITests.WaitTimeout)
       }
 
       it("should show feed chart view when tapping on detail disclosure") {
