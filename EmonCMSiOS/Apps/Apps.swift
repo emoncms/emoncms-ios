@@ -71,6 +71,17 @@ extension AppCategory {
     }
   }
 
+  var viewModelInit: (RealmController, AccountController, EmonCMSAPI, String) -> AppViewModel {
+    switch self {
+    case .myElectric:
+      return MyElectricAppViewModel.init
+    case .mySolar:
+      return MySolarAppViewModel.init
+    case .mySolarDivert:
+      return MySolarDivertAppViewModel.init
+    }
+  }
+
   var feedConfigFields: [AppConfigFieldFeed] {
     switch self {
     case .myElectric:

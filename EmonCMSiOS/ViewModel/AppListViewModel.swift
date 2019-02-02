@@ -73,15 +73,7 @@ final class AppListViewModel {
     let storyboard = UIStoryboard(name: "Apps", bundle: nil)
     let appViewController = storyboard.instantiateInitialViewController() as! AppViewController
 
-    let viewModel: AppViewModel
-    switch category {
-    case .myElectric:
-      viewModel = MyElectricAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-    case .mySolar:
-      viewModel = MySolarAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-    case .mySolarDivert:
-      viewModel = MySolarDivertAppViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: id)
-    }
+    let viewModel = category.viewModelInit(self.realmController, self.account, self.api, id)
     appViewController.viewModel = viewModel
 
     return appViewController
