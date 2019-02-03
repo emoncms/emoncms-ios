@@ -11,7 +11,7 @@ before_install:
 script:
   - sh scripts/ci.sh
 after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - bash <(curl -s https://codecov.io/bash) -J '^EmonCMSiOS$'
 env:
   matrix:
     - TEST_SDK=iphonesimulator12.1 OS=12.1 NAME='iPhone XR'
