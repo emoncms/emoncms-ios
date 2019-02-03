@@ -161,6 +161,8 @@ extension MySolarDivertAppPage1ViewController {
         $0.setColor(EmonCMSColors.Chart.Orange)
         $0.fillColor = EmonCMSColors.Chart.Orange
       }
+
+      self.lineChart.leftAxis.axisMinimum = min(data.yMin, 0)
     } else {
       self.lineChart.data = nil
     }

@@ -135,6 +135,8 @@ extension MySolarAppPage1ViewController {
         $0.setColor(EmonCMSColors.Chart.Yellow)
         $0.fillColor = EmonCMSColors.Chart.Yellow
       }
+
+      self.lineChart.leftAxis.axisMinimum = min(data.yMin, 0)
     } else {
       self.lineChart.data = nil
     }

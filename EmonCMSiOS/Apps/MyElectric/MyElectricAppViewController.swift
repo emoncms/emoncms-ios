@@ -112,6 +112,8 @@ extension MyElectricAppViewController {
         $0.setColor(EmonCMSColors.Chart.Blue)
         $0.fillColor = EmonCMSColors.Chart.Blue
       }
+
+      self.lineChart.leftAxis.axisMinimum = min(data.yMin, 0)
     } else {
       self.lineChart.data = nil
     }
