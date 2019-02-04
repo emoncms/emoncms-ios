@@ -126,6 +126,11 @@ final class InputListViewController: UITableViewController {
       .drive(refreshControl.rx.isRefreshing)
       .disposed(by: self.disposeBag)
 
+    self.viewModel.isRefreshing
+      .map { !$0 }
+      .drive(self.refreshButton.rx.isEnabled)
+      .disposed(by: self.disposeBag)
+
     Driver.combineLatest(
       self.viewModel.serverNeedsUpdate
         .distinctUntilChanged(),
