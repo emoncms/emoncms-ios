@@ -134,6 +134,7 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     let updateTime = self.data.map { $0?.updateTime }.asObservable()
 
     self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
+      .startWith((true, nil, nil))
       .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading

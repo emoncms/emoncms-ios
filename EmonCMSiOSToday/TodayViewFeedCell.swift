@@ -60,7 +60,7 @@ final class TodayViewFeedCell: UITableViewCell {
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
     lineChart.chartDescription = nil
-    lineChart.noDataText = "Loading data..."
+    lineChart.noDataText = "Loading data\u{2026}"
     lineChart.noDataTextColor = .black
     lineChart.isUserInteractionEnabled = false
 

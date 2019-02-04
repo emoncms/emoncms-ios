@@ -64,7 +64,7 @@ class AppPageViewController: UIViewController {
         switch state {
         case .loading:
           strongSelf.bannerSpinner.startAnimating()
-          strongSelf.bannerLabel.text = "Loading"
+          strongSelf.bannerLabel.text = "Loading\u{2026}"
           strongSelf.bannerView.backgroundColor = UIColor.lightGray
         case .error(let message):
           strongSelf.bannerSpinner.stopAnimating()

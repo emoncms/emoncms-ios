@@ -44,7 +44,7 @@ final class ChartHelpers {
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
     lineChart.chartDescription = nil
-    lineChart.noDataText = "Loading data..."
+    lineChart.noDataText = "Loading data\u{2026}"
     lineChart.noDataTextColor = .black
     lineChart.isUserInteractionEnabled = false
 
@@ -74,7 +74,7 @@ final class ChartHelpers {
     barChart.leftAxis.enabled = false
     barChart.rightAxis.enabled = false
     barChart.chartDescription = nil
-    barChart.noDataText = "Loading data..."
+    barChart.noDataText = "Loading data\u{2026}"
     barChart.noDataTextColor = .black
     barChart.isUserInteractionEnabled = false
     barChart.extraBottomOffset = 0

@@ -107,6 +107,7 @@ final class MySolarAppPage2ViewModel: AppPageViewModel {
     let updateTime = self.data.asObservable().map { $0?.updateTime }
 
     self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
+      .startWith((true, nil, nil))
       .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading
