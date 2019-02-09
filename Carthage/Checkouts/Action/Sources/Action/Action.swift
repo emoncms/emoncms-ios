@@ -97,7 +97,7 @@ public final class Action<Input, Element> {
                 execution -> Observable<Bool> in
                 let execution = execution
                     .flatMap { _ in Observable<Bool>.empty() }
-                    .catchError { _ in Observable.empty()}
+                    .catchError { _ in Observable.empty() }
 
                 return Observable.concat([Observable.just(true),
                                           execution,
@@ -133,5 +133,12 @@ public final class Action<Input, Element> {
 			.disposed(by: disposeBag)
 
 		return subject.asObservable()
+    }
+}
+
+extension Action where Input == Void {
+    @discardableResult
+    public func execute() -> Observable<Element> {
+        return execute(())
     }
 }

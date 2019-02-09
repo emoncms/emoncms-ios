@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Action"
-  s.version      = "3.9.1"
+  s.version      = "3.10.0"
   s.summary      = "Abstracts actions to be performed in RxSwift."
   s.description  = <<-DESC
     Encapsulates an action to be performed, usually by a button press, but also useful to pass actions to execute later
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
-  s.watchos.deployment_target = '2.0'
+  s.watchos.deployment_target = '3.0'
   s.tvos.deployment_target = '9.0'
 
   s.source       = { :git => "https://github.com/RxSwiftCommunity/Action.git", :tag => s.version.to_s }
