@@ -184,6 +184,8 @@
 		C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */; };
 		C9E7A73421FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
 		C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */; };
+		C9F14ABA220F109A0005869F /* main_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB8220F109A0005869F /* main_v1.realm */; };
+		C9F14ABB220F109A0005869F /* account_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB9220F109A0005869F /* account_v1.realm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -408,6 +410,8 @@
 		C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelper.swift; sourceTree = "<group>"; };
 		C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Dashboard.swift"; sourceTree = "<group>"; };
 		C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewController.swift; sourceTree = "<group>"; };
+		C9F14AB8220F109A0005869F /* main_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v1.realm; sourceTree = "<group>"; };
+		C9F14AB9220F109A0005869F /* account_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v1.realm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -776,6 +780,8 @@
 			isa = PBXGroup;
 			children = (
 				C9E7A6F721F50873008BD497 /* account_v0.realm */,
+				C9F14AB9220F109A0005869F /* account_v1.realm */,
+				C9F14AB8220F109A0005869F /* main_v1.realm */,
 			);
 			path = Realms;
 			sourceTree = "<group>";
@@ -1027,7 +1033,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9F14ABB220F109A0005869F /* account_v1.realm in Resources */,
 				C9E7A6F821F50873008BD497 /* account_v0.realm in Resources */,
+				C9F14ABA220F109A0005869F /* main_v1.realm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

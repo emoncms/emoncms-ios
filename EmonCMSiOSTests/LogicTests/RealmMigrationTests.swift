@@ -16,9 +16,38 @@ class RealmMigrationTests: QuickSpec {
     return FileManager.default.temporaryDirectory.appendingPathComponent("realm_migration_tests")
   }
 
+  private func copyMainRealm(fromFilename: String, realmController: RealmController) throws {
+    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm") else {
+      throw NSError()
+    }
+    try FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+    try FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.mainRealmFileURL)
+  }
+
+  private func copyAccountRealm(fromFilename: String, forAccountId accountId: String, realmController: RealmController) throws {
+    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm") else {
+      throw NSError()
+    }
+    try FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+    try FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.realmFileURL(forAccountId: accountId))
+  }
+
   override func spec() {
 
-    describe("accounts") {
+    beforeEach {
+      do {
+        try FileManager.default.removeItem(at: self.dataDirectory)
+        try FileManager.default.removeItem(at: self.dataDirectory)
+      } catch {
+        let nsError = error as NSError
+        if nsError.domain == NSCocoaErrorDomain && nsError.code == NSFileNoSuchFileError {
+          return
+        }
+        fail("Failed to remove data directory.")
+      }
+    }
+
+    describe("migrations") {
 
       var realmController: RealmController!
       var uuid: String!
@@ -28,13 +57,28 @@ class RealmMigrationTests: QuickSpec {
         uuid = UUID().uuidString
       }
 
-      it("should migrate from v0 to v1") {
-        guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: "account_v0", withExtension: "realm") else {
-          fail("Failed to find Realm file!")
-          return
+      it("should create realms for current schema") {
+        do {
+          let schemaVersion = RealmController.schemaVersion
+          try self.copyMainRealm(fromFilename: "main_v\(schemaVersion)", realmController: realmController)
+          try self.copyAccountRealm(fromFilename: "account_v\(schemaVersion)", forAccountId: uuid, realmController: realmController)
+        } catch {
+          fail("Failed to copy Realm file!")
         }
-        try! FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
-        try! FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.realmFileURL(forAccountId: uuid))
+
+        expect {
+          let _ = realmController.createMainRealm()
+          let _ = realmController.createAccountRealm(forAccountId: uuid)
+          return nil
+        }.toNot(throwAssertion())
+      }
+
+      it("should migrate from v0") {
+        do {
+          try self.copyAccountRealm(fromFilename: "account_v0", forAccountId: uuid, realmController: realmController)
+        } catch {
+          fail("Failed to copy Realm file!")
+        }
 
         let realm = realmController.createAccountRealm(forAccountId: uuid)
 
