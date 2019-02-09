@@ -13,6 +13,8 @@ import RealmSwift
 
 final class RealmController {
 
+  static let schemaVersion: UInt64 = 1
+
   let dataDirectory: URL
 
   init(dataDirectory: URL) {
@@ -25,7 +27,7 @@ final class RealmController {
 
   private func mainRealmConfiguration() -> Realm.Configuration {
     var config = Realm.Configuration(fileURL: self.mainRealmFileURL)
-    config.schemaVersion = 1
+    config.schemaVersion = RealmController.schemaVersion
     return config
   }
 
@@ -41,7 +43,7 @@ final class RealmController {
 
   private func accountRealmConfiguration(forAccountId accountId: String) -> Realm.Configuration {
     var config = Realm.Configuration(fileURL: self.realmFileURL(forAccountId: accountId))
-    config.schemaVersion = 1
+    config.schemaVersion = RealmController.schemaVersion
     config.migrationBlock = { (migration, oldSchemaVersion) in
       if oldSchemaVersion == 0 {
         self.account_migrate_0_1(migration)
