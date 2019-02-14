@@ -698,6 +698,7 @@
                                     <constraint firstItem="50S-wU-imk" firstAttribute="top" secondItem="DyG-UV-IEg" secondAttribute="top" constant="8" id="OYf-Il-1d8"/>
                                     <constraint firstItem="kPa-6E-sF2" firstAttribute="leading" secondItem="DyG-UV-IEg" secondAttribute="leading" constant="8" id="PJo-uU-Dy9"/>
                                     <constraint firstItem="I0K-b1-vJ2" firstAttribute="top" secondItem="ola-RT-cnS" secondAttribute="bottom" constant="8" id="Sfb-oE-f8z"/>
+                                    <constraint firstItem="ola-RT-cnS" firstAttribute="top" secondItem="DyG-UV-IEg" secondAttribute="top" constant="8" id="elc-Ve-Myp"/>
                                     <constraint firstItem="unh-we-kQw" firstAttribute="leading" secondItem="GEI-Wp-Y6X" secondAttribute="trailing" constant="16" id="gVU-RM-53l"/>
                                     <constraint firstItem="50S-wU-imk" firstAttribute="centerX" secondItem="DyG-UV-IEg" secondAttribute="centerX" id="iFT-ZM-tF4"/>
                                     <constraint firstItem="unh-we-kQw" firstAttribute="top" secondItem="DyG-UV-IEg" secondAttribute="top" constant="8" id="j9a-oW-giG"/>
@@ -710,19 +711,21 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="0E8-kH-9wY"/>
-                                        <exclude reference="4TH-lZ-zYx"/>
+                                        <exclude reference="elc-Ve-Myp"/>
                                         <exclude reference="gVU-RM-53l"/>
+                                        <exclude reference="4TH-lZ-zYx"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=compact">
                                     <mask key="constraints">
                                         <include reference="0E8-kH-9wY"/>
                                         <exclude reference="A5N-fH-ki2"/>
+                                        <include reference="elc-Ve-Myp"/>
                                         <exclude reference="jJo-Yr-oBW"/>
+                                        <include reference="gVU-RM-53l"/>
                                         <include reference="4TH-lZ-zYx"/>
                                         <exclude reference="LgJ-HT-dkc"/>
                                         <exclude reference="k25-bt-yRS"/>
-                                        <include reference="gVU-RM-53l"/>
                                     </mask>
                                 </variation>
                             </view>
