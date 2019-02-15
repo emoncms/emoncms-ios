@@ -38,7 +38,7 @@ final class MySolarAppPage1ViewController: AppPageViewController {
     self.useLabelView.alignment = .left
     self.useLabelView.valueColor = EmonCMSColors.Apps.Use
     self.importLabelView.alignment = .center
-    self.importLabelView.valueColor = EmonCMSColors.Apps.Grid
+    self.importLabelView.valueColor = EmonCMSColors.Apps.Import
     self.solarLabelView.alignment = .right
     self.solarLabelView.valueColor = EmonCMSColors.Apps.Solar
 
@@ -72,18 +72,26 @@ final class MySolarAppPage1ViewController: AppPageViewController {
       .drive(self.useLabelView.rx.value)
       .disposed(by: self.disposeBag)
 
-    self.typedViewModel.data
-      .map {
-        guard let value = $0?.importNow else { return "-" }
+    let importExport = self.typedViewModel.data
+      .map { data -> (String, UIColor) in
+        guard let value = data?.importNow else { return ("-", UIColor.black) }
 
         switch value.sign {
         case .plus:
-          return "IMPORT"
+          return ("IMPORT", EmonCMSColors.Apps.Import)
         case .minus:
-          return "EXPORT"
+          return ("EXPORT", EmonCMSColors.Apps.Export)
         }
       }
+
+    importExport
+      .map { $0.0 }
       .drive(self.importLabelView.rx.title)
+      .disposed(by: self.disposeBag)
+
+    importExport
+      .map { $0.1 }
+      .drive(self.importLabelView.rx.valueColor)
       .disposed(by: self.disposeBag)
 
     self.typedViewModel.data
