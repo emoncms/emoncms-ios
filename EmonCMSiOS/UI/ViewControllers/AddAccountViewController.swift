@@ -185,7 +185,7 @@ final class AddAccountViewController: FormViewController {
             message = "An unknown error ocurred."
           }
 
-          let alert = UIAlertController(title: "Whoops!", message: message, preferredStyle: .alert)
+          let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
           alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
           strongSelf.present(alert, animated: true, completion: nil)
           return Observable.empty()
