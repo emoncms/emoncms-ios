@@ -171,9 +171,9 @@ final class AddAccountViewController: FormViewController {
           if let error = error as? AddAccountViewModel.AddAccountError {
             switch error {
             case .urlNotValid:
-              message = "URL is not valid"
+              message = "URL is not valid."
             case .httpsRequired:
-              message = "HTTPS is required."
+              message = "HTTPS is required. This is a requirement of iOS. Please ensure you are using HTTPS with a valid certificate."
             case .invalidCredentials:
               message = "The credentials are invalid."
             case .networkFailed:
@@ -185,7 +185,7 @@ final class AddAccountViewController: FormViewController {
             message = "An unknown error ocurred."
           }
 
-          let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+          let alert = UIAlertController(title: "Whoops!", message: message, preferredStyle: .alert)
           alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
           strongSelf.present(alert, animated: true, completion: nil)
           return Observable.empty()
