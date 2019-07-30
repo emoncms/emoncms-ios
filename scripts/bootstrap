@@ -1,2 +1,2 @@
 #!/bin/bash
-carthage bootstrap $@ --platform ios --verbose | xcpretty -f `xcpretty-travis-formatter` || exit $?
+carthage bootstrap $@ --platform ios --verbose || exit $?
