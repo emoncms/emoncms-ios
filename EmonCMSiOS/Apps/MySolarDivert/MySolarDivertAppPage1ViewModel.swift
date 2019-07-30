@@ -52,7 +52,7 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
       .distinctUntilChanged()
       .flatMapLatest { active -> Observable<Int> in
         if (active) {
-          return Observable<Int>.interval(10.0, scheduler: MainScheduler.asyncInstance)
+          return Observable<Int>.interval(.seconds(10), scheduler: MainScheduler.asyncInstance)
         } else {
           return Observable.never()
         }

@@ -55,9 +55,9 @@ extension MaybeTest {
     func testMaybe_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((MaybeEvent<Int>) -> ())! = nil
+        var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.success(1))
@@ -92,9 +92,9 @@ extension MaybeTest {
     func testMaybe_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((MaybeEvent<Int>) -> ())! = nil
+        var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.completed)
@@ -128,9 +128,9 @@ extension MaybeTest {
     func testMaybe_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((MaybeEvent<Int>) -> ())! = nil
+        var observer: ((MaybeEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -161,8 +161,8 @@ extension MaybeTest {
     func testMaybe_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((MaybeEvent<Int>) -> ())! = nil
-        var disposedTime: Int? = nil
+        var observer: ((MaybeEvent<Int>) -> Void)! = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Int.self)
 
@@ -217,7 +217,7 @@ extension MaybeTest {
     }
 
     func test_never_producesElement() {
-        var event: MaybeEvent<Int>? = nil
+        var event: MaybeEvent<Int>?
         let subscription = (Maybe<Int>.never() as Maybe<Int>).subscribe { _event in
             event = _event
         }
@@ -235,7 +235,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe.just(1).delaySubscription(2.0, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (Maybe.just(1).delaySubscription(.seconds(2), scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -248,7 +248,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe.just(1).delay(2.0, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (Maybe.just(1).delay(.seconds(2), scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -459,7 +459,7 @@ extension MaybeTest {
             ]).asMaybe()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (xs.timeout(.seconds(5), scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -481,7 +481,7 @@ extension MaybeTest {
         ]).asMaybe()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, other: xs2, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (xs.timeout(.seconds(5), other: xs2, scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -499,7 +499,7 @@ extension MaybeTest {
         ]).asMaybe()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (xs.timeout(.seconds(30), scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -522,7 +522,7 @@ extension MaybeTest {
         ]).asMaybe()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, other: xs2, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (xs.timeout(.seconds(30), other: xs2, scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -537,7 +537,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe<Int>.timer(2, scheduler: scheduler) as Maybe<Int>).asObservable()
+            (Maybe<Int>.timer(.seconds(2), scheduler: scheduler) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -552,7 +552,7 @@ extension MaybeTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Maybe<Int>.just(1).do(onNext: { _ in () }, onError: { _ in () }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Maybe<Int>).asObservable()
+            (Maybe<Int>.just(1).do(onNext: { _ in () }, afterNext: { _ in () }, onError: { _ in () }, afterError: { _ in }, onSubscribe: { () in () }, onSubscribed: { () in () }, onDispose: { () in () }) as Maybe<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -607,8 +607,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 5),
-            completed(200)
+            .next(200, 5),
+            .completed(200)
             ])
     }
 
@@ -622,8 +622,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 10),
-            completed(200)
+            .next(200, 10),
+            .completed(200)
             ])
     }
 
@@ -637,8 +637,8 @@ extension MaybeTest {
         }
 
         XCTAssertEqual(res.events, [
-            next(200, 10),
-            completed(200)
+            .next(200, 10),
+            .completed(200)
             ])
     }
 }

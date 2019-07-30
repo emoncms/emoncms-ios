@@ -2,11 +2,75 @@
 All notable changes to this project will be documented in this file.
 
 ---
-## Master
+## [5.0.1](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.1)
+
+* Reverts Carthage integration from using static to dynamic libraries. #1960
+
+## [5.0.0](https://github.com/ReactiveX/RxSwift/releases/tag/5.0.0)
+
+RxSwift 5 is a _mostly_ source-compatible release targeting the Swift 5 compiler.
+
+**Xcode 10.2 is the minimum supported version (or Swift 5 on Linux).**
+
+If you're using Xcode 10.1 and below, please use [RxSwift 4.5](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0).
+
+* Relays have been moved to a separate framework - RxRelay, and can be used without RxCocoa. #1924
+* `TimeInterval` has been deprecated in favor of `DispatchTimeInterval`. For example - `throttle(1.2)` would change to `throttle(.milliseconds(1200))`, while `throttle(3)` would change to `throttle(.seconds(3))`. #1472
+* `Variable` is now entirely deprecated. #1922
+* `do` now provides additional "_after_" closures. For example, `do(onNext:)` and `do(afterNext:)`. #1898
+* `bind(to:)` now supports multiple observers (e.g. `bind(to: observer1, observer2)`). #1702
+* Changes the return type of `ObservableType.toArray` to `Single`. #1923
+* Adds `compactMap`. #1925
+* Deprecate `Completable.merge` in favor of `Completable.zip`. #1929 #1931
+* RxSwift can be built as a Static Library using Carthage 0.33 and up. #1940
+
+### Anomalies
+
+* `SubjectType.SubjectObserverType` has been renamed to `SubjectType.Observer`. #1950
+* The `S` associated type has been renamed to `Subject` where applicable. #1950
+* The `S` generic constraint on `SharedSequence` has been renamed to `SharingStrategy`. #1951
+* The `E` associated type on `ObservableConvertibleType` and `ObserverType` have been renamed to `Element`. #1945
+* The `C` and `S` associated types have been renamed to `Collection` and `Sequence` accordingly. #1949
+* Renamed `ElementType` associatedtype to `Element`. #1945
+* Renamed `TraitType` associatedtype to `Trait`. #1945
+* Make `RxMutableBox` supported on Linux in Swift 5. #1917
+* Fix incorrect assignment to `Thread.threadDictionary` on Linux. #1912
+* `combineLatest` of an empty array now completes immediately. #1879
+* Add `resultsSelector` missing closure labels for some overloads of `combineLatest` & `zip`.
+
+## [4.5.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.5.0)
+
+* Compatibility with Xcode 10.2.
+* Adds missing `UISearchBar.setDelegate()`.
+
+## [4.4.2](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.2)
+
+* Adds `UIView.rx.backgroundColor` Binder. #1888
+
+### Anomalies
+
+* Fix multiple disposes on ScheduledDisposables. #1892
+* Fix `DelegateProxy` main thread validation. #1882
+* Bring back the `first` operator to `ObservableType`. #1886
+
+## [4.4.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.1)
+
+* Adds `takeUntil(_ behavior:predicate:)`.
+
+#### Anomalies
+
+* Fixes problems with RxAtomic and TSan. #1853
+* Fixes problem with passing 0 count to `Observable.range`. #1870
+* Fixes Swift 5.0 warnings. #1859
+* Fixes problem with RxCocoa and `DISABLE_SWIZZLING` flag. #1805
+* Internal cleanups:
+    * Unused code deletions.
+    * Adds SwiftLint.
+    * Removes legacy Swift 3.0 conditional compilation flags.
 
 ## [4.4.0](https://github.com/ReactiveX/RxSwift/releases/tag/4.4.0)
 
-**This relase introduces new framework `RxAtomic` that enables using C11 atomic primities in RxSwift as a replacement for deprecated `OSAtomic*` functions.**
+**This release introduces a new framework `RxAtomic` that enables using C11 atomic primitives in RxSwift as a replacement for deprecated `OSAtomic*` functions.**
 **Carthage users will probably need to include this framework manually.**
 
 * Updates deprecated `OSAtomic*` primitives to use C11 atomic primitives.
@@ -20,6 +84,7 @@ All notable changes to this project will be documented in this file.
 * Fixes problem with canceling events scheduled on serial scheduler through `observeOn` operator.  #1778
 * Fixes problem with `UISearchBar.text` property not triggering update when cancel button is tapped. #1714 
 * Updates watchos minimum target to 3.0. #1752
+
 
 ## [4.3.1](https://github.com/ReactiveX/RxSwift/releases/tag/4.3.1)
 

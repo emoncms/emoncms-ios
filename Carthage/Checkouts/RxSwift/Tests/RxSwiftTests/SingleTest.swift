@@ -43,9 +43,9 @@ extension SingleTest {
     func testSingle_create_success() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.success(1))
@@ -77,9 +77,9 @@ extension SingleTest {
     func testSingle_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -110,8 +110,8 @@ extension SingleTest {
     func testSingle_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((SingleEvent<Int>) -> ())! = nil
-        var disposedTime: Int? = nil
+        var observer: ((SingleEvent<Int>) -> Void)! = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Int.self)
 
@@ -166,7 +166,7 @@ extension SingleTest {
     }
 
     func test_never_producesElement() {
-        var event: SingleEvent<Int>? = nil
+        var event: SingleEvent<Int>?
         let subscription = (Single<Int>.never() as Single<Int>).subscribe { _event in
             event = _event
         }
@@ -184,7 +184,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Single.just(1).delay(2.0, scheduler: scheduler) as Single<Int>).asObservable()
+            (Single.just(1).delay(.seconds(2), scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -197,7 +197,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Single.just(1).delaySubscription(2.0, scheduler: scheduler) as Single<Int>).asObservable()
+            (Single.just(1).delaySubscription(.seconds(2), scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -408,7 +408,7 @@ extension SingleTest {
             ]).asSingle()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, scheduler: scheduler) as Single<Int>).asObservable()
+            (xs.timeout(.seconds(5), scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -430,7 +430,7 @@ extension SingleTest {
             ]).asSingle()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, other: xs2, scheduler: scheduler) as Single<Int>).asObservable()
+            (xs.timeout(.seconds(5), other: xs2, scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -448,7 +448,7 @@ extension SingleTest {
             ]).asSingle()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, scheduler: scheduler) as Single<Int>).asObservable()
+            (xs.timeout(.seconds(30), scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -471,7 +471,7 @@ extension SingleTest {
             ]).asSingle()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, other: xs2, scheduler: scheduler) as Single<Int>).asObservable()
+            (xs.timeout(.seconds(30), other: xs2, scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -486,7 +486,7 @@ extension SingleTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Single<Int>.timer(2, scheduler: scheduler) as Single<Int>).asObservable()
+            (Single<Int>.timer(.seconds(2), scheduler: scheduler) as Single<Int>).asObservable()
         }
 
         XCTAssertEqual(res.events, [

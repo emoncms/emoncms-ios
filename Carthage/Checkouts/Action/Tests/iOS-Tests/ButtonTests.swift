@@ -35,7 +35,7 @@ class ButtonTests: QuickSpec {
 
             subject.rx.action = action
 
-            action.execute(())
+            action.execute()
             expect(subject.isEnabled).toEventually( beFalse() )
 
             observer.onCompleted()
@@ -46,8 +46,7 @@ class ButtonTests: QuickSpec {
             var subject = UIButton(type: .system)
 
             subject.rx.action = emptyAction(.just(false))
-            expect(subject.allTargets).toEventuallyNot( beEmpty() )
-            
+            expect(subject.allTargets.count) == 1
             expect(subject.isEnabled) == false
         }
 
@@ -76,7 +75,7 @@ class ButtonTests: QuickSpec {
             subject.rx.action = action
 
             // Setting the action has an asynchronous effect of adding a target.
-            expect(subject.allTargets).toEventuallyNot( beEmpty() )
+            expect(subject.allTargets.count) == 1
 
             subject.test_executeTap()
 
@@ -105,9 +104,9 @@ class ButtonTests: QuickSpec {
 
             expect(disposed) == true
         }
-        
+
         it("cancels the observable if the button is deallocated") {
-            
+
             var disposed = false
 
             waitUntil { done in
@@ -123,10 +122,10 @@ class ButtonTests: QuickSpec {
                     }
 
                     subject.rx.action = action
-                    subject.rx.action?.execute(())
+                    subject.rx.action?.execute()
                 }
             }
-            
+
             expect(disposed) == true
         }
     }

@@ -9,6 +9,7 @@
 import Dispatch
 import RxSwift
 import RxCocoa
+import RxRelay
 import XCTest
 import RxTest
 
@@ -225,7 +226,7 @@ extension SignalTests {
 
     func testAsSignal_onErrorRecover() {
         let hotObservable = BackgroundThreadPrimitiveHotObservable<Int>()
-        let xs = hotObservable.asSignal { e in
+        let xs = hotObservable.asSignal { _ in
             return Signal.empty()
         }
 
@@ -330,7 +331,7 @@ extension SignalTests {
     func testSignalRelay() {
         let relay = PublishRelay<Int>()
 
-        var latest: Int? = nil
+        var latest: Int?
         _ = relay.subscribe(onNext: { latestElement in
             latest = latestElement
         })
@@ -356,7 +357,7 @@ extension SignalTests {
     func testSignalOptionalRelay2() {
         let relay = PublishRelay<Int?>()
 
-        var latest: Int? = nil
+        var latest: Int?
         _ = relay.subscribe(onNext: { latestElement in
             latest = latestElement
         })

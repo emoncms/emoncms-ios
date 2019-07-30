@@ -39,7 +39,7 @@ final class TodayViewFeedCell: UITableViewCell {
       dataSet.notifyDataSetChanged()
       data.notifyDataChanged()
     } else {
-      let dataSet = LineChartDataSet(values: entries, label: nil)
+      let dataSet = LineChartDataSet(entries: entries, label: nil)
       dataSet.setColor(EmonCMSColors.Chart.Blue)
       dataSet.valueTextColor = .black
       dataSet.drawFilledEnabled = false

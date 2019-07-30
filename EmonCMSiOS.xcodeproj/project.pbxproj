@@ -158,6 +158,8 @@
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
+		C9DD825122F0B8C000CE9ABC /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DD825022F0B8C000CE9ABC /* RxRelay.framework */; };
+		C9DD825222F0B8C000CE9ABC /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9DD825022F0B8C000CE9ABC /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C9E7A6F821F50873008BD497 /* account_v0.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9E7A6F721F50873008BD497 /* account_v0.realm */; };
 		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
 		C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */; };
@@ -258,6 +260,17 @@
 			files = (
 			);
 			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9DD825322F0B8C000CE9ABC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C9DD825222F0B8C000CE9ABC /* RxRelay.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -388,6 +401,7 @@
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
+		C9DD825022F0B8C000CE9ABC /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
 		C9E7A6F721F50873008BD497 /* account_v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v0.realm; sourceTree = "<group>"; };
 		C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
 		C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainControllerTests.swift; sourceTree = "<group>"; };
@@ -457,6 +471,7 @@
 				C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */,
 				C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */,
 				C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */,
+				C9DD825122F0B8C000CE9ABC /* RxRelay.framework in Frameworks */,
 				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
 				C949986A21FBD6FE008FB8AE /* RxRealm.framework in Frameworks */,
 				C949986B21FBD6FE008FB8AE /* RealmSwift.framework in Frameworks */,
@@ -507,6 +522,7 @@
 		83130A8D04C98BB39AF4F2A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9DD825022F0B8C000CE9ABC /* RxRelay.framework */,
 				C94998B421FC9CDF008FB8AE /* RxTest.framework */,
 				C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */,
 				C949987C21FBD94B008FB8AE /* Differentiator.framework */,
@@ -928,6 +944,7 @@
 				C9D6923B1D95B55B00E0B249 /* Embed Watch Content */,
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
 				C949985A21FBD1AF008FB8AE /* ShellScript */,
+				C9DD825322F0B8C000CE9ABC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

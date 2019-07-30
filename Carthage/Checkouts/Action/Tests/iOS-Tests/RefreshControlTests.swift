@@ -35,7 +35,7 @@ class RefreshControlTests: QuickSpec {
 
             subject.rx.action = action
 
-            action.execute(())
+            action.execute()
             expect(subject.isEnabled).toEventually( beFalse() )
 
             observer.onCompleted()
@@ -46,8 +46,8 @@ class RefreshControlTests: QuickSpec {
             var subject = UIRefreshControl()
 
             subject.rx.action = emptyAction(.just(false))
-            expect(subject.allTargets).toEventuallyNot( beEmpty() )
-            
+            expect(subject.allTargets.count) == 1
+
             expect(subject.isEnabled) == false
         }
 
@@ -76,10 +76,10 @@ class RefreshControlTests: QuickSpec {
             subject.rx.action = action
 
             // Setting the action has an asynchronous effect of adding a target.
-            expect(subject.allTargets).toEventuallyNot( beEmpty() )
-            
+            expect(subject.allTargets.count) == 1
+
             subject.test_executeRefresh()
-            
+
             expect(executed).toEventually( beTrue() )
         }
 
@@ -105,17 +105,17 @@ class RefreshControlTests: QuickSpec {
 
             expect(disposed) == true
         }
-        
+
         it("disposes of old action subscriptions when re-set") {
             var subject = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
-            
+
             var disposed = false
             autoreleasepool {
                 let disposeBag = DisposeBag()
-                
+
                 let action = emptyAction()
                 subject.rx.action = action
-                
+
                 action
                     .elements
                     .subscribe(onNext: nil, onError: nil, onCompleted: nil, onDisposed: {
@@ -123,11 +123,10 @@ class RefreshControlTests: QuickSpec {
                     })
                     .disposed(by: disposeBag)
             }
-            
+
             subject.rx.action = nil
-            
+
             expect(disposed) == true
         }
     }
 }
-

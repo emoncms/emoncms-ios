@@ -17,15 +17,15 @@ extension ObservableType {
     return map { _ in () }
   }
 
-  public func log() -> Observable<Self.E> {
+  public func log() -> Observable<Self.Element> {
     return self.log({ print($0) })
   }
 
-  public func log(_ logger: XCGLogger, level: XCGLogger.Level = .debug) -> Observable<Self.E> {
+  public func log(_ logger: XCGLogger, level: XCGLogger.Level = .debug) -> Observable<Self.Element> {
     return self.log({ logger.logln($0, level: level) })
   }
 
-  public func log(_ logger: @escaping LoggerFunc) -> Observable<Self.E> {
+  public func log(_ logger: @escaping LoggerFunc) -> Observable<Self.Element> {
     return self.do(
       onNext: {
         logger("\(self): onNext <\($0)>")

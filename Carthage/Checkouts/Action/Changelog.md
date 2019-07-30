@@ -4,11 +4,30 @@ Changelog
 
 Current master
 --------------
+- Added full support for Swift 5.0
+- Added full support for RxSwift 5.0
+- Remove RxAtomic references
 
-- Nothing yet!
+4.0.0
+-------
+- Add `completions` property to `CompletableAction`
+- Change `inputs` type to `AnyObserver<Input>`
 
-# 3.10.0
+3.11.0
+-------
+- Introduction of  `underlyingError` observable which returns a `Swift.Error`  element type.
+- Updated specs that were breaking in `Circle CI` pipeline
 
+3.10.2
+-------
+- Update the project and xcworkspace and make it compatible with Version 10.1 (10B61)
+- Update the Unit test target and make it compatible with Version 10.1 (10B61)
+- Moved CI to circle CI 2.0
+- Fix issue [#155](https://github.com/RxSwiftCommunity/Action/issues/155)
+- Fix issue [#179](https://github.com/RxSwiftCommunity/Action/issues/179)
+
+3.10.0
+-------
 - Adding syntax sugar `execute()` method on `Action` when `Input` is `Void`. [#171](https://github.com/RxSwiftCommunity/Action/pull/171)
 - Raises minimum watchOS deployment target to 3.0, to match RxSwift.
 

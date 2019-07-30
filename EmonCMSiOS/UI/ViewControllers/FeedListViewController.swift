@@ -356,7 +356,7 @@ final class FeedListViewController: UIViewController {
       .asObservable()
       .flatMapLatest { chartViewModel -> Observable<Bool> in
         if let chartViewModel = chartViewModel {
-          return chartViewModel.isRefreshing.throttle(0.3).asObservable()
+          return chartViewModel.isRefreshing.throttle(.milliseconds(300)).asObservable()
         } else {
           return Observable<Bool>.never()
         }
@@ -414,7 +414,7 @@ final class FeedListViewController: UIViewController {
                 return
               }
 
-              let dataSet = LineChartDataSet(values: [], label: nil)
+              let dataSet = LineChartDataSet(entries: [], label: nil)
               dataSet.valueTextColor = .lightGray
               dataSet.fillColor = .black
               dataSet.setColor(.black)
@@ -428,7 +428,7 @@ final class FeedListViewController: UIViewController {
                 let y = point.value
 
                 let yDataEntry = ChartDataEntry(x: x, y: y)
-                _ = dataSet.addEntry(yDataEntry)
+                _ = dataSet.append(yDataEntry)
               }
 
               let data = LineChartData()

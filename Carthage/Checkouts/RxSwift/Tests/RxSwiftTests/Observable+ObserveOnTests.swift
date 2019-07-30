@@ -47,7 +47,7 @@ extension ObservableObserveOnTest {
         let disposable = tests(scheduler)
         let expectation = self.expectation(description: "Wait for all tests to complete")
 
-        _ = scheduler.schedule(()) { s in
+        _ = scheduler.schedule(()) { _ in
             expectation.fulfill()
             return Disposables.create()
         }
@@ -81,7 +81,7 @@ extension ObservableObserveOnTest {
         runDispatchQueueSchedulerTests { scheduler in
             let observable = Observable.just(0)
                 .observeOn(scheduler)
-            return observable.subscribe(onNext: { n in
+            return observable.subscribe(onNext: { _ in
                 didExecute = true
                 XCTAssert(Thread.current !== unitTestsThread)
             })
@@ -105,15 +105,15 @@ extension ObservableObserveOnTest {
         }
 
         func testObserveOnDispatchQueue_DispatchQueueSchedulerIsSerial() {
-            var numberOfConcurrentEvents = AtomicInt(0)
-            var numberOfExecutions = AtomicInt(0)
+            let numberOfConcurrentEvents = AtomicInt(0)
+            let numberOfExecutions = AtomicInt(0)
             runDispatchQueueSchedulerTests { scheduler in
                 XCTAssert(Resources.numberOfSerialDispatchQueueObservables == 0)
                 let action = { (s: Void) -> Disposable in
-                    XCTAssertEqual(numberOfConcurrentEvents.increment(), 0)
+                    XCTAssertEqual(increment(numberOfConcurrentEvents), 0)
                     self.sleep(0.1) // should be enough to block the queue, so if it's concurrent, it will fail
-                    XCTAssertEqual(numberOfConcurrentEvents.decrement(), 1)
-                    numberOfExecutions.increment()
+                    XCTAssertEqual(decrement(numberOfConcurrentEvents), 1)
+                    increment(numberOfExecutions)
                     return Disposables.create()
                 }
                 _ = scheduler.schedule((), action: action)
@@ -122,7 +122,7 @@ extension ObservableObserveOnTest {
             }
 
             XCTAssertEqual(Resources.numberOfSerialDispatchQueueObservables, 0)
-            XCTAssertEqual(numberOfExecutions.load(), 2)
+            XCTAssertEqual(globalLoad(numberOfExecutions), 2)
         }
     #endif
 
@@ -131,7 +131,7 @@ extension ObservableObserveOnTest {
 
         runDispatchQueueSchedulerTests { scheduler in
             let observable: Observable<Int> = Observable.error(testError).observeOn(scheduler)
-            return observable.subscribe(onError: { n in
+            return observable.subscribe(onError: { _ in
                 nEvents += 1
             })
         }
@@ -158,7 +158,7 @@ extension ObservableObserveOnTest {
             let xs: Observable<Int> = Observable.never()
             return xs
                 .observeOn(scheduler)
-                .subscribe(onNext: { n in
+                .subscribe(onNext: { _ in
                     XCTAssert(false)
                 })
         }
@@ -498,7 +498,7 @@ class ObservableObserveOnTestConcurrentSchedulerTest: ObservableObserveOnTestBas
         let xs: Observable<Int> = Observable.never()
         let subscription = xs
             .observeOn(scheduler)
-            .subscribe(onNext: { n in
+            .subscribe(onNext: { _ in
                 XCTAssert(false)
             })
 

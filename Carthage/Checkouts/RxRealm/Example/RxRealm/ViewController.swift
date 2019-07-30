@@ -1,11 +1,10 @@
-
 import UIKit
 import RealmSwift
-import RxSwift
 import RxCocoa
 import RxRealm
+import RxSwift
 
-//realm model
+// realm model
 class Lap: Object {
     @objc dynamic var time: TimeInterval = Date().timeIntervalSinceReferenceDate
 }
@@ -16,22 +15,22 @@ class TickCounter: Object {
     override static func primaryKey() -> String? { return "id" }
 }
 
-//view controller
+// view controller
 class ViewController: UIViewController {
     let bag = DisposeBag()
-
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var tickItemButton: UIBarButtonItem!
-    @IBOutlet weak var addTwoItemsButton: UIBarButtonItem!
-
+    
+    @IBOutlet var tableView: UITableView!
+    @IBOutlet var tickItemButton: UIBarButtonItem!
+    @IBOutlet var addTwoItemsButton: UIBarButtonItem!
+    
     var laps: Results<Lap>!
-
+    
     let footer: UILabel = {
         let l = UILabel()
         l.textAlignment = .center
         return l
     }()
-
+    
     lazy var ticker: TickCounter = {
         let realm = try! Realm()
         let ticker = TickCounter()
@@ -40,28 +39,28 @@ class ViewController: UIViewController {
         }
         return ticker
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let realm = try! Realm()
         laps = realm.objects(Lap.self).sorted(byKeyPath: "time", ascending: false)
-
+        
         /*
          Observable<Results<Lap>> - wrap Results as observable
          */
         Observable.collection(from: laps)
-            .map {results in "laps: \(results.count)"}
+            .map { results in "laps: \(results.count)" }
             .subscribe { event in
                 self.title = event.element
             }
             .disposed(by: bag)
-
+        
         /*
          Observable<Results<Lap>> - reacting to change sets
          */
         Observable.changeset(from: laps)
-            .subscribe(onNext: {[unowned self] results, changes in
+            .subscribe(onNext: { [unowned self] _, changes in
                 if let changes = changes {
                     self.tableView.applyChangeset(changes)
                 } else {
@@ -75,7 +74,7 @@ class ViewController: UIViewController {
          */
         addTwoItemsButton.rx.tap
             .map { [Lap(), Lap()] }
-            .bind(to: Realm.rx.add(onError: {elements, error in
+            .bind(to: Realm.rx.add(onError: { elements, error in
                 if let elements = elements {
                     print("Error \(error.localizedDescription) while saving objects \(String(describing: elements))")
                 } else {
@@ -83,25 +82,25 @@ class ViewController: UIViewController {
                 }
             }))
             .disposed(by: bag)
-
+        
         /*
          Bind bar item to increasing the ticker
          */
         tickItemButton.rx.tap
-            .subscribe(onNext: {[unowned self] value in
+            .subscribe(onNext: { [unowned self] _ in
                 try! realm.write {
                     self.ticker.ticks += 1
                 }
             })
             .disposed(by: bag)
-
+        
         /*
          Observing a single object
          */
         let tickerChanges$ = Observable.propertyChanges(object: ticker)
         tickerChanges$
-            .filter({ $0.name == "ticks" })
-            .map({ "\($0.newValue!) ticks" })
+            .filter { $0.name == "ticks" }
+            .map { "\($0.newValue!) ticks" }
             .bind(to: footer.rx.text)
             .disposed(by: bag)
     }
@@ -111,15 +110,15 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return laps.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let lap = laps[indexPath.row]
-
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")!
         cell.textLabel?.text = formatter.string(from: Date(timeIntervalSinceReferenceDate: lap.time))
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return "Delete objects by tapping them, add ticks to trigger a footer update"
     }
@@ -131,7 +130,7 @@ extension ViewController: UITableViewDelegate {
             .subscribe(Realm.rx.delete())
             .disposed(by: bag)
     }
-
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         return footer
     }
@@ -146,3 +145,4 @@ extension UITableView {
         endUpdates()
     }
 }
+

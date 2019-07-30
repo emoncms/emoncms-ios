@@ -1,8 +1,9 @@
 Pod::Spec.new do |s|
 
   s.name             = "RxRealm"
-  s.version          = "0.7.6"
+  s.version          = "1.0.0"
   s.summary          = "An Rx wrapper of Realm's notifications and write bindings"
+  s.swift_version    = "5.0"
 
   s.description      = <<-DESC
     This is an Rx extension that provides an easy and straight-forward way
@@ -19,12 +20,12 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
   s.tvos.deployment_target = '9.0'
-  s.watchos.deployment_target = '2.0'
+  s.watchos.deployment_target = '3.0'
 
   s.source_files = 'Pod/Classes/*.swift'
 
   s.frameworks = 'Foundation'
-  s.dependency 'RealmSwift', '~> 3.0'
-  s.dependency 'RxSwift', '~> 4.0'
+  s.dependency 'RealmSwift', '~> 3.14'
+  s.dependency 'RxSwift', '~> 5.0'
 
 end

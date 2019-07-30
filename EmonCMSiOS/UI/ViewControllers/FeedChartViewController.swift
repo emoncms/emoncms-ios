@@ -186,7 +186,7 @@ final class FeedChartViewController: FormViewController {
       .disposed(by: self.disposeBag)
 
     self.viewModel.isRefreshing
-      .throttle(0.3)
+      .throttle(.milliseconds(300))
       .drive(onNext: { [weak self] refreshing in
         guard let strongSelf = self else { return }
 
@@ -214,7 +214,7 @@ final class FeedChartViewController: FormViewController {
           return
         }
 
-        let dataSet = LineChartDataSet(values: [], label: nil)
+        let dataSet = LineChartDataSet(entries: [], label: nil)
         dataSet.valueTextColor = .lightGray
         dataSet.fillColor = .black
         dataSet.setColor(.black)
@@ -228,7 +228,7 @@ final class FeedChartViewController: FormViewController {
           let y = point.value
 
           let yDataEntry = ChartDataEntry(x: x, y: y)
-          _ = dataSet.addEntry(yDataEntry)
+          _ = dataSet.append(yDataEntry)
         }
 
         let data = LineChartData()

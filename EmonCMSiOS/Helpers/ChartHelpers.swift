@@ -105,7 +105,7 @@ final class ChartHelpers {
       dataSet.notifyDataSetChanged()
       data.notifyDataChanged()
     } else {
-      let dataSet = LineChartDataSet(values: entries, label: nil)
+      let dataSet = LineChartDataSet(entries: entries, label: nil)
       configureBlock(dataSet)
       dataSet.valueTextColor = .black
       dataSet.drawFilledEnabled = true
@@ -138,7 +138,7 @@ final class ChartHelpers {
       dataSet.notifyDataSetChanged()
       data.notifyDataChanged()
     } else {
-      let dataSet = BarChartDataSet(values: entries, label: "kWh")
+      let dataSet = BarChartDataSet(entries: entries, label: "kWh")
       configureBlock(dataSet)
       dataSet.valueTextColor = .black
 

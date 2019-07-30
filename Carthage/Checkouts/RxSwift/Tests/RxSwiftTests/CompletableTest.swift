@@ -43,9 +43,9 @@ extension CompletableTest {
     func testCompletable_create_completed() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.completed)
@@ -76,9 +76,9 @@ extension CompletableTest {
     func testCompletable_create_error() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
 
-        var disposedTime: Int? = nil
+        var disposedTime: Int?
 
         scheduler.scheduleAt(201, action: {
             observer(.error(testError))
@@ -109,8 +109,8 @@ extension CompletableTest {
     func testCompletable_create_disposing() {
         let scheduler = TestScheduler(initialClock: 0)
 
-        var observer: ((CompletableEvent) -> ())! = nil
-        var disposedTime: Int? = nil
+        var observer: ((CompletableEvent) -> Void)! = nil
+        var disposedTime: Int?
         var subscription: Disposable! = nil
         let res = scheduler.createObserver(Never.self)
 
@@ -155,7 +155,7 @@ extension CompletableTest {
     }
 
     func test_never_producesElement() {
-        var event: CompletableEvent? = nil
+        var event: CompletableEvent?
         let subscription = Completable.never().subscribe { _event in
             event = _event
         }
@@ -173,7 +173,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().delaySubscription(2.0, scheduler: scheduler) as Completable).asObservable()
+            (Completable.empty().delaySubscription(.seconds(2), scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -185,7 +185,7 @@ extension CompletableTest {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.empty().delay(2.0, scheduler: scheduler) as Completable).asObservable()
+            (Completable.empty().delay(.seconds(2), scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -372,7 +372,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, scheduler: scheduler) as Completable).asObservable()
+            (xs.timeout(.seconds(5), scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -392,7 +392,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(5.0, other: xs2, scheduler: scheduler) as Completable).asObservable()
+            (xs.timeout(.seconds(5), other: xs2, scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -408,7 +408,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, scheduler: scheduler) as Completable).asObservable()
+            (xs.timeout(.seconds(30), scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -428,7 +428,7 @@ extension CompletableTest {
             ]).asCompletable()
 
         let res = scheduler.start {
-            (xs.timeout(30.0, other: xs2, scheduler: scheduler) as Completable).asObservable()
+            (xs.timeout(.seconds(30), other: xs2, scheduler: scheduler) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -498,11 +498,11 @@ extension CompletableTest {
             ])
     }
 
-    func test_merge_collection() {
+    func test_zip_collection() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.merge(AnyCollection([Completable.empty(), Completable.empty()])) as Completable).asObservable()
+            (Completable.zip(AnyCollection([Completable.empty(), Completable.empty()])) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -510,11 +510,11 @@ extension CompletableTest {
             ])
     }
 
-    func test_merge_array() {
+    func test_zip_array() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.merge([Completable.empty(), Completable.empty()]) as Completable).asObservable()
+            (Completable.zip([Completable.empty(), Completable.empty()]) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -522,11 +522,11 @@ extension CompletableTest {
             ])
     }
 
-    func test_merge_variadic() {
+    func test_zip_variadic() {
         let scheduler = TestScheduler(initialClock: 0)
 
         let res = scheduler.start {
-            (Completable.merge(Completable.empty(), Completable.empty()) as Completable).asObservable()
+            (Completable.zip(Completable.empty(), Completable.empty()) as Completable).asObservable()
         }
 
         XCTAssertEqual(res.events, [
@@ -556,10 +556,6 @@ extension CompletableTest {
         _ = Completable.error(testError).subscribe()
         XCTAssertEqual(loggedErrors, [testError])
     }
-}
-
-extension Never: Equatable {
-
 }
 
 public func == (lhs: Never, rhs: Never) -> Bool {
