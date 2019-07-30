@@ -177,6 +177,7 @@ final class AccountListViewController: UITableViewController {
 
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     let rootViewController = storyboard.instantiateViewController(withIdentifier: "MainFlow") as! UITabBarController
+    rootViewController.modalPresentationStyle = .fullScreen
 
     // Setup view models
 
