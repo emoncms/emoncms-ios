@@ -952,12 +952,14 @@
 					C925517721F4AB2A008342D8 = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = KGUUH6BP8Y;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C9C041961D85F7D600E3CEC4;
 					};
 					C94998BD21FD0D08008FB8AE = {
 						CreatedOnToolsVersion = 10.1;
 						DevelopmentTeam = 4C898RE43H;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -971,14 +973,14 @@
 					C95640A91D8A9C7D003B9757 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = KGUUH6BP8Y;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						TestTargetID = C9C041961D85F7D600E3CEC4;
 					};
 					C9C041961D85F7D600E3CEC4 = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 4C898RE43H;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1100;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
@@ -996,6 +998,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1340,7 +1343,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EmonCMSiOS;
 			};
@@ -1367,7 +1370,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = EmonCMSiOS;
 			};
@@ -1397,7 +1400,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSToday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1425,7 +1428,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSToday;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
@@ -1444,7 +1447,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
 			};
 			name = Debug;
@@ -1463,7 +1466,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.EmonCMSiOSTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/EmonCMSiOS.app/EmonCMSiOS";
 			};
 			name = Release;
@@ -1600,7 +1603,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -1622,7 +1625,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
