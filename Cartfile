@@ -1,5 +1,5 @@
 github "ReactiveX/RxSwift" ~> 4.4
-github "realm/realm-cocoa" ~> 3.13
+github "realm/realm-cocoa" ~> 3.17
 github "danielgindi/Charts" ~> 3.2
 github "ra1028/Former" ~> 1.7
 github "DaveWoodCom/XCGLogger" ~> 6.1

@@ -65,7 +65,7 @@
         @autoreleasepool {
             RLMRealm *realm = RLMRealm.defaultRealm;
             [realm transactionWithBlock:^{
-                for (int i = 0; i < 100; ++i) {
+                for (int i = 0; i < 1000; ++i) {
                     [IntObject createInRealm:realm withValue:@[@(i)]];
                 }
             }];
@@ -118,8 +118,9 @@
 
 - (void)testCompactOnLaunchFailSilently {
     if (self.isParent) {
-        [[RLMRealm defaultRealm] transactionWithBlock:^{}];
+        RLMRealm *realm  = [RLMRealm defaultRealm];
         RLMRunChildAndWait(); // runs the event loop
+        (void)[realm configuration]; // ensure the Realm stays open while the child process runs
     } else {
         unsigned long long (^fileSize)(NSString *) = ^unsigned long long(NSString *path) {
             NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
@@ -136,7 +137,7 @@
         unsigned long long sizeBefore = fileSize(config.fileURL.path);
         RLMRealm *realm = [RLMRealm realmWithConfiguration:config error:nil];
         unsigned long long sizeAfter = fileSize(config.fileURL.path);
-        XCTAssertEqual(sizeBefore, sizeAfter);
+        XCTAssertLessThanOrEqual(sizeBefore, sizeAfter);
         XCTAssertTrue(realm.isEmpty);
         XCTAssertTrue(blockCalled);
     }
@@ -378,7 +379,7 @@
     else {
         RLMRealm *realm = RLMRealm.defaultRealm;
         [realm beginWriteTransaction];
-        abort();
+        _Exit(1);
     }
 }
 
@@ -394,7 +395,7 @@
     else {
         RLMRealm *realm = RLMRealm.defaultRealm;
         [realm beginWriteTransaction];
-        abort();
+        _Exit(1);
     }
 }
 
