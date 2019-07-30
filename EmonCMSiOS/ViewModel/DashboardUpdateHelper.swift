@@ -54,7 +54,7 @@ final class DashboardUpdateHelper {
 
       try realm.write {
         realm.delete(existingDashboards)
-        realm.add(dashboards, update: true)
+        realm.add(dashboards, update: .all)
       }
 
       return Observable.just(())

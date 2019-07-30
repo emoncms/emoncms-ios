@@ -61,7 +61,7 @@ final class FeedUpdateHelper {
             .filter("accountId = %@ AND feedId IN %@", self.account.uuid, Array(goneAwayFeeds.map { $0.id }))
           realm.delete(todayWidgetFeedsForGoneAwayFeeds)
         }
-        realm.add(feeds, update: true)
+        realm.add(feeds, update: .all)
       }
 
       return Observable.just(())

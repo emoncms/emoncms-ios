@@ -54,7 +54,7 @@ final class InputUpdateHelper {
 
       try realm.write {
         realm.delete(existingInputs)
-        realm.add(inputs, update: true)
+        realm.add(inputs, update: .all)
       }
 
       return Observable.just(())

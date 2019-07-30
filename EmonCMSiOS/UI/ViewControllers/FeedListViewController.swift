@@ -206,6 +206,8 @@ final class FeedListViewController: UIViewController {
           return (endProgress, velocity, true)
         case .began, .changed, .possible:
           return (progress, velocity, false)
+        @unknown default:
+          return (progress, velocity, false)
         }
       }
 

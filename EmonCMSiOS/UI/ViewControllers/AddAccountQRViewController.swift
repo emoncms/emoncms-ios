@@ -65,6 +65,8 @@ final class AddAccountQRViewController: UIViewController {
       self.presentCameraRequiredDialog()
     case .restricted:
       self.presentCameraRestrictedDialog()
+    @unknown default:
+      self.presentCameraRequiredDialog()
     }
   }
 
