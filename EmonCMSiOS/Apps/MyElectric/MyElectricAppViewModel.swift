@@ -191,7 +191,10 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
       startOfDayKwhSignal = Observable.just(startOfDayKwh)
     } else {
-      startOfDayKwhSignal = self.api.feedData(self.account.credentials, id: kwhFeedId, at: midnightToday, until: midnightToday + 1, interval: 1)
+      let endTime = midnightToday + 43200
+      let startTime = endTime - 86400
+
+      startOfDayKwhSignal = self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
         .map { dataPoints in
           guard dataPoints.count > 0 else {
             // Assume that the data point doesn't exist, so it's a new feed, so zero
