@@ -5,7 +5,7 @@ import XCTest
 
 #if SWIFT_PACKAGE
 
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS)
+#if canImport(QuickSpecBase)
 import QuickSpecBase
 
 public typealias QuickSpecBase = _QuickSpecBase
@@ -14,9 +14,19 @@ public typealias QuickSpecBase = XCTestCase
 #endif
 
 open class QuickSpec: QuickSpecBase {
+    /// Returns the currently executing spec. Use in specs that require XCTestCase
+    /// methods, e.g. expectation(description:).
+    public private(set) static var current: QuickSpec!
+
+    private var example: Example? {
+        didSet {
+            QuickSpec.current = self
+        }
+    }
+
     open func spec() {}
 
-#if !(os(macOS) || os(iOS) || os(tvOS) || os(watchOS))
+#if !canImport(Darwin)
     public required init() {
         super.init(name: "", testClosure: { _ in })
     }
@@ -37,19 +47,11 @@ open class QuickSpec: QuickSpecBase {
     /// SwiftPM on macOS does not have the mechanism (test cases are automatically
     /// discovered powered by Objective-C runtime), so we needed the alternative
     /// way.
-    #if swift(>=4)
     override open class var defaultTestSuite: XCTestSuite {
         configureDefaultTestSuite()
 
         return super.defaultTestSuite
     }
-    #else
-    override open class func defaultTestSuite() -> XCTestSuite {
-        configureDefaultTestSuite()
-
-        return super.defaultTestSuite()
-    }
-    #endif
 
     private static func configureDefaultTestSuite() {
         let world = World.sharedWorld
@@ -80,12 +82,13 @@ open class QuickSpec: QuickSpecBase {
     }
 
     private static func addInstanceMethod(for example: Example, classSelectorNames selectorNames : inout Set<String>) -> Selector {
-        let block: @convention(block) (QuickSpec) -> Void = { _ in
+        let block: @convention(block) (QuickSpec) -> Void = { spec in
+            spec.example = example
             example.run()
         }
         let implementation = imp_implementationWithBlock(block as Any)
 
-        let originalName = example.name
+        let originalName = example.name.c99ExtendedIdentifier
         var selectorName = originalName
         var i: UInt = 2
 
@@ -103,9 +106,9 @@ open class QuickSpec: QuickSpecBase {
     }
 #endif
 
-    static var allTestsCache = [String: [(String, (XCTestCase) -> () throws -> Void)]]()
+    static var allTestsCache = [String: [(String, (QuickSpec) -> () throws -> Void)]]()
 
-    public class var allTests: [(String, (XCTestCase) -> () throws -> Void)] {
+    public class var allTests: [(String, (QuickSpec) -> () throws -> Void)] {
         if let cached = allTestsCache[String(describing: self)] {
             return cached
         }
@@ -113,8 +116,13 @@ open class QuickSpec: QuickSpecBase {
         gatherExamplesIfNeeded()
 
         let examples = World.sharedWorld.examples(self)
-        let result = examples.map { example -> (String, (XCTestCase) -> () throws -> Void) in
-            return (example.name, { _ in { example.run() } })
+        let result = examples.map { example -> (String, (QuickSpec) -> () throws -> Void) in
+            return (example.name, { spec in
+                return {
+                    spec.example = example
+                    example.run()
+                }
+            })
         }
         allTestsCache[String(describing: self)] = result
         return result

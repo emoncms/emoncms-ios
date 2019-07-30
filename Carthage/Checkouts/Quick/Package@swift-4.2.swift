@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.2
 
 import PackageDescription
 
@@ -8,7 +8,7 @@ let package = Package(
         .library(name: "Quick", targets: ["Quick"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Nimble.git", from: "7.0.1"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "8.0.0"),
     ],
     targets: {
         var targets: [Target] = [
@@ -19,7 +19,9 @@ let package = Package(
                     "QuickAfterSuiteTests/AfterSuiteTests+ObjC.m",
                     "QuickFocusedTests/FocusedTests+ObjC.m",
                     "QuickTests/FunctionalTests/ObjC",
-                    "QuickTests/Helpers",
+                    "QuickTests/Helpers/QCKSpecRunner.h",
+                    "QuickTests/Helpers/QCKSpecRunner.m",
+                    "QuickTests/Helpers/QuickTestsBridgingHeader.h",
                     "QuickTests/QuickConfigurationTests.m",
                 ]
             ),
@@ -36,5 +38,5 @@ let package = Package(
 #endif
         return targets
     }(),
-    swiftLanguageVersions: [4]
+    swiftLanguageVersions: [.v4_2]
 )
