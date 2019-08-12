@@ -20,7 +20,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
     self.chartView = ChartViewType()
     chartView.translatesAutoresizingMaskIntoConstraints = false
 
-    self.spinner = UIActivityIndicatorView(style: .gray)
+    self.spinner = UIActivityIndicatorView(style: .medium)
     spinner.translatesAutoresizingMaskIntoConstraints = false
     spinner.hidesWhenStopped = true
 

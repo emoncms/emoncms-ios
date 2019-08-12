@@ -58,7 +58,7 @@ final class FeedListViewController: UIViewController {
     self.tableView.refreshControl = UIRefreshControl()
 
     self.searchController.searchResultsUpdater = self
-    self.searchController.dimsBackgroundDuringPresentation = false
+    self.searchController.obscuresBackgroundDuringPresentation = false
     self.searchController.searchBar.placeholder = "Search feeds"
     self.navigationItem.searchController = searchController
     self.definesPresentationContext = true
@@ -87,9 +87,9 @@ final class FeedListViewController: UIViewController {
     contentInset.bottom = insetBottom
     self.tableView.contentInset = contentInset
 
-    var scrollIndicatorInsets = self.tableView.scrollIndicatorInsets
+    var scrollIndicatorInsets = self.tableView.verticalScrollIndicatorInsets
     scrollIndicatorInsets.bottom = insetBottom
-    self.tableView.scrollIndicatorInsets = scrollIndicatorInsets
+    self.tableView.verticalScrollIndicatorInsets = scrollIndicatorInsets
   }
 
   override func viewDidAppear(_ animated: Bool) {

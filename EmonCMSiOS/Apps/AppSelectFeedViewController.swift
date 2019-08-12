@@ -35,7 +35,7 @@ final class AppSelectFeedViewController: UITableViewController {
     self.tableView.refreshControl = UIRefreshControl()
 
     self.searchController.searchResultsUpdater = self
-    self.searchController.dimsBackgroundDuringPresentation = false
+    self.searchController.obscuresBackgroundDuringPresentation = false
     self.tableView.tableHeaderView = searchController.searchBar
 
     self.setupDataSource()
