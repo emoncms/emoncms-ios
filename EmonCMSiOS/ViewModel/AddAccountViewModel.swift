@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import Realm
 import RealmSwift
 
@@ -29,11 +28,11 @@ final class AddAccountViewModel {
   private let realm: Realm
   private let account: Account?
 
-  let name = BehaviorRelay<String>(value: "")
-  let url = BehaviorRelay<String>(value: SharedConstants.EmonCMSdotOrgURL)
-  let username = BehaviorRelay<String>(value: "")
-  let password = BehaviorRelay<String>(value: "")
-  let apiKey = BehaviorRelay<String>(value: "")
+  @Published var name = ""
+  @Published var url = SharedConstants.EmonCMSdotOrgURL
+  @Published var username = ""
+  @Published var password = ""
+  @Published var apiKey = ""
 
   init(realmController: RealmController, api: EmonCMSAPI, accountId: String? = nil) {
     self.realmController = realmController
@@ -43,24 +42,21 @@ final class AddAccountViewModel {
     if let accountId = accountId {
       let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId)!
       self.account = account
-      self.name.accept(account.name)
-      self.url.accept(account.url)
+      self.name = account.name
+      self.url = account.url
       if let apiKey = self.keychainController.apiKey(forAccountWithId: account.uuid) {
-        self.apiKey.accept(apiKey)
+        self.apiKey = apiKey
       }
     } else {
       self.account = nil
     }
   }
 
-  func canSave() -> Observable<Bool> {
-    return Observable
-      .combineLatest(self.name.asObservable(),
-                     self.url.asObservable(),
-                     self.username.asObservable(),
-                     self.password.asObservable(),
-                     self.apiKey.asObservable())
-      { [weak self] name, url, username, password, apiKey in
+  func canSave() -> AnyPublisher<Bool, Never> {
+    return Publishers
+      .CombineLatest4($name, $url, $username, $password)
+      .combineLatest($apiKey) { [weak self] first, apiKey in
+        let (name, url, username, password) = first
         guard let self = self else { return false }
 
         if name.isEmpty || url.isEmpty {
@@ -79,61 +75,60 @@ final class AddAccountViewModel {
 
         return false
       }
-      .distinctUntilChanged()
+      .removeDuplicates()
+      .eraseToAnyPublisher()
   }
 
-  private func validate(name: String, url: String, username: String, password: String, apiKey: String) -> Observable<AccountCredentials?> {
+  private func validate(name: String, url: String, username: String, password: String, apiKey: String) -> AnyPublisher<AccountCredentials?, AddAccountError> {
     if self.account != nil {
-      return Observable.just(nil)
+      return Just(nil).setFailureType(to: AddAccountError.self).eraseToAnyPublisher()
     }
 
-    let loginObservable: Observable<AccountCredentials?>
+    let loginObservable: AnyPublisher<AccountCredentials?, EmonCMSAPI.APIError>
 
     if !apiKey.isEmpty {
       let accountCredentials = AccountCredentials(url: url, apiKey: apiKey)
       loginObservable = self.api.feedList(accountCredentials)
         .map { _ in
           return accountCredentials
-      }
+        }
+        .eraseToAnyPublisher()
     } else {
       loginObservable = self.api.userAuth(url: url, username: username, password: password)
         .map { apiKey in
           return AccountCredentials(url: url, apiKey: apiKey)
-      }
+        }
+        .eraseToAnyPublisher()
     }
 
     return loginObservable
-      .catchError { error in
+      .mapError { error in
         let returnError: AddAccountError
-        if let error = error as? EmonCMSAPI.APIError {
-          switch error {
-          case .invalidCredentials:
-            returnError = .invalidCredentials
-          case .atsFailed:
-            returnError = .httpsRequired
-          default:
-            returnError = .networkFailed
-          }
-        } else {
+        switch error {
+        case .invalidCredentials:
+          returnError = .invalidCredentials
+        case .atsFailed:
+          returnError = .httpsRequired
+        default:
           returnError = .networkFailed
         }
 
-        return Observable.error(returnError)
-    }
+        return returnError
+      }
+      .eraseToAnyPublisher()
   }
 
-  func saveAccount() -> Observable<String> {
-    guard let _ = URL(string: self.url.value) else { return Observable.error(AddAccountError.urlNotValid) }
+  func saveAccount() -> AnyPublisher<String, AddAccountError> {
+    guard let _ = URL(string: self.url) else { return Fail(error: AddAccountError.urlNotValid).eraseToAnyPublisher() }
 
-    let name = self.name.value
-    let url = self.url.value
-    let username = self.username.value
-    let password = self.password.value
-    let apiKey = self.apiKey.value
+    let name = self.name
+    let url = self.url
+    let username = self.username
+    let password = self.password
+    let apiKey = self.apiKey
 
     return self.validate(name: name, url: url, username: username, password: password, apiKey: apiKey)
-      .observeOn(MainScheduler.asyncInstance)
-      .map { [weak self] credentials in
+      .tryMap { [weak self] credentials in
         guard let self = self else { throw AddAccountError.saveFailed }
 
         let account = self.account ?? Account()
@@ -156,6 +151,13 @@ final class AddAccountViewModel {
 
         return account.uuid
       }
+      .mapError { error in
+        if let error = error as? AddAccountError {
+          return error
+        }
+        return .saveFailed
+      }
+      .eraseToAnyPublisher()
   }
 
 }

@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
+import Combine
 
 enum AppBannerBarState {
   case loading
@@ -34,8 +32,8 @@ protocol AppViewModel: AnyObject {
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
-  var title: Driver<String> { get }
-  var isReady: Driver<Bool> { get }
+  var title: AnyPublisher<String, Never> { get }
+  var isReady: AnyPublisher<Bool, Never> { get }
   var accessibilityIdentifier: String { get }
   var pageViewControllerStoryboardIdentifiers: [String] { get }
   var pageViewModels: [AppPageViewModel] { get }
@@ -48,11 +46,11 @@ protocol AppPageViewModel: AnyObject {
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
-  var active: BehaviorRelay<Bool> { get }
-  var dateRange: BehaviorRelay<DateRange> { get }
-  var errors: Driver<AppError?> { get }
-  var isRefreshing: Driver<Bool> { get }
-  var bannerBarState: Driver<AppBannerBarState> { get }
+  var active: Bool { get set }
+  var dateRange: DateRange { get set }
+  var errors: AnyPublisher<AppError?, Never> { get }
+  var bannerBarState: AnyPublisher<AppBannerBarState, Never> { get }
+  var isRefreshing: AnyPublisher<Bool, Never> { get }
 
 }
 

@@ -7,9 +7,8 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
 import Charts
 
 final class MySolarAppPage2ViewController: AppPageViewController {
@@ -22,7 +21,7 @@ final class MySolarAppPage2ViewController: AppPageViewController {
   @IBOutlet private var useBarChart: BarChartView!
   @IBOutlet private var solarBarChart: BarChartView!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,30 +32,29 @@ final class MySolarAppPage2ViewController: AppPageViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupBindings() {
-    self.dateSegmentedControl.rx.selectedSegmentIndex
-      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+    self.dateSegmentedControl.publisher(for: \.selectedSegmentIndex)
       .map {
         DateRange.fromWMYSegmentedControlIndex($0)
       }
-      .bind(to: self.viewModel.dateRange)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.dateRange, on: self.viewModel)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.barChartData }
-      .drive(onNext: { [weak self] dataPoints in
+      .sink { [weak self] dataPoints in
         guard let self = self else { return }
         self.updateBarChartData(dataPoints)
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
 }

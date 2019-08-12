@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class SettingsViewModel {
@@ -19,10 +18,10 @@ final class SettingsViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
+  @Published var active = false
 
   // Outputs
   let feedList: FeedListHelper
@@ -35,12 +34,12 @@ final class SettingsViewModel {
 
     self.feedList = FeedListHelper(realmController: realmController, account: account, api: api)
 
-    self.active.asObservable()
-      .distinctUntilChanged()
+    $active
+      .removeDuplicates()
       .filter { $0 == true }
       .becomeVoid()
       .subscribe(self.feedList.refresh)
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
   }
 
   func todayWidgetFeedsListViewModel() -> TodayWidgetFeedsListViewModel {

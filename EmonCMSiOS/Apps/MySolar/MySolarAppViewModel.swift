@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class MySolarAppViewModel: AppViewModel {
@@ -23,8 +22,8 @@ final class MySolarAppViewModel: AppViewModel {
   // Inputs
 
   // Outputs
-  private(set) var title: Driver<String>
-  private(set) var isReady: Driver<Bool>
+  let title: AnyPublisher<String, Never>
+  let isReady: AnyPublisher<Bool, Never>
 
   var accessibilityIdentifier: String {
     return AccessibilityIdentifiers.Apps.MySolar
@@ -51,19 +50,14 @@ final class MySolarAppViewModel: AppViewModel {
     self.page1ViewModel = MySolarAppPage1ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
     self.page2ViewModel = MySolarAppPage2ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
 
-    self.title = Driver.empty()
-    self.isReady = Driver.empty()
+    self.title = self.appData.publisher(for: \.name)
+      .receive(on: DispatchQueue.main)
+      .eraseToAnyPublisher()
 
-    self.title = self.appData.rx
-      .observe(String.self, "name")
-      .map { $0 ?? "" }
-      .asDriver(onErrorJustReturn: "")
-
-    self.isReady = self.appData.rx.observe(String.self, #keyPath(AppData.name))
-      .map {
-        $0 != nil
-      }
-      .asDriver(onErrorJustReturn: false)
+    self.isReady = self.appData.publisher(for: \.name)
+      .map { $0 != "" }
+      .receive(on: DispatchQueue.main)
+      .eraseToAnyPublisher()
   }
 
   func configViewModel() -> AppConfigViewModel {

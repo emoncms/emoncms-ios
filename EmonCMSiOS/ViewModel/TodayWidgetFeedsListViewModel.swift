@@ -7,13 +7,10 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Realm
 import RealmSwift
-import RxRealm
 
 final class TodayWidgetFeedsListViewModel {
 
@@ -33,12 +30,12 @@ final class TodayWidgetFeedsListViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
 
   // Outputs
-  private(set) var feeds: Driver<[ListItem]>
+  @Published private(set) var feeds: [ListItem] = []
 
   init(realmController: RealmController, accountController: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -47,13 +44,19 @@ final class TodayWidgetFeedsListViewModel {
     self.api = api
     self.realm = realmController.createMainRealm()
 
-    self.feeds = Driver.never()
-
     let todayWidgetFeedsQuery = self.realm.objects(TodayWidgetFeed.self)
       .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
-    self.feeds = Observable.array(from: todayWidgetFeedsQuery)
+    Publishers.array(from: todayWidgetFeedsQuery)
       .map(self.todayWidgetFeedsToListItems)
-      .asDriver(onErrorJustReturn: [])
+      .sink(
+        receiveCompletion: { error in
+          AppLog.error("Query errored when it shouldn't! \(error)")
+        },
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.feeds = items
+        })
+      .store(in: &self.cancellables)
   }
 
   private func todayWidgetFeedsToListItems(_ todayWidgetFeeds: [TodayWidgetFeed]) -> [ListItem] {
@@ -88,11 +91,11 @@ final class TodayWidgetFeedsListViewModel {
     return listItems
   }
 
-  func addTodayWidgetFeed(forFeedId feedId: String) -> Observable<Bool> {
+  func addTodayWidgetFeed(forFeedId feedId: String) -> AnyPublisher<Bool, Never> {
     let realm = self.realm
-    return Observable.deferred { () -> Observable<Bool> in
+    return Deferred { () -> Just<Bool> in
       let query = realm.objects(TodayWidgetFeed.self).filter("accountId = %@ AND feedId = %@", self.accountController.uuid, feedId)
-      guard query.count == 0 else { return Observable.just(false) }
+      guard query.count == 0 else { return Just(false) }
 
       let todayWidgetFeed = TodayWidgetFeed()
       todayWidgetFeed.accountId = self.accountController.uuid
@@ -105,49 +108,57 @@ final class TodayWidgetFeedsListViewModel {
 
       todayWidgetFeed.order = maxOrder + 1
 
-      try realm.write {
-        realm.add(todayWidgetFeed)
-      }
-
-      return Observable.just(true)
-    }
-  }
-
-  func deleteTodayWidgetFeed(withId id: String) -> Observable<()> {
-    let realm = self.realm
-    return Observable.deferred { () -> Observable<()> in
-      if let todayWidgetFeed = realm.object(ofType: TodayWidgetFeed.self, forPrimaryKey: id) {
+      do {
         try realm.write {
-          realm.delete(todayWidgetFeed)
+          realm.add(todayWidgetFeed)
         }
-      }
 
-      return Observable.just(())
-    }
+        return Just(true)
+      } catch {
+        return Just(false)
+      }
+    }.eraseToAnyPublisher()
   }
 
-  func moveTodayWidgetFeed(fromIndex oldIndex: Int, toIndex newIndex: Int) -> Observable<()> {
+  func deleteTodayWidgetFeed(withId id: String) -> AnyPublisher<(), Never> {
     let realm = self.realm
-    return Observable.deferred { () -> Observable<()> in
+    return Deferred { () -> Just<()> in
+      do {
+        if let todayWidgetFeed = realm.object(ofType: TodayWidgetFeed.self, forPrimaryKey: id) {
+          try realm.write {
+            realm.delete(todayWidgetFeed)
+          }
+        }
+      } catch {}
+
+      return Just(())
+    }.eraseToAnyPublisher()
+  }
+
+  func moveTodayWidgetFeed(fromIndex oldIndex: Int, toIndex newIndex: Int) -> AnyPublisher<(), Never> {
+    let realm = self.realm
+    return Deferred { () -> Just<()> in
       let query = self.realm.objects(TodayWidgetFeed.self)
         .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
 
       var objects = Array(query)
-      guard oldIndex < objects.count && newIndex < objects.count else { return Observable.empty() }
+      guard oldIndex < objects.count && newIndex < objects.count else { return Just(()) }
 
       let moveObject = objects.remove(at: oldIndex)
       objects.insert(moveObject, at: newIndex)
 
-      try realm.write {
-        var i = 0
-        objects.forEach { item in
-          item.order = i
-          i += 1
+      do {
+        try realm.write {
+          var i = 0
+          objects.forEach { item in
+            item.order = i
+            i += 1
+          }
         }
-      }
+      } catch {}
 
-      return Observable.just(())
-    }
+      return Just(())
+    }.eraseToAnyPublisher()
   }
 
   func feedListViewModel() -> FeedListViewModel {

@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
@@ -22,17 +21,19 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
   private let realm: Realm
   private let appData: AppData
 
+  private var cancellables = Set<AnyCancellable>()
+
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
-  let dateRange = BehaviorRelay<DateRange>(value: DateRange.relative { $0.hour = -1 })
+  @Published var active = false
+  @Published var dateRange = DateRange.relative { $0.hour = -1 }
 
   // Outputs
-  private(set) var data: Driver<Data?>
-  private(set) var isRefreshing: Driver<Bool>
-  private(set) var errors: Driver<AppError?>
-  private(set) var bannerBarState: Driver<AppBannerBarState>
-
-  private let errorsSubject = PublishSubject<AppError?>()
+  @Published private(set) var data: Data? = nil
+  var errors: AnyPublisher<AppError?, Never> { return self.errorsSubject.eraseToAnyPublisher() }
+  private let errorsSubject = CurrentValueSubject<AppError?, Never>(nil)
+  var bannerBarState: AnyPublisher<AppBannerBarState, Never> { return self.bannerBarStateSubject.eraseToAnyPublisher() }
+  private let bannerBarStateSubject = CurrentValueSubject<AppBannerBarState, Never>(.loading)
+  let isRefreshing: AnyPublisher<Bool, Never>
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.realmController = realmController
@@ -41,73 +42,64 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
 
-    self.data = Driver.empty()
-    self.errors = self.errorsSubject.asDriver(onErrorJustReturn: .generic("Unknown"))
-    self.bannerBarState = Driver.empty()
+    let isRefreshingIndicator = ActivityIndicatorCombine()
+    self.isRefreshing = isRefreshingIndicator.asPublisher()
 
-    let isRefreshing = ActivityIndicator()
-    self.isRefreshing = isRefreshing.asDriver()
-
-    let timerIfActive = self.active.asObservable()
-      .distinctUntilChanged()
-      .flatMapLatest { active -> Observable<Int> in
-        if (active) {
-          return Observable<Int>.interval(.seconds(60), scheduler: MainScheduler.asyncInstance)
+    let timerIfActive = $active
+      .map { active -> AnyPublisher<Date, Never> in
+        if active {
+          return Timer.publish(every: 60, on: .main, in: .common).eraseToAnyPublisher()
         } else {
-          return Observable.never()
+          return Empty(completeImmediately: false).eraseToAnyPublisher()
         }
       }
+      .switchToLatest()
       .becomeVoid()
 
-    let feedsChangedSignal = self.appData.rx.observe(String.self, "feedsJson")
-      .distinctUntilChanged {
-        $0 == $1
-      }
-      .becomeVoid()
+    let feedsChangedSignal = self.appData.feedsChanged
+    let dateRangeSignal = $dateRange.dropFirst()
 
-    let refreshSignal = Observable.of(
+    let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      self.dateRange.map { _ in AppPageRefreshKind.dateRangeChange }
-      )
-      .merge()
+      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange }
+    )
 
-    self.data = Observable.combineLatest(refreshSignal, self.dateRange)
-      .flatMap { [weak self] refreshKind, dateRange -> Observable<Data?> in
-        guard let strongSelf = self else { return Observable.empty() }
+    Publishers.CombineLatest(refreshSignal, dateRangeSignal)
+      .flatMap { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
 
-        let update: Observable<Data?> = strongSelf.update()
-          .catchError { [weak self] error in
-            var typedError = error as? AppError ?? .generic("\(error)")
-            if typedError == AppError.updateFailed && refreshKind == .initial {
-              typedError = .initialFailed
+        let update = self.update(dateRange: dateRange)
+          .catch { [weak self] error -> AnyPublisher<Data, Never> in
+            let actualError: AppError
+            if error == AppError.updateFailed && refreshKind == .initial {
+              actualError = .initialFailed
+            } else {
+              actualError = error
             }
-            self?.errorsSubject.onNext(typedError)
-            return Observable.empty()
+            self?.errorsSubject.send(actualError)
+            return Empty().eraseToAnyPublisher()
           }
-          .do(onNext: { [weak self] _ in
-            self?.errorsSubject.onNext(nil)
+          .handleEvents(receiveOutput: { [weak self] _ in
+            self?.errorsSubject.send(nil)
           })
           .map { $0 }
-          .takeUntil(strongSelf.dateRange.skip(1))
-          .trackActivity(isRefreshing)
+          .prefix(untilOutputFrom: self.$dateRange.dropFirst())
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
 
-        if refreshKind == .initial {
-          return Observable<Data?>.just(nil)
-            .concat(update)
-        } else {
-          return update
-        }
+        return update
       }
-      .startWith(nil)
-      .asDriver(onErrorJustReturn: nil)
+      .map { $0 as Data? }
+      .assign(to: \Self.data, on: self)
+      .store(in: &self.cancellables)
 
-    let errors = self.errors.asObservable()
-    let loading = self.isRefreshing.asObservable()
-    let updateTime = self.data.asObservable().map { $0?.updateTime }
+    let loading = self.isRefreshing
+    let errors = self.errors
+    let updateTime = $data.map { $0?.updateTime }
 
-    self.bannerBarState = Observable.combineLatest(loading, errors, updateTime) { ($0, $1, $2) }
-      .startWith((true, nil, nil))
+    Publishers.CombineLatest3(loading, errors, updateTime)
+      .prepend((true, nil, nil))
       .map { (loading: Bool, error: AppError?, updateTime: Date?) -> AppBannerBarState in
         if loading {
           return .loading
@@ -120,31 +112,34 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
         // TODO: Could check `error` and return something more helpful
         return .error("Error")
       }
-      .asDriver(onErrorJustReturn: .error("Error"))
+      .sink(receiveValue: { [weak self] state in
+        guard let self = self else { return }
+        self.bannerBarStateSubject.send(state)
+      })
+      .store(in: &self.cancellables)
   }
 
-  private func update() -> Observable<Data> {
+  private func update(dateRange: DateRange) -> AnyPublisher<Data, AppError> {
     guard
       let useFeedId = self.appData.feed(forName: "useKwh"),
       let solarFeedId = self.appData.feed(forName: "solarKwh"),
       let divertFeedId = self.appData.feed(forName: "divertKwh")
     else {
-      return Observable.error(AppError.notConfigured)
+      return Fail(error: AppError.notConfigured).eraseToAnyPublisher()
     }
-
-    let dateRange = self.dateRange.value
 
     return self.fetchBarChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId)
       .map { barChartData in
         return Data(updateTime: Date(), barChartData: barChartData)
       }
-      .catchError { error in
+      .mapError { error in
         AppLog.info("Update failed: \(error)")
-        return Observable.error(AppError.updateFailed)
-    }
+        return AppError.updateFailed
+      }
+      .eraseToAnyPublisher()
   }
 
-  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String, divertFeedId: String) -> Observable<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>])> {
+  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String, divertFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let interval = 86400.0
     let startTime = dates.0 - interval
@@ -164,7 +159,7 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
         return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
     }
 
-    return Observable.zip(use, solar, divert)
+    return Publishers.Zip3(use, solar, divert).eraseToAnyPublisher()
   }
 
 }

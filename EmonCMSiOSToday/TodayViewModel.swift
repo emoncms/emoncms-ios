@@ -7,13 +7,10 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Realm
 import RealmSwift
-import RxRealm
 
 final class TodayViewModel {
 
@@ -36,15 +33,12 @@ final class TodayViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
 
   // Outputs
-  lazy var feeds: Driver<[ListItem]> = {
-    return self.feedsSubject.asDriver(onErrorJustReturn: [])
-  }()
-  private var feedsSubject = ReplaySubject<[ListItem]>.create(bufferSize: 1)
+  @Published private(set) var feeds: [ListItem] = []
 
   init(realmController: RealmController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -53,14 +47,14 @@ final class TodayViewModel {
     self.realm = realmController.createMainRealm()
   }
 
-  func updateData() -> Observable<Bool> {
-    return Observable.deferred { [weak self] in
-      guard let self = self else { return Observable.empty() }
+  func updateData() -> AnyPublisher<Bool, Never> {
+    return Deferred { [weak self] () -> AnyPublisher<Bool, Never> in
+      guard let self = self else { return Empty<Bool, Never>().eraseToAnyPublisher() }
 
       let feedsQuery = self.realm.objects(TodayWidgetFeed.self)
         .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
 
-      let listItemObservables = feedsQuery.compactMap { [weak self] todayWidgetFeed -> Observable<ListItem?>? in
+      let listItemObservables = feedsQuery.compactMap { [weak self] todayWidgetFeed -> AnyPublisher<ListItem?, Never>? in
         guard let self = self else { return nil }
 
         let accountId = todayWidgetFeed.accountId
@@ -83,7 +77,7 @@ final class TodayViewModel {
         let endDate = Date()
         let startDate = endDate.addingTimeInterval(TimeInterval(-range))
         return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: (range / 200))
-          .catchErrorJustReturn([])
+          .replaceError(with: [])
           .map { dataPoints -> ListItem in
             return ListItem(
               accountId: accountId,
@@ -93,21 +87,23 @@ final class TodayViewModel {
               feedChartData: dataPoints
             )
           }
+          .eraseToAnyPublisher()
       }
 
       if listItemObservables.count == 0 {
-        self.feedsSubject.onNext([])
-        return Observable.just(true)
+        self.feeds = []
+        return Just<Bool>(true).eraseToAnyPublisher()
       } else {
-        return Observable.zip(listItemObservables)
-          .do(onNext: { [weak self] in
+        return listItemObservables.publisher.flatMap { $0 }.collect()
+          .handleEvents(receiveOutput: { [weak self] in
             guard let self = self else { return }
             let nonNils = $0.compactMap { $0 }
-            self.feedsSubject.onNext(nonNils)
+            self.feeds = nonNils
           })
           .map { _ in return true }
+          .eraseToAnyPublisher()
       }
-    }
+    }.eraseToAnyPublisher()
   }
 
 }

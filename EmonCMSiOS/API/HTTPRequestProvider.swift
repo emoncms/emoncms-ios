@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-import RxSwift
+import Combine
 
 enum HTTPRequestProviderError: Error {
   case unknown
@@ -19,7 +18,7 @@ enum HTTPRequestProviderError: Error {
 
 protocol HTTPRequestProvider {
 
-  func request(url: URL) -> Observable<Data>
-  func request(url: URL, formData: [String:String]) -> Observable<Data>
+  func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError>
+  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError>
 
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 import RealmSwift
 
@@ -24,6 +25,13 @@ final class AppData: Object {
   @objc dynamic var name: String = "App"
   @objc private dynamic var category: String = "NULL"
   @objc private dynamic var feedsJson: Data?
+
+  var feedsChanged: AnyPublisher<Void, Never> {
+    return self.publisher(for: \.feedsJson)
+      .removeDuplicates()
+      .becomeVoid()
+      .eraseToAnyPublisher()
+  }
 
   var appCategory: AppCategory {
     get {

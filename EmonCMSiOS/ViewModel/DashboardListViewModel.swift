@@ -7,13 +7,10 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Realm
 import RealmSwift
-import RxRealm
 
 final class DashboardListViewModel {
 
@@ -31,20 +28,17 @@ final class DashboardListViewModel {
   private let realm: Realm
   private let dashboardUpdateHelper: DashboardUpdateHelper
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
-  let refresh = ReplaySubject<()>.create(bufferSize: 1)
+  @Published var active = false
+  let refresh = PassthroughSubject<Void, Never>()
 
   // Outputs
-  private(set) var dashboards: Driver<[ListItem]>
-  private(set) var updateTime: Driver<Date?>
-  private(set) var isRefreshing: Driver<Bool>
-  lazy var serverNeedsUpdate: Driver<Bool> = {
-    return self.serverNeedsUpdateSubject.asDriver(onErrorJustReturn: true).distinctUntilChanged()
-  }()
-  private var serverNeedsUpdateSubject = ReplaySubject<Bool>.create(bufferSize: 1)
+  @Published private(set) var dashboards: [ListItem] = []
+  @Published private(set) var updateTime: Date? = nil
+  let isRefreshing: AnyPublisher<Bool, Never>
+  @Published private(set) var serverNeedsUpdate = false
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -53,46 +47,44 @@ final class DashboardListViewModel {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.dashboardUpdateHelper = DashboardUpdateHelper(realmController: realmController, account: account, api: api)
 
-    self.dashboards = Driver.never()
-    self.updateTime = Driver.never()
-    self.isRefreshing = Driver.never()
+    let isRefreshingIndicator = ActivityIndicatorCombine()
+    self.isRefreshing = isRefreshingIndicator.asPublisher()
 
     let dashboardsQuery = self.realm.objects(Dashboard.self).sorted(byKeyPath: #keyPath(Dashboard.id))
-    self.dashboards = Observable.array(from: dashboardsQuery)
+    Publishers.array(from: dashboardsQuery)
       .map(self.dashboardsToListItems)
-      .asDriver(onErrorJustReturn: [])
+      .sink(
+        receiveCompletion: { error in
+          AppLog.error("Query errored when it shouldn't! \(error)")
+        },
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.dashboards = items
+          self.updateTime = Date()
+        })
+      .store(in: &self.cancellables)
 
-    self.updateTime = self.dashboards
-      .map { _ in Date() }
-      .startWith(nil)
-      .asDriver(onErrorJustReturn: Date())
-
-    let isRefreshing = ActivityIndicator()
-    self.isRefreshing = isRefreshing.asDriver()
-
-    let becameActive = self.active.asObservable()
-      .distinctUntilChanged()
+    let becameActive = $active
       .filter { $0 == true }
+      .removeDuplicates()
       .becomeVoid()
 
-    Observable.of(self.refresh, becameActive)
-      .merge()
-      .flatMapLatest { [weak self] () -> Observable<()> in
-        guard let self = self else { return Observable.empty() }
+    Publishers.Merge(self.refresh, becameActive)
+      .map { [weak self] () -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
         return self.dashboardUpdateHelper.updateDashboards()
-          .catchError { [weak self] error in
+          .catch { [weak self] error -> AnyPublisher<Void, Never> in
             if error == EmonCMSAPI.APIError.invalidResponse {
-              self?.serverNeedsUpdateSubject.onNext(true)
+              self?.serverNeedsUpdate = true
             }
-            throw error
+            return Just(()).eraseToAnyPublisher()
           }
-          .catchErrorJustReturn(())
-          .trackActivity(isRefreshing)
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
       }
-      .subscribe()
-      .disposed(by: self.disposeBag)
-
-    self.serverNeedsUpdateSubject.onNext(false)
+      .switchToLatest()
+      .sink(receiveValue: { _ in })
+      .store(in: &self.cancellables)
   }
 
   private func dashboardsToListItems(_ dashboards: [Dashboard]) -> [ListItem] {

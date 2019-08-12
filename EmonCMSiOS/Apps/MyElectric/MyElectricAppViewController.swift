@@ -7,9 +7,8 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
 import Charts
 
 final class MyElectricAppViewController: AppPageViewController {
@@ -24,7 +23,7 @@ final class MyElectricAppViewController: AppPageViewController {
   @IBOutlet private var lineChart: LineChartView!
   @IBOutlet private var barChart: BarChartView!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -41,15 +40,14 @@ final class MyElectricAppViewController: AppPageViewController {
   }
 
   private func setupBindings() {
-    self.dateSegmentedControl.rx.selectedSegmentIndex
-      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+    self.dateSegmentedControl.publisher(for: \.selectedSegmentIndex)
       .map {
         DateRange.from1h8hDMYSegmentedControlIndex($0)
       }
-      .bind(to: self.typedViewModel.dateRange)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.dateRange, on: self.viewModel)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.powerNow }
       .map {
         let value: String
@@ -60,10 +58,10 @@ final class MyElectricAppViewController: AppPageViewController {
         }
         return value + "W"
       }
-      .drive(self.powerLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.powerLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.usageToday }
       .map {
         let value: String
@@ -74,24 +72,24 @@ final class MyElectricAppViewController: AppPageViewController {
         }
         return value + "kWh"
       }
-      .drive(self.usageTodayLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.usageTodayLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.lineChartData }
-      .drive(onNext: { [weak self] dataPoints in
-        guard let strongSelf = self else { return }
-        strongSelf.updateLineChartData(dataPoints)
-        })
-      .disposed(by: self.disposeBag)
+      .sink { [weak self] dataPoints in
+        guard let self = self else { return }
+        self.updateLineChartData(dataPoints)
+      }
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.barChartData }
-      .drive(onNext: { [weak self] dataPoints in
-        guard let strongSelf = self else { return }
-        strongSelf.updateBarChartData(dataPoints)
-        })
-      .disposed(by: self.disposeBag)
+      .sink { [weak self] dataPoints in
+        guard let self = self else { return }
+        self.updateBarChartData(dataPoints)
+      }
+      .store(in: &self.cancellables)
   }
 
 }

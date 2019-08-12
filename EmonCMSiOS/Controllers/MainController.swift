@@ -8,9 +8,6 @@
 
 import UIKit
 
-import RxSwift
-import RxCocoa
-
 final class MainController {
 
   private let window: UIWindow

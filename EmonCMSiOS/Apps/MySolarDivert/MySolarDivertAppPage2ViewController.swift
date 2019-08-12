@@ -7,9 +7,8 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
 import Charts
 
 final class MySolarDivertAppPage2ViewController: AppPageViewController {
@@ -23,7 +22,7 @@ final class MySolarDivertAppPage2ViewController: AppPageViewController {
   @IBOutlet private var solarBarChart: BarChartView!
   @IBOutlet private var divertBarChart: BarChartView!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -33,21 +32,20 @@ final class MySolarDivertAppPage2ViewController: AppPageViewController {
   }
 
   private func setupBindings() {
-    self.dateSegmentedControl.rx.selectedSegmentIndex
-      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+    self.dateSegmentedControl.publisher(for: \.selectedSegmentIndex)
       .map {
         DateRange.fromWMYSegmentedControlIndex($0)
       }
-      .bind(to: self.viewModel.dateRange)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.dateRange, on: self.viewModel)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.barChartData }
-      .drive(onNext: { [weak self] dataPoints in
+      .sink { [weak self] dataPoints in
         guard let self = self else { return }
         self.updateBarChartData(dataPoints)
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
 }

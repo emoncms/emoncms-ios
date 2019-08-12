@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
+import Combine
 
 class AppViewController: UIViewController {
 
@@ -21,7 +19,7 @@ class AppViewController: UIViewController {
   private var pageViewController: UIPageViewController!
   private var pages = [UIViewController]()
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   private enum Segues: String {
     case pageVC
@@ -43,37 +41,38 @@ class AppViewController: UIViewController {
 
   private func setupBindings() {
     self.viewModel.title
-      .drive(self.rx.title)
-      .disposed(by: self.disposeBag)
+      .map { $0 as String? }
+      .assign(to: \.title, on: self)
+      .store(in: &self.cancellables)
 
     self.viewModel.isReady
       .map { !$0 }
-      .drive(self.mainView.rx.isHidden)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.isHidden, on: self.mainView)
+      .store(in: &self.cancellables)
 
     self.viewModel.isReady
-      .drive(self.configureView.rx.isHidden)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.isHidden, on: self.configureView)
+      .store(in: &self.cancellables)
   }
 
   private func setupNavigation() {
     let rightBarButtonItem = UIBarButtonItem(title: "Configure", style: .plain, target: nil, action: nil)
-    rightBarButtonItem.rx.tap
-      .flatMap { [weak self] _ -> Driver<AppUUIDAndCategory?> in
-        guard let strongSelf = self else { return Driver.empty() }
+    rightBarButtonItem.publisher()
+      .flatMap { [weak self] _ -> AnyPublisher<AppUUIDAndCategory?, Never> in
+        guard let self = self else { return Empty<AppUUIDAndCategory?, Never>().eraseToAnyPublisher() }
 
         let configViewController = AppConfigViewController()
-        configViewController.viewModel = strongSelf.viewModel.configViewModel()
+        configViewController.viewModel = self.viewModel.configViewModel()
         let navController = UINavigationController(rootViewController: configViewController)
-        strongSelf.present(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
 
         return configViewController.finished
       }
-      .subscribe(onNext: { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.dismiss(animated: true, completion: nil)
-      })
-      .disposed(by: self.disposeBag)
+      .sink { [weak self] _ in
+        guard let self = self else { return }
+        self.dismiss(animated: true, completion: nil)
+      }
+      .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 

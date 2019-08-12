@@ -7,9 +7,8 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
 import Charts
 
 final class MySolarDivertAppPage1ViewController: AppPageViewController {
@@ -34,7 +33,7 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
   @IBOutlet private var solarToGridArrowView: AppBoxesArrowView!
   @IBOutlet private var gridToHouseArrowView: AppBoxesArrowView!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -58,13 +57,12 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
   }
 
   private func setupBindings() {
-    self.dateSegmentedControl.rx.selectedSegmentIndex
-      .startWith(self.dateSegmentedControl.selectedSegmentIndex)
+    self.dateSegmentedControl.publisher(for: \.selectedSegmentIndex)
       .map {
         DateRange.from1h8hDMYSegmentedControlIndex($0)
       }
-      .bind(to: self.viewModel.dateRange)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.dateRange, on: self.viewModel)
+      .store(in: &self.cancellables)
 
     func powerFormat(powerNow: Double?) -> String {
       let value: String
@@ -76,25 +74,25 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
       return value + "W"
     }
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.houseNow }
       .map(powerFormat)
-      .drive(self.houseLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.houseLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.divertNow }
       .map(powerFormat)
-      .drive(self.divertLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.divertLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.totalUseNow }
       .map(powerFormat)
-      .drive(self.totalUseLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.totalUseLabelView)
+      .store(in: &self.cancellables)
 
-    let importExport = self.typedViewModel.data
+    let importExport = self.typedViewModel.$data
       .map { data -> (String, UIColor) in
         guard let value = data?.importNow else { return ("-", UIColor.black) }
 
@@ -108,15 +106,15 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
 
     importExport
       .map { $0.0 }
-      .drive(self.importLabelView.rx.title)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.title, on: self.importLabelView)
+      .store(in: &self.cancellables)
 
     importExport
       .map { $0.1 }
-      .drive(self.importLabelView.rx.valueColor)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.valueColor, on: self.importLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map {
         if let value = $0?.importNow {
           return abs(value)
@@ -125,23 +123,23 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
         }
       }
       .map(powerFormat)
-      .drive(self.importLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.importLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.solarNow }
       .map(powerFormat)
-      .drive(self.solarLabelView.rx.value)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.value, on: self.solarLabelView)
+      .store(in: &self.cancellables)
 
-    self.typedViewModel.data
+    self.typedViewModel.$data
       .map { $0?.lineChartData }
-      .drive(onNext: { [weak self] dataPoints in
-        guard let strongSelf = self else { return }
-        strongSelf.updateLineChartData(dataPoints)
-        strongSelf.updateBoxViewData(dataPoints)
-        })
-      .disposed(by: self.disposeBag)
+      .sink { [weak self] dataPoints in
+        guard let self = self else { return }
+        self.updateLineChartData(dataPoints)
+        self.updateBoxViewData(dataPoints)
+      }
+      .store(in: &self.cancellables)
   }
 
 }

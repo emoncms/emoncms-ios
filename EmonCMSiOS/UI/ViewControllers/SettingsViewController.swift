@@ -8,21 +8,20 @@
 
 import UIKit
 import MessageUI
+import Combine
 
 import Former
-import RxSwift
-import RxCocoa
 
 final class SettingsViewController: FormViewController {
 
   var viewModel: SettingsViewModel!
 
-  lazy var switchAccount: Driver<Bool> = {
-    return self.switchAccountSubject.asDriver(onErrorJustReturn: false)
+  lazy var switchAccount: AnyPublisher<Bool, Never> = {
+    return self.switchAccountSubject.eraseToAnyPublisher()
   }()
-  private var switchAccountSubject = PublishSubject<Bool>()
+  private var switchAccountSubject = PassthroughSubject<Bool, Never>()
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,12 +34,12 @@ final class SettingsViewController: FormViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupFormer() {
@@ -49,21 +48,21 @@ final class SettingsViewController: FormViewController {
       }.configure {
         $0.text = "Logout"
       }.onSelected { [weak self] former in
-        guard let strongSelf = self else { return }
+        guard let self = self else { return }
 
         let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
 
         actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
-          strongSelf.former.deselect(animated: true)
-          if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
-            strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
+          self.former.deselect(animated: true)
+          if let selectedRow = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectedRow, animated: true)
           }
-          strongSelf.switchAccountSubject.onNext(true)
+          self.switchAccountSubject.send(true)
         }))
 
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
-          if let selectedRow = strongSelf.tableView.indexPathForSelectedRow {
-            strongSelf.tableView.deselectRow(at: selectedRow, animated: true)
+          if let selectedRow = self.tableView.indexPathForSelectedRow {
+            self.tableView.deselectRow(at: selectedRow, animated: true)
           }
         }))
 
@@ -72,7 +71,7 @@ final class SettingsViewController: FormViewController {
           popoverController.sourceRect = CGRect(x: former.cell.bounds.midX, y: former.cell.bounds.midY, width: 0, height: 0)
         }
 
-        strongSelf.present(actionSheet, animated: true, completion: nil)
+        self.present(actionSheet, animated: true, completion: nil)
     }
 
     let switchAccountRow = LabelRowFormer<FormLabelCell>() {
@@ -80,8 +79,8 @@ final class SettingsViewController: FormViewController {
       }.configure {
         $0.text = "Switch Account"
       }.onSelected { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.switchAccountSubject.onNext(false)
+        guard let self = self else { return }
+        self.switchAccountSubject.send(false)
     }
 
     let configureTodayWidgetsRow = LabelRowFormer<FormLabelCell>() {
@@ -89,9 +88,9 @@ final class SettingsViewController: FormViewController {
       }.configure {
         $0.text = "Configure Today Widget"
       }.onSelected { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.showTodayWidgetsView()
-        strongSelf.former.deselect(animated: true)
+        guard let self = self else { return }
+        self.showTodayWidgetsView()
+        self.former.deselect(animated: true)
     }
 
     let feedbackRow = LabelRowFormer<FormLabelCell>() {
@@ -99,9 +98,9 @@ final class SettingsViewController: FormViewController {
       }.configure {
         $0.text = "Send Feedback"
       }.onSelected { [weak self] _ in
-        guard let strongSelf = self else { return }
-        strongSelf.sendFeedback()
-        strongSelf.former.deselect(animated: true)
+        guard let self = self else { return }
+        self.sendFeedback()
+        self.former.deselect(animated: true)
     }
 
     let detailsFooter = LabelViewFormer<FormLabelFooterView>() { _ in

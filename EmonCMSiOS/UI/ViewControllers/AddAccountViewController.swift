@@ -7,20 +7,18 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
-import Action
 import Former
 
 final class AddAccountViewController: FormViewController {
 
   var viewModel: AddAccountViewModel!
 
-  lazy var finished: Driver<String?> = {
-    return self.finishedSubject.asDriver(onErrorJustReturn: nil)
+  lazy var finished: AnyPublisher<String?, Never> = {
+    return self.finishedSubject.eraseToAnyPublisher()
   }()
-  private var finishedSubject = PublishSubject<String?>()
+  private var finishedSubject = PassthroughSubject<String?, Never>()
 
   private var nameRow: TextFieldRowFormer<FormTextFieldCell>?
   private var urlRow: TextFieldRowFormer<FormTextFieldCell>?
@@ -30,7 +28,7 @@ final class AddAccountViewController: FormViewController {
   private var apiKeyRow: TextFieldRowFormer<FormTextFieldCell>?
   private var scanQRRow: LabelRowFormer<FormLabelCell>?
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   fileprivate enum Segues: String {
     case scanQR
@@ -62,10 +60,10 @@ final class AddAccountViewController: FormViewController {
       $0.textField.font = .systemFont(ofSize: 15)
       }.configure {
         $0.placeholder = "Name"
-        $0.text = viewModel.name.value
+        $0.text = viewModel.name
       }.onTextChanged { [weak self] text in
-        guard let strongSelf = self else { return }
-        strongSelf.viewModel.name.accept(text)
+        guard let self = self else { return }
+        self.viewModel.name = text
     }
 
     let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -75,10 +73,10 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "URL"
-        $0.text = viewModel.url.value
+        $0.text = viewModel.url
       }.onTextChanged { [weak self] text in
-        guard let strongSelf = self else { return }
-        strongSelf.viewModel.url.accept(text)
+        guard let self = self else { return }
+        self.viewModel.url = text
     }
 
     let usernameRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -87,10 +85,10 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Username"
-        $0.text = viewModel.username.value
+        $0.text = viewModel.username
       }.onTextChanged { [weak self] text in
-        guard let strongSelf = self else { return }
-        strongSelf.viewModel.username.accept(text)
+        guard let self = self else { return }
+        self.viewModel.username = text
     }
 
     let passwordRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -100,10 +98,10 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "Password"
-        $0.text = viewModel.password.value
+        $0.text = viewModel.password
       }.onTextChanged { [weak self] text in
-        guard let strongSelf = self else { return }
-        strongSelf.viewModel.password.accept(text)
+        guard let self = self else { return }
+        self.viewModel.password = text
     }
 
     let apiKeyRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -112,10 +110,10 @@ final class AddAccountViewController: FormViewController {
       $0.textField.autocorrectionType = .no
       }.configure {
         $0.placeholder = "API read key"
-        $0.text = viewModel.apiKey.value
+        $0.text = viewModel.apiKey
       }.onTextChanged { [weak self] text in
-        guard let strongSelf = self else { return }
-        strongSelf.viewModel.apiKey.accept(text)
+        guard let self = self else { return }
+        self.viewModel.apiKey = text
     }
 
     let scanQRRow = LabelRowFormer<FormLabelCell>() {
@@ -149,26 +147,32 @@ final class AddAccountViewController: FormViewController {
   }
 
   private func setupBindings() {
-    let action = CocoaAction(enabledIf: self.viewModel.canSave()) { [weak self] _ -> Observable<Void> in
-      guard let strongSelf = self else { return Observable.empty() }
+    let barButtonItem = self.navigationItem.rightBarButtonItem!
 
-      strongSelf.tableView.resignFirstResponder()
-      strongSelf.tableView.isUserInteractionEnabled = false
+    self.viewModel.canSave()
+      .assign(to: \.isEnabled, on: barButtonItem)
+      .store(in: &self.cancellables)
 
-      return strongSelf.viewModel.saveAccount()
-        .do(onNext: { [weak self] accountId in
-          guard let strongSelf = self else { return }
-          strongSelf.finishedSubject.onNext(accountId)
-        })
-        .catchError { [weak self] error in
-          guard let strongSelf = self else { return Observable.empty() }
+    barButtonItem.publisher()
+      .flatMap { [weak self] _ -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
 
-          AppLog.info("Login failed: \(error)")
+        self.tableView.resignFirstResponder()
+        self.tableView.isUserInteractionEnabled = false
 
-          strongSelf.tableView.isUserInteractionEnabled = true
+        return self.viewModel.saveAccount()
+          .handleEvents(receiveOutput: { [weak self] accountId in
+            guard let self = self else { return }
+            self.finishedSubject.send(accountId)
+          })
+          .catch { [weak self] error -> AnyPublisher<String, Never> in
+            guard let self = self else { return Empty<String, Never>().eraseToAnyPublisher() }
 
-          let message: String
-          if let error = error as? AddAccountViewModel.AddAccountError {
+            AppLog.info("Login failed: \(error)")
+
+            self.tableView.isUserInteractionEnabled = true
+
+            let message: String
             switch error {
             case .urlNotValid:
               message = "URL is not valid."
@@ -181,18 +185,18 @@ final class AddAccountViewController: FormViewController {
             case .saveFailed:
               message = "Something failed. Please try again."
             }
-          } else {
-            message = "An unknown error ocurred."
-          }
 
-          let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-          alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
-          return Observable.empty()
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+
+            return Empty<String, Never>().eraseToAnyPublisher()
         }
         .becomeVoid()
-    }
-    self.navigationItem.rightBarButtonItem!.rx.action = action
+        .eraseToAnyPublisher()
+      }
+    .sink { _ in }
+    .store(in: &self.cancellables)
   }
 
   private func presentScanQR() {
@@ -200,8 +204,8 @@ final class AddAccountViewController: FormViewController {
   }
 
   fileprivate func updateWithAccountCredentials(_ accountCredentials: AccountCredentials) {
-    self.viewModel.url.accept(accountCredentials.url)
-    self.viewModel.apiKey.accept(accountCredentials.apiKey)
+    self.viewModel.url = accountCredentials.url
+    self.viewModel.apiKey = accountCredentials.apiKey
     self.urlRow?.text = accountCredentials.url
     self.urlRow?.update()
     self.apiKeyRow?.text = accountCredentials.apiKey

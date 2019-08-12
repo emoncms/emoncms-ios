@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
+import Combine
 
 final class FakeHTTPProvider: HTTPRequestProvider {
 
@@ -222,10 +221,10 @@ final class FakeHTTPProvider: HTTPRequestProvider {
 
 
 
-  func request(url: URL) -> Observable<Data> {
+  func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
       else {
-        return Observable.empty()
+        return Empty().eraseToAnyPublisher()
     }
 
     let path = urlComponents.path
@@ -240,7 +239,7 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       queryValues["apikey"] == "ilikecats" ||
         (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
       else {
-        return Observable.error(HTTPRequestProviderError.httpError(code: 401))
+        return Fail(error: HTTPRequestProviderError.httpError(code: 401)).eraseToAnyPublisher()
     }
 
     self.createFeedData(untilTime: Date())
@@ -274,14 +273,14 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       let responseObject = try? routeFunc(queryValues),
       let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: [])
     {
-      return Observable.just(responseData)
+      return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
     }
 
-    return Observable.error(HTTPRequestProviderError.unknown)
+    return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher()
   }
 
-  func request(url: URL, formData: [String:String]) -> Observable<Data> {
-    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Observable.error(HTTPRequestProviderError.unknown) }
+  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
+    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher() }
 
     var queryItems = components.queryItems ?? [URLQueryItem]()
     queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )

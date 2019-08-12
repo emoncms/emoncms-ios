@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class InputUpdateHelper {
@@ -17,30 +16,30 @@ final class InputUpdateHelper {
   private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
-  private let scheduler: SerialDispatchQueueScheduler
+  private let scheduler: DispatchQueue
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
     self.account = account
     self.api = api
-    self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.InputUpdateHelper")
+    self.scheduler = DispatchQueue(label: "org.openenergymonitor.emoncms.InputUpdateHelper")
   }
 
-  func updateInputs() -> Observable<()> {
-    return Observable.deferred {
+  func updateInputs() -> AnyPublisher<Void, EmonCMSAPI.APIError> {
+    return Deferred {
       return self.api.inputList(self.account.credentials)
-        .observeOn(self.scheduler)
-        .flatMap { [weak self] inputs -> Observable<()> in
-          guard let self = self else { return Observable.empty() }
+        .receive(on: self.scheduler)
+        .flatMap { [weak self] inputs -> AnyPublisher<Void, EmonCMSAPI.APIError> in
+          guard let self = self else { return Empty().eraseToAnyPublisher() }
           let realm = self.realmController.createAccountRealm(forAccountId: self.account.uuid)
-          return self.saveInputs(inputs, inRealm: realm)
+          return self.saveInputs(inputs, inRealm: realm).eraseToAnyPublisher()
         }
-        .observeOn(MainScheduler.asyncInstance)
-    }
+        .receive(on: DispatchQueue.main)
+    }.eraseToAnyPublisher()
   }
 
-  private func saveInputs(_ inputs: [Input], inRealm realm: Realm) -> Observable<()> {
-    return Observable.deferred {
+  private func saveInputs(_ inputs: [Input], inRealm realm: Realm) -> AnyPublisher<Void, EmonCMSAPI.APIError> {
+    return Deferred<Just<Void>> {
       let existingInputs = realm.objects(Input.self).filter {
         var inNewArray = false
         for input in inputs {
@@ -52,13 +51,19 @@ final class InputUpdateHelper {
         return !inNewArray
       }
 
-      try realm.write {
-        realm.delete(existingInputs)
-        realm.add(inputs, update: .all)
+      do {
+        try realm.write {
+          realm.delete(existingInputs)
+          realm.add(inputs, update: .all)
+        }
+      } catch {
+        AppLog.error("Failed to write to Realm: \(error)")
       }
 
-      return Observable.just(())
+      return Just(())
     }
+    .setFailureType(to: EmonCMSAPI.APIError.self)
+    .eraseToAnyPublisher()
   }
 
 }

@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
+import Combine
 
 class AppPageViewController: UIViewController {
 
@@ -19,7 +17,7 @@ class AppPageViewController: UIViewController {
   @IBOutlet private var bannerLabel: UILabel!
   @IBOutlet private var bannerSpinner: UIActivityIndicatorView!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -29,54 +27,54 @@ class AppPageViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupBindings() {
     self.viewModel.errors
-      .drive(onNext: { [weak self] error in
-        guard let strongSelf = self else { return }
+      .sink(receiveValue: { [weak self] error in
+        guard let self = self else { return }
         guard let error = error else { return }
 
         switch error {
         case .initialFailed:
           let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.", preferredStyle: .alert)
           alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-          strongSelf.present(alert, animated: true, completion: nil)
+          self.present(alert, animated: true, completion: nil)
         default:
           break
         }
       })
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
 
     let dateFormatter = DateFormatter()
     dateFormatter.dateStyle = .none
     dateFormatter.timeStyle = .medium
     self.viewModel.bannerBarState
-      .drive(onNext: { [weak self] state in
-        guard let strongSelf = self else { return }
+      .sink(receiveValue: { [weak self] state in
+        guard let self = self else { return }
 
         switch state {
         case .loading:
-          strongSelf.bannerSpinner.startAnimating()
-          strongSelf.bannerLabel.text = "Loading\u{2026}"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
+          self.bannerSpinner.startAnimating()
+          self.bannerLabel.text = "Loading\u{2026}"
+          self.bannerView.backgroundColor = UIColor.lightGray
         case .error(let message):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = message
-          strongSelf.bannerView.backgroundColor = EmonCMSColors.ErrorRed
+          self.bannerSpinner.stopAnimating()
+          self.bannerLabel.text = message
+          self.bannerView.backgroundColor = EmonCMSColors.ErrorRed
         case .loaded(let updateTime):
-          strongSelf.bannerSpinner.stopAnimating()
-          strongSelf.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
-          strongSelf.bannerView.backgroundColor = UIColor.lightGray
+          self.bannerSpinner.stopAnimating()
+          self.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
+          self.bannerView.backgroundColor = UIColor.lightGray
         }
       })
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
   }
 
 }

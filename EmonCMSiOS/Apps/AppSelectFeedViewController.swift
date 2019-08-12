@@ -7,24 +7,22 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
-import RxDataSources
+import Combine
 
 final class AppSelectFeedViewController: UITableViewController {
 
   var viewModel: FeedListViewModel!
 
-  fileprivate let searchController = UISearchController(searchResultsController: nil)
-  fileprivate let searchSubject = BehaviorSubject<String>(value: "")
+  private let searchController = UISearchController(searchResultsController: nil)
+  private let searchSubject = CurrentValueSubject<String, Never>("")
 
-  fileprivate let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<FeedListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
 
-  lazy var finished: Driver<String?> = {
-    return self.finishedSubject.asDriver(onErrorJustReturn: nil)
+  lazy var finished: AnyPublisher<String?, Never> = {
+    return self.finishedSubject.eraseToAnyPublisher()
   }()
-  private var finishedSubject = PublishSubject<String?>()
+  private var finishedSubject = PassthroughSubject<String?, Never>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -46,16 +44,16 @@ final class AppSelectFeedViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupDataSource() {
-    let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<FeedListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ??
           UITableViewCell(style: .default, reuseIdentifier: "Cell")
@@ -71,35 +69,44 @@ final class AppSelectFeedViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.feeds
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+    let items = self.viewModel.$feeds
+      .eraseToAnyPublisher()
+
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
   }
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
 
-    refreshControl.rx.controlEvent(.valueChanged)
-      .bind(to: self.viewModel.refresh)
-      .disposed(by: self.disposeBag)
+    refreshControl.publisher(for: .valueChanged)
+      .becomeVoid()
+      .subscribe(self.viewModel.refresh)
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
-      .drive(refreshControl.rx.isRefreshing)
-      .disposed(by: self.disposeBag)
+      .sink { refreshing in
+        if refreshing {
+          refreshControl.beginRefreshing()
+        } else {
+          refreshControl.endRefreshing()
+        }
+      }
+      .store(in: &self.cancellables)
 
     self.searchSubject
-      .bind(to: self.viewModel.searchTerm)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.searchTerm, on: self.viewModel)
+      .store(in: &self.cancellables)
 
-    self.tableView.rx
-      .modelSelected(FeedListViewModel.ListItem.self)
-      .do(onNext: { [weak self] _ in
+    self.dataSource
+      .modelSelected
+      .handleEvents(receiveOutput: { [weak self] _ in
         guard let self = self else { return }
         self.searchController.dismiss(animated: true, completion: nil)
       })
       .map { $0.feedId }
       .subscribe(self.finishedSubject)
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
   }
 
 }
@@ -107,7 +114,7 @@ final class AppSelectFeedViewController: UITableViewController {
 extension AppSelectFeedViewController: UISearchResultsUpdating {
 
   public func updateSearchResults(for searchController: UISearchController) {
-    searchSubject.onNext(searchController.searchBar.text ?? "")
+    searchSubject.send(searchController.searchBar.text ?? "")
   }
 
 }

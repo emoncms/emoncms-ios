@@ -7,8 +7,7 @@
 //
 
 import Foundation
-
-import RxSwift
+import Combine
 
 final class EmonCMSAPI {
 
@@ -26,10 +25,10 @@ final class EmonCMSAPI {
     self.requestProvider = requestProvider
   }
 
-  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) throws -> URL {
+  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> URL? {
     let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
-      throw APIError.failedToCreateURL
+      return nil
     }
 
     var allQueryItems = queryItems
@@ -39,56 +38,52 @@ final class EmonCMSAPI {
     if let url = urlBuilder.url {
       return url
     } else {
-      throw APIError.failedToCreateURL
+      return nil
     }
   }
 
-  private func convertNetworkError(_ error: Error) -> APIError {
-    if let error = error as? HTTPRequestProviderError {
-      switch error {
-      case .httpError(let code):
-        if code == 401 {
-          return .invalidCredentials
-        } else {
-          return .requestFailed
-        }
-      case .atsFailed:
-        return .atsFailed
-      case .networkError, .unknown:
+  private func convertNetworkError(_ error: HTTPRequestProviderError) -> APIError {
+    switch error {
+    case .httpError(let code):
+      if code == 401 {
+        return .invalidCredentials
+      } else {
         return .requestFailed
       }
+    case .atsFailed:
+      return .atsFailed
+    case .networkError, .unknown:
+      return .requestFailed
     }
-    return .requestFailed
   }
 
-  func request(_ baseUrl: String, path: String, username: String, password: String) -> Observable<Data> {
+  func request(_ baseUrl: String, path: String, username: String, password: String) -> AnyPublisher<Data, APIError> {
     let fullUrlString = baseUrl + "/" + path + ".json"
     guard let url = URL(string: fullUrlString) else {
-      return Observable.error(APIError.requestFailed)
+      return Fail(error: APIError.requestFailed).eraseToAnyPublisher()
     }
 
     return self.requestProvider.request(url: url, formData: ["username":username, "password":password])
-      .catchError { [weak self] error -> Observable<Data> in
-        guard let self = self else { return Observable.error(APIError.requestFailed) }
+      .mapError { [weak self] error in
+        guard let self = self else { return .requestFailed }
         AppLog.info("Network request error: \(error)")
-        return Observable.error(self.convertNetworkError(error))
-    }
+        return self.convertNetworkError(error)
+      }
+      .eraseToAnyPublisher()
   }
 
-  func request(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> Observable<Data> {
-    let url: URL
-    do {
-      url = try EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems)
-    } catch {
-      return Observable.error(error)
+  func request(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> AnyPublisher<Data, APIError> {
+    guard let url = EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems) else {
+      return Fail(error: APIError.failedToCreateURL).eraseToAnyPublisher()
     }
 
     return self.requestProvider.request(url: url)
-      .catchError { [weak self] error -> Observable<Data> in
-        guard let self = self else { return Observable.error(APIError.requestFailed) }
+      .mapError { [weak self] error in
+        guard let self = self else { return APIError.requestFailed }
         AppLog.info("Network request error: \(error)")
-        return Observable.error(self.convertNetworkError(error))
+        return self.convertNetworkError(error)
       }
+      .eraseToAnyPublisher()
   }
 
   class func extractAPIDetailsFromURLString(_ url: String) -> AccountCredentials? {

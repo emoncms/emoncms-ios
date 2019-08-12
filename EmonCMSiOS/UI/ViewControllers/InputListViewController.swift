@@ -7,16 +7,14 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
-import RxDataSources
+import Combine
 
 final class InputListViewController: UITableViewController {
 
   var viewModel: InputListViewModel!
 
-  private let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<InputListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
 
   @IBOutlet private var refreshButton: UIBarButtonItem!
   @IBOutlet private var lastUpdatedLabel: UILabel!
@@ -41,18 +39,18 @@ final class InputListViewController: UITableViewController {
 
     // Annoyingly this has to be in DIDappear and not WILLappear, otherwise it causes a weird
     // navigation bar bug when going back to the feed list view from a feed detail view.
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupDataSource() {
     self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
 
-    let dataSource = RxTableViewSectionedReloadDataSource<InputListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<InputListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
         cell.titleLabel.text = item.name
@@ -86,23 +84,24 @@ final class InputListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.inputs
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+    let items = self.viewModel.$inputs
+      .eraseToAnyPublisher()
+
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
   }
 
   private func setupBindings() {
     let refreshControl = self.refreshControl!
-    let appBecameActive = NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification).becomeVoid()
-    Observable.of(self.refreshButton.rx.tap.asObservable(),
-                  refreshControl.rx.controlEvent(.valueChanged).asObservable(),
-                  appBecameActive)
-      .merge()
-      .bind(to: self.viewModel.refresh)
-      .disposed(by: self.disposeBag)
+    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification).becomeVoid()
+    Publishers.Merge3(self.refreshButton.publisher().becomeVoid(),
+                      refreshControl.publisher(for: .valueChanged).becomeVoid(),
+                      appBecameActive)
+      .subscribe(self.viewModel.refresh)
+      .store(in: &self.cancellables)
 
     let dateFormatter = DateFormatter()
-    self.viewModel.updateTime
+    self.viewModel.$updateTime
       .map { time in
         var string = "Last updated: "
         if let time = time {
@@ -119,26 +118,32 @@ final class InputListViewController: UITableViewController {
         }
         return string
       }
-      .drive(self.lastUpdatedLabel.rx.text)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.text, on: self.lastUpdatedLabel)
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
-      .drive(refreshControl.rx.isRefreshing)
-      .disposed(by: self.disposeBag)
+      .sink { refreshing in
+        if refreshing {
+          refreshControl.beginRefreshing()
+        } else {
+          refreshControl.endRefreshing()
+        }
+      }
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
       .map { !$0 }
-      .drive(self.refreshButton.rx.isEnabled)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.isEnabled, on: self.refreshButton)
+      .store(in: &self.cancellables)
 
-    Driver.combineLatest(
-      self.viewModel.serverNeedsUpdate
-        .distinctUntilChanged(),
-      self.viewModel.inputs
+    Publishers.CombineLatest(
+      self.viewModel.$serverNeedsUpdate
+        .removeDuplicates(),
+      self.viewModel.$inputs
         .map { $0.isEmpty }
-        .distinctUntilChanged()
+        .removeDuplicates()
     )
-      .drive(onNext: { [weak self] serverNeedsUpdate, inputsEmpty in
+      .sink { [weak self] serverNeedsUpdate, inputsEmpty in
         guard let self = self else { return }
 
         let showLabel = serverNeedsUpdate || inputsEmpty
@@ -198,8 +203,8 @@ final class InputListViewController: UITableViewController {
             emptyLabel.removeFromSuperview()
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
 }
