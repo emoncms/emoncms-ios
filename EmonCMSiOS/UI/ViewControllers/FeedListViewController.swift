@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FeedListViewController.swift
 //  EmonCMSiOS
 //
 //  Created by Matt Galloway on 11/09/2016.
@@ -7,16 +7,14 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Charts
 
 final class FeedListViewController: UIViewController {
 
   var viewModel: FeedListViewModel!
-  let chartViewModel = BehaviorRelay<FeedChartViewModel?>(value: nil)
+  let chartViewModel = CurrentValueSubject<FeedChartViewModel?, Never>(nil)
 
   @IBOutlet private var tableView: UITableView!
   @IBOutlet private var refreshButton: UIBarButtonItem!
@@ -30,9 +28,10 @@ final class FeedListViewController: UIViewController {
   @IBOutlet private var chartSegmentedControl: UISegmentedControl!
 
   private let searchController = UISearchController(searchResultsController: nil)
-  private let searchSubject = BehaviorSubject<String>(value: "")
+  private let searchSubject = CurrentValueSubject<String, Never>("")
 
-  private let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<FeedListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
 
   private var emptyLabel: UILabel?
 
@@ -98,18 +97,18 @@ final class FeedListViewController: UIViewController {
 
     // Annoyingly this has to be in DIDappear and not WILLappear, otherwise it causes a weird
     // navigation bar bug when going back to the feed list view from a feed detail view.
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(animated)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupDataSource() {
     self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
 
-    let dataSource = RxTableViewSectionedReloadDataSource<FeedListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<FeedListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
         cell.titleLabel.text = item.name
@@ -144,30 +143,34 @@ final class FeedListViewController: UIViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.feeds
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+    let items = self.viewModel.$feeds
+      .eraseToAnyPublisher()
 
-    self.tableView.rx.itemSelected
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
+
+    self.dataSource
+      .itemSelected
       .map { [weak self] indexPath -> FeedChartViewModel? in
-        guard let strongSelf = self else { return nil }
+        guard let self = self else { return nil }
 
-        strongSelf.searchController.searchBar.resignFirstResponder()
+        self.searchController.searchBar.resignFirstResponder()
 
-        let item = try! dataSource.model(at: indexPath) as! FeedListViewModel.ListItem
-        let chartViewModel = strongSelf.viewModel.feedChartViewModel(forItem: item)
+        let item = self.dataSource.model(at: indexPath)
+        let chartViewModel = self.viewModel.feedChartViewModel(forItem: item)
         return chartViewModel
       }
-      .bind(to: self.chartViewModel)
-      .disposed(by: self.disposeBag)
+      .subscribe(self.chartViewModel)
+      .store(in: &self.cancellables)
 
-    self.tableView.rx.itemAccessoryButtonTapped
-      .subscribe(onNext: { [weak self] indexPath in
-        guard let strongSelf = self else { return }
-        let item = try! dataSource.model(at: indexPath)
-        strongSelf.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
-      })
-      .disposed(by: self.disposeBag)
+    self.dataSource
+      .itemAccessoryButtonTapped
+      .sink { [weak self] indexPath in
+        guard let self = self else { return }
+        let item = dataSource.model(at: indexPath)
+        self.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupDragRecogniser() {
@@ -176,7 +179,7 @@ final class FeedListViewController: UIViewController {
 
     var beginConstant = CGFloat(0)
 
-    let dragProgress = gestureRecogniser.rx.event
+    let dragProgress = gestureRecogniser.publisher()
       .map { [weak self] recognizer -> (CGFloat, CGFloat, Bool) in
         guard let self = self else { return (0, 0, false) }
 
@@ -214,15 +217,14 @@ final class FeedListViewController: UIViewController {
     let tapRecogniser = UITapGestureRecognizer()
     self.chartLabelContainerView.addGestureRecognizer(tapRecogniser)
 
-    let tapProgress = Observable.merge(
-      tapRecogniser.rx.event.becomeVoid(),
-      self.tableView.rx.itemSelected.becomeVoid()
+    let tapProgress = Publishers.Merge(
+      tapRecogniser.publisher().becomeVoid(),
+      self.dataSource.itemSelected.becomeVoid()
       )
       .map { _ in (CGFloat(1), CGFloat(0), true) }
 
-    Observable.merge(dragProgress, tapProgress)
-      .asDriver(onErrorJustReturn: (0, 0, false))
-      .drive(onNext: { [weak self] (progress, velocity, animated) in
+    Publishers.Merge(dragProgress, tapProgress)
+      .sink { [weak self] (progress, velocity, animated) in
         guard let self = self else { return }
 
         let displacement = self.chartContainerMinDisplacement + (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
@@ -238,8 +240,8 @@ final class FeedListViewController: UIViewController {
                         self.chartLabelContainerView.alpha = 1.0 - progress
                         self.view.layoutIfNeeded()
         }, completion: nil)
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupChartView() {
@@ -249,16 +251,15 @@ final class FeedListViewController: UIViewController {
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
-    let appBecameActive = NotificationCenter.default.rx.notification(UIApplication.didBecomeActiveNotification).becomeVoid()
-    Observable.of(self.refreshButton.rx.tap.asObservable(),
-                  refreshControl.rx.controlEvent(.valueChanged).asObservable(),
-                  appBecameActive)
-      .merge()
-      .bind(to: self.viewModel.refresh)
-      .disposed(by: self.disposeBag)
+    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification).becomeVoid()
+    Publishers.Merge3(self.refreshButton.publisher().becomeVoid(),
+                      refreshControl.publisher(for: .valueChanged).becomeVoid(),
+                      appBecameActive)
+      .subscribe(self.viewModel.refresh)
+      .store(in: &self.cancellables)
 
     let dateFormatter = DateFormatter()
-    self.viewModel.updateTime
+    self.viewModel.$updateTime
       .map { time in
         var string = "Last updated: "
         if let time = time {
@@ -275,27 +276,34 @@ final class FeedListViewController: UIViewController {
         }
         return string
       }
-      .drive(self.lastUpdatedLabel.rx.text)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.text, on: self.lastUpdatedLabel)
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
-      .drive(refreshControl.rx.isRefreshing)
-      .disposed(by: self.disposeBag)
+      .sink { refreshing in
+        if refreshing {
+          refreshControl.beginRefreshing()
+        } else {
+          refreshControl.endRefreshing()
+        }
+      }
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
       .map { !$0 }
-      .drive(self.refreshButton.rx.isEnabled)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.isEnabled, on: self.refreshButton)
+      .store(in: &self.cancellables)
 
     self.searchSubject
-      .bind(to: self.viewModel.searchTerm)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.searchTerm, on: self.viewModel)
+      .store(in: &self.cancellables)
 
-    self.viewModel.feeds
+    self.viewModel.$feeds
       .map {
         $0.count == 0
       }
-      .drive(onNext: { [weak self] empty in
+      .removeDuplicates()
+      .sink { [weak self] empty in
         guard let self = self else { return }
 
         self.tableView.tableHeaderView?.isHidden = empty
@@ -347,22 +355,21 @@ final class FeedListViewController: UIViewController {
             emptyLabel.removeFromSuperview()
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupChartBindings() {
     self.chartViewModel
-      .asObservable()
-      .flatMapLatest { chartViewModel -> Observable<Bool> in
+      .map { chartViewModel -> AnyPublisher<Bool, Never> in
         if let chartViewModel = chartViewModel {
-          return chartViewModel.isRefreshing.throttle(.milliseconds(300)).asObservable()
+          return chartViewModel.isRefreshing.throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true).eraseToAnyPublisher()
         } else {
-          return Observable<Bool>.never()
+          return Empty<Bool, Never>(completeImmediately: false).eraseToAnyPublisher()
         }
       }
-      .asDriver(onErrorJustReturn: false)
-      .drive(onNext: { [weak self] refreshing in
+      .switchToLatest()
+      .sink { [weak self] refreshing in
         guard let self = self else { return }
 
         if refreshing {
@@ -372,12 +379,11 @@ final class FeedListViewController: UIViewController {
           self.chartSpinner.stopAnimating()
           self.chartView.alpha = 1.0
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
 
     self.chartViewModel
-      .asDriver()
-      .drive(onNext: { [weak self] chartViewModel in
+      .sink { [weak self] chartViewModel in
         guard let self = self else { return }
 
         if chartViewModel == nil {
@@ -385,28 +391,26 @@ final class FeedListViewController: UIViewController {
         } else {
           self.chartView.noDataText = "No data"
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
 
     self.chartViewModel
-      .asObservable()
-      .flatMapLatest { [weak self] chartViewModel -> Observable<()> in
-        let disposeBag = CompositeDisposable()
+      .map { [weak self] chartViewModel -> AnyPublisher<(), Never> in
+        var cancellables = Set<AnyCancellable>()
 
         if let self = self, let chartViewModel = chartViewModel {
-          let disposable1 = self.chartSegmentedControl.rx.selectedSegmentIndex
-            .startWith(self.chartSegmentedControl.selectedSegmentIndex)
+          let cancellable1 = self.chartSegmentedControl.publisher(for: \.selectedSegmentIndex)
             .map {
               DateRange.from1h8hDMYSegmentedControlIndex($0)
             }
-            .bind(to: chartViewModel.dateRange)
-          _ = disposeBag.insert(disposable1)
+            .assign(to: \.dateRange, on: chartViewModel)
+          cancellables.insert(cancellable1)
 
-          let disposable2 = chartViewModel.dataPoints
-            .drive(onNext: { [weak self] dataPoints in
-              guard let strongSelf = self else { return }
+          let cancellable2 = chartViewModel.$dataPoints
+            .sink { [weak self] dataPoints in
+              guard let self = self else { return }
 
-              let chartView = strongSelf.chartView!
+              let chartView = self.chartView!
 
               guard !dataPoints.isEmpty else {
                 chartView.data = nil
@@ -436,18 +440,21 @@ final class FeedListViewController: UIViewController {
               chartView.data = data
 
               chartView.notifyDataSetChanged()
-            })
-          chartViewModel.active.accept(true)
-          _ = disposeBag.insert(disposable2)
+            }
+          chartViewModel.active = true
+          cancellables.insert(cancellable2)
         }
 
-        return Observable<()>.never()
-          .do(onDispose: {
-            disposeBag.dispose()
+        return Empty<Void, Never>(completeImmediately: false)
+          .handleEvents(receiveCancel: {
+            cancellables.forEach { $0.cancel() }
+            cancellables.removeAll()
           })
+          .eraseToAnyPublisher()
       }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .switchToLatest()
+      .sink { _ in }
+      .store(in: &self.cancellables)
   }
 
 }
@@ -468,7 +475,7 @@ extension FeedListViewController {
 extension FeedListViewController: UISearchResultsUpdating {
 
   public func updateSearchResults(for searchController: UISearchController) {
-    searchSubject.onNext(searchController.searchBar.text ?? "")
+    searchSubject.send(searchController.searchBar.text ?? "")
   }
 
 }

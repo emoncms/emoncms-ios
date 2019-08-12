@@ -7,9 +7,7 @@
 //
 
 import Foundation
-
-import RxSwift
-import RxCocoa
+import Combine
 
 final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
 
@@ -25,32 +23,12 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
     self.init(session: session)
   }
 
-  private func convertError(_ error: Error) -> HTTPRequestProviderError {
-    if let error = error as? RxCocoaURLError {
-      switch error {
-      case .httpRequestFailed(let response, _):
-        return .httpError(code: response.statusCode)
-      case .nonHTTPResponse(_):
-        return .networkError
-      case .unknown, .deserializationError(_):
-        return .unknown
-      }
-    } else {
-      let nsError = error as NSError
-      if nsError.domain == NSURLErrorDomain && nsError.code == NSURLErrorAppTransportSecurityRequiresSecureConnection {
-        return .atsFailed
-      } else {
-        return .unknown
-      }
-    }
-  }
-
-  func request(url: URL) -> Observable<Data> {
+  func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
     let request = URLRequest(url: url)
     return self.data(forRequest: request)
   }
 
-  func request(url: URL, formData: [String:String]) -> Observable<Data> {
+  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
 
@@ -60,12 +38,35 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
     return self.data(forRequest: request)
   }
 
-  private func data(forRequest request: URLRequest) -> Observable<Data> {
-    return self.session.rx.data(request: request)
-      .catchError { [weak self] error in
-        guard let self = self else { return Observable.error(HTTPRequestProviderError.unknown) }
-        return Observable.error(self.convertError(error))
+  private func data(forRequest request: URLRequest) -> AnyPublisher<Data, HTTPRequestProviderError> {
+    return self.session.dataTaskPublisher(for: request)
+      .tryMap { data, response -> Data in
+        guard let httpResponse = response as? HTTPURLResponse else {
+          throw HTTPRequestProviderError.networkError
+        }
+        guard 200..<300 ~= httpResponse.statusCode else {
+          throw HTTPRequestProviderError.httpError(code: httpResponse.statusCode)
+        }
+        return data
       }
+      .mapError{ error -> HTTPRequestProviderError in
+        if let e = error as? HTTPRequestProviderError {
+          return e
+        }
+
+        if let e = error as? URLError {
+          switch e.code {
+          case URLError.appTransportSecurityRequiresSecureConnection:
+            return .atsFailed
+          default:
+            return .unknown
+          }
+        }
+
+        return .unknown
+      }
+      .receive(on: DispatchQueue.main)
+      .eraseToAnyPublisher()
   }
 
 }

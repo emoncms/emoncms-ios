@@ -7,13 +7,10 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Realm
 import RealmSwift
-import RxRealm
 
 final class FeedListViewModel {
 
@@ -32,17 +29,17 @@ final class FeedListViewModel {
   private let realm: Realm
   private let feedUpdateHelper: FeedUpdateHelper
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
-  let refresh = ReplaySubject<()>.create(bufferSize: 1)
-  let searchTerm = BehaviorRelay<String>(value: "")
+  @Published var active = false
+  let refresh = PassthroughSubject<Void, Never>()
+  @Published var searchTerm = ""
 
   // Outputs
-  private(set) var feeds: Driver<[Section]>
-  private(set) var updateTime: Driver<Date?>
-  private(set) var isRefreshing: Driver<Bool>
+  @Published private(set) var feeds: [Section] = []
+  @Published private(set) var updateTime: Date? = nil
+  let isRefreshing: AnyPublisher<Bool, Never>
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -51,47 +48,51 @@ final class FeedListViewModel {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.feedUpdateHelper = FeedUpdateHelper(realmController: realmController, account: account, api: api)
 
-    self.feeds = Driver.never()
-    self.updateTime = Driver.never()
-    self.isRefreshing = Driver.never()
+    let isRefreshingIndicator = ActivityIndicatorCombine()
+    self.isRefreshing = isRefreshingIndicator.asPublisher()
 
-    self.feeds = self.searchTerm
-      .distinctUntilChanged()
-      .flatMapLatest { searchTerm -> Observable<[Feed]> in
+    $searchTerm
+      .removeDuplicates()
+      .map { searchTerm -> AnyPublisher<[Feed], Never> in
         var results = self.realm.objects(Feed.self)
         let trimmedSearchTerm = searchTerm.trimmingCharacters(in: .whitespacesAndNewlines)
         if trimmedSearchTerm != "" {
           results = results.filter("name CONTAINS[c] %@", trimmedSearchTerm)
         }
         results = results.sorted(byKeyPath: #keyPath(Feed.name))
-        return Observable.array(from: results)
+        return Publishers.array(from: results)
+          .catch { error -> AnyPublisher<[Feed], Never> in
+            AppLog.error("Query errored when it shouldn't! \(error)")
+            return Just<[Feed]>([]).eraseToAnyPublisher()
+          }
+          .eraseToAnyPublisher()
       }
+      .switchToLatest()
       .map(self.feedsToSections)
-      .asDriver(onErrorJustReturn: [])
+      .sink(
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.feeds = items
+          self.updateTime = Date()
+        })
+      .store(in: &self.cancellables)
 
-    self.updateTime = self.feeds
-      .map { _ in Date() }
-      .startWith(nil)
-      .asDriver(onErrorJustReturn: Date())
-
-    let isRefreshing = ActivityIndicator()
-    self.isRefreshing = isRefreshing.asDriver()
-
-    let becameActive = self.active.asObservable()
-      .distinctUntilChanged()
+    let becameActive = $active
       .filter { $0 == true }
+      .removeDuplicates()
       .becomeVoid()
 
-    Observable.of(self.refresh, becameActive)
-      .merge()
-      .flatMapLatest { [weak self] () -> Observable<()> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.feedUpdateHelper.updateFeeds()
-          .catchErrorJustReturn(())
-          .trackActivity(isRefreshing)
+    Publishers.Merge(self.refresh, becameActive)
+      .map { [weak self] () -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
+        return self.feedUpdateHelper.updateFeeds()
+          .replaceError(with: ())
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
       }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .switchToLatest()
+      .sink(receiveValue: { _ in })
+      .store(in: &self.cancellables)
   }
 
   private func feedsToSections(_ feeds: [Feed]) -> [Section] {

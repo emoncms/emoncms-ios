@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
-import RxDataSources
+import Combine
 
 final class AccountListViewController: UITableViewController {
 
@@ -18,7 +15,8 @@ final class AccountListViewController: UITableViewController {
 
   private var emptyLabel: UILabel?
 
-  private let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<AccountListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
   private var firstLoad = true
 
   private enum Segues: String {
@@ -42,7 +40,7 @@ final class AccountListViewController: UITableViewController {
   }
 
   private func setupDataSource() {
-    let dataSource = RxTableViewSectionedReloadDataSource<AccountListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<AccountListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
@@ -56,51 +54,51 @@ final class AccountListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.accounts
+    let items = self.viewModel.$accounts
       .map { [AccountListViewModel.Section(model: "", items: $0)] }
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+      .eraseToAnyPublisher()
+
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
   }
 
   private func setupBindings() {
-    self.tableView.rx
-      .modelSelected(AccountListViewModel.ListItem.self)
-      .subscribe(onNext: { [weak self] in
+    self.dataSource
+      .modelSelected
+      .sink { [weak self] in
         guard let self = self else { return }
         if self.tableView.isEditing {
           self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: $0.accountId, animated: true))
         } else {
           self.login(toAccountWithId: $0.accountId)
         }
-      })
-      .disposed(by: self.disposeBag)
-
-    self.tableView.rx
-      .itemDeleted
-      .map { [unowned self] in
-        let item: AccountListViewModel.ListItem = try! self.tableView.rx.model(at: $0)
-        return item.accountId
       }
-      .flatMap { [unowned self] in
-        self.viewModel.deleteAccount(withId: $0)
-          .catchErrorJustReturn(())
-      }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
 
-    self.viewModel.accounts
+    self.dataSource
+      .modelDeleted
+      .flatMap { [weak self] item -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return self.viewModel.deleteAccount(withId: item.accountId).replaceError(with: ()).eraseToAnyPublisher()
+      }
+      .sink() { _ in }
+      .store(in: &self.cancellables)
+
+    self.viewModel.$accounts
+      .dropFirst()
       .map {
         $0.count == 0
       }
-      .drive(onNext: { [weak self] empty in
-        guard let strongSelf = self else { return }
+      .removeDuplicates()
+      .sink { [weak self] empty in
+        guard let self = self else { return }
 
-        if strongSelf.firstLoad {
-          strongSelf.firstLoad = false
+        if self.firstLoad {
+          self.firstLoad = false
           if empty {
-            strongSelf.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: false))
-          } else if let selectedAccountId = strongSelf.viewModel.lastSelectedAccountId {
-            strongSelf.login(toAccountWithId: selectedAccountId, animated: false)
+            self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: false))
+          } else if let selectedAccountId = self.viewModel.lastSelectedAccountId {
+            self.login(toAccountWithId: selectedAccountId, animated: false)
           }
         }
 
@@ -110,9 +108,9 @@ final class AccountListViewController: UITableViewController {
           emptyLabel.text = "Tap + to add a new account"
           emptyLabel.numberOfLines = 0
           emptyLabel.textColor = .lightGray
-          strongSelf.emptyLabel = emptyLabel
+          self.emptyLabel = emptyLabel
 
-          let tableView = strongSelf.tableView!
+          let tableView = self.tableView!
           tableView.addSubview(emptyLabel)
           tableView.addConstraint(NSLayoutConstraint(
             item: emptyLabel,
@@ -147,24 +145,24 @@ final class AccountListViewController: UITableViewController {
             multiplier: 1,
             constant: 44.0 * 1.5))
         } else {
-          if let emptyLabel = strongSelf.emptyLabel {
+          if let emptyLabel = self.emptyLabel {
             emptyLabel.removeFromSuperview()
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupNavigation() {
     self.navigationItem.leftBarButtonItem = self.editButtonItem
 
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
-    rightBarButtonItem.rx.tap
-      .subscribe(onNext: { [weak self] _ in
+    rightBarButtonItem.publisher()
+      .sink { [weak self] _ in
         guard let self = self else { return }
         self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: true))
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
@@ -203,20 +201,19 @@ final class AccountListViewController: UITableViewController {
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.viewModel = viewModels.settings
     settingsViewController.switchAccount
-      .asObservable()
-      .flatMap { logout -> Observable<()> in
+      .flatMap { logout -> AnyPublisher<(), Never> in
         if logout {
-          return self.viewModel.deleteAccount(withId: accountId).becomeVoid()
+          return self.viewModel.deleteAccount(withId: accountId).becomeVoid().eraseToAnyPublisher()
         } else {
-          return Observable.just(())
+          return Just(()).eraseToAnyPublisher()
         }
       }
-      .asDriver(onErrorJustReturn: ())
-      .drive(onNext: { [weak self] _ in
+      .replaceError(with: ())
+      .sink { [weak self] _ in
         guard let self = self else { return }
         self.dismiss(animated: true, completion: nil)
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
 
     self.present(rootViewController, animated: animated, completion: nil)
   }
@@ -232,15 +229,15 @@ extension AccountListViewController {
       let viewModel = self.viewModel.addAccountViewModel(accountId: data?.accountId)
       addAccountViewController.viewModel = viewModel
       addAccountViewController.finished
-        .drive(onNext: { [weak self] accountId in
+        .sink { [weak self] accountId in
           guard let self = self else { return }
           self.navigationController?.popToViewController(self, animated: (data?.animated ?? true))
           if data?.accountId == nil {
             guard let accountId = accountId else { return }
             self.login(toAccountWithId: accountId)
           }
-        })
-        .disposed(by: self.disposeBag)
+        }
+        .store(in: &self.cancellables)
     }
   }
 

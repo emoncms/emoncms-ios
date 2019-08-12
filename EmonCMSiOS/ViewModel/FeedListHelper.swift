@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class FeedListHelper {
@@ -25,14 +24,14 @@ final class FeedListHelper {
   private let realm: Realm
   private let feedUpdateHelper: FeedUpdateHelper
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
-  let refresh = ReplaySubject<()>.create(bufferSize: 1)
+  let refresh = PassthroughSubject<Void, Never>()
 
   // Outputs
-  private(set) var feeds: Driver<[FeedListItem]>
-  private(set) var isRefreshing: Driver<Bool>
+  @Published private(set) var feeds: [FeedListItem] = []
+  let isRefreshing: AnyPublisher<Bool, Never>
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -41,25 +40,32 @@ final class FeedListHelper {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.feedUpdateHelper = FeedUpdateHelper(realmController: realmController, account: account, api: api)
 
-    self.feeds = Driver.never()
-    self.isRefreshing = Driver.never()
+    let isRefreshingIndicator = ActivityIndicatorCombine()
+    self.isRefreshing = isRefreshingIndicator.asPublisher()
 
-    self.feeds = Observable.array(from: self.realm.objects(Feed.self))
+    Publishers.array(from: self.realm.objects(Feed.self))
       .map(self.feedsToListItems)
-      .asDriver(onErrorJustReturn: [])
-
-    let isRefreshing = ActivityIndicator()
-    self.isRefreshing = isRefreshing.asDriver()
+      .sink(
+        receiveCompletion: { error in
+          AppLog.error("Query errored when it shouldn't! \(error)")
+        },
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.feeds = items
+        })
+      .store(in: &self.cancellables)
 
     self.refresh
-      .flatMapLatest { [weak self] () -> Observable<()> in
-        guard let strongSelf = self else { return Observable.empty() }
-        return strongSelf.feedUpdateHelper.updateFeeds()
-          .catchErrorJustReturn(())
-          .trackActivity(isRefreshing)
+      .map { [weak self] () -> AnyPublisher<(), Never> in
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
+        return self.feedUpdateHelper.updateFeeds()
+          .replaceError(with: ())
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
       }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .switchToLatest()
+      .sink(receiveValue: { _ in })
+      .store(in: &self.cancellables)
   }
 
   private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {

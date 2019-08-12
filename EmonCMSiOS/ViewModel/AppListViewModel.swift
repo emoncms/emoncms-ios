@@ -7,11 +7,10 @@
 //
 
 import Foundation
+import UIKit
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
-import RxDataSources
 
 final class AppListViewModel {
 
@@ -28,12 +27,12 @@ final class AppListViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
 
   // Outputs
-  private(set) var apps: Driver<[ListItem]>
+  @Published private(set) var apps: [ListItem] = []
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -41,13 +40,19 @@ final class AppListViewModel {
     self.api = api
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
 
-    self.apps = Driver.never()
-
     let appQuery = self.realm.objects(AppData.self)
       .sorted(byKeyPath: #keyPath(AppData.name), ascending: true)
-    self.apps = Observable.array(from: appQuery)
+    Publishers.array(from: appQuery)
       .map(self.appsToListItems)
-      .asDriver(onErrorJustReturn: [])
+      .sink(
+        receiveCompletion: { error in
+          AppLog.error("Query errored when it shouldn't! \(error)")
+        },
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.apps = items
+        })
+      .store(in: &self.cancellables)
   }
 
   private func appsToListItems(_ apps: [AppData]) -> [ListItem] {
@@ -57,16 +62,19 @@ final class AppListViewModel {
     return listItems
   }
 
-  func deleteApp(withId id: String) -> Observable<()> {
+  func deleteApp(withId id: String) -> AnyPublisher<(), Never> {
     let realm = self.realm
-    return Observable.deferred {
-      if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
-        try realm.write {
-          realm.delete(app)
+    return Deferred { () -> Just<()> in
+      do {
+        if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
+          try realm.write {
+            realm.delete(app)
+          }
         }
-      }
-      return Observable.just(())
-    }
+      } catch {}
+
+      return Just(())
+    }.eraseToAnyPublisher()
   }
 
   func viewController(forDataWithId id: String, ofCategory category: AppCategory) -> UIViewController {

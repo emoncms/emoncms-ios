@@ -7,13 +7,10 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
-import RxDataSources
 import Realm
 import RealmSwift
-import RxRealm
 
 final class AccountListViewModel {
 
@@ -30,12 +27,12 @@ final class AccountListViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   // Inputs
 
   // Outputs
-  private(set) var accounts: Driver<[ListItem]>
+  @Published private(set) var accounts: [ListItem] = []
 
   init(realmController: RealmController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -43,15 +40,21 @@ final class AccountListViewModel {
     self.api = api
     self.realm = realmController.createMainRealm()
 
-    self.accounts = Driver.never()
-
     self.migrateOldAccountIfNeeded()
 
     let accountQuery = self.realm.objects(Account.self)
       .sorted(byKeyPath: #keyPath(Account.name), ascending: true)
-    self.accounts = Observable.array(from: accountQuery)
+    Publishers.array(from: accountQuery)
       .map(self.accountsToListItems)
-      .asDriver(onErrorJustReturn: [])
+      .sink(
+        receiveCompletion: { error in
+          AppLog.error("Query errored when it shouldn't! \(error)")
+        },
+        receiveValue: { [weak self] items in
+          guard let self = self else { return }
+          self.accounts = items
+        })
+      .store(in: &self.cancellables)
   }
 
   private func migrateOldAccountIfNeeded() {
@@ -128,21 +131,23 @@ final class AccountListViewModel {
     return AddAccountViewModel(realmController: self.realmController, api: self.api, accountId: accountId)
   }
 
-  func deleteAccount(withId id: String) -> Observable<()> {
+  func deleteAccount(withId id: String) -> AnyPublisher<(), Never> {
     let realm = self.realm
-    return Observable.deferred {
-      if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
-        try self.keychainController.logout(ofAccountWithId: id)
+    return Deferred { () -> Just<()> in
+      do {
+        if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
+          try self.keychainController.logout(ofAccountWithId: id)
 
-        let todayWidgetFeeds = realm.objects(TodayWidgetFeed.self).filter("accountId = %@", account.uuid)
-        try realm.write {
-          realm.delete(account)
-          realm.delete(todayWidgetFeeds)
+          let todayWidgetFeeds = realm.objects(TodayWidgetFeed.self).filter("accountId = %@", account.uuid)
+          try realm.write {
+            realm.delete(account)
+            realm.delete(todayWidgetFeeds)
+          }
         }
-      }
+      } catch {}
 
-      return Observable.just(())
-    }
+      return Just(())
+    }.eraseToAnyPublisher()
   }
 
 }

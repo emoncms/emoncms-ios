@@ -7,13 +7,12 @@
 //
 
 import Foundation
-
-import RxSwift
+import Combine
 
 extension EmonCMSAPI {
 
-  func userAuth(url: String, username: String, password: String) -> Observable<String> {
-    return self.request(url, path: "user/auth", username: username, password: password).map { resultData -> String in
+  func userAuth(url: String, username: String, password: String) -> AnyPublisher<String, APIError> {
+    return self.request(url, path: "user/auth", username: username, password: password).tryMap { resultData -> String in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String:Any] else {
           throw APIError.invalidResponse
@@ -29,6 +28,11 @@ extension EmonCMSAPI {
 
       return apiKey
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
 }

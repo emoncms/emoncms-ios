@@ -7,13 +7,12 @@
 //
 
 import Foundation
-
-import RxSwift
+import Combine
 
 extension EmonCMSAPI {
 
-  func feedList(_ account: AccountCredentials) -> Observable<[Feed]> {
-    return self.request(account, path: "feed/list").map { resultData -> [Feed] in
+  func feedList(_ account: AccountCredentials) -> AnyPublisher<[Feed], APIError> {
+    return self.request(account, path: "feed/list").tryMap { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
           throw APIError.invalidResponse
@@ -29,14 +28,19 @@ extension EmonCMSAPI {
 
       return feeds
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
-  func feedFields(_ account: AccountCredentials, id: String) -> Observable<Feed> {
+  func feedFields(_ account: AccountCredentials, id: String) -> AnyPublisher<Feed, APIError> {
     let queryItems = [
       "id": id
     ]
 
-    return self.request(account, path: "feed/aget", queryItems: queryItems).map { resultData -> Feed in
+    return self.request(account, path: "feed/aget", queryItems: queryItems).tryMap { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
@@ -45,15 +49,20 @@ extension EmonCMSAPI {
 
       return feed
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
-  func feedField(_ account: AccountCredentials, id: String, fieldName: String) -> Observable<String> {
+  func feedField(_ account: AccountCredentials, id: String, fieldName: String) -> AnyPublisher<String, APIError> {
     let queryItems = [
       "id": id,
       "field": fieldName
     ]
 
-    return self.request(account, path: "feed/get", queryItems: queryItems).map { resultData -> String in
+    return self.request(account, path: "feed/get", queryItems: queryItems).tryMap { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = json as? String else {
           throw APIError.invalidResponse
@@ -61,6 +70,11 @@ extension EmonCMSAPI {
 
       return value
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
   private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint<Double>] {
@@ -81,7 +95,7 @@ extension EmonCMSAPI {
     return dataPoints
   }
 
-  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> Observable<[DataPoint<Double>]> {
+  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> AnyPublisher<[DataPoint<Double>], APIError> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -89,12 +103,17 @@ extension EmonCMSAPI {
       "interval": "\(interval)"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint<Double>] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
-  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> Observable<[DataPoint<Double>]> {
+  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> AnyPublisher<[DataPoint<Double>], APIError> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -102,17 +121,22 @@ extension EmonCMSAPI {
       "mode": "daily"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).map { resultData -> [DataPoint<Double>] in
+    return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
       return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
-  func feedValue(_ account: AccountCredentials, id: String) -> Observable<Double> {
+  func feedValue(_ account: AccountCredentials, id: String) -> AnyPublisher<Double, APIError> {
     let queryItems = [
       "id": id
     ]
 
-    return self.request(account, path: "feed/value", queryItems: queryItems).map { resultData -> Double in
+    return self.request(account, path: "feed/value", queryItems: queryItems).tryMap { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = Double.from(json) else {
           throw APIError.invalidResponse
@@ -120,14 +144,19 @@ extension EmonCMSAPI {
 
       return value
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
-  func feedValue(_ account: AccountCredentials, ids: [String]) -> Observable<[String:Double]> {
+  func feedValue(_ account: AccountCredentials, ids: [String]) -> AnyPublisher<[String:Double], APIError> {
     let queryItems = [
       "ids": ids.joined(separator: ",")
     ]
 
-    return self.request(account, path: "feed/fetch", queryItems: queryItems).map { resultData -> [String:Double] in
+    return self.request(account, path: "feed/fetch", queryItems: queryItems).tryMap { resultData -> [String:Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let array = json as? [Any] else {
           throw APIError.invalidResponse
@@ -143,6 +172,11 @@ extension EmonCMSAPI {
       }
       return results
     }
+    .mapError { error -> APIError in
+      if let error = error as? APIError { return error }
+      return APIError.requestFailed
+    }
+    .eraseToAnyPublisher()
   }
 
 }

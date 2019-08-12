@@ -7,9 +7,7 @@
 //
 
 import Foundation
-
-import RxSwift
-import RxCocoa
+import Combine
 
 final class FeedChartViewModel {
 
@@ -17,50 +15,52 @@ final class FeedChartViewModel {
   private let api: EmonCMSAPI
   private let feedId: String
 
+  private var cancellables = Set<AnyCancellable>()
+
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
-  let dateRange: BehaviorRelay<DateRange>
-  let refresh = ReplaySubject<()>.create(bufferSize: 1)
+  @Published var active: Bool = false
+  @Published var dateRange: DateRange = .relative { $0.hour = -8 }
+  let refresh = PassthroughSubject<Void, Never>()
 
   // Outputs
-  private(set) var dataPoints: Driver<[DataPoint<Double>]>
-  private(set) var isRefreshing: Driver<Bool>
+  @Published private(set) var dataPoints: [DataPoint<Double>] = []
+  let isRefreshing: AnyPublisher<Bool, Never>
 
   init(account: AccountController, api: EmonCMSAPI, feedId: String) {
     self.account = account
     self.api = api
     self.feedId = feedId
 
-    self.dateRange = BehaviorRelay<DateRange>(value: DateRange.relative { $0.hour = -8 })
+    let isRefreshingIndicator = ActivityIndicatorCombine()
+    self.isRefreshing = isRefreshingIndicator.asPublisher()
 
-    self.dataPoints = Driver.empty()
-
-    let isRefreshing = ActivityIndicator()
-    self.isRefreshing = isRefreshing.asDriver()
-
-    let becameActive = self.active.asObservable()
+    let becameActive = $active
       .filter { $0 == true }
-      .distinctUntilChanged()
+      .removeDuplicates()
       .becomeVoid()
 
-    let refreshSignal = Observable.of(self.refresh, becameActive)
-      .merge()
+    let refreshSignal = Publishers.Merge(self.refresh, becameActive)
 
-    let dateRange = self.dateRange.asObservable()
+    Publishers.CombineLatest(refreshSignal, $dateRange)
+      .map { $1 }
+      .map { [weak self] dateRange -> AnyPublisher<[DataPoint<Double>], Never> in
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
 
-    self.dataPoints = Observable.combineLatest(refreshSignal, dateRange) { $1 }
-      .flatMapLatest { [weak self] dateRange -> Observable<[DataPoint<Double>]> in
-        guard let strongSelf = self else { return Observable.empty() }
-
-        let feedId = strongSelf.feedId
-
+        let feedId = self.feedId
         let (startDate, endDate) = dateRange.calculateDates()
         let interval = Int(endDate.timeIntervalSince(startDate) / 500)
-        return strongSelf.api.feedData(strongSelf.account.credentials, id: feedId, at: startDate, until: endDate, interval: interval)
-          .catchErrorJustReturn([])
-          .trackActivity(isRefreshing)
+
+        return self.api.feedData(self.account.credentials, id: feedId, at: startDate, until: endDate, interval: interval)
+          .replaceError(with: [])
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
       }
-      .asDriver(onErrorJustReturn: [])
+      .switchToLatest()
+      .sink { [weak self] dataPoints in
+        guard let self = self else { return }
+        self.dataPoints = dataPoints
+      }
+      .store(in: &self.cancellables)
   }
 
 }

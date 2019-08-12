@@ -7,9 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
+import Combine
 
 @IBDesignable final class AppTitleAndValueView: UIView {
 
@@ -79,34 +77,6 @@ import RxCocoa
                                      views: views)
 
     self.addConstraints(self.internalConstraints)
-  }
-
-}
-
-extension Reactive where Base: AppTitleAndValueView {
-
-  var title: Binder<String?> {
-    return Binder(self.base) { view, text in
-      view.title = text
-    }
-  }
-
-  var titleColor: Binder<UIColor> {
-    return Binder(self.base) { view, color in
-      view.titleColor = color
-    }
-  }
-
-  var value: Binder<String?> {
-    return Binder(self.base) { view, text in
-      view.value = text
-    }
-  }
-
-  var valueColor: Binder<UIColor> {
-    return Binder(self.base) { view, color in
-      view.valueColor = color
-    }
   }
 
 }

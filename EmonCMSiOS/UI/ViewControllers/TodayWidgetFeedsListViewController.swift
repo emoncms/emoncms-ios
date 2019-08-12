@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
-import RxDataSources
+import Combine
 
 final class TodayWidgetFeedsListViewController: UITableViewController {
 
@@ -18,7 +15,8 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
 
   private var emptyLabel: UILabel?
 
-  private let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<TodayWidgetFeedsListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
   private var firstLoad = true
 
   override func viewDidLoad() {
@@ -36,7 +34,7 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
   }
 
   private func setupDataSource() {
-    let dataSource = RxTableViewSectionedReloadDataSource<TodayWidgetFeedsListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<TodayWidgetFeedsListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ??
           UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
@@ -51,42 +49,40 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.feeds
+    let items = self.viewModel.$feeds
       .map { [TodayWidgetFeedsListViewModel.Section(model: "", items: $0)] }
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+      .eraseToAnyPublisher()
+
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
   }
 
   private func setupBindings() {
-    self.tableView.rx
-      .itemDeleted
-      .map { [unowned self] in
-        let item: TodayWidgetFeedsListViewModel.ListItem = try! self.tableView.rx.model(at: $0)
-        return item.todayWidgetFeedId
+    self.dataSource
+      .modelDeleted
+      .flatMap { [weak self] item -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return self.viewModel.deleteTodayWidgetFeed(withId: item.todayWidgetFeedId).replaceError(with: ()).eraseToAnyPublisher()
       }
-      .flatMap { [unowned self] in
-        self.viewModel.deleteTodayWidgetFeed(withId: $0)
-          .catchErrorJustReturn(())
-      }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .sink { _ in }
+      .store(in: &self.cancellables)
 
-    self.tableView.rx
+    self.dataSource
       .itemMoved
-      .flatMap { [weak self] event -> Observable<()> in
-        guard let self = self else { return Observable.empty() }
-        return self.viewModel.moveTodayWidgetFeed(fromIndex: event.sourceIndex.row, toIndex: event.destinationIndex.row)
-          .catchErrorJustReturn(())
+      .flatMap { [weak self] (sourceIndex, destinationIndex) -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return self.viewModel.moveTodayWidgetFeed(fromIndex: sourceIndex.row, toIndex: destinationIndex.row).replaceError(with: ()).eraseToAnyPublisher()
       }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .sink { _ in }
+      .store(in: &self.cancellables)
 
-    self.viewModel.feeds
+    self.viewModel.$feeds
       .map {
         $0.count == 0
       }
-      .drive(onNext: { [weak self] empty in
-        guard let strongSelf = self else { return }
+      .removeDuplicates()
+      .sink { [weak self] empty in
+        guard let self = self else { return }
 
         if empty {
           let emptyLabel = UILabel(frame: CGRect.zero)
@@ -94,9 +90,9 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
           emptyLabel.text = "Tap + to add a new feed"
           emptyLabel.numberOfLines = 0
           emptyLabel.textColor = .lightGray
-          strongSelf.emptyLabel = emptyLabel
+          self.emptyLabel = emptyLabel
 
-          let tableView = strongSelf.tableView!
+          let tableView = self.tableView!
           tableView.addSubview(emptyLabel)
           tableView.addConstraint(NSLayoutConstraint(
             item: emptyLabel,
@@ -131,37 +127,38 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
             multiplier: 1,
             constant: 44.0 * 1.5))
         } else {
-          if let emptyLabel = strongSelf.emptyLabel {
+          if let emptyLabel = self.emptyLabel {
             emptyLabel.removeFromSuperview()
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupNavigation() {
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
-    rightBarButtonItem.rx.tap
-      .flatMapLatest { [weak self] _ -> Observable<Bool> in
-        guard let self = self else { return Observable.just(false) }
+    rightBarButtonItem.publisher()
+      .map { [weak self] _ -> AnyPublisher<Bool, Never> in
+        guard let self = self else { return Just<Bool>(false).eraseToAnyPublisher() }
 
         let viewController = AppSelectFeedViewController()
         viewController.viewModel = self.viewModel.feedListViewModel()
         self.navigationController?.pushViewController(viewController, animated: true)
 
         return viewController.finished
-          .asObservable()
-          .flatMap { [weak self] feedId -> Observable<Bool> in
-            guard let self = self else { return Observable.just(false) }
-            guard let feedId = feedId else { return Observable.just(false) }
+          .flatMap { [weak self] feedId -> AnyPublisher<Bool, Never> in
+            guard let self = self else { return Just<Bool>(false).eraseToAnyPublisher() }
+            guard let feedId = feedId else { return Just<Bool>(false).eraseToAnyPublisher() }
             return self.viewModel.addTodayWidgetFeed(forFeedId: feedId)
           }
+          .eraseToAnyPublisher()
       }
-      .subscribe(onNext: { [weak self] _ in
+      .switchToLatest()
+      .sink { [weak self] _ in
         guard let self = self else { return }
         self.navigationController?.popViewController(animated: true)
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItems = [self.editButtonItem, rightBarButtonItem]
   }
 

@@ -7,8 +7,8 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
 import Charts
 import Former
 
@@ -18,7 +18,7 @@ final class FeedChartViewController: FormViewController {
 
   private var chartRow: CustomRowFormer<ChartCell<LineChartView>>!
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -35,12 +35,12 @@ final class FeedChartViewController: FormViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.active.accept(true)
+    self.viewModel.active = true
   }
 
   override func viewDidDisappear(_ animated: Bool) {
     super.viewDidDisappear(true)
-    self.viewModel.active.accept(false)
+    self.viewModel.active = false
   }
 
   private func setupFormer() {
@@ -67,7 +67,7 @@ final class FeedChartViewController: FormViewController {
   typealias DateOptionsRowTypes = (SegmentedRowFormer<FormSegmentedCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, SegmentedRowFormer<FormSegmentedCell>)
 
   private func dateOptionsFormerSection() -> DateOptionsRowTypes {
-    let startDateRange = self.viewModel.dateRange.value
+    let startDateRange = self.viewModel.dateRange
     let (startDate, endDate) = startDateRange.calculateDates()
 
     let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() {
@@ -128,10 +128,10 @@ final class FeedChartViewController: FormViewController {
   private func bindDateRangeSectionRows(_ rows: DateOptionsRowTypes) {
     let (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow) = rows
 
-    let dateRangeTypeSignal = RowFormer.rx_observable(dateRangeTypeRow.onSegmentSelected)
+    let dateRangeTypeSignal = RowFormer.publisher(dateRangeTypeRow.onSegmentSelected)
       .map { $0.0 }
-      .startWith(dateRangeTypeRow.selectedIndex)
-      .do(onNext: { s in
+      .prepend(dateRangeTypeRow.selectedIndex)
+      .handleEvents(receiveOutput: { s in
         switch s {
         case 0:
           startDateRow.enabled = true
@@ -145,20 +145,17 @@ final class FeedChartViewController: FormViewController {
           break
         }
       })
-      .share(replay: 1)
-    let startDateSignal = RowFormer.rx_observable(startDateRow.onDateChanged)
-      .startWith(startDateRow.date)
-      .share(replay: 1)
-    let endDateSignal = RowFormer.rx_observable(endDateRow.onDateChanged)
-      .startWith(endDateRow.date)
-      .share(replay: 1)
-    let dateRelativeSignal = RowFormer.rx_observable(dateRelativeRow.onSegmentSelected)
+    let startDateSignal = RowFormer.publisher(startDateRow.onDateChanged)
+      .prepend(startDateRow.date)
+    let endDateSignal = RowFormer.publisher(endDateRow.onDateChanged)
+      .prepend(endDateRow.date)
+    let dateRelativeSignal = RowFormer.publisher(dateRelativeRow.onSegmentSelected)
       .map { $0.0 }
-      .startWith(dateRelativeRow.selectedIndex)
-      .share(replay: 1)
+      .prepend(dateRelativeRow.selectedIndex)
 
-    let dateRangeSignal = Observable
-      .combineLatest(dateRangeTypeSignal, startDateSignal, endDateSignal, dateRelativeSignal) {
+    let dateRangeSignal = Publishers
+      .CombineLatest4(dateRangeTypeSignal, startDateSignal, endDateSignal, dateRelativeSignal)
+      .map {
         dateRangeType, startDate, endDate, dateRelative -> DateRange in
         switch dateRangeType {
         case 1:
@@ -167,30 +164,37 @@ final class FeedChartViewController: FormViewController {
         default:
           return .absolute(startDate, endDate)
         }
-    }
+      }
 
     dateRangeSignal
-      .bind(to: self.viewModel.dateRange)
-      .disposed(by: self.disposeBag)
+      .assign(to: \.dateRange, on: self.viewModel)
+      .store(in: &self.cancellables)
   }
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
 
-    refreshControl.rx.controlEvent(.valueChanged)
-      .bind(to: self.viewModel.refresh)
-      .disposed(by: self.disposeBag)
+    refreshControl.publisher(for: .valueChanged)
+      .becomeVoid()
+      .subscribe(self.viewModel.refresh)
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
-      .drive(refreshControl.rx.isRefreshing)
-      .disposed(by: self.disposeBag)
+      .sink { refreshing in
+        if refreshing {
+          refreshControl.beginRefreshing()
+        } else {
+          refreshControl.endRefreshing()
+        }
+      }
+      .store(in: &self.cancellables)
 
     self.viewModel.isRefreshing
-      .throttle(.milliseconds(300))
-      .drive(onNext: { [weak self] refreshing in
-        guard let strongSelf = self else { return }
+      .throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true)
+      .sink { [weak self] refreshing in
+        guard let self = self else { return }
 
-        let cell = strongSelf.chartRow.cell
+        let cell = self.chartRow.cell
 
         if refreshing {
           cell.spinner.startAnimating()
@@ -199,14 +203,14 @@ final class FeedChartViewController: FormViewController {
           cell.spinner.stopAnimating()
           cell.chartView.alpha = 1.0
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
 
-    self.viewModel.dataPoints
-      .drive(onNext: { [weak self] dataPoints in
-        guard let strongSelf = self else { return }
+    self.viewModel.$dataPoints
+      .sink { [weak self] dataPoints in
+        guard let self = self else { return }
 
-        let chartView = strongSelf.chartRow.cell.chartView
+        let chartView = self.chartRow.cell.chartView
 
         guard !dataPoints.isEmpty else {
           chartView.data = nil
@@ -236,8 +240,8 @@ final class FeedChartViewController: FormViewController {
         chartView.data = data
 
         chartView.notifyDataSetChanged()
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
 }

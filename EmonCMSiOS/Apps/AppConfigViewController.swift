@@ -7,23 +7,22 @@
 //
 
 import UIKit
+import Combine
 
 import Former
-import RxSwift
-import RxCocoa
 
 final class AppConfigViewController: FormViewController {
 
   var viewModel: AppConfigViewModel!
 
-  lazy var finished: Driver<AppUUIDAndCategory?> = {
-    return self.finishedSubject.asDriver(onErrorJustReturn: nil)
+  lazy var finished: AnyPublisher<AppUUIDAndCategory?, Never> = {
+    return self.finishedSubject.eraseToAnyPublisher()
   }()
-  private var finishedSubject = PublishSubject<AppUUIDAndCategory?>()
+  private var finishedSubject = PassthroughSubject<AppUUIDAndCategory?, Never>()
 
   private var data: [String:Any] = [:]
 
-  private let disposeBag = DisposeBag()
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -38,7 +37,7 @@ final class AppConfigViewController: FormViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.viewModel.feedListHelper.refresh.onNext(())
+    self.viewModel.feedListHelper.refresh.send(())
     if let indexPath = self.tableView.indexPathForSelectedRow {
       self.tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -56,20 +55,20 @@ final class AppConfigViewController: FormViewController {
           $0.titleLabel.text = field.name
           $0.textField.textAlignment = .right
           }.configure { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             $0.placeholder = field.name
-            $0.text = strongSelf.data[field.id] as? String
+            $0.text = self.data[field.id] as? String
           }.onTextChanged { [weak self] text in
-            guard let strongSelf = self else { return }
-            strongSelf.data[field.id] = text
+            guard let self = self else { return }
+            self.data[field.id] = text
         }
         row = textFieldRow
       case let feedField as AppConfigFieldFeed:
         let labelRow = LabelRowFormer<FormLabelCell>()
           .configure { [weak self] in
-            guard let strongSelf = self else { return }
+            guard let self = self else { return }
             $0.text = field.name
-            $0.subText = strongSelf.data[field.id] as? String
+            $0.subText = self.data[field.id] as? String
         }
         self.setupFeedCellBindings(forRow: labelRow, field: feedField)
         row = labelRow
@@ -88,37 +87,36 @@ final class AppConfigViewController: FormViewController {
   }
 
   private func setupFeedCellBindings(forRow row: LabelRowFormer<FormLabelCell>, field: AppConfigFieldFeed) {
-    let selectedFeed = Observable<()>.create { observer in
+    let selectedFeed = Producer<Void, Never> { observer in
         row.onSelected { _ in
-          observer.onNext(())
+          _ = observer.receive(())
         }
-        return Disposables.create()
       }
-      .flatMap { [weak self] _ -> Driver<String?> in
-        guard let strongSelf = self else { return Driver.empty() }
+      .flatMap { [weak self] _ -> AnyPublisher<String?, Never> in
+        guard let self = self else { return Empty<String?, Never>().eraseToAnyPublisher() }
 
         let viewController = AppSelectFeedViewController()
-        viewController.viewModel = strongSelf.viewModel.feedListViewModel()
-        strongSelf.navigationController?.pushViewController(viewController, animated: true)
+        viewController.viewModel = self.viewModel.feedListViewModel()
+        self.navigationController?.pushViewController(viewController, animated: true)
 
         return viewController.finished
       }
-      .do(onNext: { [weak self] selectedFeed in
-        guard let strongSelf = self else { return }
+      .handleEvents(receiveOutput: { [weak self] selectedFeed in
+        guard let self = self else { return }
 
         if let selectedFeed = selectedFeed {
-          strongSelf.data[field.id] = selectedFeed
+          self.data[field.id] = selectedFeed
         }
 
-        strongSelf.navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
       })
-      .startWith(self.data[field.id] as? String)
+      .prepend(self.data[field.id] as? String)
 
-    let feeds = self.viewModel.feedListHelper.feeds.asObservable().startWith([])
+    let feeds = self.viewModel.feedListHelper.$feeds.prepend([])
 
-    Observable.combineLatest(feeds, selectedFeed)
-      .asDriver(onErrorJustReturn: ([], nil))
-      .drive(onNext: { [weak self] feeds, selectedFeedId in
+    Publishers.CombineLatest(feeds, selectedFeed)
+      .replaceError(with: ([], nil))
+      .sink { [weak self] feeds, selectedFeedId in
         guard let self = self else { return }
 
         row.update { row in
@@ -141,54 +139,52 @@ final class AppConfigViewController: FormViewController {
             }
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupNavigation() {
     let leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: nil, action: nil)
     self.navigationItem.leftBarButtonItem = leftBarButtonItem
-    let cancelTap = leftBarButtonItem.rx.tap.map { false }
+    let cancelTap = leftBarButtonItem.publisher().map { _ in false }
 
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: nil, action: nil)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
-    let saveTap = rightBarButtonItem.rx.tap.map { true }
+    let saveTap = rightBarButtonItem.publisher().map { _ in true }
 
-    Observable.of(cancelTap, saveTap)
-      .merge()
-      .flatMapLatest { [weak self] save -> Observable<AppUUIDAndCategory?> in
-        guard let strongSelf = self else { return Observable.just(nil) }
+    Publishers.Merge(cancelTap, saveTap)
+      .map { [weak self] save -> AnyPublisher<AppUUIDAndCategory?, Never> in
+        guard let self = self else { return Just<AppUUIDAndCategory?>(nil).eraseToAnyPublisher() }
 
         if save {
-          return strongSelf.viewModel.updateWithConfigData(strongSelf.data)
+          return self.viewModel.updateWithConfigData(self.data)
             .map { $0 as AppUUIDAndCategory? }
-            .catchError { [weak self] error in
-              guard let strongSelf = self else { return Observable.never() }
+            .catch { [weak self] error -> AnyPublisher<AppUUIDAndCategory?, Never> in
+              guard let self = self else { return Empty<AppUUIDAndCategory?, Never>(completeImmediately: false).eraseToAnyPublisher() }
 
               let message: String
-              if let error = error as? AppConfigViewModel.SaveError {
-                switch error {
-                case .missingFields(let fields):
-                  let fieldsText = fields.map { $0.name }.joined(separator: "\n")
-                  message = "Missing fields:\n\(fieldsText)"
-                }
-              } else {
-                message = "An unknown error occurred."
-                AppLog.error("Unknown error saving app config data: \(error)")
+              switch error {
+              case .missingFields(let fields):
+                let fieldsText = fields.map { $0.name }.joined(separator: "\n")
+                message = "Missing fields:\n\(fieldsText)"
+              case .generic, .realmFailure:
+                message = "A problem occurred."
               }
 
               let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
               alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-              
-              strongSelf.present(alert, animated: true, completion: nil)
-              
-              return Observable.never()
-          }
+
+              self.present(alert, animated: true, completion: nil)
+
+              return Empty<AppUUIDAndCategory?, Never>(completeImmediately: false).eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
         }
-        return Observable.just(nil)
+        return Just<AppUUIDAndCategory?>(nil).eraseToAnyPublisher()
       }
+      .switchToLatest()
       .subscribe(self.finishedSubject)
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
   }
 
 }

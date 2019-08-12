@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class FeedUpdateHelper {
@@ -17,31 +16,31 @@ final class FeedUpdateHelper {
   private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
-  private let scheduler: SerialDispatchQueueScheduler
+  private let scheduler: DispatchQueue
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI) {
     self.realmController = realmController
     self.account = account
     self.api = api
-    self.scheduler = SerialDispatchQueueScheduler(internalSerialQueueName: "org.openenergymonitor.emoncms.FeedUpdateHelper")
+    self.scheduler = DispatchQueue(label: "org.openenergymonitor.emoncms.FeedUpdateHelper")
   }
 
-  func updateFeeds() -> Observable<()> {
-    return Observable.deferred {
+  func updateFeeds() -> AnyPublisher<Void, EmonCMSAPI.APIError> {
+    return Deferred {
       return self.api.feedList(self.account.credentials)
-        .observeOn(self.scheduler)
-        .flatMap { [weak self] feeds -> Observable<()> in
-          guard let self = self else { return Observable.empty() }
+        .receive(on: self.scheduler)
+        .flatMap { [weak self] feeds -> AnyPublisher<Void, EmonCMSAPI.APIError> in
+          guard let self = self else { return Empty().eraseToAnyPublisher() }
           let realm = self.realmController.createAccountRealm(forAccountId: self.account.uuid)
-          return self.saveFeeds(feeds, inRealm: realm)
+          return self.saveFeeds(feeds, inRealm: realm).eraseToAnyPublisher()
         }
-        .observeOn(MainScheduler.asyncInstance)
-    }
+        .receive(on: DispatchQueue.main)
+    }.eraseToAnyPublisher()
   }
 
-  private func saveFeeds(_ feeds: [Feed], inRealm realm: Realm) -> Observable<()> {
-    return Observable.deferred { [weak self] in
-      guard let self = self else { return Observable.empty() }
+  private func saveFeeds(_ feeds: [Feed], inRealm realm: Realm) -> AnyPublisher<Void, EmonCMSAPI.APIError> {
+    return Deferred<AnyPublisher<Void, Never>> { [weak self] in
+      guard let self = self else { return Empty().eraseToAnyPublisher() }
 
       let goneAwayFeeds = realm.objects(Feed.self).filter {
         var inNewArray = false
@@ -54,18 +53,24 @@ final class FeedUpdateHelper {
         return !inNewArray
       }
 
-      try realm.write {
-        if goneAwayFeeds.count > 0 {
-          realm.delete(goneAwayFeeds)
-          let todayWidgetFeedsForGoneAwayFeeds = realm.objects(TodayWidgetFeed.self)
-            .filter("accountId = %@ AND feedId IN %@", self.account.uuid, Array(goneAwayFeeds.map { $0.id }))
-          realm.delete(todayWidgetFeedsForGoneAwayFeeds)
+      do {
+        try realm.write {
+          if goneAwayFeeds.count > 0 {
+            realm.delete(goneAwayFeeds)
+            let todayWidgetFeedsForGoneAwayFeeds = realm.objects(TodayWidgetFeed.self)
+              .filter("accountId = %@ AND feedId IN %@", self.account.uuid, Array(goneAwayFeeds.map { $0.id }))
+            realm.delete(todayWidgetFeedsForGoneAwayFeeds)
+          }
+          realm.add(feeds, update: .all)
         }
-        realm.add(feeds, update: .all)
+      } catch {
+        AppLog.error("Failed to write to Realm: \(error)")
       }
 
-      return Observable.just(())
+      return Just(()).eraseToAnyPublisher()
     }
+    .setFailureType(to: EmonCMSAPI.APIError.self)
+    .eraseToAnyPublisher()
   }
 
 }

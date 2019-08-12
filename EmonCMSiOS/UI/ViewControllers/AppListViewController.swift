@@ -7,10 +7,7 @@
 //
 
 import UIKit
-
-import RxSwift
-import RxCocoa
-import RxDataSources
+import Combine
 
 final class AppListViewController: UITableViewController {
 
@@ -18,7 +15,8 @@ final class AppListViewController: UITableViewController {
 
   private var emptyLabel: UILabel?
 
-  fileprivate let disposeBag = DisposeBag()
+  private var dataSource: CombineTableViewDataSource<AppListViewModel.Section>!
+  private var cancellables = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -32,7 +30,7 @@ final class AppListViewController: UITableViewController {
   }
 
   private func setupDataSource() {
-    let dataSource = RxTableViewSectionedReloadDataSource<AppListViewModel.Section>(
+    let dataSource = CombineTableViewDataSource<AppListViewModel.Section>(
       configureCell: { (ds, tableView, indexPath, item) in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
@@ -46,39 +44,38 @@ final class AppListViewController: UITableViewController {
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
 
-    self.viewModel.apps
+    let items = self.viewModel.$apps
       .map { [AppListViewModel.Section(model: "", items: $0)] }
-      .drive(self.tableView.rx.items(dataSource: dataSource))
-      .disposed(by: self.disposeBag)
+      .eraseToAnyPublisher()
+
+    dataSource.assign(toTableView: self.tableView, items: items)
+    self.dataSource = dataSource
   }
 
   private func setupBindings() {
-    self.tableView.rx
-      .modelSelected(AppListViewModel.ListItem.self)
-      .subscribe(onNext: { [unowned self] in
-        self.presentApp(withId: $0.appId, ofCategory: $0.category)
-      })
-      .disposed(by: self.disposeBag)
-
-    self.tableView.rx
-      .itemDeleted
-      .map { [unowned self] in
-        let item: AppListViewModel.ListItem = try! self.tableView.rx.model(at: $0)
-        return item.appId
+    self.dataSource
+      .modelSelected
+      .sink { [weak self] in
+        self?.presentApp(withId: $0.appId, ofCategory: $0.category)
       }
-      .flatMap { [unowned self] in
-        self.viewModel.deleteApp(withId: $0)
-          .catchErrorJustReturn(())
-      }
-      .subscribe()
-      .disposed(by: self.disposeBag)
+      .store(in: &self.cancellables)
 
-    self.viewModel.apps
+    self.dataSource
+      .modelDeleted
+      .flatMap { [weak self] item -> AnyPublisher<Void, Never> in
+        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        return self.viewModel.deleteApp(withId: item.appId).replaceError(with: ()).eraseToAnyPublisher()
+      }
+      .sink { _ in }
+      .store(in: &self.cancellables)
+
+    self.viewModel.$apps
       .map {
         $0.count == 0
       }
-      .drive(onNext: { [weak self] empty in
-        guard let strongSelf = self else { return }
+      .removeDuplicates()
+      .sink { [weak self] empty in
+        guard let self = self else { return }
 
         if empty {
           let emptyLabel = UILabel(frame: CGRect.zero)
@@ -86,9 +83,9 @@ final class AppListViewController: UITableViewController {
           emptyLabel.text = "Tap + to add a new app"
           emptyLabel.numberOfLines = 0
           emptyLabel.textColor = .lightGray
-          strongSelf.emptyLabel = emptyLabel
+          self.emptyLabel = emptyLabel
 
-          let tableView = strongSelf.tableView!
+          let tableView = self.tableView!
           tableView.addSubview(emptyLabel)
           tableView.addConstraint(NSLayoutConstraint(
             item: emptyLabel,
@@ -123,33 +120,33 @@ final class AppListViewController: UITableViewController {
             multiplier: 1,
             constant: 44.0 * 1.5))
         } else {
-          if let emptyLabel = strongSelf.emptyLabel {
+          if let emptyLabel = self.emptyLabel {
             emptyLabel.removeFromSuperview()
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
   }
 
   private func setupNavigation() {
     self.navigationItem.leftBarButtonItem = self.editButtonItem
 
     let rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: nil, action: nil)
-    rightBarButtonItem.rx.tap
-      .flatMapLatest { [weak self] () -> Observable<AppCategory> in
-        guard let strongSelf = self else { return Observable.empty() }
+    rightBarButtonItem.publisher()
+      .map { [weak self] _ -> AnyPublisher<AppCategory, Never> in
+        guard let self = self else { return Empty<AppCategory, Never>().eraseToAnyPublisher() }
 
-        return Observable.create { observer in
-          let alert = UIAlertController(title: "Select a type", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: "Select a type", message: nil, preferredStyle: .actionSheet)
 
+        return Producer<AppCategory, Never> { observer in
           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            observer.on(.completed)
+            _ = observer.receive(completion: .finished)
           })
 
           AppCategory.allCases.forEach { appCategory in
             alert.addAction(UIAlertAction(title: appCategory.displayName, style: .default) { _ in
-              observer.on(.next(appCategory))
-              observer.on(.completed)
+              _ = observer.receive(appCategory)
+              _ = observer.receive(completion: .finished)
             })
           }
 
@@ -157,34 +154,36 @@ final class AppListViewController: UITableViewController {
             popoverController.barButtonItem = rightBarButtonItem
           }
 
-          strongSelf.present(alert, animated: true, completion: nil)
-
-          return Disposables.create {
-            alert.dismiss(animated: true, completion: nil)
-          }
+          self.present(alert, animated: true, completion: nil)
         }
+        .handleEvents(receiveCancel: {
+          alert.dismiss(animated: true, completion: nil)
+        })
+        .eraseToAnyPublisher()
       }
-      .flatMapLatest { [weak self] (appCategory) -> Driver<AppUUIDAndCategory?> in
-        guard let strongSelf = self else { return Driver.empty() }
+      .switchToLatest()
+      .map { [weak self] (appCategory) -> AnyPublisher<AppUUIDAndCategory?, Never> in
+        guard let self = self else { return Empty<AppUUIDAndCategory?, Never>().eraseToAnyPublisher() }
 
-        let viewModel = self?.viewModel.appConfigViewModel(forCategory: appCategory)
+        let viewModel = self.viewModel.appConfigViewModel(forCategory: appCategory)
         let viewController = AppConfigViewController()
         viewController.viewModel = viewModel
         let navController = UINavigationController(rootViewController: viewController)
 
-        strongSelf.present(navController, animated: true, completion: nil)
+        self.present(navController, animated: true, completion: nil)
 
         return viewController.finished
       }
-      .subscribe(onNext: { [weak self] appUUIDAndCategory in
-        guard let strongSelf = self else { return }
-        strongSelf.dismiss(animated: true) {
+      .switchToLatest()
+      .sink { [weak self] appUUIDAndCategory in
+        guard let self = self else { return }
+        self.dismiss(animated: true) {
           if let appUUIDAndCategory = appUUIDAndCategory {
-            strongSelf.presentApp(withId: appUUIDAndCategory.uuid, ofCategory: appUUIDAndCategory.category)
+            self.presentApp(withId: appUUIDAndCategory.uuid, ofCategory: appUUIDAndCategory.category)
           }
         }
-      })
-      .disposed(by: self.disposeBag)
+      }
+      .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 

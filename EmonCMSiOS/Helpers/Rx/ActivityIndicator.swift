@@ -1,80 +1,122 @@
 //
 //  ActivityIndicator.swift
-//  RxExample
+//  EmonCMSiOS
 //
-//  Created by Krunoslav Zaher on 10/18/15.
-//  Copyright © 2015 Krunoslav Zaher. All rights reserved.
+//  Created by Matt Galloway on 01/08/19.
+//  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import RxSwift
-import RxCocoa
+import Foundation
+import Combine
 
-private struct ActivityToken<E> : ObservableConvertibleType, Disposable {
-    private let _source: Observable<E>
-    private let _dispose: Cancelable
+public final class ActivityIndicatorCombine {
 
-    init(source: Observable<E>, disposeAction: @escaping () -> Void) {
-        _source = source
-        _dispose = Disposables.create(with: disposeAction)
-    }
+  private let lock = NSRecursiveLock()
+  private var count = 0
+  private let subject = PassthroughSubject<Bool, Never>()
 
-    func dispose() {
-        _dispose.dispose()
-    }
+  var loading: Bool {
+    self.lock.lock()
+    let loading = count > 0
+    self.lock.unlock()
+    return loading
+  }
 
-    func asObservable() -> Observable<E> {
-        return _source
-    }
+  func asPublisher() -> AnyPublisher<Bool, Never> {
+    self.subject.removeDuplicates().eraseToAnyPublisher()
+  }
+
+  fileprivate func increment() {
+    self.lock.lock()
+    self.count += 1
+    self.subject.send(self.count > 0)
+    self.lock.unlock()
+  }
+
+  fileprivate func decrement() {
+    self.lock.lock()
+    self.count -= 1
+    self.subject.send(self.count > 0)
+    self.lock.unlock()
+  }
+
 }
 
-/**
-Enables monitoring of sequence computation.
+extension Publishers {
 
-If there is at least one sequence computation in progress, `true` will be sent.
-When all activities complete `false` will be sent.
-*/
-public class ActivityIndicator : SharedSequenceConvertibleType {
-    public typealias Element = Bool
-    public typealias SharingStrategy = DriverSharingStrategy
+  public struct TrackActivity<Upstream: Publisher>: Publisher {
 
-    private let _lock = NSRecursiveLock()
-    private let _relay = BehaviorRelay(value: 0)
-    private let _loading: SharedSequence<SharingStrategy, Bool>
+    public typealias Output = Upstream.Output
+    public typealias Failure = Upstream.Failure
 
-    public init() {
-        _loading = _relay.asDriver()
-            .map { $0 > 0 }
-            .distinctUntilChanged()
+    private let upstream: Upstream
+    private let indicator: ActivityIndicatorCombine
+
+    init(upstream: Upstream, indicator: ActivityIndicatorCombine) {
+      self.upstream = upstream
+      self.indicator = indicator
     }
 
-    fileprivate func trackActivityOfObservable<Source: ObservableConvertibleType>(_ source: Source) -> Observable<Source.Element> {
-        return Observable.using({ () -> ActivityToken<Source.Element> in
-            self.increment()
-            return ActivityToken(source: source.asObservable(), disposeAction: self.decrement)
-        }) { t in
-            return t.asObservable()
-        }
+    public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
+      subscriber.receive(subscription: TrackActivitySubscription(upstream: self.upstream, downstream: subscriber, indicator: self.indicator))
     }
 
-    private func increment() {
-        _lock.lock()
-        _relay.accept(_relay.value + 1)
-        _lock.unlock()
+  }
+
+  private class TrackActivitySubscription<Upstream: Publisher, Downstream: Subscriber>: Subscription, Subscriber
+    where Upstream.Output == Downstream.Input, Upstream.Failure == Downstream.Failure
+  {
+    typealias Input = Upstream.Output
+    typealias Failure = Upstream.Failure
+
+    var upstreamSubscription: Subscription?
+    let upstream: Upstream
+    let downstream: Downstream
+    let indicator: ActivityIndicatorCombine
+
+    init(upstream: Upstream, downstream: Downstream, indicator: ActivityIndicatorCombine) {
+      self.upstream = upstream
+      self.downstream = downstream
+      self.indicator = indicator
+      upstream.subscribe(self)
     }
 
-    private func decrement() {
-        _lock.lock()
-        _relay.accept(_relay.value - 1)
-        _lock.unlock()
+    func request(_ demand: Subscribers.Demand) {
+      self.upstreamSubscription?.request(demand)
     }
 
-    public func asSharedSequence() -> SharedSequence<SharingStrategy, Element> {
-        return _loading
+    func cancel() {
+      self.cancelUpstreamSubscription()
     }
+
+    func receive(subscription: Subscription) {
+      self.upstreamSubscription = subscription
+      self.indicator.increment()
+      subscription.request(.unlimited)
+    }
+
+    func receive(_ input: Input) -> Subscribers.Demand {
+      return self.downstream.receive(input)
+    }
+
+    func receive(completion: Subscribers.Completion<Upstream.Failure>) {
+      self.downstream.receive(completion: completion)
+      self.cancelUpstreamSubscription()
+    }
+
+    private func cancelUpstreamSubscription() {
+      self.indicator.decrement()
+      self.upstreamSubscription?.cancel()
+      self.upstreamSubscription = nil
+    }
+  }
+
 }
 
-extension ObservableConvertibleType {
-    public func trackActivity(_ activityIndicator: ActivityIndicator) -> Observable<Element> {
-        return activityIndicator.trackActivityOfObservable(self)
-    }
+public extension Publisher {
+
+  func trackActivity(_ indicator: ActivityIndicatorCombine) -> Publishers.TrackActivity<Self> {
+    Publishers.TrackActivity(upstream: self, indicator: indicator)
+  }
+
 }

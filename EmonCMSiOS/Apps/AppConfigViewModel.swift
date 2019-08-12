@@ -7,13 +7,15 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
 import RealmSwift
 
 final class AppConfigViewModel {
 
   enum SaveError: Error {
+    case generic
+    case realmFailure(Error)
     case missingFields([AppConfigField])
   }
 
@@ -68,46 +70,43 @@ final class AppConfigViewModel {
     return data
   }
 
-  func updateWithConfigData(_ data: [String:Any]) -> Observable<AppUUIDAndCategory> {
-    return Observable.create { [weak self] observer in
-      guard let strongSelf = self else { return Disposables.create() }
+  func updateWithConfigData(_ data: [String:Any]) -> AnyPublisher<AppUUIDAndCategory, SaveError> {
+    return Future<AppUUIDAndCategory, SaveError> {  [weak self] result in
+      guard let self = self else { result(.failure(.generic)); return }
 
       // Validate first
       var missingFields: [AppConfigField] = []
-      for field in strongSelf.configFields() where field.optional == false {
+      for field in self.configFields() where field.optional == false {
         if data[field.id] == nil {
           missingFields.append(field)
         }
       }
 
       if missingFields.count > 0 {
-        observer.onError(SaveError.missingFields(missingFields))
+        result(.failure(.missingFields(missingFields)))
       } else {
         do {
-          let appData = strongSelf.appData
-          try strongSelf.realm.write {
+          let appData = self.appData
+          try self.realm.write {
             if let name = data[AppConfigViewModel.nameConfigFieldID] as? String {
               appData.name = name
             }
-            for feedConfigField in strongSelf.appCategory.feedConfigFields {
+            for feedConfigField in self.appCategory.feedConfigFields {
               if let feedId = data[feedConfigField.id] as? String {
                 appData.setFeed(feedId, forName: feedConfigField.id)
               }
             }
 
             if appData.realm == nil {
-              strongSelf.realm.add(appData)
+              self.realm.add(appData)
             }
           }
-          observer.onNext((strongSelf.appData.uuid, strongSelf.appData.appCategory))
-          observer.onCompleted()
+          result(.success((self.appData.uuid, self.appData.appCategory)))
         } catch {
-          observer.onError(error)
+          result(.failure(.realmFailure(error)))
         }
       }
-
-      return Disposables.create()
-    }
+    }.eraseToAnyPublisher()
   }
 
   func feedListViewModel() -> FeedListViewModel {

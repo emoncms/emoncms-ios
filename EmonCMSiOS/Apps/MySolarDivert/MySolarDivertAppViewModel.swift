@@ -7,9 +7,8 @@
 //
 
 import Foundation
+import Combine
 
-import RxSwift
-import RxCocoa
 import RealmSwift
 
 final class MySolarDivertAppViewModel: AppViewModel {
@@ -22,12 +21,14 @@ final class MySolarDivertAppViewModel: AppViewModel {
   private let realm: Realm
   private let appData: AppData
 
+  private var cancellables = Set<AnyCancellable>()
+
   // Inputs
-  let active = BehaviorRelay<Bool>(value: false)
+  @Published var active = false
 
   // Outputs
-  private(set) var title: Driver<String>
-  private(set) var isReady: Driver<Bool>
+  let title: AnyPublisher<String, Never>
+  let isReady: AnyPublisher<Bool, Never>
 
   var accessibilityIdentifier: String {
     return AccessibilityIdentifiers.Apps.MySolarDivert
@@ -54,19 +55,14 @@ final class MySolarDivertAppViewModel: AppViewModel {
     self.page1ViewModel = MySolarDivertAppPage1ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
     self.page2ViewModel = MySolarDivertAppPage2ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
 
-    self.title = Driver.empty()
-    self.isReady = Driver.empty()
+    self.title = self.appData.publisher(for: \.name)
+      .receive(on: DispatchQueue.main)
+      .eraseToAnyPublisher()
 
-    self.title = self.appData.rx
-      .observe(String.self, #keyPath(AppData.name))
-      .map { $0 ?? "" }
-      .asDriver(onErrorJustReturn: "")
-
-    self.isReady = self.appData.rx.observe(String.self, #keyPath(AppData.name))
-      .map {
-        $0 != nil
-      }
-      .asDriver(onErrorJustReturn: false)
+    self.isReady = self.appData.publisher(for: \.name)
+      .map { $0 != "" }
+      .receive(on: DispatchQueue.main)
+      .eraseToAnyPublisher()
   }
 
   func configViewModel() -> AppConfigViewModel {
