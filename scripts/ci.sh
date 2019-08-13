@@ -4,6 +4,9 @@ set -e
 
 XCPRETTY="xcpretty -f `xcpretty-travis-formatter`"
 
+# Ensure we don't have hardware keyboard - it interferes with tests
+defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0
+
 scripts/intelligent-bootstrap
 xcodebuild \
 	-project EmonCMSiOS.xcodeproj \
