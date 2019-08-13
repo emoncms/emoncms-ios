@@ -1,13 +1,8 @@
-github "ReactiveX/RxSwift" ~> 5.0
 github "realm/realm-cocoa" ~> 3.17
 github "danielgindi/Charts" ~> 3.3
 github "ra1028/Former" ~> 1.8
 github "DaveWoodCom/XCGLogger" ~> 7.0
 github "matthewpalmer/Locksmith" ~> 4.0
-
-github "RxSwiftCommunity/Action" ~> 4.0
-github "RxSwiftCommunity/RxRealm" ~> 1.0
-github "RxSwiftCommunity/RxDataSources" ~> 4.0
 
 # Tests
 github "Quick/Quick" ~> 2.1
