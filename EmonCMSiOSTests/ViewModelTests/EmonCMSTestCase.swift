@@ -6,6 +6,7 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Foundation
 import Quick
 
 class EmonCMSTestCase: QuickSpec {
