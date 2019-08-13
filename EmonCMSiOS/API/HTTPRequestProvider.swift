@@ -9,7 +9,7 @@
 import Foundation
 import Combine
 
-enum HTTPRequestProviderError: Error {
+enum HTTPRequestProviderError: Error, Equatable {
   case unknown
   case networkError
   case atsFailed

@@ -8,8 +8,6 @@
 
 import Quick
 import Nimble
-import RxSwift
-import RxTest
 @testable import EmonCMSiOS
 
 class EmonCMSAPITests: EmonCMSTestCase {

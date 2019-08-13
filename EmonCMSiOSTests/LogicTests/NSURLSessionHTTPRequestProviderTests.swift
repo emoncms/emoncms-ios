@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 @testable import EmonCMSiOS
 
 final class MockURLSessionDataTask: URLSessionDataTask {
@@ -36,13 +36,11 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var session: MockURLSession!
     var provider: NSURLSessionHTTPRequestProvider!
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
       session = MockURLSession()
       provider = NSURLSessionHTTPRequestProvider(session: session)
@@ -50,7 +48,6 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
     describe("NSURLSessionHTTPRequestProvider") {
       it("should return data") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
         let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
 
@@ -58,24 +55,20 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         session.nextResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "2.0", headerFields: nil)
         session.nextError = nil
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .next(10, data),
-          .completed(10)
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .input(data)),
+          (900, .completion(.finished))
         ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
 
       it("should error when response code is an error code") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
         let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
 
@@ -83,23 +76,19 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         session.nextResponse = HTTPURLResponse(url: url, statusCode: 401, httpVersion: "2.0", headerFields: nil)
         session.nextError = nil
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .error(10, HTTPRequestProviderError.httpError(code: 401)),
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .completion(.failure(.httpError(code: 401))))
         ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
 
       it("should error when response is non-HTTP") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
         let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
 
@@ -107,93 +96,77 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         session.nextResponse = URLResponse(url: url, mimeType: nil, expectedContentLength: data.count, textEncodingName: nil)
         session.nextError = nil
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .error(10, HTTPRequestProviderError.networkError),
-          ]
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .completion(.failure(.networkError)))
+        ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
 
       it("should error when no data or response") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
 
         session.nextData = nil
         session.nextResponse = nil
         session.nextError = nil
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .error(10, HTTPRequestProviderError.unknown),
-          ]
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .completion(.failure(.unknown)))
+        ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
 
       it("should error when ATS failure") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
 
         session.nextData = nil
         session.nextResponse = nil
         session.nextError = NSError(domain: NSURLErrorDomain, code: NSURLErrorAppTransportSecurityRequiresSecureConnection, userInfo: nil)
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .error(10, HTTPRequestProviderError.atsFailed),
-          ]
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .completion(.failure(.atsFailed)))
+        ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
 
       it("should error when random NSError") {
-        let observer = scheduler.createObserver(Data.self)
         let url = URL(string: "http://localhost")!
 
         session.nextData = nil
         session.nextResponse = nil
         session.nextError = NSError(domain: NSURLErrorDomain, code: NSURLErrorUnknown, userInfo: nil)
 
-        scheduler.scheduleAt(10, action: {
-          provider.request(url: url)
-            .subscribe(observer)
-            .disposed(by: disposeBag)
-        })
+        let sut = provider.request(url: url)
 
-        scheduler.start()
+        let results = scheduler.start { sut }
 
-        let expected: [Recorded<Event<Data>>] = [
-          .error(10, HTTPRequestProviderError.unknown),
-          ]
+        let expected: TestSequence<Data, HTTPRequestProviderError> = [
+          (900, .subscription),
+          (900, .completion(.failure(.unknown)))
+        ]
 
-        expect(observer.events).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
       }
     }
 
     it("should return data for a form request") {
-      let observer = scheduler.createObserver(Data.self)
       let url = URL(string: "http://localhost")!
       let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
 
@@ -201,22 +174,18 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
       session.nextResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "2.0", headerFields: nil)
       session.nextError = nil
 
-      scheduler.scheduleAt(10, action: {
-        provider.request(url: url, formData: ["foo":"bar"])
-          .subscribe(observer)
-          .disposed(by: disposeBag)
-      })
+      let sut = provider.request(url: url, formData: ["foo":"bar"])
 
-      scheduler.start()
+      let results = scheduler.start { sut }
 
-      let expected: [Recorded<Event<Data>>] = [
-        .next(10, data),
-        .completed(10)
+      let expected: TestSequence<Data, HTTPRequestProviderError> = [
+        (900, .subscription),
+        (900, .input(data)),
+        (900, .completion(.finished))
       ]
 
-      expect(observer.events).toEventually(equal(expected), timeout: 1)
+      expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
     }
-
 
   }
 

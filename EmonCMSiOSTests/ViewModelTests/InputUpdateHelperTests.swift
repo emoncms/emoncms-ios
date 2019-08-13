@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class InputUpdateHelperTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var realmController: RealmController!
     var accountController: AccountController!
     var realm: Realm!
@@ -27,8 +26,6 @@ class InputUpdateHelperTests: EmonCMSTestCase {
     var viewModel: InputUpdateHelper!
 
     beforeEach {
-      disposeBag = DisposeBag()
-
       realmController = RealmController(dataDirectory: self.dataDirectory)
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
       accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
@@ -45,16 +42,19 @@ class InputUpdateHelperTests: EmonCMSTestCase {
     describe("inputHandling") {
       it("should update inputs") {
         waitUntil { done in
-          viewModel.updateInputs()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateInputs()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
-              },
-              onCompleted: {
-                done()
-              })
-            .disposed(by: disposeBag)
+            },
+              receiveValue: { _ in }
+          )
         }
 
         let results = realm.objects(Input.self)
@@ -71,16 +71,19 @@ class InputUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          viewModel.updateInputs()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateInputs()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
 
         expect { realm.object(ofType: Input.self, forPrimaryKey: newInputId) }

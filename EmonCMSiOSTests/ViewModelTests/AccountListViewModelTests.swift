@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -52,21 +52,16 @@ class AccountListViewModelTests: EmonCMSTestCase {
 
     describe("accountHandling") {
 
-      var disposeBag: DisposeBag!
       var scheduler: TestScheduler!
       var viewModel: AccountListViewModel!
 
       beforeEach {
-        disposeBag = DisposeBag()
         scheduler = TestScheduler(initialClock: 0)
         viewModel = AccountListViewModel(realmController: realmController, api: api)
       }
 
       it("should list all accounts") {
-        let accountsObserver = scheduler.createObserver([AccountListViewModel.ListItem].self)
-        viewModel.accounts
-          .drive(accountsObserver)
-          .disposed(by: disposeBag)
+        let sut = viewModel.$accounts
 
         let count = 10
         try! realm.write {
@@ -78,10 +73,18 @@ class AccountListViewModelTests: EmonCMSTestCase {
           }
         }
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        let results = scheduler.start { sut }
 
-        expect(accountsObserver.events.count).toEventually(equal(2))
-        let lastEventAccounts = accountsObserver.events.last!.value.element!
+        expect(results.recordedOutput.count).toEventually(equal(3))
+        let lastEventAccountsSignal = results.recordedOutput.suffix(1).first!.1
+        let lastEventAccounts: [AccountListViewModel.ListItem]
+        switch lastEventAccountsSignal {
+        case .input(let v):
+          lastEventAccounts = v
+        default:
+          lastEventAccounts = []
+        }
         expect(lastEventAccounts.count).to(equal(10))
         for (i, account) in lastEventAccounts.enumerated() {
           expect(account.name).to(equal("Account \(i)"))
@@ -103,18 +106,20 @@ class AccountListViewModelTests: EmonCMSTestCase {
         expect(accountQuery1.count).to(equal(1))
 
         waitUntil { (done) in
-          viewModel.deleteAccount(withId: uuid)
-            .subscribe(
-              onError: { error in
-                fail(error.localizedDescription)
+          _ = viewModel.deleteAccount(withId: uuid)
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  let accountQuery2 = realm.objects(Account.self)
+                  expect(accountQuery2.count).to(equal(0))
+                case .failure:
+                  fail("Failure is not an option")
+                }
                 done()
             },
-              onCompleted: {
-                let accountQuery2 = realm.objects(Account.self)
-                expect(accountQuery2.count).to(equal(0))
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
       }
 
@@ -134,18 +139,20 @@ class AccountListViewModelTests: EmonCMSTestCase {
         }
 
         waitUntil { (done) in
-          viewModel.deleteAccount(withId: uuid)
-            .subscribe(
-              onError: { error in
-                fail(error.localizedDescription)
+          _ = viewModel.deleteAccount(withId: uuid)
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  let query = realm.objects(TodayWidgetFeed.self)
+                  expect(query.count).to(equal(0))
+                case .failure:
+                  fail("Failure is not an option")
+                }
                 done()
             },
-              onCompleted: {
-                let query = realm.objects(TodayWidgetFeed.self)
-                expect(query.count).to(equal(0))
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
       }
     }
