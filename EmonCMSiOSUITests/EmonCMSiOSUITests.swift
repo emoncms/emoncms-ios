@@ -6,6 +6,8 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Foundation
+import XCTest
 import Quick
 import Nimble
 @testable import EmonCMSiOS
