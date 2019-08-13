@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class FeedListViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -28,7 +27,6 @@ class FeedListViewModelTests: EmonCMSTestCase {
     var viewModel: FeedListViewModel!
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
 
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -46,10 +44,7 @@ class FeedListViewModelTests: EmonCMSTestCase {
 
     describe("feedHandling") {
       it("should list all feeds") {
-        let feedsObserver = scheduler.createObserver([FeedListViewModel.Section].self)
-        viewModel.feeds
-          .drive(feedsObserver)
-          .disposed(by: disposeBag)
+        let sut = viewModel.$feeds
 
         let count = 10
         try! realm.write {
@@ -62,11 +57,19 @@ class FeedListViewModelTests: EmonCMSTestCase {
           }
         }
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        let results = scheduler.start { sut }
 
-        expect(feedsObserver.events.count).toEventually(equal(2))
+        expect(results.recordedOutput.count).toEventually(equal(3))
+        let lastEventFeedsSignal = results.recordedOutput.suffix(1).first!.1
+        let lastEventFeeds: [FeedListViewModel.Section]
+        switch lastEventFeedsSignal {
+        case .input(let v):
+          lastEventFeeds = v
+        default:
+          lastEventFeeds = []
+        }
 
-        let lastEventFeeds = feedsObserver.events.last!.value.element!
         expect(lastEventFeeds.count).to(equal(2))
         guard lastEventFeeds.count == 2 else { return }
 
@@ -86,10 +89,7 @@ class FeedListViewModelTests: EmonCMSTestCase {
       }
 
       it("should list the right feeds when searching") {
-        let feedsObserver = scheduler.createObserver([FeedListViewModel.Section].self)
-        viewModel.feeds
-          .drive(feedsObserver)
-          .disposed(by: disposeBag)
+        let sut = viewModel.$feeds
 
         let count = 10
         try! realm.write {
@@ -102,13 +102,21 @@ class FeedListViewModelTests: EmonCMSTestCase {
           }
         }
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        scheduler.schedule(after: 350) { viewModel.searchTerm = "Feed 5" }
+        scheduler.schedule(after: 400) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        let results = scheduler.start { sut }
 
-        expect(feedsObserver.events.count).toEventually(equal(2))
-        viewModel.searchTerm.accept("Feed 5")
-        expect(feedsObserver.events.count).toEventually(equal(3))
+        expect(results.recordedOutput.count).toEventually(equal(4))
+        let lastEventFeedsSignal = results.recordedOutput.suffix(1).first!.1
+        let lastEventFeeds: [FeedListViewModel.Section]
+        switch lastEventFeedsSignal {
+        case .input(let v):
+          lastEventFeeds = v
+        default:
+          lastEventFeeds = []
+        }
 
-        let lastEventFeeds = feedsObserver.events.last!.value.element!
         expect(lastEventFeeds.count).to(equal(1))
         guard lastEventFeeds.count == 1 else { return }
 
@@ -120,28 +128,26 @@ class FeedListViewModelTests: EmonCMSTestCase {
       }
 
       it("should refresh when asked to") {
-        let refreshObserver = scheduler.createObserver(Bool.self)
+        let subscriber = scheduler.createTestableSubscriber(Bool.self, Never.self)
+
         viewModel.isRefreshing
-          .drive(refreshObserver)
-          .disposed(by: disposeBag)
+          .subscribe(subscriber)
 
-        viewModel.active.accept(true)
+        viewModel.active = true
 
-        scheduler.createColdObservable([.next(10, ()), .next(20, ())])
-          .bind(to: viewModel.refresh)
-          .disposed(by: disposeBag)
+        scheduler.schedule(after: 10) { viewModel.refresh.send(()) }
+        scheduler.schedule(after: 20) { viewModel.refresh.send(()) }
+        scheduler.resume()
 
-        scheduler.start()
-
-        expect(refreshObserver.events).toEventually(equal([
-          .next(0, false),
-          .next(0, true),
-          .next(10, false),
-          .next(10, true),
-          .next(20, false),
-          .next(20, true),
-          .next(20, false),
-          ]))
+        expect(subscriber.recordedOutput).toEventually(equal([
+          (0, .subscription),
+          (0, .input(true)),
+          (10, .input(false)),
+          (10, .input(true)),
+          (20, .input(false)),
+          (20, .input(true)),
+          (20, .input(false)),
+        ]))
       }
     }
 

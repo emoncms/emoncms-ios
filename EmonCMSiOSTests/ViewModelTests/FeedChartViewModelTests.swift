@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class FeedChartViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -28,7 +27,6 @@ class FeedChartViewModelTests: EmonCMSTestCase {
     var viewModel: FeedChartViewModel!
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
 
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -46,46 +44,42 @@ class FeedChartViewModelTests: EmonCMSTestCase {
 
     describe("dataHandling") {
       it("should fetch feed data") {
-        let dataPointsObserver = scheduler.createObserver([DataPoint<Double>].self)
-        viewModel.dataPoints
-          .drive(dataPointsObserver)
-          .disposed(by: disposeBag)
+        let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, Never.self)
+        viewModel.$dataPoints
+          .subscribe(subscriber)
 
-        viewModel.active.accept(true)
+        viewModel.active = true
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        scheduler.resume()
 
-        expect(dataPointsObserver.events.count).toEventually(equal(1))
+        expect(subscriber.recordedOutput.count).toEventually(equal(3))
       }
 
       it("should refresh when asked to") {
-        let dataPointsObserver = scheduler.createObserver([DataPoint<Double>].self)
-        viewModel.dataPoints
-          .drive(dataPointsObserver)
-          .disposed(by: disposeBag)
+        let dataPointsSubscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, Never.self)
+        viewModel.$dataPoints
+          .subscribe(dataPointsSubscriber)
 
-        let refreshObserver = scheduler.createObserver(Bool.self)
+        let refreshSubscriber = scheduler.createTestableSubscriber(Bool.self, Never.self)
         viewModel.isRefreshing
-          .drive(refreshObserver)
-          .disposed(by: disposeBag)
+          .subscribe(refreshSubscriber)
 
-        viewModel.active.accept(true)
+        viewModel.active = true
 
-        scheduler.createColdObservable([.next(10, ()), .next(20, ())])
-          .bind(to: viewModel.refresh)
-          .disposed(by: disposeBag)
+        scheduler.schedule(after: 10) { viewModel.refresh.send(()) }
+        scheduler.schedule(after: 20) { viewModel.refresh.send(()) }
+        scheduler.resume()
 
-        scheduler.start()
-
-        expect(dataPointsObserver.events.count).toEventually(equal(3))
-        expect(refreshObserver.events).to(equal([
-          .next(0, false),
-          .next(0, true),
-          .next(0, false),
-          .next(10, true),
-          .next(10, false),
-          .next(20, true),
-          .next(20, false),
+        expect(dataPointsSubscriber.recordedOutput.count).toEventually(equal(5))
+        expect(refreshSubscriber.recordedOutput).to(equal([
+          (0, .subscription),
+          (0, .input(true)),
+          (0, .input(false)),
+          (10, .input(true)),
+          (10, .input(false)),
+          (20, .input(true)),
+          (20, .input(false)),
         ]))
       }
     }

@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class AppListViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -28,7 +27,6 @@ class AppListViewModelTests: EmonCMSTestCase {
     var viewModel: AppListViewModel!
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
 
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -46,10 +44,7 @@ class AppListViewModelTests: EmonCMSTestCase {
 
     describe("appHandling") {
       it("should list all apps") {
-        let appsObserver = scheduler.createObserver([AppListViewModel.ListItem].self)
-        viewModel.apps
-          .drive(appsObserver)
-          .disposed(by: disposeBag)
+        let sut = viewModel.$apps
 
         let count = 10
         try! realm.write {
@@ -62,10 +57,18 @@ class AppListViewModelTests: EmonCMSTestCase {
           }
         }
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        let results = scheduler.start { sut }
 
-        expect(appsObserver.events.count).toEventually(equal(2))
-        let lastEventApps = appsObserver.events.last!.value.element!
+        expect(results.recordedOutput.count).toEventually(equal(3))
+        let lastEventAppsSignal = results.recordedOutput.suffix(1).first!.1
+        let lastEventApps: [AppListViewModel.ListItem]
+        switch lastEventAppsSignal {
+        case .input(let v):
+          lastEventApps = v
+        default:
+          lastEventApps = []
+        }
         expect(lastEventApps.count).to(equal(10))
         for (i, app) in lastEventApps.enumerated() {
           expect(app.name).to(equal("App \(i)"))
@@ -85,16 +88,18 @@ class AppListViewModelTests: EmonCMSTestCase {
         let appQuery1 = realm.objects(AppData.self)
         expect(appQuery1.count).to(equal(1))
 
-        viewModel.deleteApp(withId: uuid)
-          .subscribe(
-            onError: { error in
-              fail(error.localizedDescription)
-          },
-            onCompleted: {
+        _ = viewModel.deleteApp(withId: uuid)
+          .sink(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
               let appQuery2 = realm.objects(AppData.self)
               expect(appQuery2.count).to(equal(0))
-          })
-          .disposed(by: disposeBag)
+            case .failure:
+              fail("Failure is not an option")
+            }
+          },
+                receiveValue: { _ in }
+        )
       }
     }
 

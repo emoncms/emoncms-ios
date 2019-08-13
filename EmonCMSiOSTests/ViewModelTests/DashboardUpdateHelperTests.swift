@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var realmController: RealmController!
     var accountController: AccountController!
     var realm: Realm!
@@ -27,8 +26,6 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
     var viewModel: DashboardUpdateHelper!
 
     beforeEach {
-      disposeBag = DisposeBag()
-
       realmController = RealmController(dataDirectory: self.dataDirectory)
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
       accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
@@ -45,16 +42,19 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
     describe("dashboardHandling") {
       it("should update dashboards") {
         waitUntil { done in
-          viewModel.updateDashboards()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateDashboards()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
-              },
-              onCompleted: {
-                done()
-              })
-            .disposed(by: disposeBag)
+            },
+              receiveValue: { _ in }
+          )
         }
 
         let results = realm.objects(Dashboard.self)
@@ -71,16 +71,19 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          viewModel.updateDashboards()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateDashboards()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
 
         expect { realm.object(ofType: Dashboard.self, forPrimaryKey: newDashboardId) }

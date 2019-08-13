@@ -6,10 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class AddAccountViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var realmController: RealmController!
     var realm: Realm!
     var requestProvider: MockHTTPRequestProvider!
@@ -26,8 +25,6 @@ class AddAccountViewModelTests: EmonCMSTestCase {
     var viewModel: AddAccountViewModel!
 
     beforeEach {
-      disposeBag = DisposeBag()
-
       realmController = RealmController(dataDirectory: self.dataDirectory)
       realm = realmController.createMainRealm()
       try! realm.write {
@@ -44,26 +41,24 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         let url = "https://test"
         let apiKey = "invalid"
 
-        viewModel.name.accept("Test")
-        viewModel.url.accept(url)
-        viewModel.apiKey.accept(apiKey)
+        viewModel.name = "Test"
+        viewModel.url = url
+        viewModel.apiKey = apiKey
 
         waitUntil { done in
-          viewModel.saveAccount()
-            .subscribe(
-              onError: { error in
-                if let typedError = error as? AddAccountViewModel.AddAccountError {
-                  expect(typedError).to(equal(AddAccountViewModel.AddAccountError.invalidCredentials))
-                } else {
-                  fail("Wrong error returned")
+          _ = viewModel.saveAccount()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  fail("Should have errored!")
+                case .failure(let error):
+                  expect(error).to(equal(AddAccountViewModel.AddAccountError.invalidCredentials))
                 }
                 done()
-              },
-              onCompleted: {
-                fail("Should have errored!")
-                done()
-              })
-            .disposed(by: disposeBag)
+            },
+              receiveValue: { _ in }
+          )
         }
       }
 
@@ -72,25 +67,25 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         let username = "username"
         let password = "ilikecats"
 
-        viewModel.name.accept("Test")
-        viewModel.url.accept(url)
-        viewModel.username.accept(username)
-        viewModel.password.accept(password)
+        viewModel.name = "Test"
+        viewModel.url = url
+        viewModel.username = username
+        viewModel.password = password
 
         waitUntil { done in
-          viewModel.saveAccount()
-            .subscribe(
-              onNext: {
-                expect($0).toNot(equal(""))
-            },
-              onError: { error in
-                fail(error.localizedDescription)
+          _ = viewModel.saveAccount()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { expect($0).toNot(equal("")) }
+          )
         }
       }
 
@@ -98,24 +93,24 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         let url = "https://test"
         let apiKey = "ilikecats"
 
-        viewModel.name.accept("Test")
-        viewModel.url.accept(url)
-        viewModel.apiKey.accept(apiKey)
+        viewModel.name = "Test"
+        viewModel.url = url
+        viewModel.apiKey = apiKey
 
         waitUntil { done in
-          viewModel.saveAccount()
-            .subscribe(
-              onNext: {
-                expect($0).toNot(equal(""))
-            },
-              onError: { error in
-                fail(error.localizedDescription)
+          _ = viewModel.saveAccount()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { expect($0).toNot(equal("")) }
+          )
         }
       }
     }
@@ -123,60 +118,55 @@ class AddAccountViewModelTests: EmonCMSTestCase {
     describe("canSave") {
       it("should be false for invalid input") {
         var result: Bool?
-        viewModel.canSave()
-          .subscribe(onNext: { result = $0 })
-          .disposed(by: disposeBag)
+        _ = viewModel.canSave()
+          .sink(receiveValue: { result = $0 })
 
         expect(result).to(equal(false))
       }
 
       it("should be false when there's no name") {
-        viewModel.url.accept("http://emoncms.org")
-        viewModel.apiKey.accept("abcdef")
+        viewModel.url = "http://emoncms.org"
+        viewModel.apiKey = "abcdef"
 
         var result: Bool?
-        viewModel.canSave()
-          .subscribe(onNext: { result = $0 })
-          .disposed(by: disposeBag)
+        _ = viewModel.canSave()
+          .sink(receiveValue: { result = $0 })
 
         expect(result).to(equal(false))
       }
 
       it("should be false when there's no credentials") {
-        viewModel.name.accept("EmonCMS.org instance")
-        viewModel.url.accept("http://emoncms.org")
+        viewModel.name = "EmonCMS.org instance"
+        viewModel.url = "http://emoncms.org"
 
         var result: Bool?
-        viewModel.canSave()
-          .subscribe(onNext: { result = $0 })
-          .disposed(by: disposeBag)
+        _ = viewModel.canSave()
+          .sink(receiveValue: { result = $0 })
 
         expect(result).to(equal(false))
       }
 
       it("should be true when there's username and password") {
-        viewModel.name.accept("EmonCMS.org instance")
-        viewModel.url.accept("http://emoncms.org")
-        viewModel.username.accept("username")
-        viewModel.password.accept("password")
+        viewModel.name = "EmonCMS.org instance"
+        viewModel.url = "http://emoncms.org"
+        viewModel.username = "username"
+        viewModel.password = "password"
 
         var result: Bool?
-        viewModel.canSave()
-          .subscribe(onNext: { result = $0 })
-          .disposed(by: disposeBag)
+        _ = viewModel.canSave()
+          .sink(receiveValue: { result = $0 })
 
         expect(result).to(equal(true))
       }
 
       it("should be true when there's api key") {
-        viewModel.name.accept("EmonCMS.org instance")
-        viewModel.url.accept("http://emoncms.org")
-        viewModel.apiKey.accept("abcdef")
+        viewModel.name = "EmonCMS.org instance"
+        viewModel.url = "http://emoncms.org"
+        viewModel.apiKey = "abcdef"
 
         var result: Bool?
-        viewModel.canSave()
-          .subscribe(onNext: { result = $0 })
-          .disposed(by: disposeBag)
+        _ = viewModel.canSave()
+          .sink(receiveValue: { result = $0 })
 
         expect(result).to(equal(true))
       }

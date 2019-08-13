@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class InputListViewModelTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -28,7 +27,6 @@ class InputListViewModelTests: EmonCMSTestCase {
     var viewModel: InputListViewModel!
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
 
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -46,10 +44,7 @@ class InputListViewModelTests: EmonCMSTestCase {
 
     describe("inputHandling") {
       it("should list all inputs") {
-        let inputsObserver = scheduler.createObserver([InputListViewModel.Section].self)
-        viewModel.inputs
-          .drive(inputsObserver)
-          .disposed(by: disposeBag)
+        let sut = viewModel.$inputs
 
         let count = 10
         try! realm.write {
@@ -63,11 +58,19 @@ class InputListViewModelTests: EmonCMSTestCase {
           }
         }
 
-        scheduler.start()
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
+        let results = scheduler.start { sut }
 
-        expect(inputsObserver.events.count).toEventually(equal(2))
+        expect(results.recordedOutput.count).toEventually(equal(3))
+        let lastEventInputsSignal = results.recordedOutput.suffix(1).first!.1
+        let lastEventInputs: [InputListViewModel.Section]
+        switch lastEventInputsSignal {
+        case .input(let v):
+          lastEventInputs = v
+        default:
+          lastEventInputs = []
+        }
 
-        let lastEventInputs = inputsObserver.events.last!.value.element!
         expect(lastEventInputs.count).to(equal(2))
         guard lastEventInputs.count == 2 else { return }
 
@@ -89,28 +92,23 @@ class InputListViewModelTests: EmonCMSTestCase {
       }
 
       it("should refresh when asked to") {
-        let refreshObserver = scheduler.createObserver(Bool.self)
+        let subscriber = scheduler.createTestableSubscriber(Bool.self, Never.self)
+
         viewModel.isRefreshing
-          .drive(refreshObserver)
-          .disposed(by: disposeBag)
+          .subscribe(subscriber)
 
-        viewModel.active.accept(true)
+        viewModel.active = true
 
-        scheduler.createColdObservable([.next(10, ()), .next(20, ())])
-          .bind(to: viewModel.refresh)
-          .disposed(by: disposeBag)
+        scheduler.schedule(after: 10) { viewModel.refresh.send(()) }
+        scheduler.schedule(after: 20) { viewModel.refresh.send(()) }
+        scheduler.resume()
 
-        scheduler.start()
-
-        expect(refreshObserver.events).toEventually(equal([
-          .next(0, false),
-          .next(0, true),
-          .next(10, false),
-          .next(10, true),
-          .next(20, false),
-          .next(20, true),
-          .next(20, false),
-          ]))
+        expect(subscriber.recordedOutput).toEventually(equal([
+          (0, .subscription),
+          (10, .input(false)),
+          (20, .input(true)),
+          (20, .input(false)),
+        ]))
       }
     }
 

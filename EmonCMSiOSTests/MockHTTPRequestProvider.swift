@@ -7,16 +7,16 @@
 //
 
 import UIKit
+import Combine
 
-import RxSwift
 @testable import EmonCMSiOS
 
 final class MockHTTPRequestProvider: HTTPRequestProvider {
 
-  func request(url: URL) -> Observable<Data> {
+  func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
       else {
-        return Observable.empty()
+        return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
     }
 
     let path = urlComponents.path
@@ -31,7 +31,7 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
       queryValues["apikey"] == "ilikecats" ||
       (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
     else {
-      return Observable.error(HTTPRequestProviderError.httpError(code: 401))
+      return Fail(error: .httpError(code: 401)).eraseToAnyPublisher()
     }
 
     var responseString: String?
@@ -63,14 +63,14 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
     }
 
     if let responseString = responseString, let responseData = responseString.data(using: .utf8) {
-      return Observable.just(responseData)
+      return Just<Data>(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
     }
 
-    return Observable.empty()
+    return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
   }
 
-  func request(url: URL, formData: [String:String]) -> Observable<Data> {
-    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Observable.error(HTTPRequestProviderError.unknown) }
+  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
+    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Fail(error: .unknown).eraseToAnyPublisher() }
 
     var queryItems = components.queryItems ?? [URLQueryItem]()
     queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )

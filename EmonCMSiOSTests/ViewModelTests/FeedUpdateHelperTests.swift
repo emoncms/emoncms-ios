@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Quick
 import Nimble
-import RxSwift
-import RxTest
+import EntwineTest
 import Realm
 import RealmSwift
 @testable import EmonCMSiOS
@@ -18,7 +18,6 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var realmController: RealmController!
     var accountController: AccountController!
     var realm: Realm!
@@ -27,8 +26,6 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
     var viewModel: FeedUpdateHelper!
 
     beforeEach {
-      disposeBag = DisposeBag()
-
       realmController = RealmController(dataDirectory: self.dataDirectory)
       let credentials = AccountCredentials(url: "https://test", apiKey: "ilikecats")
       accountController = AccountController(uuid: "testaccount-\(type(of: self))", credentials: credentials)
@@ -45,16 +42,19 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
     describe("feedHandling") {
       it("should update feeds") {
         waitUntil { done in
-          viewModel.updateFeeds()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateFeeds()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
-              },
-              onCompleted: {
-                done()
-              })
-            .disposed(by: disposeBag)
+            },
+              receiveValue: { _ in }
+          )
         }
 
         let results = realm.objects(Feed.self)
@@ -71,16 +71,19 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          viewModel.updateFeeds()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateFeeds()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
 
         expect { realm.object(ofType: Feed.self, forPrimaryKey: newFeedId) }
@@ -107,16 +110,19 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          viewModel.updateFeeds()
-            .subscribe(
-              onError: {
-                fail($0.localizedDescription)
+          _ = viewModel.updateFeeds()
+            .sink(
+              receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
                 done()
             },
-              onCompleted: {
-                done()
-            })
-            .disposed(by: disposeBag)
+              receiveValue: { _ in }
+          )
         }
 
         let results = realm.objects(TodayWidgetFeed.self)
