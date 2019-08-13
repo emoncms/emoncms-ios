@@ -74,34 +74,24 @@
 		C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */; };
 		C945F8FA21FE54BE00B99D35 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
-		C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985C21FBD6FE008FB8AE /* RxCocoa.framework */; };
 		C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985D21FBD6FE008FB8AE /* Realm.framework */; };
 		C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
-		C949986A21FBD6FE008FB8AE /* RxRealm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985F21FBD6FE008FB8AE /* RxRealm.framework */; };
 		C949986B21FBD6FE008FB8AE /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986021FBD6FE008FB8AE /* RealmSwift.framework */; };
 		C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986121FBD6FE008FB8AE /* Former.framework */; };
 		C949986D21FBD6FE008FB8AE /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; };
 		C949986E21FBD6FE008FB8AE /* XCGLogger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986321FBD6FE008FB8AE /* XCGLogger.framework */; };
-		C949986F21FBD6FE008FB8AE /* Action.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986421FBD6FE008FB8AE /* Action.framework */; };
-		C949987021FBD6FE008FB8AE /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986521FBD6FE008FB8AE /* RxSwift.framework */; };
 		C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; };
 		C949987521FBD717008FB8AE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; };
 		C949987621FBD717008FB8AE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; };
-		C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987721FBD8D9008FB8AE /* RxDataSources.framework */; };
 		C949987A21FBD900008FB8AE /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; };
 		C949987B21FBD900008FB8AE /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; };
-		C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987C21FBD94B008FB8AE /* Differentiator.framework */; };
 		C949988121FBDA65008FB8AE /* ObjcExceptionBridging.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */; };
 		C94998AB21FC65C9008FB8AE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998AC21FC65CD008FB8AE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998AF21FC65DB008FB8AE /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987221FBD717008FB8AE /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998B021FC65DE008FB8AE /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987321FBD717008FB8AE /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C94998B121FC9C9E008FB8AE /* RxSwift.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949986521FBD6FE008FB8AE /* RxSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C94998B221FC9CC0008FB8AE /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986521FBD6FE008FB8AE /* RxSwift.framework */; };
 		C94998B321FC9CDF008FB8AE /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; };
-		C94998B521FC9CDF008FB8AE /* RxTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; };
-		C94998B621FC9CE8008FB8AE /* RxTest.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C94998B421FC9CDF008FB8AE /* RxTest.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998B721FC9CEB008FB8AE /* Charts.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949986221FBD6FE008FB8AE /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
 		C94998C221FD0D08008FB8AE /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998C121FD0D08008FB8AE /* TodayViewController.swift */; };
@@ -166,8 +156,6 @@
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
-		C9DD825122F0B8C000CE9ABC /* RxRelay.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9DD825022F0B8C000CE9ABC /* RxRelay.framework */; };
-		C9DD825222F0B8C000CE9ABC /* RxRelay.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C9DD825022F0B8C000CE9ABC /* RxRelay.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C9E7A6F821F50873008BD497 /* account_v0.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9E7A6F721F50873008BD497 /* account_v0.realm */; };
 		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
 		C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */; };
@@ -227,8 +215,6 @@
 			dstSubfolderSpec = 10;
 			files = (
 				C94998B721FC9CEB008FB8AE /* Charts.framework in CopyFiles */,
-				C94998B621FC9CE8008FB8AE /* RxTest.framework in CopyFiles */,
-				C94998B121FC9C9E008FB8AE /* RxSwift.framework in CopyFiles */,
 				C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */,
 				C94998AC21FC65CD008FB8AE /* Quick.framework in CopyFiles */,
 				C94998AB21FC65C9008FB8AE /* Nimble.framework in CopyFiles */,
@@ -273,7 +259,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C9DD825222F0B8C000CE9ABC /* RxRelay.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,24 +323,17 @@
 		C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+User.swift"; sourceTree = "<group>"; };
-		C949985B21FBD6FE008FB8AE /* RxAppState.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxAppState.framework; path = Carthage/Build/iOS/RxAppState.framework; sourceTree = "<group>"; };
-		C949985C21FBD6FE008FB8AE /* RxCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxCocoa.framework; path = Carthage/Build/iOS/RxCocoa.framework; sourceTree = "<group>"; };
 		C949985D21FBD6FE008FB8AE /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = Carthage/Build/iOS/Realm.framework; sourceTree = "<group>"; };
 		C949985E21FBD6FE008FB8AE /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
-		C949985F21FBD6FE008FB8AE /* RxRealm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRealm.framework; path = Carthage/Build/iOS/RxRealm.framework; sourceTree = "<group>"; };
 		C949986021FBD6FE008FB8AE /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = Carthage/Build/iOS/RealmSwift.framework; sourceTree = "<group>"; };
 		C949986121FBD6FE008FB8AE /* Former.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Former.framework; path = Carthage/Build/iOS/Former.framework; sourceTree = "<group>"; };
 		C949986221FBD6FE008FB8AE /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
 		C949986321FBD6FE008FB8AE /* XCGLogger.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCGLogger.framework; path = Carthage/Build/iOS/XCGLogger.framework; sourceTree = "<group>"; };
 		C949986421FBD6FE008FB8AE /* Action.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Action.framework; path = Carthage/Build/iOS/Action.framework; sourceTree = "<group>"; };
-		C949986521FBD6FE008FB8AE /* RxSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxSwift.framework; path = Carthage/Build/iOS/RxSwift.framework; sourceTree = "<group>"; };
 		C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		C949987221FBD717008FB8AE /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
 		C949987321FBD717008FB8AE /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
-		C949987721FBD8D9008FB8AE /* RxDataSources.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxDataSources.framework; path = Carthage/Build/iOS/RxDataSources.framework; sourceTree = "<group>"; };
-		C949987C21FBD94B008FB8AE /* Differentiator.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Differentiator.framework; path = Carthage/Build/iOS/Differentiator.framework; sourceTree = "<group>"; };
 		C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ObjcExceptionBridging.framework; path = Carthage/Build/iOS/ObjcExceptionBridging.framework; sourceTree = "<group>"; };
-		C94998B421FC9CDF008FB8AE /* RxTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxTest.framework; path = Carthage/Build/iOS/RxTest.framework; sourceTree = "<group>"; };
 		C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C94998C121FD0D08008FB8AE /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		C94998C421FD0D08008FB8AE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -409,7 +387,6 @@
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
-		C9DD825022F0B8C000CE9ABC /* RxRelay.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RxRelay.framework; path = Carthage/Build/iOS/RxRelay.framework; sourceTree = "<group>"; };
 		C9E7A6F721F50873008BD497 /* account_v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v0.realm; sourceTree = "<group>"; };
 		C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
 		C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainControllerTests.swift; sourceTree = "<group>"; };
@@ -465,9 +442,7 @@
 				C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */,
 				C949987521FBD717008FB8AE /* Nimble.framework in Frameworks */,
 				C949987621FBD717008FB8AE /* Quick.framework in Frameworks */,
-				C94998B221FC9CC0008FB8AE /* RxSwift.framework in Frameworks */,
 				C96DA36123028FC3005B1F98 /* EntwineTest in Frameworks */,
-				C94998B521FC9CDF008FB8AE /* RxTest.framework in Frameworks */,
 				C94998B321FC9CDF008FB8AE /* Charts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -476,19 +451,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C949986721FBD6FE008FB8AE /* RxCocoa.framework in Frameworks */,
-				C949987F21FBDA03008FB8AE /* Differentiator.framework in Frameworks */,
-				C949987821FBD8DA008FB8AE /* RxDataSources.framework in Frameworks */,
 				C949986821FBD6FE008FB8AE /* Realm.framework in Frameworks */,
-				C9DD825122F0B8C000CE9ABC /* RxRelay.framework in Frameworks */,
 				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
-				C949986A21FBD6FE008FB8AE /* RxRealm.framework in Frameworks */,
 				C949986B21FBD6FE008FB8AE /* RealmSwift.framework in Frameworks */,
 				C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */,
 				C949986D21FBD6FE008FB8AE /* Charts.framework in Frameworks */,
 				C949986E21FBD6FE008FB8AE /* XCGLogger.framework in Frameworks */,
-				C949986F21FBD6FE008FB8AE /* Action.framework in Frameworks */,
-				C949987021FBD6FE008FB8AE /* RxSwift.framework in Frameworks */,
 				C949988121FBDA65008FB8AE /* ObjcExceptionBridging.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -531,11 +499,7 @@
 		83130A8D04C98BB39AF4F2A0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				C9DD825022F0B8C000CE9ABC /* RxRelay.framework */,
-				C94998B421FC9CDF008FB8AE /* RxTest.framework */,
 				C949988021FBDA65008FB8AE /* ObjcExceptionBridging.framework */,
-				C949987C21FBD94B008FB8AE /* Differentiator.framework */,
-				C949987721FBD8D9008FB8AE /* RxDataSources.framework */,
 				C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */,
 				C949987221FBD717008FB8AE /* Nimble.framework */,
 				C949987321FBD717008FB8AE /* Quick.framework */,
@@ -545,10 +509,6 @@
 				C949985E21FBD6FE008FB8AE /* Locksmith.framework */,
 				C949985D21FBD6FE008FB8AE /* Realm.framework */,
 				C949986021FBD6FE008FB8AE /* RealmSwift.framework */,
-				C949985B21FBD6FE008FB8AE /* RxAppState.framework */,
-				C949985C21FBD6FE008FB8AE /* RxCocoa.framework */,
-				C949985F21FBD6FE008FB8AE /* RxRealm.framework */,
-				C949986521FBD6FE008FB8AE /* RxSwift.framework */,
 				C949986321FBD6FE008FB8AE /* XCGLogger.framework */,
 				C97284D51DA594C20010C7B7 /* NotificationCenter.framework */,
 			);
@@ -1100,35 +1060,23 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/RxSwift.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxCocoa.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/XCGLogger.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxDataSources.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/RxRealm.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Action.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Former.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Differentiator.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/ObjcExceptionBridging.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxSwift.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxCocoa.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Realm.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RealmSwift.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/XCGLogger.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxDataSources.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/RxRealm.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Action.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Charts.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Former.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Differentiator.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/ObjcExceptionBridging.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
