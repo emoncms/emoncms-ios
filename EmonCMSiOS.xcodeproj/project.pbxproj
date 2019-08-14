@@ -89,7 +89,6 @@
 		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
-		C96A08392303518E00B55194 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
 		C96A081A2303495000B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A08192303495000B55194 /* Realm */; };
 		C96A081C2303495000B55194 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C96A081B2303495000B55194 /* RealmSwift */; };
 		C96A081E2303495D00B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A081D2303495D00B55194 /* Realm */; };
@@ -98,14 +97,13 @@
 		C96A08242303496700B55194 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C96A08232303496700B55194 /* XCGLogger */; };
 		C96A082623034BA800B55194 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082523034BA800B55194 /* Quick */; };
 		C96A082823034BA800B55194 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082723034BA800B55194 /* Nimble */; };
-		C96A082A23034BB700B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082923034BB700B55194 /* Realm */; };
-		C96A082C23034BB700B55194 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082B23034BB700B55194 /* RealmSwift */; };
-		C96A082E23034BCF00B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082D23034BCF00B55194 /* ObjcExceptionBridging */; };
-		C96A083023034BCF00B55194 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C96A082F23034BCF00B55194 /* XCGLogger */; };
 		C96A083223034BD700B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083123034BD700B55194 /* Realm */; };
 		C96A083423034BD700B55194 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083323034BD700B55194 /* RealmSwift */; };
 		C96A083623034BE600B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083523034BE600B55194 /* ObjcExceptionBridging */; };
 		C96A083823034BE600B55194 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083723034BE600B55194 /* XCGLogger */; };
+		C96A08392303518E00B55194 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
+		C96A083B2303E00B00B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083A2303E00B00B55194 /* Realm */; };
+		C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083C2303E02100B55194 /* ObjcExceptionBridging */; };
 		C96DA33323004E79005B1F98 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA33223004E79005B1F98 /* UIControl+Combine.swift */; };
 		C96DA3352301F4B7005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
 		C96DA33823020197005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
@@ -435,14 +433,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C96A082C23034BB700B55194 /* RealmSwift in Frameworks */,
 				C96DA3772303410F005B1F98 /* Quick in Frameworks */,
 				C96DA37A23034132005B1F98 /* Nimble in Frameworks */,
-				C96A083023034BCF00B55194 /* XCGLogger in Frameworks */,
+				C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */,
 				C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */,
 				C96DA36123028FC3005B1F98 /* EntwineTest in Frameworks */,
-				C96A082A23034BB700B55194 /* Realm in Frameworks */,
-				C96A082E23034BCF00B55194 /* ObjcExceptionBridging in Frameworks */,
+				C96A083B2303E00B00B55194 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -912,10 +908,8 @@
 				C96DA36023028FC3005B1F98 /* EntwineTest */,
 				C96DA3762303410F005B1F98 /* Quick */,
 				C96DA37923034132005B1F98 /* Nimble */,
-				C96A082923034BB700B55194 /* Realm */,
-				C96A082B23034BB700B55194 /* RealmSwift */,
-				C96A082D23034BCF00B55194 /* ObjcExceptionBridging */,
-				C96A082F23034BCF00B55194 /* XCGLogger */,
+				C96A083A2303E00B00B55194 /* Realm */,
+				C96A083C2303E02100B55194 /* ObjcExceptionBridging */,
 			);
 			productName = EmonCMSiOSTests;
 			productReference = C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */;
@@ -1797,26 +1791,6 @@
 			package = C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
 		};
-		C96A082923034BB700B55194 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		C96A082B23034BB700B55194 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = RealmSwift;
-		};
-		C96A082D23034BCF00B55194 /* ObjcExceptionBridging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = ObjcExceptionBridging;
-		};
-		C96A082F23034BCF00B55194 /* XCGLogger */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = XCGLogger;
-		};
 		C96A083123034BD700B55194 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
@@ -1836,6 +1810,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = XCGLogger;
+		};
+		C96A083A2303E00B00B55194 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		C96A083C2303E02100B55194 /* ObjcExceptionBridging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = ObjcExceptionBridging;
 		};
 		C96DA36023028FC3005B1F98 /* EntwineTest */ = {
 			isa = XCSwiftPackageProductDependency;
