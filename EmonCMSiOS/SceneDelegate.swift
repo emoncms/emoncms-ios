@@ -67,10 +67,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     let accountListViewController = rootViewController.topViewController! as! AccountListViewController
     accountListViewController.viewModel = AccountListViewModel(realmController: realmController, api: api)
 
-    let window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+    let window = UIWindow(windowScene: windowScene)
     self.window = window
 
-    window.windowScene = windowScene
     window.rootViewController = rootViewController
     window.makeKeyAndVisible()
   }
