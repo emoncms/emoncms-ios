@@ -104,6 +104,7 @@
 		C96A08392303518E00B55194 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
 		C96A083B2303E00B00B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083A2303E00B00B55194 /* Realm */; };
 		C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083C2303E02100B55194 /* ObjcExceptionBridging */; };
+		C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96A1C902304987200690E4D /* SceneDelegate.swift */; };
 		C96DA33323004E79005B1F98 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA33223004E79005B1F98 /* UIControl+Combine.swift */; };
 		C96DA3352301F4B7005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
 		C96DA33823020197005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
@@ -140,7 +141,6 @@
 		C9BB83501D869DCA0058C059 /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
 		C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
 		C9BB83621D873E130058C059 /* FeedListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83611D873E130058C059 /* FeedListViewModel.swift */; };
-		C9BB83671D87F52E0058C059 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83661D87F52E0058C059 /* MainController.swift */; };
 		C9BB83691D87F5630058C059 /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
 		C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */; };
 		C9BB836D1D87FD070058C059 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */; };
@@ -333,6 +333,7 @@
 		C95640AE1D8A9C7D003B9757 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RowFormer+Combine.swift"; sourceTree = "<group>"; };
 		C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Emoncms.swift"; sourceTree = "<group>"; };
+		C96A1C902304987200690E4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C96DA33223004E79005B1F98 /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTableViewDataSource.swift; sourceTree = "<group>"; };
 		C96DA384230345BE005B1F98 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
@@ -356,7 +357,6 @@
 		C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSAPI.swift; sourceTree = "<group>"; };
 		C9BB83531D86AA3E0058C059 /* Feed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Feed.swift; sourceTree = "<group>"; };
 		C9BB83611D873E130058C059 /* FeedListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewModel.swift; sourceTree = "<group>"; };
-		C9BB83661D87F52E0058C059 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
 		C9BB83681D87F5630058C059 /* KeychainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainController.swift; sourceTree = "<group>"; };
 		C9BB836A1D87FC1D0058C059 /* AddAccountViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddAccountViewModel.swift; sourceTree = "<group>"; };
 		C9BB836C1D87FD070058C059 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -678,7 +678,6 @@
 		C9BB83651D87F52E0058C059 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C9BB83661D87F52E0058C059 /* MainController.swift */,
 				C9BB83681D87F5630058C059 /* KeychainController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
 				1EE02C1221ED116900C6AE9A /* RealmController.swift */,
@@ -722,6 +721,7 @@
 				C9BB83551D86B19C0058C059 /* Helpers */,
 				1EE02BF921EB4BBB00C6AE9A /* FakeServer */,
 				C9C0419A1D85F7D600E3CEC4 /* AppDelegate.swift */,
+				C96A1C902304987200690E4D /* SceneDelegate.swift */,
 				C9C0419E1D85F7D600E3CEC4 /* Main.storyboard */,
 				C92010F31D89F6AD00C9974B /* Apps.storyboard */,
 				C9C041A11D85F7D600E3CEC4 /* Assets.xcassets */,
@@ -1200,12 +1200,12 @@
 				C92010FC1D89FD7300C9974B /* AppConfig.swift in Sources */,
 				1EE02C1521ED251000C6AE9A /* AccountListViewModel.swift in Sources */,
 				C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */,
-				C9BB83671D87F52E0058C059 /* MainController.swift in Sources */,
 				C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* KeychainController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
 				C9E7A70821F662AA008BD497 /* EmonCMSAPI+Feed.swift in Sources */,
 				C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */,
+				C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */,
 				C9BB836B1D87FC1D0058C059 /* AddAccountViewModel.swift in Sources */,
 				C91CC3451D8CAE1E0048A356 /* CombineOperators.swift in Sources */,
 				1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */,
