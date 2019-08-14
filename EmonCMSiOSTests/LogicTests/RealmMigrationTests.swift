@@ -67,11 +67,11 @@ class RealmMigrationTests: QuickSpec {
           fail("Failed to copy Realm file!")
         }
 
-        expect {
-          let _ = realmController.createMainRealm()
-          let _ = realmController.createAccountRealm(forAccountId: uuid)
-          return nil
-        }.toNot(throwAssertion())
+        let mainRealm = realmController.createMainRealm()
+        let accountRealm = realmController.createAccountRealm(forAccountId: uuid)
+
+        expect(mainRealm).toNot(beNil())
+        expect(accountRealm).toNot(beNil())
       }
 
       it("should migrate from v0") {

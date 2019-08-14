@@ -6,6 +6,7 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
+import Foundation
 import Combine
 import Quick
 import Nimble
