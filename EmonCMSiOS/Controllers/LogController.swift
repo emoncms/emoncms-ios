@@ -10,46 +10,21 @@ import Foundation
 
 import XCGLogger
 
-let AppLog: XCGLogger = {
+var AppLog: XCGLogger {
   guard LogController.shared.initialised else { fatalError("Logging not initialised yet!") }
-  let log = XCGLogger.default
-
-  #if DEBUG
-    let systemDestination = AppleSystemLogDestination(identifier: XCGLogger.Constants.systemLogDestinationIdentifier)
-    systemDestination.outputLevel = .debug
-    systemDestination.showLogIdentifier = false
-    systemDestination.showFunctionName = true
-    systemDestination.showThreadName = true
-    systemDestination.showLevel = true
-    systemDestination.showFileName = true
-    systemDestination.showLineNumber = true
-    systemDestination.showDate = true
-    log.add(destination: systemDestination)
-  #endif
-
-  let logPath: URL = LogController.shared.mainLogFile
-  let fileDestination = FileDestination(writeToFile: logPath, identifier: XCGLogger.Constants.fileDestinationIdentifier)
-  fileDestination.outputLevel = .debug
-  fileDestination.showLogIdentifier = false
-  fileDestination.showFunctionName = true
-  fileDestination.showThreadName = true
-  fileDestination.showLevel = true
-  fileDestination.showFileName = true
-  fileDestination.showLineNumber = true
-  fileDestination.showDate = true
-  fileDestination.logQueue = XCGLogger.logQueue
-  log.add(destination: fileDestination)
-
-  return log
-}()
+  return LogController.shared.logger
+}
 
 final class LogController {
 
   static let shared = LogController()
 
-  fileprivate private(set) var initialised: Bool
+  fileprivate var initialised: Bool
   private let fileManager: FileManager
-  fileprivate let logDirectory: URL
+  private let logDirectory: URL
+
+  fileprivate let logger: XCGLogger
+  private var fileDestination: FileDestination?
 
   private static let FileName: String = "log.txt"
 
@@ -60,14 +35,44 @@ final class LogController {
     let urls = self.fileManager.urls(for: .cachesDirectory, in: .userDomainMask)
     let url = urls.last!.appendingPathComponent("logs")
     self.logDirectory = url
+
+    let log = XCGLogger.default
+    self.logger = log
   }
 
-  fileprivate var mainLogFile: URL {
+  private var mainLogFile: URL {
     return self.logDirectory.appendingPathComponent(LogController.FileName)
   }
 
   private func internalSetup() {
     self.ensureLogDirectoryExists()
+
+    #if DEBUG
+      let systemDestination = AppleSystemLogDestination(identifier: XCGLogger.Constants.systemLogDestinationIdentifier)
+      systemDestination.outputLevel = .debug
+      systemDestination.showLogIdentifier = false
+      systemDestination.showFunctionName = true
+      systemDestination.showThreadName = true
+      systemDestination.showLevel = true
+      systemDestination.showFileName = true
+      systemDestination.showLineNumber = true
+      systemDestination.showDate = true
+      self.logger.add(destination: systemDestination)
+    #endif
+
+    let logPath: URL = self.mainLogFile
+    let fileDestination = FileDestination(writeToFile: logPath, identifier: XCGLogger.Constants.fileDestinationIdentifier)
+    fileDestination.outputLevel = .debug
+    fileDestination.showLogIdentifier = false
+    fileDestination.showFunctionName = true
+    fileDestination.showThreadName = true
+    fileDestination.showLevel = true
+    fileDestination.showFileName = true
+    fileDestination.showLineNumber = true
+    fileDestination.showDate = true
+    fileDestination.logQueue = XCGLogger.logQueue
+    self.logger.add(destination: fileDestination)
+    self.fileDestination = fileDestination
   }
 
   private func ensureLogDirectoryExists() {
@@ -107,6 +112,10 @@ final class LogController {
     }
 
     return fileUrls
+  }
+
+  func flushFile() {
+    self.fileDestination?.flush()
   }
 
 }
