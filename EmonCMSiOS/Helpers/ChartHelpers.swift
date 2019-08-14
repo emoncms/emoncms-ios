@@ -35,8 +35,23 @@ final class ChartHelpers {
 
     let yAxisFormatter = NumberFormatter()
     yAxisFormatter.minimumIntegerDigits = 1
-    yAxisFormatter.minimumSignificantDigits = 2
-    yAxis.valueFormatter = DefaultAxisValueFormatter(formatter: yAxisFormatter)
+    let valueFormatter = DefaultAxisValueFormatter.with { value, axis -> String in
+      guard let axis = axis else { return "" }
+      let range = axis.axisRange
+      let count = axis.entryCount
+      let perLabel = range / Double(count)
+      let decimals: Int
+      if perLabel.isNaN || perLabel <= 0 {
+        decimals = 0
+      } else if perLabel > 1 {
+        decimals = 0
+      } else {
+        decimals = -Int(floor(log10(perLabel)))
+      }
+      yAxisFormatter.minimumFractionDigits = decimals
+      return yAxisFormatter.string(from: NSNumber(value: value)) ?? "\(value)"
+    }
+    yAxis.valueFormatter = valueFormatter
   }
 
   static func setupAppLineChart(_ lineChart: LineChartView) {
