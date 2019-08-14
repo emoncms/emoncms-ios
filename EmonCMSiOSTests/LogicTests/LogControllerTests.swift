@@ -25,6 +25,8 @@ class LogControllerTests: QuickSpec {
         let thingToLog = UUID().uuidString
         AppLog.info(thingToLog)
 
+        controller.flushFile()
+
         let logFiles = controller.logFiles
         expect(logFiles.count).to(beGreaterThan(0))
 
