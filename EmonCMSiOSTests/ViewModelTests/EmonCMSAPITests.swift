@@ -6,44 +6,46 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
+import Foundation
+import Combine
 import Quick
 import Nimble
+import EntwineTest
 @testable import EmonCMSiOS
 
 class EmonCMSAPITests: EmonCMSTestCase {
 
   override func spec() {
 
-    var disposeBag: DisposeBag!
     var scheduler: TestScheduler!
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
     var accountCredentials: AccountCredentials!
 
-    func call<T>(api: Observable<T>, observer: TestableObserver<T>, expect: @escaping () -> Void) {
+    func call<T>(api: AnyPublisher<T, EmonCMSAPI.APIError>, subscriber: TestableSubscriber<T, EmonCMSAPI.APIError>, expect: @escaping () -> Void) {
       let sharedResult = api.share(replay: 1)
 
       sharedResult
-        .subscribe(observer)
-        .disposed(by: disposeBag)
+        .subscribe(subscriber)
 
       waitUntil { done in
-        sharedResult
-          .subscribe(
-            onError: { error in
-              fail(error.localizedDescription)
+        _ = sharedResult
+          .sink(
+            receiveCompletion: { completion in
+              switch completion {
+              case .finished:
+                break
+              case .failure(let error):
+                fail(error.localizedDescription)
+              }
               done()
-            },
-            onCompleted: {
-              expect()
-              done()
-          })
-          .disposed(by: disposeBag)
+          },
+            receiveValue: { _ in }
+          )
       }
     }
 
     beforeEach {
-      disposeBag = DisposeBag()
       scheduler = TestScheduler(initialClock: 0)
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
@@ -52,111 +54,118 @@ class EmonCMSAPITests: EmonCMSTestCase {
 
     describe("feedList") {
       it("should return feeds") {
-        let observer = scheduler.createObserver([Feed].self)
+        let subscriber = scheduler.createTestableSubscriber([Feed].self, EmonCMSAPI.APIError.self)
 
-        let result = api.feedList(accountCredentials).share(replay: 1)
+        let result = api.feedList(accountCredentials)
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element!.count).to(equal(2))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!.count).to(equal(2))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 
     describe("feedFields") {
       it("should fetch all fields for a given feed") {
-        let observer = scheduler.createObserver(Feed.self)
+        let subscriber = scheduler.createTestableSubscriber(Feed.self, EmonCMSAPI.APIError.self)
 
         let result = api.feedFields(accountCredentials, id: "1")
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 
     describe("feedField") {
       it("should fetch the given field for the feed") {
-        let observer = scheduler.createObserver(String.self)
+        let subscriber = scheduler.createTestableSubscriber(String.self, EmonCMSAPI.APIError.self)
 
         let result = api.feedField(accountCredentials, id: "1", fieldName: "name")
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element).to(equal("use"))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!).to(equal("use"))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 
     describe("feedData") {
       it("should fetch the data for the feed") {
-        let observer = scheduler.createObserver([DataPoint<Double>].self)
+        let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
 
         let result = api.feedData(accountCredentials, id: "1", at: Date()-100, until: Date(), interval: 10)
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element!.count).to(equal(10))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!.count).to(equal(10))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 
     describe("feedDataDaily") {
       it("should fetch the data for the feed") {
-        let observer = scheduler.createObserver([DataPoint<Double>].self)
+        let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
 
         let result = api.feedDataDaily(accountCredentials, id: "1", at: Date()-100, until: Date())
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element!.count).to(equal(3))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!.count).to(equal(3))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 
     describe("feedValue") {
       it("should fetch the value for the feed") {
-        let observer = scheduler.createObserver(Double.self)
+        let subscriber = scheduler.createTestableSubscriber(Double.self, EmonCMSAPI.APIError.self)
 
         let result = api.feedValue(accountCredentials, id: "1")
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element!).to(equal(100))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!).to(equal(100))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
 
       it("should fetch the value for the feeds") {
-        let observer = scheduler.createObserver([String:Double].self)
+        let subscriber = scheduler.createTestableSubscriber([String:Double].self, EmonCMSAPI.APIError.self)
 
         let result = api.feedValue(accountCredentials, ids: ["1", "2", "3"])
 
-        call(api: result, observer: observer) {
-          expect(observer.events.count).to(equal(2))
-          expect(observer.events[0].value.element).notTo(beNil())
-          expect(observer.events[0].value.element!.count).to(equal(3))
-          expect(observer.events[0].value.element!).to(equal(["1":100,"2":200,"3":300]))
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[0].1.value).notTo(beNil())
+          expect(results[0].1.value!.count).to(equal(3))
+          expect(results[0].1.value!).to(equal(["1":100,"2":200,"3":300]))
         }
 
-        scheduler.start()
+        scheduler.resume()
       }
     }
 

@@ -156,6 +156,8 @@
 		C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BD1D91730100BC302C /* FeedListViewController.swift */; };
 		C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240BF1D91730100BC302C /* SettingsViewController.swift */; };
 		C9C240CE1D917CA500BC302C /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
+		C9C40BA12307D19800CE2839 /* EmonCMSAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */; };
+		C9C40BA32307D45900CE2839 /* EntwineAdditions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C40BA22307D45900CE2839 /* EntwineAdditions.swift */; };
 		C9D9CA101DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
 		C9E7A6F821F50873008BD497 /* account_v0.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9E7A6F721F50873008BD497 /* account_v0.realm */; };
 		C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */; };
@@ -375,6 +377,8 @@
 		C9C240BD1D91730100BC302C /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
+		C9C40B9F2304A04300CE2839 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
+		C9C40BA22307D45900CE2839 /* EntwineAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntwineAdditions.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C9E7A6F721F50873008BD497 /* account_v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v0.realm; sourceTree = "<group>"; };
 		C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmMigrationTests.swift; sourceTree = "<group>"; };
@@ -586,6 +590,7 @@
 				C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */,
 				C9E7A6F621F50873008BD497 /* Realms */,
 				C95640AE1D8A9C7D003B9757 /* Info.plist */,
+				C9C40BA22307D45900CE2839 /* EntwineAdditions.swift */,
 			);
 			path = EmonCMSiOSTests;
 			sourceTree = "<group>";
@@ -1158,6 +1163,7 @@
 				C96DA36323029D50005B1F98 /* EmonCMSTestCase.swift in Sources */,
 				C9E7A70F21F864E1008BD497 /* ChartDateValueFormatterTests.swift in Sources */,
 				C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */,
+				C9C40BA32307D45900CE2839 /* EntwineAdditions.swift in Sources */,
 				C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */,
 				C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */,
 				C96DA3682302EA14005B1F98 /* FeedChartViewModelTests.swift in Sources */,
@@ -1165,6 +1171,7 @@
 				C96DA36F23031BCE005B1F98 /* NSURLSessionHTTPRequestProviderTests.swift in Sources */,
 				C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */,
 				C9E7A6FA21F50892008BD497 /* RealmMigrationTests.swift in Sources */,
+				C9C40BA12307D19800CE2839 /* EmonCMSAPITests.swift in Sources */,
 				C96DA36223029BE2005B1F98 /* DashboardListViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
