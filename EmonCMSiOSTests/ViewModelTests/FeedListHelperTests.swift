@@ -63,13 +63,7 @@ class FeedListHelperTests: EmonCMSTestCase {
 
         expect(results.recordedOutput.count).toEventually(equal(3))
         let lastEventFeedsSignal = results.recordedOutput.suffix(1).first!.1
-        let lastEventFeeds: [FeedListHelper.FeedListItem]
-        switch lastEventFeedsSignal {
-        case .input(let v):
-          lastEventFeeds = v
-        default:
-          lastEventFeeds = []
-        }
+        let lastEventFeeds = lastEventFeedsSignal.value ?? []
         expect(lastEventFeeds.count).to(equal(10))
         for (i, feed) in lastEventFeeds.enumerated() {
           expect(feed.feedId).to(equal("\(i)"))

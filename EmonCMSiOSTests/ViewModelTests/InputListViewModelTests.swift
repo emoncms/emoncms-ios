@@ -63,14 +63,7 @@ class InputListViewModelTests: EmonCMSTestCase {
 
         expect(results.recordedOutput.count).toEventually(equal(3))
         let lastEventInputsSignal = results.recordedOutput.suffix(1).first!.1
-        let lastEventInputs: [InputListViewModel.Section]
-        switch lastEventInputsSignal {
-        case .input(let v):
-          lastEventInputs = v
-        default:
-          lastEventInputs = []
-        }
-
+        let lastEventInputs = lastEventInputsSignal.value ?? []
         expect(lastEventInputs.count).to(equal(2))
         guard lastEventInputs.count == 2 else { return }
 

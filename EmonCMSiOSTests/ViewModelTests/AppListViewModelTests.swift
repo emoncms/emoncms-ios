@@ -62,13 +62,7 @@ class AppListViewModelTests: EmonCMSTestCase {
 
         expect(results.recordedOutput.count).toEventually(equal(3))
         let lastEventAppsSignal = results.recordedOutput.suffix(1).first!.1
-        let lastEventApps: [AppListViewModel.ListItem]
-        switch lastEventAppsSignal {
-        case .input(let v):
-          lastEventApps = v
-        default:
-          lastEventApps = []
-        }
+        let lastEventApps = lastEventAppsSignal.value ?? []
         expect(lastEventApps.count).to(equal(10))
         for (i, app) in lastEventApps.enumerated() {
           expect(app.name).to(equal("App \(i)"))

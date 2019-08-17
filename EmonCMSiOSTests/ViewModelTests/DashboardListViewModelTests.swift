@@ -62,13 +62,7 @@ class DashboardListViewModelTests: EmonCMSTestCase {
 
         expect(results.recordedOutput.count).toEventually(equal(3))
         let lastEventDashboardsSignal = results.recordedOutput.suffix(1).first!.1
-        let lastEventDashboards: [DashboardListViewModel.ListItem]
-        switch lastEventDashboardsSignal {
-        case .input(let v):
-          lastEventDashboards = v
-        default:
-          lastEventDashboards = []
-        }
+        let lastEventDashboards = lastEventDashboardsSignal.value ?? []
         expect(lastEventDashboards.count).to(equal(10))
         for (i, dashboard) in lastEventDashboards.enumerated() {
           expect(dashboard.dashboardId).to(equal("\(i)"))

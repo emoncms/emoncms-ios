@@ -78,13 +78,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
 
         expect(results.recordedOutput.count).toEventually(equal(3))
         let lastEventAccountsSignal = results.recordedOutput.suffix(1).first!.1
-        let lastEventAccounts: [AccountListViewModel.ListItem]
-        switch lastEventAccountsSignal {
-        case .input(let v):
-          lastEventAccounts = v
-        default:
-          lastEventAccounts = []
-        }
+        let lastEventAccounts = lastEventAccountsSignal.value ?? []
         expect(lastEventAccounts.count).to(equal(10))
         for (i, account) in lastEventAccounts.enumerated() {
           expect(account.name).to(equal("Account \(i)"))
