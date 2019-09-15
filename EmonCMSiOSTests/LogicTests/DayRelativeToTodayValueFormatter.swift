@@ -8,6 +8,7 @@
 
 import Quick
 import Nimble
+import Charts
 @testable import EmonCMSiOS
 
 class DayRelativeToTodayValueFormatterTests: QuickSpec {
@@ -18,16 +19,37 @@ class DayRelativeToTodayValueFormatterTests: QuickSpec {
     }
 
     describe("dayRelativeToTodayValueFormatter") {
-      it("should format properly") {
-        let formatter = DayRelativeToTodayValueFormatter()
+      it("should format properly for 7 day week") {
+        let formatter = DayRelativeToTodayValueFormatter(relativeTo: Date(timeIntervalSince1970: (86_400 * 7)))
+        let axis = AxisBase()
+        axis.axisRange = 7
 
-        let values = (-6...0)
-          .map {
-            formatter.stringForValue(Double($0), axis: nil)
-          }
-          .sorted()
+        let values = (-7...0)
+          .map { formatter.stringForValue(Double($0), axis: axis) }
 
-        expect(values).to(equal(["F", "M", "S", "S", "T", "T", "W"]))
+        expect(values).to(equal(["T", "F", "S", "S", "M", "T", "W", "T"]))
+      }
+
+      it("should format properly for month") {
+        let formatter = DayRelativeToTodayValueFormatter(relativeTo: Date(timeIntervalSince1970: (86_400 * 31)))
+        let axis = AxisBase()
+        axis.axisRange = 31
+
+        let values = (-31...0)
+          .map { formatter.stringForValue(Double($0), axis: axis) }
+
+        expect(values).to(equal(["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "01"]))
+      }
+
+      it("should format properly for year") {
+        let formatter = DayRelativeToTodayValueFormatter(relativeTo: Date(timeIntervalSince1970: (86_400 * 365)))
+        let axis = AxisBase()
+        axis.axisRange = 365
+
+        let values = [-365, -61, -15, 0]
+          .map { formatter.stringForValue(Double($0), axis: axis) }
+
+        expect(values).to(equal(["Jan 01", "Nov 01", "Dec 17", "Jan 01"]))
       }
     }
 
