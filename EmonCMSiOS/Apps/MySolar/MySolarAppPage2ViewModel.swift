@@ -62,11 +62,11 @@ final class MySolarAppPage2ViewModel: AppPageViewModel {
     let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange }
+      dateRangeSignal.dropFirst().map { _ in AppPageRefreshKind.dateRangeChange }
     )
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
-      .flatMap { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
+      .map { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
         guard let self = self else { return Empty().eraseToAnyPublisher() }
 
         let update = self.update(dateRange: dateRange)
@@ -84,12 +84,12 @@ final class MySolarAppPage2ViewModel: AppPageViewModel {
             self?.errorsSubject.send(nil)
           })
           .map { $0 }
-          .prefix(untilOutputFrom: self.$dateRange.dropFirst())
           .trackActivity(isRefreshingIndicator)
           .eraseToAnyPublisher()
 
         return update
       }
+      .switchToLatest()
       .map { $0 as Data? }
       .assign(to: \Self.data, on: self)
       .store(in: &self.cancellables)
