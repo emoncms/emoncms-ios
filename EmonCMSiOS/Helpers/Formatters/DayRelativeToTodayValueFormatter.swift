@@ -13,14 +13,20 @@ import Charts
 final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
 
   private let dateFormatter: DateFormatter
+  private let relativeTo: Date?
 
   static let posixLocale = Locale(identifier: "en_US_POSIX")
 
-  override init() {
+  init(relativeTo: Date?) {
+    self.relativeTo = relativeTo
     let dateFormatter = DateFormatter()
     self.dateFormatter = dateFormatter
 
     super.init()
+  }
+
+  override convenience init() {
+    self.init(relativeTo: nil)
   }
 
   func stringForValue(_ value: Double, axis: AxisBase?) -> String {
@@ -35,7 +41,13 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
       self.dateFormatter.dateFormat = "MMM dd"
     }
 
-    let date = Date(timeIntervalSinceNow: value * 86400)
+    let timeAdd = value * 86_400
+    let date: Date
+    if let relativeTo = self.relativeTo {
+      date = relativeTo.addingTimeInterval(timeAdd)
+    } else {
+      date = Date(timeIntervalSinceNow: timeAdd)
+    }
     return self.dateFormatter.string(from: date)
   }
   
