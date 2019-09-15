@@ -96,6 +96,7 @@ final class ChartHelpers {
     barChart.drawValueAboveBarEnabled = true
 
     let xAxis = barChart.xAxis
+    xAxis.avoidFirstLastClippingEnabled = true
     xAxis.labelPosition = .bottom
     xAxis.labelTextColor = .black
     xAxis.valueFormatter = DayRelativeToTodayValueFormatter()

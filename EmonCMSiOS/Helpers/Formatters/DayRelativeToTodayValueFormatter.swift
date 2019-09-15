@@ -18,13 +18,23 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
 
   override init() {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "eeeee"
     self.dateFormatter = dateFormatter
 
     super.init()
   }
 
   func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+    let range = axis?.axisRange ?? 0
+
+    switch range {
+    case let x where x <= 14:
+      self.dateFormatter.dateFormat = "eeeee"
+    case let x where x > 14 && x <= 31:
+      self.dateFormatter.dateFormat = "dd"
+    default:
+      self.dateFormatter.dateFormat = "MMM dd"
+    }
+
     let date = Date(timeIntervalSinceNow: value * 86400)
     return self.dateFormatter.string(from: date)
   }
