@@ -89,6 +89,7 @@
 		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */; };
 		C95C50FC23511EFB00D07E80 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C95C50FB23511EFB00D07E80 /* Charts */; };
+		C95C50FE2351361200D07E80 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C95C50FD2351361200D07E80 /* Charts */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
 		C96A081A2303495000B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A08192303495000B55194 /* Realm */; };
 		C96A081C2303495000B55194 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C96A081B2303495000B55194 /* RealmSwift */; };
@@ -425,6 +426,7 @@
 			files = (
 				C96A081C2303495000B55194 /* RealmSwift in Frameworks */,
 				C96A081A2303495000B55194 /* Realm in Frameworks */,
+				C95C50FE2351361200D07E80 /* Charts in Frameworks */,
 				C96A08222303496700B55194 /* ObjcExceptionBridging in Frameworks */,
 				C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */,
 				C94998D321FD1C8B008FB8AE /* Locksmith.framework in Frameworks */,
@@ -888,6 +890,7 @@
 				C96A081B2303495000B55194 /* RealmSwift */,
 				C96A08212303496700B55194 /* ObjcExceptionBridging */,
 				C96A08232303496700B55194 /* XCGLogger */,
+				C95C50FD2351361200D07E80 /* Charts */,
 			);
 			productName = EmonCMSiOSToday;
 			productReference = C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */;
@@ -1766,6 +1769,11 @@
 
 /* Begin XCSwiftPackageProductDependency section */
 		C95C50FB23511EFB00D07E80 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		C95C50FD2351361200D07E80 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = Charts;
