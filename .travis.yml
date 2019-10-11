@@ -12,6 +12,6 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) -J '^EmonCMSiOS$'
 env:
   matrix:
-    - TEST_SDK=iphonesimulator13.0 OS=13.0 NAME='iPhone XR'
+    - TEST_SDK=iphonesimulator13.0 OS=13.0 NAME='iPhone 11'
   global:
     secure: DKJhMWi5WghhvvEcW3iuU5cUD9xyIOSPc6c6IjuDML4A6ytE3CKs0oHZJ1DP2xejWbPVolkvuk0IS0OXIvFeJR3e4To5BFTdgfmMrrUknmESI6BleH1AOV/CBFVLF+I3/PEGPzC3RmUr1WcQ3AANty6HN+Sgr8MsI8Te6gNMQ55Gpl596oYELooSZZyHZRNNwlRdCMKVv33rPFh1FUlyy4/r+GWdlq0QYYHmbYKKBEJhinox2/4HX7argOo+l1Hf/Cpz9SrDoOZJk/Kf7ZjSI43lMo7I0ot8NZgLMi8KR92xTYqxxxD426NRQYe/Marttis7Wx0CHpodmDTsBAQ0eq/awai6hkhXhzEcWd4o51/U8/Ngs7bKeB2dfMmAcCjfVa5p54I9gFFXOpiVSiOSPgAF0Y4DROFOIFl4QsdJ7iitXOsbolKB3GV52GwxvRifBJ/sjxsMQ6iZFU5wMCJbs8ZgVzltzvxDiur0KZmYi4k6CnEW2jbSIe5zFx5kA922diBh4qAbkV3uxlEk3fZcfEQnak/FcBWt4W0HgjAzJXsh4nsRkdEmBCeH6CoOuk1VsTdUYEFZmQ3/vYp98lZQPrWIZZAhDhvjSKAoTRjWEzti12yOt4EMdEGqo4uM8fxhbI+el+sgtT5iZfdqnAIs8SNiGYqo0cxmX8MB2Z8q/EI=
