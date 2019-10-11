@@ -1,4 +1,3 @@
-github "danielgindi/Charts" "v3.3.0"
 github "matthewpalmer/Locksmith" "4.0.0"
 github "ra1028/Former" "1.8.0"
 github "uber/ios-snapshot-test-case" "6.1.0"
