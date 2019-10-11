@@ -88,6 +88,7 @@
 		C94998D421FD1C93008FB8AE /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
 		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */; };
+		C95C50FC23511EFB00D07E80 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C95C50FB23511EFB00D07E80 /* Charts */; };
 		C96233FF1DB4B06B004C17E8 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
 		C96A081A2303495000B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A08192303495000B55194 /* Realm */; };
 		C96A081C2303495000B55194 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C96A081B2303495000B55194 /* RealmSwift */; };
@@ -126,7 +127,6 @@
 		C96DA37423034002005B1F98 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C96DA37323034002005B1F98 /* XCGLogger */; };
 		C96DA3772303410F005B1F98 /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = C96DA3762303410F005B1F98 /* Quick */; };
 		C96DA37A23034132005B1F98 /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = C96DA37923034132005B1F98 /* Nimble */; };
-		C96DA385230345BE005B1F98 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C96DA384230345BE005B1F98 /* Charts.framework */; };
 		C97284EA1DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284E91DAAFB760010C7B7 /* DayRelativeToTodayValueFormatter.swift */; };
 		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
 		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
@@ -377,7 +377,6 @@
 		C9C240BD1D91730100BC302C /* FeedListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListViewController.swift; sourceTree = "<group>"; };
 		C9C240BF1D91730100BC302C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C9C240CD1D917CA500BC302C /* DateRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateRange.swift; sourceTree = "<group>"; };
-		C9C40B9F2304A04300CE2839 /* AccountListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListView.swift; sourceTree = "<group>"; };
 		C9C40BA22307D45900CE2839 /* EntwineAdditions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntwineAdditions.swift; sourceTree = "<group>"; };
 		C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSURLSessionHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C9E7A6F721F50873008BD497 /* account_v0.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v0.realm; sourceTree = "<group>"; };
@@ -453,9 +452,9 @@
 				C96A081E2303495D00B55194 /* Realm in Frameworks */,
 				C96DA37223034002005B1F98 /* ObjcExceptionBridging in Frameworks */,
 				C96A08202303495D00B55194 /* RealmSwift in Frameworks */,
+				C95C50FC23511EFB00D07E80 /* Charts in Frameworks */,
 				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
 				C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */,
-				C96DA385230345BE005B1F98 /* Charts.framework in Frameworks */,
 				C96DA37423034002005B1F98 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -943,6 +942,7 @@
 				C96DA37323034002005B1F98 /* XCGLogger */,
 				C96A081D2303495D00B55194 /* Realm */,
 				C96A081F2303495D00B55194 /* RealmSwift */,
+				C95C50FB23511EFB00D07E80 /* Charts */,
 			);
 			productName = EmonCMSiOS;
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
@@ -1017,6 +1017,7 @@
 				C96DA3752303410F005B1F98 /* XCRemoteSwiftPackageReference "Quick" */,
 				C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */,
 				C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
+				C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
 			projectDirPath = "";
@@ -1083,14 +1084,12 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Former.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Charts.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Former.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Charts.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1715,6 +1714,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.4.0;
+			};
+		};
 		C96DA35F23028FC3005B1F98 /* XCRemoteSwiftPackageReference "Entwine" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tcldr/Entwine";
@@ -1758,6 +1765,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C95C50FB23511EFB00D07E80 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
 		C96A08192303495000B55194 /* Realm */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
