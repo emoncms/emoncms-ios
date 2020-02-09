@@ -1730,7 +1730,7 @@
 			repositoryURL = "https://github.com/tcldr/Entwine";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.7.0;
+				minimumVersion = 0.8.0;
 			};
 		};
 		C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
@@ -1753,8 +1753,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Nimble";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 8.0.2;
+				kind = exactVersion;
+				version = 8.0.2;
 			};
 		};
 		C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
