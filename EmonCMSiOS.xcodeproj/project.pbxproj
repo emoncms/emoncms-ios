@@ -107,6 +107,7 @@
 		C96A083B2303E00B00B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083A2303E00B00B55194 /* Realm */; };
 		C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083C2303E02100B55194 /* ObjcExceptionBridging */; };
 		C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96A1C902304987200690E4D /* SceneDelegate.swift */; };
+		C96D523D23F956B700613835 /* TimelaneCombine in Frameworks */ = {isa = PBXBuildFile; productRef = C96D523C23F956B700613835 /* TimelaneCombine */; };
 		C96DA33323004E79005B1F98 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA33223004E79005B1F98 /* UIControl+Combine.swift */; };
 		C96DA3352301F4B7005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
 		C96DA33823020197005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
@@ -454,6 +455,7 @@
 				C96A081E2303495D00B55194 /* Realm in Frameworks */,
 				C96DA37223034002005B1F98 /* ObjcExceptionBridging in Frameworks */,
 				C96A08202303495D00B55194 /* RealmSwift in Frameworks */,
+				C96D523D23F956B700613835 /* TimelaneCombine in Frameworks */,
 				C95C50FC23511EFB00D07E80 /* Charts in Frameworks */,
 				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
 				C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */,
@@ -946,6 +948,7 @@
 				C96A081D2303495D00B55194 /* Realm */,
 				C96A081F2303495D00B55194 /* RealmSwift */,
 				C95C50FB23511EFB00D07E80 /* Charts */,
+				C96D523C23F956B700613835 /* TimelaneCombine */,
 			);
 			productName = EmonCMSiOS;
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
@@ -1021,6 +1024,7 @@
 				C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */,
 				C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */,
+				C96D523B23F956B700613835 /* XCRemoteSwiftPackageReference "TimelaneCombine" */,
 			);
 			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
 			projectDirPath = "";
@@ -1725,6 +1729,14 @@
 				minimumVersion = 3.4.0;
 			};
 		};
+		C96D523B23F956B700613835 /* XCRemoteSwiftPackageReference "TimelaneCombine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/icanzilb/TimelaneCombine";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.0;
+			};
+		};
 		C96DA35F23028FC3005B1F98 /* XCRemoteSwiftPackageReference "Entwine" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tcldr/Entwine";
@@ -1847,6 +1859,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = ObjcExceptionBridging;
+		};
+		C96D523C23F956B700613835 /* TimelaneCombine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96D523B23F956B700613835 /* XCRemoteSwiftPackageReference "TimelaneCombine" */;
+			productName = TimelaneCombine;
 		};
 		C96DA36023028FC3005B1F98 /* EntwineTest */ = {
 			isa = XCSwiftPackageProductDependency;
