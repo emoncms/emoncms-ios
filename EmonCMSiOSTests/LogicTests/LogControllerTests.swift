@@ -22,13 +22,9 @@ class LogControllerTests: QuickSpec {
         let thingToLog = UUID().uuidString
         AppLog.info(thingToLog)
 
-        controller.flushFile()
-
-        if let logFileQueue = controller.logFileQueue {
-          waitUntil { done in
-            logFileQueue.async(flags: .barrier) {
-              done()
-            }
+        waitUntil { done in
+          controller.flushFile {
+            done()
           }
         }
 
