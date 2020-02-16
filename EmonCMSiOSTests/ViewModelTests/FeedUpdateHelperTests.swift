@@ -24,6 +24,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
     var viewModel: FeedUpdateHelper!
+    var cancellables: Set<AnyCancellable> = []
 
     beforeEach {
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -37,12 +38,13 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
       viewModel = FeedUpdateHelper(realmController: realmController, account: accountController, api: api)
+      cancellables.removeAll()
     }
 
     describe("feedHandling") {
       it("should update feeds") {
         waitUntil { done in
-          _ = viewModel.updateFeeds()
+          let cancellable = viewModel.updateFeeds()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -55,6 +57,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         let results = realm.objects(Feed.self)
@@ -71,7 +74,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          _ = viewModel.updateFeeds()
+          let cancellable = viewModel.updateFeeds()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -84,6 +87,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         expect { realm.object(ofType: Feed.self, forPrimaryKey: newFeedId) }
@@ -110,7 +114,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          _ = viewModel.updateFeeds()
+          let cancellable = viewModel.updateFeeds()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -123,6 +127,7 @@ class FeedUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         let results = realm.objects(TodayWidgetFeed.self)

@@ -24,6 +24,7 @@ class InputUpdateHelperTests: EmonCMSTestCase {
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
     var viewModel: InputUpdateHelper!
+    var cancellables: Set<AnyCancellable> = []
 
     beforeEach {
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -37,12 +38,13 @@ class InputUpdateHelperTests: EmonCMSTestCase {
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
       viewModel = InputUpdateHelper(realmController: realmController, account: accountController, api: api)
+      cancellables.removeAll()
     }
 
     describe("inputHandling") {
       it("should update inputs") {
         waitUntil { done in
-          _ = viewModel.updateInputs()
+          let cancellable = viewModel.updateInputs()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -55,6 +57,7 @@ class InputUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         let results = realm.objects(Input.self)
@@ -71,7 +74,7 @@ class InputUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          _ = viewModel.updateInputs()
+          let cancellable = viewModel.updateInputs()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -84,6 +87,7 @@ class InputUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         expect { realm.object(ofType: Input.self, forPrimaryKey: newInputId) }

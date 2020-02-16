@@ -24,6 +24,7 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
     var viewModel: DashboardUpdateHelper!
+    var cancellables: Set<AnyCancellable> = []
 
     beforeEach {
       realmController = RealmController(dataDirectory: self.dataDirectory)
@@ -37,12 +38,13 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
       viewModel = DashboardUpdateHelper(realmController: realmController, account: accountController, api: api)
+      cancellables.removeAll()
     }
 
     describe("dashboardHandling") {
       it("should update dashboards") {
         waitUntil { done in
-          _ = viewModel.updateDashboards()
+          let cancellable = viewModel.updateDashboards()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -55,6 +57,7 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         let results = realm.objects(Dashboard.self)
@@ -71,7 +74,7 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
         }
 
         waitUntil { done in
-          _ = viewModel.updateDashboards()
+          let cancellable = viewModel.updateDashboards()
             .sink(
               receiveCompletion: { completion in
                 switch completion {
@@ -84,6 +87,7 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
             },
               receiveValue: { _ in }
           )
+          cancellables.insert(cancellable)
         }
 
         expect { realm.object(ofType: Dashboard.self, forPrimaryKey: newDashboardId) }
