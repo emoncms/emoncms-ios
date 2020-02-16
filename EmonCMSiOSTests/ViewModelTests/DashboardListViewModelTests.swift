@@ -85,7 +85,10 @@ class DashboardListViewModelTests: EmonCMSTestCase {
 
         expect(subscriber.recordedOutput).toEventually(equal([
           (0, .subscription),
+          (0, .input(true)),
           (10, .input(false)),
+          (10, .input(true)),
+          (20, .input(false)),
           (20, .input(true)),
           (20, .input(false)),
         ]))
