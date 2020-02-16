@@ -62,9 +62,9 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .input(data)),
-          (900, .completion(.finished))
+          (200, .subscription),
+          (300, .input(data)),
+          (300, .completion(.finished))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -84,8 +84,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .completion(.failure(.httpError(code: 401))))
+          (200, .subscription),
+          (300, .completion(.failure(.httpError(code: 401))))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -105,8 +105,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .completion(.failure(.networkError)))
+          (200, .subscription),
+          (300, .completion(.failure(.networkError)))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -125,8 +125,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .completion(.failure(.unknown)))
+          (200, .subscription),
+          (300, .completion(.failure(.unknown)))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -145,8 +145,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .completion(.failure(.atsFailed)))
+          (200, .subscription),
+          (300, .completion(.failure(.atsFailed)))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -165,8 +165,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
-          (900, .subscription),
-          (900, .completion(.failure(.unknown)))
+          (200, .subscription),
+          (300, .completion(.failure(.unknown)))
         ]
 
         expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
@@ -187,9 +187,9 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
       let results = scheduler.start { sut }
 
       let expected: TestSequence<Data, HTTPRequestProviderError> = [
-        (900, .subscription),
-        (900, .input(data)),
-        (900, .completion(.finished))
+        (200, .subscription),
+        (300, .input(data)),
+        (300, .completion(.finished))
       ]
 
       expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
