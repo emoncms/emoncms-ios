@@ -6,21 +6,18 @@
 //  Copyright © 2018 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 enum AppCategory: String, CaseIterable {
-
   case myElectric
   case mySolar
   case mySolarDivert
-
 }
 
 final class AppData: Object {
-
   @objc dynamic var uuid: String = UUID().uuidString
   @objc dynamic var name: String = "App"
   @objc private dynamic var category: String = "NULL"
@@ -35,24 +32,24 @@ final class AppData: Object {
 
   var appCategory: AppCategory {
     get {
-      return AppCategory(rawValue: category)! // TODO: Handle this if it doesn't exist?
+      return AppCategory(rawValue: self.category)! // TODO: Handle this if it doesn't exist?
     }
     set {
       self.category = newValue.rawValue
     }
   }
 
-  private var feeds: [String:String] {
+  private var feeds: [String: String] {
     get {
       guard let dataJson = self.feedsJson else {
-        return [String:String]()
+        return [String: String]()
       }
       do {
-        if let feeds = try JSONSerialization.jsonObject(with: dataJson, options: []) as? [String:String] {
+        if let feeds = try JSONSerialization.jsonObject(with: dataJson, options: []) as? [String: String] {
           return feeds
         }
       } catch {}
-      return [String:String]()
+      return [String: String]()
     }
 
     set {
@@ -82,5 +79,4 @@ final class AppData: Object {
     feeds[name] = id
     self.feeds = feeds
   }
-
 }

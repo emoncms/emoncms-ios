@@ -12,7 +12,6 @@ import Realm
 import RealmSwift
 
 final class RealmController {
-
   static let schemaVersion: UInt64 = 1
 
   let dataDirectory: URL
@@ -44,7 +43,7 @@ final class RealmController {
   private func accountRealmConfiguration(forAccountId accountId: String) -> Realm.Configuration {
     var config = Realm.Configuration(fileURL: self.realmFileURL(forAccountId: accountId))
     config.schemaVersion = RealmController.schemaVersion
-    config.migrationBlock = { (migration, oldSchemaVersion) in
+    config.migrationBlock = { migration, oldSchemaVersion in
       if oldSchemaVersion == 0 {
         self.account_migrate_0_1(migration)
       }
@@ -58,14 +57,12 @@ final class RealmController {
     let realm = try! Realm(configuration: config)
     return realm
   }
-
 }
 
 extension RealmController {
-
   private func account_migrate_0_1(_ migration: Migration) {
     // Migrate the apps to new data model
-    migration.enumerateObjects(ofType: "MyElectricAppData") { (oldObject, newObject) in
+    migration.enumerateObjects(ofType: "MyElectricAppData") { oldObject, _ in
       guard let oldObject = oldObject else { return }
 
       guard
@@ -73,9 +70,9 @@ extension RealmController {
         let name = oldObject.value(forKey: "name"),
         let useFeedId = oldObject.value(forKey: "useFeedId"),
         let kwhFeedId = oldObject.value(forKey: "kwhFeedId"),
-        let feedsJsonData = try? JSONSerialization.data(withJSONObject: ["use":useFeedId, "kwh":kwhFeedId], options: [])
-        else {
-          return
+        let feedsJsonData = try? JSONSerialization.data(withJSONObject: ["use": useFeedId, "kwh": kwhFeedId], options: [])
+      else {
+        return
       }
 
       let newAppData = migration.create("AppData")
@@ -85,5 +82,4 @@ extension RealmController {
       newAppData.setValue(feedsJsonData, forKey: "feedsJson")
     }
   }
-
 }

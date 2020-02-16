@@ -8,8 +8,8 @@
 
 // TAKEN FROM: https://www.avanderlee.com/swift/custom-combine-publisher/
 
-import UIKit
 import Combine
+import UIKit
 
 protocol CombineCompatible {}
 
@@ -21,7 +21,7 @@ final class UIControlSubscription<SubscriberType: Subscriber>: Subscription wher
   init(subscriber: SubscriberType, control: UIControl, event: UIControl.Event) {
     self.subscriber = subscriber
     self.control = control
-    control.addTarget(self, action: #selector(eventHandler), for: event)
+    control.addTarget(self, action: #selector(self.eventHandler), for: event)
   }
 
   func request(_ demand: Subscribers.Demand) {
@@ -30,11 +30,11 @@ final class UIControlSubscription<SubscriberType: Subscriber>: Subscription wher
   }
 
   func cancel() {
-    subscriber = nil
+    self.subscriber = nil
   }
 
   @objc private func eventHandler() {
-    _ = subscriber?.receive(control)
+    _ = self.subscriber?.receive(self.control)
   }
 }
 
@@ -51,7 +51,7 @@ struct UIControlPublisher: Publisher {
     self.controlEvents = events
   }
 
-  func receive<S>(subscriber: S) where S : Subscriber, S.Failure == UIControlPublisher.Failure, S.Input == UIControlPublisher.Output {
+  func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIControlPublisher.Failure, S.Input == UIControlPublisher.Output {
     let subscription = UIControlSubscription(subscriber: subscriber, control: control, event: controlEvents)
     subscriber.receive(subscription: subscription)
   }
@@ -64,8 +64,6 @@ extension UIControl {
   }
 }
 
-
-
 final class UIBarButtonItemSubscription<SubscriberType: Subscriber>: Subscription where SubscriberType.Input == UIBarButtonItem {
   private var subscriber: SubscriberType?
   private let control: UIBarButtonItem
@@ -74,7 +72,7 @@ final class UIBarButtonItemSubscription<SubscriberType: Subscriber>: Subscriptio
     self.subscriber = subscriber
     self.control = control
     control.target = self
-    control.action = #selector(eventHandler)
+    control.action = #selector(self.eventHandler)
   }
 
   func request(_ demand: Subscribers.Demand) {
@@ -83,11 +81,11 @@ final class UIBarButtonItemSubscription<SubscriberType: Subscriber>: Subscriptio
   }
 
   func cancel() {
-    subscriber = nil
+    self.subscriber = nil
   }
 
   @objc private func eventHandler() {
-    _ = subscriber?.receive(control)
+    _ = self.subscriber?.receive(self.control)
   }
 }
 
@@ -101,7 +99,7 @@ struct UIBarButtonItemPublisher: Publisher {
     self.control = control
   }
 
-  func receive<S>(subscriber: S) where S : Subscriber, S.Failure == UIBarButtonItemPublisher.Failure, S.Input == UIBarButtonItemPublisher.Output {
+  func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIBarButtonItemPublisher.Failure, S.Input == UIBarButtonItemPublisher.Output {
     let subscription = UIBarButtonItemSubscription(subscriber: subscriber, control: control)
     subscriber.receive(subscription: subscription)
   }
@@ -113,8 +111,6 @@ extension UIBarButtonItem {
   }
 }
 
-
-
 final class UIGestureRecognizerSubscription<SubscriberType: Subscriber, Recognizer: UIGestureRecognizer>: Subscription where SubscriberType.Input == Recognizer {
   private var subscriber: SubscriberType?
   private let control: Recognizer
@@ -122,7 +118,7 @@ final class UIGestureRecognizerSubscription<SubscriberType: Subscriber, Recogniz
   init(subscriber: SubscriberType, control: Recognizer) {
     self.subscriber = subscriber
     self.control = control
-    control.addTarget(self, action: #selector(eventHandler))
+    control.addTarget(self, action: #selector(self.eventHandler))
   }
 
   func request(_ demand: Subscribers.Demand) {
@@ -131,11 +127,11 @@ final class UIGestureRecognizerSubscription<SubscriberType: Subscriber, Recogniz
   }
 
   func cancel() {
-    subscriber = nil
+    self.subscriber = nil
   }
 
   @objc private func eventHandler() {
-    _ = subscriber?.receive(control)
+    _ = self.subscriber?.receive(self.control)
   }
 }
 
@@ -149,7 +145,7 @@ struct UIGestureRecognizerPublisher<Recognizer: UIGestureRecognizer>: Publisher 
     self.control = control
   }
 
-  func receive<S>(subscriber: S) where S : Subscriber, S.Failure == UIGestureRecognizerPublisher.Failure, S.Input == UIGestureRecognizerPublisher.Output {
+  func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIGestureRecognizerPublisher.Failure, S.Input == UIGestureRecognizerPublisher.Output {
     let subscription = UIGestureRecognizerSubscription(subscriber: subscriber, control: control)
     subscriber.receive(subscription: subscription)
   }

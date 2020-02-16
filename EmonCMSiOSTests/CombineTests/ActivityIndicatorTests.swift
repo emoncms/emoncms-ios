@@ -6,15 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Quick
-import Nimble
-import EntwineTest
 @testable import EmonCMSiOS
+import EntwineTest
+import Nimble
+import Quick
 
 class ActivityIndicatorTests: QuickSpec {
-
   override func spec() {
-
     var scheduler: TestScheduler!
 
     beforeEach {
@@ -41,7 +39,7 @@ class ActivityIndicatorTests: QuickSpec {
         let expected: TestSequence<Bool, Never> = [
           (200, .subscription),
           (250, .input(true)),
-          (260, .input(false)),
+          (260, .input(false))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
@@ -78,7 +76,7 @@ class ActivityIndicatorTests: QuickSpec {
           (250, .input(true)),
           (260, .input(false)),
           (300, .input(true)),
-          (310, .input(false)),
+          (310, .input(false))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
@@ -113,13 +111,11 @@ class ActivityIndicatorTests: QuickSpec {
         let expected: TestSequence<Bool, Never> = [
           (200, .subscription),
           (250, .input(true)),
-          (350, .input(false)),
+          (350, .input(false))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
       }
     }
-
   }
-
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class AppConfigViewModel {
-
   enum SaveError: Error {
     case generic
     case realmFailure(Error)
@@ -27,7 +26,7 @@ final class AppConfigViewModel {
   private let appCategory: AppCategory
 
   lazy var feedListHelper: FeedListHelper = {
-    return FeedListHelper(realmController: self.realmController, account: self.account, api: self.api)
+    FeedListHelper(realmController: self.realmController, account: self.account, api: self.api)
   }()
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
@@ -57,8 +56,8 @@ final class AppConfigViewModel {
     return fields
   }
 
-  func configData() -> [String:Any] {
-    var data: [String:Any] = [:]
+  func configData() -> [String: Any] {
+    var data: [String: Any] = [:]
 
     data[AppConfigViewModel.nameConfigFieldID] = self.appData.name
     for feedConfigField in self.appCategory.feedConfigFields {
@@ -70,8 +69,8 @@ final class AppConfigViewModel {
     return data
   }
 
-  func updateWithConfigData(_ data: [String:Any]) -> AnyPublisher<AppUUIDAndCategory, SaveError> {
-    return Future<AppUUIDAndCategory, SaveError> {  [weak self] result in
+  func updateWithConfigData(_ data: [String: Any]) -> AnyPublisher<AppUUIDAndCategory, SaveError> {
+    return Future<AppUUIDAndCategory, SaveError> { [weak self] result in
       guard let self = self else { result(.failure(.generic)); return }
 
       // Validate first
@@ -112,5 +111,4 @@ final class AppConfigViewModel {
   func feedListViewModel() -> FeedListViewModel {
     return FeedListViewModel(realmController: self.realmController, account: self.account, api: self.api)
   }
-
 }

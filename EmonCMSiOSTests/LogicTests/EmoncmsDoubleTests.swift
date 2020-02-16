@@ -6,15 +6,13 @@
 //  Copyright © 2020 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
 
 class EmoncmsDoubleTests: QuickSpec {
-
   override func spec() {
-
     describe("double conversion") {
       it("should convert float correctly") {
         let float: Float = 1.0
@@ -79,7 +77,5 @@ class EmoncmsDoubleTests: QuickSpec {
         expect(number.prettyFormat(decimals: 5)).to(equal("123.12346"))
       }
     }
-
   }
-
 }

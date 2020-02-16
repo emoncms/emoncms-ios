@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 @IBDesignable final class AppTitleAndValueView: UIView {
-
   @IBInspectable var title: String? { get { return self.titleLabel.text } set { self.titleLabel.text = newValue } }
   @IBInspectable var titleColor: UIColor { get { return self.titleLabel.textColor } set { self.titleLabel.textColor = newValue } }
   @IBInspectable var value: String? { get { return self.valueLabel.text } set { self.valueLabel.text = newValue } }
@@ -78,5 +77,4 @@ import Combine
 
     self.addConstraints(self.internalConstraints)
   }
-
 }

@@ -6,21 +6,21 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Former
 
 final class AppConfigViewController: FormViewController {
-
   var viewModel: AppConfigViewModel!
 
   lazy var finished: AnyPublisher<AppUUIDAndCategory?, Never> = {
-    return self.finishedSubject.eraseToAnyPublisher()
+    self.finishedSubject.eraseToAnyPublisher()
   }()
+
   private var finishedSubject = PassthroughSubject<AppUUIDAndCategory?, Never>()
 
-  private var data: [String:Any] = [:]
+  private var data: [String: Any] = [:]
 
   private var cancellables = Set<AnyCancellable>()
 
@@ -54,13 +54,13 @@ final class AppConfigViewController: FormViewController {
         let textFieldRow = TextFieldRowFormer<FormTextFieldCell>() {
           $0.titleLabel.text = field.name
           $0.textField.textAlignment = .right
-          }.configure { [weak self] in
-            guard let self = self else { return }
-            $0.placeholder = field.name
-            $0.text = self.data[field.id] as? String
-          }.onTextChanged { [weak self] text in
-            guard let self = self else { return }
-            self.data[field.id] = text
+        }.configure { [weak self] in
+          guard let self = self else { return }
+          $0.placeholder = field.name
+          $0.text = self.data[field.id] as? String
+        }.onTextChanged { [weak self] text in
+          guard let self = self else { return }
+          self.data[field.id] = text
         }
         row = textFieldRow
       case let feedField as AppConfigFieldFeed:
@@ -69,7 +69,7 @@ final class AppConfigViewController: FormViewController {
             guard let self = self else { return }
             $0.text = field.name
             $0.subText = self.data[field.id] as? String
-        }
+          }
         self.setupFeedCellBindings(forRow: labelRow, field: feedField)
         row = labelRow
       default:
@@ -88,29 +88,29 @@ final class AppConfigViewController: FormViewController {
 
   private func setupFeedCellBindings(forRow row: LabelRowFormer<FormLabelCell>, field: AppConfigFieldFeed) {
     let selectedFeed = Producer<Void, Never> { observer in
-        row.onSelected { _ in
-          _ = observer.receive(())
-        }
+      row.onSelected { _ in
+        _ = observer.receive(())
       }
-      .flatMap { [weak self] _ -> AnyPublisher<String?, Never> in
-        guard let self = self else { return Empty<String?, Never>().eraseToAnyPublisher() }
+    }
+    .flatMap { [weak self] _ -> AnyPublisher<String?, Never> in
+      guard let self = self else { return Empty<String?, Never>().eraseToAnyPublisher() }
 
-        let viewController = AppSelectFeedViewController()
-        viewController.viewModel = self.viewModel.feedListViewModel()
-        self.navigationController?.pushViewController(viewController, animated: true)
+      let viewController = AppSelectFeedViewController()
+      viewController.viewModel = self.viewModel.feedListViewModel()
+      self.navigationController?.pushViewController(viewController, animated: true)
 
-        return viewController.finished
+      return viewController.finished
+    }
+    .handleEvents(receiveOutput: { [weak self] selectedFeed in
+      guard let self = self else { return }
+
+      if let selectedFeed = selectedFeed {
+        self.data[field.id] = selectedFeed
       }
-      .handleEvents(receiveOutput: { [weak self] selectedFeed in
-        guard let self = self else { return }
 
-        if let selectedFeed = selectedFeed {
-          self.data[field.id] = selectedFeed
-        }
-
-        self.navigationController?.popViewController(animated: true)
+      self.navigationController?.popViewController(animated: true)
       })
-      .prepend(self.data[field.id] as? String)
+    .prepend(self.data[field.id] as? String)
 
     let feeds = self.viewModel.feedListHelper.$feeds.prepend([])
 
@@ -186,5 +186,4 @@ final class AppConfigViewController: FormViewController {
       .subscribe(self.finishedSubject)
       .store(in: &self.cancellables)
   }
-
 }

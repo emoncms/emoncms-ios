@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class AccountListViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var realmController: RealmController!
     var realm: Realm!
     var requestProvider: MockHTTPRequestProvider!
@@ -51,7 +49,6 @@ class AccountListViewModelTests: EmonCMSTestCase {
     }
 
     describe("accountHandling") {
-
       var scheduler: TestScheduler!
       var viewModel: AccountListViewModel!
 
@@ -65,7 +62,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let account = Account()
             account.name = "Account \(i)"
             account.url = "URL \(i)"
@@ -99,7 +96,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
         let accountQuery1 = realm.objects(Account.self)
         expect(accountQuery1.count).to(equal(1))
 
-        waitUntil { (done) in
+        waitUntil { done in
           _ = viewModel.deleteAccount(withId: uuid)
             .sink(
               receiveCompletion: { completion in
@@ -111,9 +108,8 @@ class AccountListViewModelTests: EmonCMSTestCase {
                   fail("Failure is not an option")
                 }
                 done()
-            },
-              receiveValue: { _ in }
-          )
+              },
+              receiveValue: { _ in })
         }
       }
 
@@ -132,7 +128,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
           realm.add(todayWidgetFeed)
         }
 
-        waitUntil { (done) in
+        waitUntil { done in
           _ = viewModel.deleteAccount(withId: uuid)
             .sink(
               receiveCompletion: { completion in
@@ -144,13 +140,10 @@ class AccountListViewModelTests: EmonCMSTestCase {
                   fail("Failure is not an option")
                 }
                 done()
-            },
-              receiveValue: { _ in }
-          )
+              },
+              receiveValue: { _ in })
         }
       }
     }
-
   }
-
 }

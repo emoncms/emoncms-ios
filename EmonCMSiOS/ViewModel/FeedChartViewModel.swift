@@ -6,11 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class FeedChartViewModel {
-
   private let account: AccountController
   private let api: EmonCMSAPI
   private let feedId: String
@@ -62,5 +61,4 @@ final class FeedChartViewModel {
       }
       .store(in: &self.cancellables)
   }
-
 }

@@ -11,7 +11,6 @@ import Foundation
 import Charts
 
 final class ChartHelpers {
-
   static func setupDefaultLineChart(_ lineChart: LineChartView) {
     lineChart.noDataText = "No data"
     lineChart.dragEnabled = false
@@ -128,7 +127,7 @@ final class ChartHelpers {
       dataSet.drawCirclesEnabled = false
       dataSet.drawValuesEnabled = false
       dataSet.highlightEnabled = false
-      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+      dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
       data.addDataSet(dataSet)
     }
@@ -173,13 +172,13 @@ final class ChartHelpers {
       let thisDataPoint = dataPoints[0]
       newDataPoints.append(thisDataPoint)
       var time = thisDataPoint.time
-      for _ in 1..<extraPadding {
+      for _ in 1 ..< extraPadding {
         time = time - Double(interval)
         newDataPoints.append(DataPoint<Double>(time: time, value: 0))
       }
     }
 
-    for i in 1..<dataPoints.count {
+    for i in 1 ..< dataPoints.count {
       let thisDataPoint = dataPoints[i]
       let differenceValue = thisDataPoint.value - lastValue
       lastValue = thisDataPoint.value
@@ -188,5 +187,4 @@ final class ChartHelpers {
 
     return newDataPoints
   }
-
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class SettingsViewModel {
-
   private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
@@ -45,5 +44,4 @@ final class SettingsViewModel {
   func todayWidgetFeedsListViewModel() -> TodayWidgetFeedsListViewModel {
     return TodayWidgetFeedsListViewModel(realmController: self.realmController, accountController: self.account, api: self.api)
   }
-
 }

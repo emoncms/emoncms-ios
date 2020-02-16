@@ -9,7 +9,6 @@
 import Foundation
 
 extension Double {
-
   static func from(_ value: Any) -> Double? {
     switch value {
     case let double as Double:
@@ -41,5 +40,4 @@ extension Double {
 
     return String(format: "%.\(actualDecimals)f", self)
   }
-
 }

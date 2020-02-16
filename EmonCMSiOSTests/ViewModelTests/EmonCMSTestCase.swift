@@ -10,7 +10,6 @@ import Foundation
 import Quick
 
 class EmonCMSTestCase: QuickSpec {
-
   var dataDirectory: URL {
     return FileManager.default.temporaryDirectory.appendingPathComponent("tests")
   }
@@ -18,5 +17,4 @@ class EmonCMSTestCase: QuickSpec {
   override func setUp() {
     try? FileManager.default.createDirectory(at: self.dataDirectory, withIntermediateDirectories: true, attributes: nil)
   }
-
 }

@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class FakeHTTPProvider: HTTPRequestProvider {
-
   enum FakeHTTPProviderError: Error {
     case unknown
     case invalidParameters
@@ -36,15 +35,13 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     self.createFeeds()
   }
 
-
-
   struct Feed {
     let id: String
     let name: String
     let tag: String
   }
 
-  private var feeds = [String:Feed]()
+  private var feeds = [String: Feed]()
   private let feedEngine = FakeEmonCMSFeedEngine()
 
   private func createFeeds() {
@@ -79,7 +76,7 @@ final class FakeHTTPProvider: HTTPRequestProvider {
       }
 
       while timeToCreateAt < untilTime.timeIntervalSince1970 {
-        let value = Double.random(in: 0...3000)
+        let value = Double.random(in: 0 ... 3000)
         self.feedEngine.post(id: id, time: timeToCreateAt, value: value)
 
         if let kwhFeed = feedConfig.kwhFeed {
@@ -93,14 +90,14 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     }
   }
 
-  private func feedDataForFeed(withId id: String) -> [String:Any]? {
+  private func feedDataForFeed(withId id: String) -> [String: Any]? {
     guard
       let feed = self.feeds[id],
       let meta = self.feedEngine.getMeta(id: id)
-      else { return nil }
+    else { return nil }
 
     let lastValue = self.feedEngine.lastValue(id: id)
-    let feedData: [String:Any] = [
+    let feedData: [String: Any] = [
       "id": id,
       "name": feed.name,
       "tag": feed.tag,
@@ -112,8 +109,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     return feedData
   }
 
-  private func feedList(query: [String:String]) throws -> Any {
-    var feedsData = [[String:Any]]()
+  private func feedList(query: [String: String]) throws -> Any {
+    var feedsData = [[String: Any]]()
     for (id, _) in self.feeds {
       guard let feedData = self.feedDataForFeed(withId: id) else { continue }
       feedsData.append(feedData)
@@ -121,7 +118,7 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     return feedsData
   }
 
-  private func feedAGet(query: [String:String]) throws -> Any {
+  private func feedAGet(query: [String: String]) throws -> Any {
     guard let id = query["id"] else {
       throw FakeHTTPProviderError.invalidParameters
     }
@@ -130,7 +127,7 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     return feedData
   }
 
-  private func feedGet(query: [String:String]) throws -> Any {
+  private func feedGet(query: [String: String]) throws -> Any {
     guard
       let id = query["id"],
       let field = query["field"]
@@ -142,94 +139,90 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     return feedData[field] ?? ""
   }
 
-  private func feedData(query: [String:String]) throws -> Any {
+  private func feedData(query: [String: String]) throws -> Any {
     guard
       let id = query["id"],
       let startString = query["start"],
       let start = TimeInterval(startString),
       let endString = query["end"],
       let end = TimeInterval(endString)
-      else {
-        throw FakeHTTPProviderError.invalidParameters
+    else {
+      throw FakeHTTPProviderError.invalidParameters
     }
 
     if
       let intervalString = query["interval"],
-      let interval = Int(intervalString)
-    {
+      let interval = Int(intervalString) {
       return self.feedEngine.getData(id: id, start: start, end: end, interval: interval)
         .map { point in
-          return [point.time, point.value ?? 0]
-      }
+          [point.time, point.value ?? 0]
+        }
     } else if
       let modeString = query["mode"],
-      let mode = FakeEmonCMSFeedEngine.DMYMode(rawValue: modeString)
-    {
+      let mode = FakeEmonCMSFeedEngine.DMYMode(rawValue: modeString) {
       return self.feedEngine.getDataDMY(id: id, start: start, end: end, mode: mode)
         .map { point in
-          return [point.time, point.value ?? 0]
-      }
+          [point.time, point.value ?? 0]
+        }
     }
 
     throw FakeHTTPProviderError.invalidParameters
   }
 
-  private func feedValue(query: [String:String]) throws -> Any {
+  private func feedValue(query: [String: String]) throws -> Any {
     guard let id = query["id"] else {
       throw FakeHTTPProviderError.invalidParameters
     }
 
-    return feedEngine.lastValue(id: id)?.value ?? 0
+    return self.feedEngine.lastValue(id: id)?.value ?? 0
   }
 
-  private func feedFetch(query: [String:String]) throws -> Any {
+  private func feedFetch(query: [String: String]) throws -> Any {
     guard let ids = query["ids"]?.split(separator: ",") else {
       throw FakeHTTPProviderError.invalidParameters
     }
 
     var feedValues = [Double]()
     for id in ids {
-      let value = feedEngine.lastValue(id: String(id))?.value ?? 0
+      let value = self.feedEngine.lastValue(id: String(id))?.value ?? 0
       feedValues.append(value)
     }
     return feedValues
   }
 
-  private func inputList(query: [String:String]) throws -> Any {
+  private func inputList(query: [String: String]) throws -> Any {
     return [
       ["id": "1", "name": "Input 1", "nodeid": "1", "description": "", "time": 0, "value": 0],
       ["id": "2", "name": "Input 2", "nodeid": "1", "description": "", "time": 0, "value": 0],
       ["id": "3", "name": "Input 3", "nodeid": "1", "description": "", "time": 0, "value": 0],
-      ["id": "4", "name": "Input 4", "nodeid": "1", "description": "", "time": 0, "value": 0],
+      ["id": "4", "name": "Input 4", "nodeid": "1", "description": "", "time": 0, "value": 0]
     ]
   }
 
-  private func dashboardList(query: [String:String]) throws -> Any {
+  private func dashboardList(query: [String: String]) throws -> Any {
     return [
       ["id": 1, "name": "Dashboard 1", "alias": "", "description": ""],
-      ["id": 2, "name": "Dashboard 2", "alias": "", "description": ""],
+      ["id": 2, "name": "Dashboard 2", "alias": "", "description": ""]
     ]
   }
 
-  private func userAuth(query: [String:String]) throws -> Any {
+  private func userAuth(query: [String: String]) throws -> Any {
     return ["success": true, "apikey_read": "abcdef"]
   }
 
-  private func error(query: [String:String]) throws -> Any {
+  private func error(query: [String: String]) throws -> Any {
     throw FakeHTTPProviderError.unknown
   }
 
-
-
   func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-      else {
-        return Empty().eraseToAnyPublisher()
+    else {
+      return Empty().eraseToAnyPublisher()
     }
 
     let path = urlComponents.path
     let queryItems = urlComponents.queryItems ?? []
-    let queryValues = queryItems.reduce([String:String]()) { (dictionary, item) in
+    let queryValues = queryItems.reduce([String: String]()) { dictionary, item in
       var mutableDictionary = dictionary
       mutableDictionary[item.name] = item.value ?? ""
       return mutableDictionary
@@ -237,56 +230,53 @@ final class FakeHTTPProvider: HTTPRequestProvider {
 
     guard
       queryValues["apikey"] == "ilikecats" ||
-        (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
-      else {
-        return Fail(error: HTTPRequestProviderError.httpError(code: 401)).eraseToAnyPublisher()
+      (queryValues["username"] == "username" && queryValues["password"] == "ilikecats")
+    else {
+      return Fail(error: HTTPRequestProviderError.httpError(code: 401)).eraseToAnyPublisher()
     }
 
     self.createFeedData(untilTime: Date())
 
-    let routeFunc: (_ query: [String:String]) throws -> Any
+    let routeFunc: (_ query: [String: String]) throws -> Any
     switch path {
     case "/feed/list.json":
-      routeFunc = feedList
+      routeFunc = self.feedList
     case "/feed/aget.json":
-      routeFunc = feedAGet
+      routeFunc = self.feedAGet
     case "/feed/get.json":
-      routeFunc = feedGet
+      routeFunc = self.feedGet
     case "/feed/data.json":
-      routeFunc = feedData
+      routeFunc = self.feedData
     case "/feed/value.json":
-      routeFunc = feedValue
+      routeFunc = self.feedValue
     case "/feed/fetch.json":
-      routeFunc = feedFetch
+      routeFunc = self.feedFetch
     case "/input/list.json":
-      routeFunc = inputList
+      routeFunc = self.inputList
     case "/dashboard/list.json":
-      routeFunc = dashboardList
+      routeFunc = self.dashboardList
     case "/user/auth.json":
-      routeFunc = userAuth
+      routeFunc = self.userAuth
     default:
-      routeFunc = error
-      break
+      routeFunc = self.error
     }
 
     if
       let responseObject = try? routeFunc(queryValues),
-      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: [])
-    {
+      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: []) {
       return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
     }
 
     return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher()
   }
 
-  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
+  func request(url: URL, formData: [String: String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher() }
 
     var queryItems = components.queryItems ?? [URLQueryItem]()
-    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )
+    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) })
     components.queryItems = queryItems
 
     return self.request(url: components.url!)
   }
-
 }

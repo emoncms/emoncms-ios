@@ -6,14 +6,12 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Nimble
+import Quick
 
 class KeychainControllerTests: QuickSpec {
-
   override func spec() {
-
     var controller: KeychainController!
 
     beforeEach {
@@ -56,7 +54,5 @@ class KeychainControllerTests: QuickSpec {
         expect(controller.apiKey(forAccountWithId: accountId)).to(equal(apiKey2))
       }
     }
-
   }
-
 }

@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class InputListViewModel {
-
   struct ListItem {
     let inputId: String
     let name: String
@@ -91,7 +90,7 @@ final class InputListViewModel {
   }
 
   private func inputsToSections(_ inputs: [Input]) -> [Section] {
-    var sectionBuilder: [String:[Input]] = [:]
+    var sectionBuilder: [String: [Input]] = [:]
     for input in inputs {
       let sectionInputs: [Input]
       if let existingInputs = sectionBuilder[input.nodeid] {
@@ -106,12 +105,11 @@ final class InputListViewModel {
     for section in sectionBuilder.keys.sorted() {
       let items = sectionBuilder[section]!
         .map { input in
-          return ListItem(inputId: input.id, name: input.name, desc: input.desc, time: input.time, value: input.value.prettyFormat())
+          ListItem(inputId: input.id, name: input.name, desc: input.desc, time: input.time, value: input.value.prettyFormat())
         }
       sections.append(Section(model: section, items: items))
     }
 
     return sections
   }
-
 }

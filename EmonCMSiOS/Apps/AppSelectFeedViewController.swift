@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class AppSelectFeedViewController: UITableViewController {
-
   var viewModel: FeedListViewModel!
 
   private let searchController = UISearchController(searchResultsController: nil)
@@ -20,8 +19,9 @@ final class AppSelectFeedViewController: UITableViewController {
   private var cancellables = Set<AnyCancellable>()
 
   lazy var finished: AnyPublisher<String?, Never> = {
-    return self.finishedSubject.eraseToAnyPublisher()
+    self.finishedSubject.eraseToAnyPublisher()
   }()
+
   private var finishedSubject = PassthroughSubject<String?, Never>()
 
   override func viewDidLoad() {
@@ -36,7 +36,7 @@ final class AppSelectFeedViewController: UITableViewController {
 
     self.searchController.searchResultsUpdater = self
     self.searchController.obscuresBackgroundDuringPresentation = false
-    self.tableView.tableHeaderView = searchController.searchBar
+    self.tableView.tableHeaderView = self.searchController.searchBar
 
     self.setupDataSource()
     self.setupBindings()
@@ -54,16 +54,16 @@ final class AppSelectFeedViewController: UITableViewController {
 
   private func setupDataSource() {
     let dataSource = CombineTableViewDataSource<FeedListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, _, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ??
           UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.text = item.name
         cell.accessoryType = .disclosureIndicator
 
         return cell
-    },
-      titleForHeaderInSection: { (ds, index) in
-        return ds.sectionModels[index].model
+      },
+      titleForHeaderInSection: { ds, index in
+        ds.sectionModels[index].model
     })
 
     self.tableView.delegate = nil
@@ -108,13 +108,10 @@ final class AppSelectFeedViewController: UITableViewController {
       .subscribe(self.finishedSubject)
       .store(in: &self.cancellables)
   }
-
 }
 
 extension AppSelectFeedViewController: UISearchResultsUpdating {
-
   public func updateSearchResults(for searchController: UISearchController) {
-    searchSubject.send(searchController.searchBar.text ?? "")
+    self.searchSubject.send(searchController.searchBar.text ?? "")
   }
-
 }

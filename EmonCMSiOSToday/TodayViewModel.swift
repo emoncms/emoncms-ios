@@ -6,14 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class TodayViewModel {
-
   enum TodayViewModel: Error {
     case unknown
   }
@@ -63,7 +62,7 @@ final class TodayViewModel {
         guard
           let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId),
           let apiKey = self.keychainController.apiKey(forAccountWithId: accountId)
-          else { return nil }
+        else { return nil }
 
         let accountName = account.name
         let accountCredentials = AccountCredentials(url: account.url, apiKey: apiKey)
@@ -76,16 +75,15 @@ final class TodayViewModel {
         let range = 3600
         let endDate = Date()
         let startDate = endDate.addingTimeInterval(TimeInterval(-range))
-        return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: (range / 200))
+        return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: range / 200)
           .replaceError(with: [])
           .map { dataPoints -> ListItem in
-            return ListItem(
+            ListItem(
               accountId: accountId,
               accountName: accountName,
               feedId: feedId,
               feedName: feedName,
-              feedChartData: dataPoints
-            )
+              feedChartData: dataPoints)
           }
           .eraseToAnyPublisher()
       }
@@ -100,10 +98,9 @@ final class TodayViewModel {
             let nonNils = $0.compactMap { $0 }
             self.feeds = nonNils
           })
-          .map { _ in return true }
+          .map { _ in true }
           .eraseToAnyPublisher()
       }
     }.eraseToAnyPublisher()
   }
-
 }

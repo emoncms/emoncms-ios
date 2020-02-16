@@ -6,13 +6,12 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
 
 class RealmMigrationTests: QuickSpec {
-
   var dataDirectory: URL {
     return FileManager.default.temporaryDirectory.appendingPathComponent("realm_migration_tests")
   }
@@ -34,14 +33,13 @@ class RealmMigrationTests: QuickSpec {
   }
 
   override func spec() {
-
     beforeEach {
       do {
         try FileManager.default.removeItem(at: self.dataDirectory)
         try FileManager.default.removeItem(at: self.dataDirectory)
       } catch {
         let nsError = error as NSError
-        if nsError.domain == NSCocoaErrorDomain && nsError.code == NSFileNoSuchFileError {
+        if nsError.domain == NSCocoaErrorDomain, nsError.code == NSFileNoSuchFileError {
           return
         }
         fail("Failed to remove data directory.")
@@ -49,7 +47,6 @@ class RealmMigrationTests: QuickSpec {
     }
 
     describe("migrations") {
-
       var realmController: RealmController!
       var uuid: String!
 
@@ -96,7 +93,5 @@ class RealmMigrationTests: QuickSpec {
         }
       }
     }
-
   }
-
 }

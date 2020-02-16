@@ -6,21 +6,20 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 extension EmonCMSAPI {
-
   func feedList(_ account: AccountCredentials) -> AnyPublisher<[Feed], APIError> {
     return self.request(account, path: "feed/list").tryMap { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [Any] else {
-          throw APIError.invalidResponse
+        throw APIError.invalidResponse
       }
 
       var feeds: [Feed] = []
       for i in json {
-        if let feedJson = i as? [String:Any],
+        if let feedJson = i as? [String: Any],
           let feed = Feed.from(json: feedJson) {
           feeds.append(feed)
         }
@@ -44,7 +43,7 @@ extension EmonCMSAPI {
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
         let json = anyJson as? [String: Any],
         let feed = Feed.from(json: json) else {
-          throw APIError.invalidResponse
+        throw APIError.invalidResponse
       }
 
       return feed
@@ -65,7 +64,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/get", queryItems: queryItems).tryMap { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = json as? String else {
-          throw APIError.invalidResponse
+        throw APIError.invalidResponse
       }
 
       return value
@@ -80,7 +79,7 @@ extension EmonCMSAPI {
   private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint<Double>] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
       let dataPointsJson = json as? [Any] else {
-        throw APIError.invalidResponse
+      throw APIError.invalidResponse
     }
 
     var dataPoints: [DataPoint<Double>] = []
@@ -104,7 +103,7 @@ extension EmonCMSAPI {
     ]
 
     return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
-      return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
+      try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
     .mapError { error -> APIError in
       if let error = error as? APIError { return error }
@@ -122,7 +121,7 @@ extension EmonCMSAPI {
     ]
 
     return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
-      return try EmonCMSAPI.dataPoints(fromJsonData: resultData)
+      try EmonCMSAPI.dataPoints(fromJsonData: resultData)
     }
     .mapError { error -> APIError in
       if let error = error as? APIError { return error }
@@ -139,7 +138,7 @@ extension EmonCMSAPI {
     return self.request(account, path: "feed/value", queryItems: queryItems).tryMap { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
         let value = Double.from(json) else {
-          throw APIError.invalidResponse
+        throw APIError.invalidResponse
       }
 
       return value
@@ -151,18 +150,18 @@ extension EmonCMSAPI {
     .eraseToAnyPublisher()
   }
 
-  func feedValue(_ account: AccountCredentials, ids: [String]) -> AnyPublisher<[String:Double], APIError> {
+  func feedValue(_ account: AccountCredentials, ids: [String]) -> AnyPublisher<[String: Double], APIError> {
     let queryItems = [
       "ids": ids.joined(separator: ",")
     ]
 
-    return self.request(account, path: "feed/fetch", queryItems: queryItems).tryMap { resultData -> [String:Double] in
+    return self.request(account, path: "feed/fetch", queryItems: queryItems).tryMap { resultData -> [String: Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
         let array = json as? [Any] else {
-          throw APIError.invalidResponse
+        throw APIError.invalidResponse
       }
 
-      var results: [String:Double] = [:]
+      var results: [String: Double] = [:]
       for (id, valueAny) in zip(ids, array) {
         guard let value = Double.from(valueAny) else {
           throw APIError.invalidResponse
@@ -178,5 +177,4 @@ extension EmonCMSAPI {
     }
     .eraseToAnyPublisher()
   }
-
 }

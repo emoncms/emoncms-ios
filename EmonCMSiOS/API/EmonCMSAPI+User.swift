@@ -6,16 +6,15 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 extension EmonCMSAPI {
-
   func userAuth(url: String, username: String, password: String) -> AnyPublisher<String, APIError> {
     return self.request(url, path: "user/auth", username: username, password: password).tryMap { resultData -> String in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
-        let json = anyJson as? [String:Any] else {
-          throw APIError.invalidResponse
+        let json = anyJson as? [String: Any] else {
+        throw APIError.invalidResponse
       }
 
       guard
@@ -34,5 +33,4 @@ extension EmonCMSAPI {
     }
     .eraseToAnyPublisher()
   }
-
 }

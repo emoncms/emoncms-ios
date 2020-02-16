@@ -6,16 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Nimble
+import Quick
 
 class AccountControllerTests: QuickSpec {
-  
   override func spec() {
-
-    beforeEach {
-    }
+    beforeEach {}
 
     describe("accountCredentials") {
       it("equality should be true for equal objects") {
@@ -46,7 +43,5 @@ class AccountControllerTests: QuickSpec {
         expect(a == b).to(equal(false))
       }
     }
-
   }
-
 }

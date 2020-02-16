@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import FBSnapshotTestCase
 @testable import EmonCMSiOS
+import FBSnapshotTestCase
 
 class AppBoxViewsTests: FBSnapshotTestCase {
-
   override func setUp() {
     super.setUp()
     self.recordMode = false
@@ -70,5 +69,4 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.value = 100
     FBSnapshotVerifyView(view)
   }
-
 }

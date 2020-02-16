@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class AddAccountViewModel {
-
   enum AddAccountError: Error {
     case urlNotValid
     case httpsRequired
@@ -67,7 +66,7 @@ final class AddAccountViewModel {
           return true
         }
 
-        if !username.isEmpty && !password.isEmpty {
+        if !username.isEmpty, !password.isEmpty {
           return true
         } else if !apiKey.isEmpty {
           return true
@@ -90,13 +89,13 @@ final class AddAccountViewModel {
       let accountCredentials = AccountCredentials(url: url, apiKey: apiKey)
       loginObservable = self.api.feedList(accountCredentials)
         .map { _ in
-          return accountCredentials
+          accountCredentials
         }
         .eraseToAnyPublisher()
     } else {
       loginObservable = self.api.userAuth(url: url, username: username, password: password)
         .map { apiKey in
-          return AccountCredentials(url: url, apiKey: apiKey)
+          AccountCredentials(url: url, apiKey: apiKey)
         }
         .eraseToAnyPublisher()
     }
@@ -159,5 +158,4 @@ final class AddAccountViewModel {
       }
       .eraseToAnyPublisher()
   }
-
 }

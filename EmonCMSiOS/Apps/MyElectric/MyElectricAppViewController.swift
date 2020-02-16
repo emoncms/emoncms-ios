@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 
 final class MyElectricAppViewController: AppPageViewController {
-
   var typedViewModel: MyElectricAppViewModel {
     return self.viewModel as! MyElectricAppViewModel
   }
@@ -91,11 +90,9 @@ final class MyElectricAppViewController: AppPageViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }
 
 extension MyElectricAppViewController {
-
   private func setupCharts() {
     ChartHelpers.setupAppLineChart(self.lineChart)
     ChartHelpers.setupAppBarChart(self.barChart)
@@ -133,5 +130,4 @@ extension MyElectricAppViewController {
 
     self.barChart.notifyDataSetChanged()
   }
-
 }

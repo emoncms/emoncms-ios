@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class DashboardUpdateHelperTests: EmonCMSTestCase {
-
   override func spec() {
-
     var realmController: RealmController!
     var accountController: AccountController!
     var realm: Realm!
@@ -54,9 +52,8 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
                   fail(error.localizedDescription)
                 }
                 done()
-            },
-              receiveValue: { _ in }
-          )
+              },
+              receiveValue: { _ in })
           cancellables.insert(cancellable)
         }
 
@@ -84,9 +81,8 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
                   fail(error.localizedDescription)
                 }
                 done()
-            },
-              receiveValue: { _ in }
-          )
+              },
+              receiveValue: { _ in })
           cancellables.insert(cancellable)
         }
 
@@ -94,7 +90,5 @@ class DashboardUpdateHelperTests: EmonCMSTestCase {
           .toEventually(beNil())
       }
     }
-
   }
-
 }

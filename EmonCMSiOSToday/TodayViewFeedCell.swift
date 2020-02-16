@@ -11,7 +11,6 @@ import UIKit
 import Charts
 
 final class TodayViewFeedCell: UITableViewCell {
-
   @IBOutlet var feedNameLabel: UILabel!
   @IBOutlet var accountNameLabel: UILabel!
   @IBOutlet var feedValueLabel: UILabel!
@@ -46,7 +45,7 @@ final class TodayViewFeedCell: UITableViewCell {
       dataSet.drawCirclesEnabled = false
       dataSet.drawValuesEnabled = false
       dataSet.highlightEnabled = false
-      dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+      dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
       data.addDataSet(dataSet)
     }
@@ -76,5 +75,4 @@ final class TodayViewFeedCell: UITableViewCell {
     yAxis.drawAxisLineEnabled = false
     yAxis.drawLabelsEnabled = false
   }
-
 }

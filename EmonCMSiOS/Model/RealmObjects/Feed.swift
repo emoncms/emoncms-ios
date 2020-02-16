@@ -11,7 +11,6 @@ import Foundation
 import RealmSwift
 
 final class Feed: Object {
-
   @objc dynamic var id: String = ""
   @objc dynamic var name: String = ""
   @objc dynamic var tag: String = ""
@@ -21,12 +20,10 @@ final class Feed: Object {
   override class func primaryKey() -> String? {
     return "id"
   }
-
 }
 
 extension Feed {
-
-  static func from(json: [String:Any]) -> Feed? {
+  static func from(json: [String: Any]) -> Feed? {
     guard let id = json["id"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }
@@ -46,5 +43,4 @@ extension Feed {
 
     return feed
   }
-
 }

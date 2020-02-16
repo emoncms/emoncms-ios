@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import Foundation
 import UIKit
-import Combine
 
 import RealmSwift
 
 final class AppListViewModel {
-
   struct ListItem {
     let appId: String
     let category: AppCategory
@@ -62,9 +61,9 @@ final class AppListViewModel {
     return listItems
   }
 
-  func deleteApp(withId id: String) -> AnyPublisher<(), Never> {
+  func deleteApp(withId id: String) -> AnyPublisher<Void, Never> {
     let realm = self.realm
-    return Deferred { () -> Just<()> in
+    return Deferred { () -> Just<Void> in
       do {
         if let app = realm.object(ofType: AppData.self, forPrimaryKey: id) {
           try realm.write {
@@ -90,5 +89,4 @@ final class AppListViewModel {
   func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {
     return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: nil, appCategory: category)
   }
-
 }

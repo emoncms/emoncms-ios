@@ -6,12 +6,11 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
-import SafariServices
 import Combine
+import SafariServices
+import UIKit
 
 final class DashboardListViewController: UITableViewController {
-
   var viewModel: DashboardListViewModel!
 
   private var emptyLabel: UILabel?
@@ -46,15 +45,15 @@ final class DashboardListViewController: UITableViewController {
 
   private func setupDataSource() {
     let dataSource = CombineTableViewDataSource<DashboardListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.desc
         return cell
-    },
-      titleForHeaderInSection: { _,_  in "" },
-      canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in false })
+      },
+      titleForHeaderInSection: { _, _ in "" },
+      canEditRowAtIndexPath: { _, _ in true },
+      canMoveRowAtIndexPath: { _, _ in false })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
@@ -125,8 +124,7 @@ final class DashboardListViewController: UITableViewController {
         .removeDuplicates(),
       self.viewModel.$dashboards
         .map { $0.isEmpty }
-        .removeDuplicates()
-      )
+        .removeDuplicates())
       .sink { [weak self] serverNeedsUpdate, dashboardsEmpty in
         guard let self = self else { return }
 
@@ -201,5 +199,4 @@ final class DashboardListViewController: UITableViewController {
     viewController.dismissButtonStyle = .close
     self.present(viewController, animated: true, completion: nil)
   }
-
 }

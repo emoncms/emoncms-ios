@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 
 final class FeedListViewController: UIViewController {
-
   var viewModel: FeedListViewModel!
   let chartViewModel = CurrentValueSubject<FeedChartViewModel?, Never>(nil)
 
@@ -60,7 +59,7 @@ final class FeedListViewController: UIViewController {
     self.searchController.searchResultsUpdater = self
     self.searchController.obscuresBackgroundDuringPresentation = false
     self.searchController.searchBar.placeholder = "Search feeds"
-    self.navigationItem.searchController = searchController
+    self.navigationItem.searchController = self.searchController
     self.definesPresentationContext = true
 
     self.chartContainerView.accessibilityIdentifier = AccessibilityIdentifiers.FeedList.ChartContainer
@@ -109,7 +108,7 @@ final class FeedListViewController: UIViewController {
     self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
 
     let dataSource = CombineTableViewDataSource<FeedListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
         cell.titleLabel.text = item.name
         cell.valueLabel.text = item.value
@@ -135,9 +134,9 @@ final class FeedListViewController: UIViewController {
         cell.activityCircle.backgroundColor = colour
 
         return cell
-    },
-      titleForHeaderInSection: { (ds, index) in
-        return ds.sectionModels[index].model
+      },
+      titleForHeaderInSection: { ds, index in
+        ds.sectionModels[index].model
     })
 
     self.tableView.delegate = nil
@@ -219,12 +218,11 @@ final class FeedListViewController: UIViewController {
 
     let tapProgress = Publishers.Merge(
       tapRecogniser.publisher().becomeVoid(),
-      self.dataSource.itemSelected.becomeVoid()
-      )
+      self.dataSource.itemSelected.becomeVoid())
       .map { _ in (CGFloat(1), CGFloat(0), true) }
 
     Publishers.Merge(dragProgress, tapProgress)
-      .sink { [weak self] (progress, velocity, animated) in
+      .sink { [weak self] progress, velocity, animated in
         guard let self = self else { return }
 
         let displacement = self.chartContainerMinDisplacement + (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
@@ -236,9 +234,9 @@ final class FeedListViewController: UIViewController {
                        initialSpringVelocity: -(velocity / self.chartContainerMaxDisplacement),
                        options: UIView.AnimationOptions(rawValue: 0),
                        animations: {
-                        self.chartControlsContainerView.alpha = progress
-                        self.chartLabelContainerView.alpha = 1.0 - progress
-                        self.view.layoutIfNeeded()
+                         self.chartControlsContainerView.alpha = progress
+                         self.chartLabelContainerView.alpha = 1.0 - progress
+                         self.view.layoutIfNeeded()
         }, completion: nil)
       }
       .store(in: &self.cancellables)
@@ -395,7 +393,7 @@ final class FeedListViewController: UIViewController {
       .store(in: &self.cancellables)
 
     self.chartViewModel
-      .map { [weak self] chartViewModel -> AnyPublisher<(), Never> in
+      .map { [weak self] chartViewModel -> AnyPublisher<Void, Never> in
         var cancellables = Set<AnyCancellable>()
 
         if let self = self, let chartViewModel = chartViewModel {
@@ -425,7 +423,7 @@ final class FeedListViewController: UIViewController {
               dataSet.drawCirclesEnabled = false
               dataSet.drawFilledEnabled = true
               dataSet.drawValuesEnabled = false
-              dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+              dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
               for point in dataPoints {
                 let x = point.time.timeIntervalSince1970
@@ -456,11 +454,9 @@ final class FeedListViewController: UIViewController {
       .sink { _ in }
       .store(in: &self.cancellables)
   }
-
 }
 
 extension FeedListViewController {
-
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.showFeed.rawValue {
       let feedViewController = segue.destination as! FeedChartViewController
@@ -469,13 +465,10 @@ extension FeedListViewController {
       feedViewController.viewModel = viewModel
     }
   }
-
 }
 
 extension FeedListViewController: UISearchResultsUpdating {
-
   public func updateSearchResults(for searchController: UISearchController) {
-    searchSubject.send(searchController.searchBar.text ?? "")
+    self.searchSubject.send(searchController.searchBar.text ?? "")
   }
-
 }

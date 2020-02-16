@@ -6,10 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
 
 struct MergePoint {
   let interval: TimeInterval
@@ -24,19 +24,14 @@ struct MergePoint {
 }
 
 extension MergePoint: Equatable {
-
-  static func ==(lhs: MergePoint, rhs: MergePoint) -> Bool {
+  static func == (lhs: MergePoint, rhs: MergePoint) -> Bool {
     return lhs.interval == rhs.interval && lhs.time == rhs.time && lhs.points == rhs.points
   }
-
 }
 
 class DataPointTests: QuickSpec {
-
   override func spec() {
-
-    beforeEach {
-    }
+    beforeEach {}
 
     describe("merge") {
       it("should merge points with all same times") {
@@ -45,7 +40,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 11),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: 12),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: 13),
-          DataPoint(time: Date(timeIntervalSince1970: 5), value: 14),
+          DataPoint(time: Date(timeIntervalSince1970: 5), value: 14)
         ]
 
         let b = [
@@ -53,7 +48,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 21),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: 22),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: 23),
-          DataPoint(time: Date(timeIntervalSince1970: 5), value: 24),
+          DataPoint(time: Date(timeIntervalSince1970: 5), value: 24)
         ]
 
         let c = [
@@ -61,7 +56,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 31),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: 32),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: 33),
-          DataPoint(time: Date(timeIntervalSince1970: 5), value: 34),
+          DataPoint(time: Date(timeIntervalSince1970: 5), value: 34)
         ]
 
         var out = [MergePoint]()
@@ -72,7 +67,7 @@ class DataPointTests: QuickSpec {
           MergePoint(1, Date(timeIntervalSince1970: 1), [11, 21, 31]),
           MergePoint(1, Date(timeIntervalSince1970: 2), [12, 22, 32]),
           MergePoint(1, Date(timeIntervalSince1970: 3), [13, 23, 33]),
-          MergePoint(2, Date(timeIntervalSince1970: 5), [14, 24, 34]),
+          MergePoint(2, Date(timeIntervalSince1970: 5), [14, 24, 34])
         ]
 
         expect(out).to(equal(expected))
@@ -82,7 +77,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: [11, 21, 31]),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: [12, 22, 32]),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: [13, 23, 33]),
-          DataPoint(time: Date(timeIntervalSince1970: 5), value: [14, 24, 34]),
+          DataPoint(time: Date(timeIntervalSince1970: 5), value: [14, 24, 34])
         ]
         expect(merged).to(equal(expectedPoints))
       }
@@ -93,7 +88,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 11),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: 12),
           DataPoint(time: Date(timeIntervalSince1970: 6), value: 13),
-          DataPoint(time: Date(timeIntervalSince1970: 7), value: 14),
+          DataPoint(time: Date(timeIntervalSince1970: 7), value: 14)
         ]
 
         let b = [
@@ -101,7 +96,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 21),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: 22),
           DataPoint(time: Date(timeIntervalSince1970: 7), value: 23),
-          DataPoint(time: Date(timeIntervalSince1970: 9), value: 24),
+          DataPoint(time: Date(timeIntervalSince1970: 9), value: 24)
         ]
 
         let c = [
@@ -109,7 +104,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 31),
           DataPoint(time: Date(timeIntervalSince1970: 7), value: 32),
           DataPoint(time: Date(timeIntervalSince1970: 8), value: 33),
-          DataPoint(time: Date(timeIntervalSince1970: 10), value: 34),
+          DataPoint(time: Date(timeIntervalSince1970: 10), value: 34)
         ]
 
         var out = [MergePoint]()
@@ -118,7 +113,7 @@ class DataPointTests: QuickSpec {
         let expected = [
           MergePoint(0, Date(timeIntervalSince1970: 0), [10, 20, 30]),
           MergePoint(1, Date(timeIntervalSince1970: 1), [11, 21, 31]),
-          MergePoint(6, Date(timeIntervalSince1970: 7), [14, 23, 32]),
+          MergePoint(6, Date(timeIntervalSince1970: 7), [14, 23, 32])
         ]
 
         expect(out).to(equal(expected))
@@ -126,7 +121,7 @@ class DataPointTests: QuickSpec {
         let expectedPoints = [
           DataPoint(time: Date(timeIntervalSince1970: 0), value: [10, 20, 30]),
           DataPoint(time: Date(timeIntervalSince1970: 1), value: [11, 21, 31]),
-          DataPoint(time: Date(timeIntervalSince1970: 7), value: [14, 23, 32]),
+          DataPoint(time: Date(timeIntervalSince1970: 7), value: [14, 23, 32])
         ]
         expect(merged).to(equal(expectedPoints))
       }
@@ -137,7 +132,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 1), value: 11),
           DataPoint(time: Date(timeIntervalSince1970: 2), value: 12),
           DataPoint(time: Date(timeIntervalSince1970: 3), value: 13),
-          DataPoint(time: Date(timeIntervalSince1970: 5), value: 14),
+          DataPoint(time: Date(timeIntervalSince1970: 5), value: 14)
         ]
 
         let b = [
@@ -145,7 +140,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 7), value: 21),
           DataPoint(time: Date(timeIntervalSince1970: 8), value: 22),
           DataPoint(time: Date(timeIntervalSince1970: 9), value: 23),
-          DataPoint(time: Date(timeIntervalSince1970: 10), value: 24),
+          DataPoint(time: Date(timeIntervalSince1970: 10), value: 24)
         ]
 
         let c = [
@@ -153,7 +148,7 @@ class DataPointTests: QuickSpec {
           DataPoint(time: Date(timeIntervalSince1970: 12), value: 31),
           DataPoint(time: Date(timeIntervalSince1970: 13), value: 32),
           DataPoint(time: Date(timeIntervalSince1970: 14), value: 33),
-          DataPoint(time: Date(timeIntervalSince1970: 15), value: 34),
+          DataPoint(time: Date(timeIntervalSince1970: 15), value: 34)
         ]
 
         var out = [MergePoint]()
@@ -169,7 +164,5 @@ class DataPointTests: QuickSpec {
         expect(merged).to(equal(expectedPoints))
       }
     }
-    
   }
-
 }

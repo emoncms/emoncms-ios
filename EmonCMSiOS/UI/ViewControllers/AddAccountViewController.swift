@@ -6,18 +6,18 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Former
 
 final class AddAccountViewController: FormViewController {
-
   var viewModel: AddAccountViewModel!
 
   lazy var finished: AnyPublisher<String?, Never> = {
-    return self.finishedSubject.eraseToAnyPublisher()
+    self.finishedSubject.eraseToAnyPublisher()
   }()
+
   private var finishedSubject = PassthroughSubject<String?, Never>()
 
   private var nameRow: TextFieldRowFormer<FormTextFieldCell>?
@@ -58,12 +58,12 @@ final class AddAccountViewController: FormViewController {
 
     let nameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
-      }.configure {
-        $0.placeholder = "Name"
-        $0.text = viewModel.name
-      }.onTextChanged { [weak self] text in
-        guard let self = self else { return }
-        self.viewModel.name = text
+    }.configure {
+      $0.placeholder = "Name"
+      $0.text = viewModel.name
+    }.onTextChanged { [weak self] text in
+      guard let self = self else { return }
+      self.viewModel.name = text
     }
 
     let urlRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -71,24 +71,24 @@ final class AddAccountViewController: FormViewController {
       $0.textField.keyboardType = .URL
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
-      }.configure {
-        $0.placeholder = "URL"
-        $0.text = viewModel.url
-      }.onTextChanged { [weak self] text in
-        guard let self = self else { return }
-        self.viewModel.url = text
+    }.configure {
+      $0.placeholder = "URL"
+      $0.text = viewModel.url
+    }.onTextChanged { [weak self] text in
+      guard let self = self else { return }
+      self.viewModel.url = text
     }
 
     let usernameRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
-      }.configure {
-        $0.placeholder = "Username"
-        $0.text = viewModel.username
-      }.onTextChanged { [weak self] text in
-        guard let self = self else { return }
-        self.viewModel.username = text
+    }.configure {
+      $0.placeholder = "Username"
+      $0.text = viewModel.username
+    }.onTextChanged { [weak self] text in
+      guard let self = self else { return }
+      self.viewModel.username = text
     }
 
     let passwordRow = TextFieldRowFormer<FormTextFieldCell>() {
@@ -96,38 +96,38 @@ final class AddAccountViewController: FormViewController {
       $0.textField.isSecureTextEntry = true
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
-      }.configure {
-        $0.placeholder = "Password"
-        $0.text = viewModel.password
-      }.onTextChanged { [weak self] text in
-        guard let self = self else { return }
-        self.viewModel.password = text
+    }.configure {
+      $0.placeholder = "Password"
+      $0.text = viewModel.password
+    }.onTextChanged { [weak self] text in
+      guard let self = self else { return }
+      self.viewModel.password = text
     }
 
     let apiKeyRow = TextFieldRowFormer<FormTextFieldCell>() {
       $0.textField.font = .systemFont(ofSize: 15)
       $0.textField.autocapitalizationType = .none
       $0.textField.autocorrectionType = .no
-      }.configure {
-        $0.placeholder = "API read key"
-        $0.text = viewModel.apiKey
-      }.onTextChanged { [weak self] text in
-        guard let self = self else { return }
-        self.viewModel.apiKey = text
+    }.configure {
+      $0.placeholder = "API read key"
+      $0.text = viewModel.apiKey
+    }.onTextChanged { [weak self] text in
+      guard let self = self else { return }
+      self.viewModel.apiKey = text
     }
 
     let scanQRRow = LabelRowFormer<FormLabelCell>() {
       $0.accessoryType = .disclosureIndicator
-      }.configure {
-        $0.text = "Scan QR Code"
-      }.onSelected { [weak self] _ in
-        self?.presentScanQR()
+    }.configure {
+      $0.text = "Scan QR Code"
+    }.onSelected { [weak self] _ in
+      self?.presentScanQR()
     }
 
     let unamepwordApiKeySeperatorView = LabelViewFormer<FormLabelFooterView>() {
       $0.titleLabel.textColor = .darkGray
-      }.configure {
-        $0.text = "\u{2014} or \u{2014}"
+    }.configure {
+      $0.text = "\u{2014} or \u{2014}"
     }
 
     self.nameRow = nameRow
@@ -191,12 +191,12 @@ final class AddAccountViewController: FormViewController {
             self.present(alert, animated: true, completion: nil)
 
             return Empty<String, Never>().eraseToAnyPublisher()
-        }
-        .becomeVoid()
-        .eraseToAnyPublisher()
+          }
+          .becomeVoid()
+          .eraseToAnyPublisher()
       }
-    .sink { _ in }
-    .store(in: &self.cancellables)
+      .sink { _ in }
+      .store(in: &self.cancellables)
   }
 
   private func presentScanQR() {
@@ -211,11 +211,9 @@ final class AddAccountViewController: FormViewController {
     self.apiKeyRow?.text = accountCredentials.apiKey
     self.apiKeyRow?.update()
   }
-
 }
 
 extension AddAccountViewController {
-
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.scanQR.rawValue {
       let navController = segue.destination as! UINavigationController
@@ -223,11 +221,9 @@ extension AddAccountViewController {
       viewController.delegate = self
     }
   }
-
 }
 
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
-
   func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials) {
     self.updateWithAccountCredentials(accountCredentials)
     self.dismiss(animated: true, completion: nil)
@@ -236,5 +232,4 @@ extension AddAccountViewController: AddAccountQRViewControllerDelegate {
   func addAccountQRViewControllerDidCancel(controller: AddAccountQRViewController) {
     self.dismiss(animated: true, completion: nil)
   }
-
 }

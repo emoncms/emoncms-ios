@@ -14,12 +14,10 @@ struct AccountCredentials {
 }
 
 extension AccountCredentials: Equatable {
-
-  static func ==(lhs: AccountCredentials, rhs: AccountCredentials) -> Bool {
+  static func == (lhs: AccountCredentials, rhs: AccountCredentials) -> Bool {
     return lhs.url == rhs.url &&
       lhs.apiKey == rhs.apiKey
   }
-
 }
 
 struct AccountController {
@@ -28,10 +26,8 @@ struct AccountController {
 }
 
 extension AccountController: Equatable {
-
-  static func ==(lhs: AccountController, rhs: AccountController) -> Bool {
+  static func == (lhs: AccountController, rhs: AccountController) -> Bool {
     return lhs.uuid == rhs.uuid &&
       lhs.credentials == rhs.credentials
   }
-
 }

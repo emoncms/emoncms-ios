@@ -6,11 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class EmonCMSAPI {
-
   private let requestProvider: HTTPRequestProvider
 
   enum APIError: Error {
@@ -25,7 +24,7 @@ final class EmonCMSAPI {
     self.requestProvider = requestProvider
   }
 
-  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> URL? {
+  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String: String] = [:]) -> URL? {
     let fullUrl = account.url + "/" + path + ".json"
     guard var urlBuilder = URLComponents(string: fullUrl) else {
       return nil
@@ -33,7 +32,7 @@ final class EmonCMSAPI {
 
     var allQueryItems = queryItems
     allQueryItems["apikey"] = account.apiKey
-    urlBuilder.queryItems = allQueryItems.map() { URLQueryItem(name: $0, value: $1) }
+    urlBuilder.queryItems = allQueryItems.map { URLQueryItem(name: $0, value: $1) }
 
     if let url = urlBuilder.url {
       return url
@@ -63,7 +62,7 @@ final class EmonCMSAPI {
       return Fail(error: APIError.requestFailed).eraseToAnyPublisher()
     }
 
-    return self.requestProvider.request(url: url, formData: ["username":username, "password":password])
+    return self.requestProvider.request(url: url, formData: ["username": username, "password": password])
       .mapError { [weak self] error in
         guard let self = self else { return .requestFailed }
         AppLog.info("Network request error: \(error)")
@@ -72,7 +71,7 @@ final class EmonCMSAPI {
       .eraseToAnyPublisher()
   }
 
-  func request(_ account: AccountCredentials, path: String, queryItems: [String:String] = [:]) -> AnyPublisher<Data, APIError> {
+  func request(_ account: AccountCredentials, path: String, queryItems: [String: String] = [:]) -> AnyPublisher<Data, APIError> {
     guard let url = EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems) else {
       return Fail(error: APIError.failedToCreateURL).eraseToAnyPublisher()
     }
@@ -99,5 +98,4 @@ final class EmonCMSAPI {
     } catch {}
     return nil
   }
-
 }

@@ -11,7 +11,6 @@ import Foundation
 import Locksmith
 
 final class KeychainController {
-
   static let ServiceIdentifier = "org.openenergymonitor.emoncms"
   static let SharedKeychainIdentifier = "4C898RE43H.org.openenergymonitor.emoncms"
 
@@ -28,33 +27,32 @@ final class KeychainController {
   {
     let service = KeychainController.ServiceIdentifier
     let account: String
-    let data: [String:Any]
+    let data: [String: Any]
     let useShared: Bool
     var accessGroup: String? {
       return self.useShared ? KeychainController.SharedKeychainIdentifier : nil
     }
 
-    init(account: String, data: [String:Any], useShared: Bool = false) {
+    init(account: String, data: [String: Any], useShared: Bool = false) {
       self.account = account
       self.data = data
       self.useShared = useShared
     }
   }
 
-  init() {
-  }
+  init() {}
 
-  private func save(data: [String:Any], forUserAccount account: String) throws {
+  private func save(data: [String: Any], forUserAccount account: String) throws {
     let storable = AccountSecureStorable(account: account, data: data)
     try storable.createInSecureStore()
   }
 
-  private func update(data: [String:Any], forUserAccount account: String) throws {
+  private func update(data: [String: Any], forUserAccount account: String) throws {
     let storable = AccountSecureStorable(account: account, data: data)
     try storable.updateInSecureStore()
   }
 
-  private func loadData(forUserAccount account: String) -> [String:Any]? {
+  private func loadData(forUserAccount account: String) -> [String: Any]? {
     let storable = AccountSecureStorable(account: account, data: [:])
     return storable.readFromSecureStore()?.data
   }
@@ -82,7 +80,7 @@ final class KeychainController {
     guard
       let data = self.loadData(forUserAccount: id),
       let apiKey = data["apikey"] as? String else {
-        return nil
+      return nil
     }
     return apiKey
   }
@@ -96,5 +94,4 @@ final class KeychainController {
       throw KeychainControllerError.KeychainFailed
     }
   }
-
 }

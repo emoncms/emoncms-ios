@@ -9,7 +9,6 @@
 import UIKit
 
 @IBDesignable final class AppBoxesFeedView: UIView {
-
   @IBInspectable var name: String = "FEED" { didSet { self.updateLabels() } }
   @IBInspectable var value: Double = 0 { didSet { hasSetValue = true; self.updateLabels() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
@@ -79,8 +78,10 @@ import UIKit
                                      metrics: nil,
                                      views: views)
     self.internalConstraints +=
-      [NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
-       NSLayoutConstraint(item: self.containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)]
+      [
+        NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
+        NSLayoutConstraint(item: self.containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
+      ]
     self.internalConstraints +=
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel]-2-[valueLabel]|",
                                      options: [],
@@ -99,5 +100,4 @@ import UIKit
 
     self.addConstraints(self.internalConstraints)
   }
-
 }

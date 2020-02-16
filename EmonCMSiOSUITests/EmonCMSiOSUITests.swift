@@ -6,14 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import XCTest
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
+import XCTest
 
 extension XCUIElement {
-
   func clearAndEnterText(text: String) {
     guard let stringValue = self.value as? String else {
       XCTFail("Tried to clear and enter text into a non string value")
@@ -25,11 +24,9 @@ extension XCUIElement {
     self.typeText(deleteString)
     self.typeText(text)
   }
-
 }
 
 class EmonCMSiOSUITests: QuickSpec {
-
   static let WaitTimeout: TimeInterval = 10
 
   override func setUp() {
@@ -389,5 +386,4 @@ class EmonCMSiOSUITests: QuickSpec {
       }
     }
   }
-
 }

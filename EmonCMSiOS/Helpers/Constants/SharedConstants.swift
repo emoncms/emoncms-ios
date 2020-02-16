@@ -9,7 +9,6 @@
 import Foundation
 
 struct SharedConstants {
-
   enum ApplicationContextKeys: String {
     case accountUUID
     case accountURL
@@ -24,5 +23,4 @@ struct SharedConstants {
 
   static let SharedApplicationGroupIdentifier = "group.org.openenergymonitor.emoncms"
   static let EmonCMSdotOrgURL = "https://www.emoncms.org/"
-
 }

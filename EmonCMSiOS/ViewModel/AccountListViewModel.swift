@@ -6,14 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class AccountListViewModel {
-
   struct ListItem {
     let accountId: String
     let name: String
@@ -60,14 +59,13 @@ final class AccountListViewModel {
   private func migrateOldAccountIfNeeded() {
     if
       let accountURL = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue),
-      let accountUUIDString = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
-    {
+      let accountUUIDString = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) {
       let account = Account()
       account.uuid = accountUUIDString
       account.name = accountURL
       account.url = accountURL
 
-      let realm = realmController.createMainRealm()
+      let realm = self.realmController.createMainRealm()
       let existingObject = realm.object(ofType: Account.self, forPrimaryKey: accountUUIDString)
       if existingObject == nil {
         do {
@@ -93,7 +91,7 @@ final class AccountListViewModel {
     guard
       let account = self.realm.object(ofType: Account.self, forPrimaryKey: id),
       let apiKey = self.keychainController.apiKey(forAccountWithId: id) else {
-        return nil
+      return nil
     }
     let credentials = AccountCredentials(url: account.url, apiKey: apiKey)
     return AccountController(uuid: account.uuid, credentials: credentials)
@@ -114,26 +112,26 @@ final class AccountListViewModel {
 
   func mainViewModels(forAccountWithId id: String) ->
     (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel, dashboardList: DashboardListViewModel, settings: SettingsViewModel)? {
-      guard
-        let accountController = self.accountController(forAccountWithId: id)
-        else {
-          return nil
-      }
-      let appListViewModel = AppListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-      let inputListViewModel = InputListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-      let feedListViewModel = FeedListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-      let dashboardListViewModel = DashboardListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-      let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController, api: self.api)
-      return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
+    guard
+      let accountController = self.accountController(forAccountWithId: id)
+    else {
+      return nil
+    }
+    let appListViewModel = AppListViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    let inputListViewModel = InputListViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    let feedListViewModel = FeedListViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    let dashboardListViewModel = DashboardListViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
   }
 
   func addAccountViewModel(accountId: String? = nil) -> AddAccountViewModel {
     return AddAccountViewModel(realmController: self.realmController, api: self.api, accountId: accountId)
   }
 
-  func deleteAccount(withId id: String) -> AnyPublisher<(), Never> {
+  func deleteAccount(withId id: String) -> AnyPublisher<Void, Never> {
     let realm = self.realm
-    return Deferred { () -> Just<()> in
+    return Deferred { () -> Just<Void> in
       do {
         if let account = realm.object(ofType: Account.self, forPrimaryKey: id) {
           try self.keychainController.logout(ofAccountWithId: id)
@@ -149,5 +147,4 @@ final class AccountListViewModel {
       return Just(())
     }.eraseToAnyPublisher()
   }
-
 }

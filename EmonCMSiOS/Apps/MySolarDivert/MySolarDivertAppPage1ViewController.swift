@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 
 final class MySolarDivertAppPage1ViewController: AppPageViewController {
-
   var typedViewModel: MySolarDivertAppPage1ViewModel {
     return self.viewModel as! MySolarDivertAppPage1ViewModel
   }
@@ -102,7 +101,7 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
         case .minus:
           return ("EXPORT", EmonCMSColors.Apps.Export)
         }
-    }
+      }
 
     importExport
       .map { $0.0 }
@@ -141,11 +140,9 @@ final class MySolarDivertAppPage1ViewController: AppPageViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }
 
 extension MySolarDivertAppPage1ViewController {
-
   private func setupCharts() {
     ChartHelpers.setupAppLineChart(self.lineChart)
   }
@@ -175,11 +172,9 @@ extension MySolarDivertAppPage1ViewController {
 
     self.lineChart.notifyDataSetChanged()
   }
-
 }
 
 extension MySolarDivertAppPage1ViewController {
-
   private func setupBoxView() {
     self.solarBoxView.backgroundColor = EmonCMSColors.Apps.Solar
     self.solarBoxView.name = "SOLAR"
@@ -227,9 +222,9 @@ extension MySolarDivertAppPage1ViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    DataPoint.merge(pointsFrom: [use, solar, divert]) { (timeDelta, _, values) in
+    DataPoint.merge(pointsFrom: [use, solar, divert]) { timeDelta, _, values in
       let wattsToKWH = { (power: Double) -> Double in
-        return (power / 1000.0) * (timeDelta / 3600.0)
+        (power / 1000.0) * (timeDelta / 3600.0)
       }
 
       let useValue = wattsToKWH(values[0])
@@ -262,5 +257,4 @@ extension MySolarDivertAppPage1ViewController {
     self.solarToHouseArrowView.value = solarToHouse
     self.gridToHouseArrowView.value = gridToHouse
   }
-
 }

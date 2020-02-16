@@ -11,7 +11,6 @@ import Foundation
 import RealmSwift
 
 final class Input: Object {
-
   @objc dynamic var id: String = ""
   @objc dynamic var nodeid: String = ""
   @objc dynamic var name: String = ""
@@ -22,12 +21,10 @@ final class Input: Object {
   override class func primaryKey() -> String? {
     return "id"
   }
-
 }
 
 extension Input {
-
-  static func from(json: [String:Any]) -> Input? {
+  static func from(json: [String: Any]) -> Input? {
     guard let id = json["id"] as? String else { return nil }
     guard let nodeid = json["nodeid"] as? String else { return nil }
     guard let name = json["name"] as? String else { return nil }
@@ -49,5 +46,4 @@ extension Input {
 
     return input
   }
-
 }

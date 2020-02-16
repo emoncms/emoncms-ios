@@ -6,16 +6,15 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
-import NotificationCenter
 import Combine
+import NotificationCenter
+import UIKit
 
+import Charts
 import Realm
 import RealmSwift
-import Charts
 
 class TodayViewController: UIViewController, NCWidgetProviding {
-
   @IBOutlet private var tableView: UITableView!
   @IBOutlet private var emptyLabel: UILabel!
 
@@ -51,7 +50,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     self.tableView.register(UINib(nibName: "TodayViewFeedCell", bundle: nil), forCellReuseIdentifier: "Cell")
 
     let dataSource = CombineTableViewDataSource<TodayViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TodayViewFeedCell
         cell.feedNameLabel.text = item.feedName
         cell.accountNameLabel.text = item.accountName
@@ -59,10 +58,10 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         cell.updateChart(withData: item.feedChartData)
         return cell
       },
-      titleForHeaderInSection: { _,_  in "" },
-      canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in false },
-      heightForRowAtIndexPath: { _,_ in
+      titleForHeaderInSection: { _, _ in "" },
+      canEditRowAtIndexPath: { _, _ in true },
+      canMoveRowAtIndexPath: { _, _ in false },
+      heightForRowAtIndexPath: { _, _ in
         let CellMinimumHeight: CGFloat = 50
 
         guard let size = self.extensionContext?.widgetMaximumSize(for: .compact) else { return CellMinimumHeight }
@@ -94,7 +93,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
     self.viewModel.$feeds
       .first()
-      .map { _ in return true }
+      .map { _ in true }
       .prepend(false)
       .map {
         $0 ? "Select some feeds in Emoncms app" : "Loading\u{2026}"
@@ -103,14 +102,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
       .store(in: &self.cancellables)
   }
 
-  private func setupBindings() {
-  }
-
+  private func setupBindings() {}
 }
 
 extension TodayViewController {
-
-  func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
+  func widgetPerformUpdate(completionHandler: @escaping (NCUpdateResult) -> Void) {
     self.viewModel.updateData()
       .sink(
         receiveCompletion: { completion in
@@ -123,8 +119,7 @@ extension TodayViewController {
         },
         receiveValue: { updated in
           completionHandler(updated ? .newData : .noData)
-        }
-      )
+        })
       .store(in: &self.cancellables)
   }
 
@@ -132,11 +127,10 @@ extension TodayViewController {
     UIView.animate(withDuration: 0.3) {
       switch activeDisplayMode {
       case .compact:
-        self.preferredContentSize = maxSize;
+        self.preferredContentSize = maxSize
       default:
-        self.preferredContentSize = self.tableView.contentSize;
+        self.preferredContentSize = self.tableView.contentSize
       }
     }
   }
-
 }

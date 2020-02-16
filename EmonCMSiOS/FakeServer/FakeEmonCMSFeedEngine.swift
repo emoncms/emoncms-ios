@@ -9,7 +9,6 @@
 import Foundation
 
 final class FakeEmonCMSFeedEngine {
-
   typealias FeedMeta = (interval: TimeInterval, startTime: TimeInterval?)
   typealias DataPoint = (time: TimeInterval, value: Double?)
 
@@ -19,7 +18,7 @@ final class FakeEmonCMSFeedEngine {
 
   final class FeedStorage {
     let interval: TimeInterval
-    var startTime: TimeInterval? = nil
+    var startTime: TimeInterval?
     var data: [DataPoint] = []
 
     init(interval: TimeInterval) {
@@ -27,7 +26,7 @@ final class FakeEmonCMSFeedEngine {
     }
   }
 
-  private var feedDatabase = [String:FeedStorage]()
+  private var feedDatabase = [String: FeedStorage]()
 
   func create(id: String, interval: TimeInterval) {
     self.feedDatabase[id] = FeedStorage(interval: interval)
@@ -84,7 +83,7 @@ final class FakeEmonCMSFeedEngine {
     guard
       let feedStorage = self.feedDatabase[id],
       let startTime = feedStorage.startTime
-      else { return }
+    else { return }
 
     let interval = feedStorage.interval
     let bucketedTime = floor(time / interval) * interval
@@ -106,7 +105,7 @@ final class FakeEmonCMSFeedEngine {
     guard
       let feedStorage = self.feedDatabase[id],
       let startTime = feedStorage.startTime
-      else { return [] }
+    else { return [] }
     guard start < end else { return [] }
     guard interval > 0 else { return [] }
 
@@ -121,7 +120,7 @@ final class FakeEmonCMSFeedEngine {
       time = startSecs + Double(interval * i)
 
       let bucket = Int(round((time - startTime) / feedInterval))
-      if bucket > 0 && bucket < feedStorage.data.count {
+      if bucket > 0, bucket < feedStorage.data.count {
         let feedValue = feedStorage.data[bucket]
         points.append(feedValue)
       }
@@ -141,5 +140,4 @@ final class FakeEmonCMSFeedEngine {
 
     return self.getData(id: id, start: midnightStart.timeIntervalSince1970 * 1000.0, end: end, interval: 86400)
   }
-
 }

@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 class AppViewController: UIViewController {
-
   var viewModel: AppViewModel!
 
   @IBOutlet private var mainView: UIView!
@@ -99,11 +98,9 @@ class AppViewController: UIViewController {
       }
     }
   }
-
 }
 
 extension AppViewController: UIPageViewControllerDataSource {
-
   func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
     guard let index = self.pages.firstIndex(of: viewController), index > 0 else { return nil }
     return self.pages[index - 1]
@@ -122,9 +119,8 @@ extension AppViewController: UIPageViewControllerDataSource {
     guard
       let topViewController = pageViewController.viewControllers?.first,
       let index = self.pages.firstIndex(of: topViewController)
-      else { return 0 }
+    else { return 0 }
 
     return index
   }
-
 }

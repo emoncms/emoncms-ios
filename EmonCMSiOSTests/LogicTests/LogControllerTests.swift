@@ -6,17 +6,14 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
 
 class LogControllerTests: QuickSpec {
-
   override func spec() {
-
-    beforeEach {
-    }
+    beforeEach {}
 
     describe("logController") {
       it("should return log files") {
@@ -33,15 +30,12 @@ class LogControllerTests: QuickSpec {
         if
           let logFile = logFiles.first,
           let data = try? Data(contentsOf: logFile),
-          let string = String(data: data, encoding: .utf8)
-        {
+          let string = String(data: data, encoding: .utf8) {
           expect(string.contains(thingToLog)).to(equal(true))
         } else {
           fail("Failed to get log file data")
         }
       }
     }
-
   }
-
 }

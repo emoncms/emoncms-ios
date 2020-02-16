@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class FeedListHelper {
-
   struct FeedListItem {
     let feedId: String
     let name: String
@@ -56,7 +55,7 @@ final class FeedListHelper {
       .store(in: &self.cancellables)
 
     self.refresh
-      .map { [weak self] () -> AnyPublisher<(), Never> in
+      .map { [weak self] () -> AnyPublisher<Void, Never> in
         guard let self = self else { return Empty().eraseToAnyPublisher() }
         return self.feedUpdateHelper.updateFeeds()
           .replaceError(with: ())
@@ -71,10 +70,9 @@ final class FeedListHelper {
   private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {
     let sortedFeedItems = feeds.sorted {
       $0.name < $1.name
-      }.map {
-        FeedListItem(feedId: $0.id, name: $0.name)
+    }.map {
+      FeedListItem(feedId: $0.id, name: $0.name)
     }
     return sortedFeedItems
   }
-
 }

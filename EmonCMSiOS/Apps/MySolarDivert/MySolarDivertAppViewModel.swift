@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class MySolarDivertAppViewModel: AppViewModel {
-
   typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
@@ -68,5 +67,4 @@ final class MySolarDivertAppViewModel: AppViewModel {
   func configViewModel() -> AppConfigViewModel {
     return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolarDivert)
   }
-
 }

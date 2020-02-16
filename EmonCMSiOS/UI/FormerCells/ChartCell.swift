@@ -8,28 +8,27 @@
 
 import UIKit
 
-import Former
 import Charts
+import Former
 
 final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
-
   let chartView: ChartViewType
   let spinner: UIActivityIndicatorView
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     self.chartView = ChartViewType()
-    chartView.translatesAutoresizingMaskIntoConstraints = false
+    self.chartView.translatesAutoresizingMaskIntoConstraints = false
 
     self.spinner = UIActivityIndicatorView(style: .medium)
-    spinner.translatesAutoresizingMaskIntoConstraints = false
-    spinner.hidesWhenStopped = true
+    self.spinner.translatesAutoresizingMaskIntoConstraints = false
+    self.spinner.hidesWhenStopped = true
 
     super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-    contentView.addSubview(chartView)
+    contentView.addSubview(self.chartView)
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: chartView,
+        item: self.chartView,
         attribute: .top,
         relatedBy: .equal,
         toItem: contentView,
@@ -38,7 +37,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         constant: 0))
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: chartView,
+        item: self.chartView,
         attribute: .bottom,
         relatedBy: .equal,
         toItem: contentView,
@@ -47,7 +46,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         constant: 0))
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: chartView,
+        item: self.chartView,
         attribute: .left,
         relatedBy: .equal,
         toItem: contentView,
@@ -56,7 +55,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         constant: 0))
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: chartView,
+        item: self.chartView,
         attribute: .right,
         relatedBy: .equal,
         toItem: contentView,
@@ -64,10 +63,10 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         multiplier: 1,
         constant: 0))
 
-    contentView.addSubview(spinner)
+    contentView.addSubview(self.spinner)
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: spinner,
+        item: self.spinner,
         attribute: .centerX,
         relatedBy: .equal,
         toItem: contentView,
@@ -76,7 +75,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         constant: 0))
     contentView.addConstraint(
       NSLayoutConstraint(
-        item: spinner,
+        item: self.spinner,
         attribute: .centerY,
         relatedBy: .equal,
         toItem: contentView,
@@ -84,9 +83,8 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         multiplier: 1,
         constant: 0))
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("Must be initialised programatically")
   }
-
 }

@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class FeedListViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -48,11 +46,11 @@ class FeedListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let feed = Feed()
             feed.id = "\(i)"
             feed.name = "Feed \(i)"
-            feed.tag = "Tag \(i%2)"
+            feed.tag = "Tag \(i % 2)"
             realm.add(feed)
           }
         }
@@ -86,7 +84,7 @@ class FeedListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let feed = Feed()
             feed.id = "\(i)"
             feed.name = "Feed \(i)"
@@ -132,11 +130,9 @@ class FeedListViewModelTests: EmonCMSTestCase {
           (10, .input(true)),
           (20, .input(false)),
           (20, .input(true)),
-          (20, .input(false)),
+          (20, .input(false))
         ]))
       }
     }
-
   }
-
 }

@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class AddAccountViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var realmController: RealmController!
     var realm: Realm!
     var requestProvider: MockHTTPRequestProvider!
@@ -56,9 +54,8 @@ class AddAccountViewModelTests: EmonCMSTestCase {
                   expect(error).to(equal(AddAccountViewModel.AddAccountError.invalidCredentials))
                 }
                 done()
-            },
-              receiveValue: { _ in }
-          )
+              },
+              receiveValue: { _ in })
         }
       }
 
@@ -83,9 +80,8 @@ class AddAccountViewModelTests: EmonCMSTestCase {
                   fail(error.localizedDescription)
                 }
                 done()
-            },
-              receiveValue: { expect($0).toNot(equal("")) }
-          )
+              },
+              receiveValue: { expect($0).toNot(equal("")) })
         }
       }
 
@@ -108,9 +104,8 @@ class AddAccountViewModelTests: EmonCMSTestCase {
                   fail(error.localizedDescription)
                 }
                 done()
-            },
-              receiveValue: { expect($0).toNot(equal("")) }
-          )
+              },
+              receiveValue: { expect($0).toNot(equal("")) })
         }
       }
     }
@@ -171,7 +166,5 @@ class AddAccountViewModelTests: EmonCMSTestCase {
         expect(result).to(equal(true))
       }
     }
-    
   }
-
 }

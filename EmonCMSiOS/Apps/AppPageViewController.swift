@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 class AppPageViewController: UIViewController {
-
   var viewModel: AppPageViewModel!
 
   @IBOutlet private var bannerView: UIView!
@@ -76,5 +75,4 @@ class AppPageViewController: UIViewController {
       })
       .store(in: &self.cancellables)
   }
-
 }

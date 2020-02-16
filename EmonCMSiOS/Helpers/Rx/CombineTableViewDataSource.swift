@@ -8,8 +8,8 @@
 
 // INSPIRED BY https://github.com/RxSwiftCommunity/RxDataSources
 
-import UIKit
 import Combine
+import UIKit
 
 public protocol SectionModelType {
   associatedtype Item
@@ -29,22 +29,21 @@ public struct SectionModel<Section, ItemType> {
   }
 }
 
-extension SectionModel : SectionModelType {
+extension SectionModel: SectionModelType {
   public typealias Identity = Section
   public typealias Item = ItemType
 
   public var identity: Section {
-    return model
+    return self.model
   }
 }
 
-extension SectionModel
-: CustomStringConvertible {
-
-  public var description: String {
-    return "\(self.model) > \(items)"
+extension SectionModel:
+  CustomStringConvertible {
+    public var description: String {
+      return "\(self.model) > \(self.items)"
+    }
   }
-}
 
 extension SectionModel {
   public init(original: SectionModel<Section, Item>, items: [Item]) {
@@ -53,9 +52,8 @@ extension SectionModel {
   }
 }
 
-extension SectionModel
-: Equatable where Section: Equatable, ItemType: Equatable {
-
+extension SectionModel:
+  Equatable where Section: Equatable, ItemType: Equatable {
   public static func == (lhs: SectionModel, rhs: SectionModel) -> Bool {
     return lhs.model == rhs.model
       && lhs.items == rhs.items
@@ -80,11 +78,10 @@ extension Array where Element: SectionModelType {
   }
 }
 
-final class CombineTableViewDataSource<Section: SectionModelType>
-  : NSObject
-  , UITableViewDataSource
-  , UITableViewDelegate {
-
+final class CombineTableViewDataSource<Section: SectionModelType>:
+  NSObject,
+  UITableViewDataSource,
+  UITableViewDelegate {
   public typealias Item = Section.Item
 
   public typealias ConfigureCell = (CombineTableViewDataSource<Section>, UITableView, IndexPath, Item) -> UITableViewCell
@@ -106,12 +103,11 @@ final class CombineTableViewDataSource<Section: SectionModelType>
 
   init(
     configureCell: @escaping ConfigureCell,
-    titleForHeaderInSection: @escaping  TitleForHeaderInSection = { _, _ in nil },
+    titleForHeaderInSection: @escaping TitleForHeaderInSection = { _, _ in nil },
     titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
     canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
     canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
-    heightForRowAtIndexPath: @escaping HeightForRowAtIndexPath = { _, _ in UITableView.automaticDimension }
-  ) {
+    heightForRowAtIndexPath: @escaping HeightForRowAtIndexPath = { _, _ in UITableView.automaticDimension }) {
     self.configureCell = configureCell
     self.titleForHeaderInSection = titleForHeaderInSection
     self.titleForFooterInSection = titleForFooterInSection
@@ -151,14 +147,14 @@ final class CombineTableViewDataSource<Section: SectionModelType>
   var itemMoved: AnyPublisher<(IndexPath, IndexPath), Never> { return self.itemMovedSubject.eraseToAnyPublisher() }
   private let itemMovedSubject = PassthroughSubject<(IndexPath, IndexPath), Never>()
 
-  ///MARK:
+  // MARK:
 
   typealias SectionModelSnapshot = SectionModel<Section, Item>
 
   private var _sectionModels: [SectionModelSnapshot] = []
 
   var sectionModels: [Section] {
-    return _sectionModels.map { Section(original: $0.model, items: $0.items) }
+    return self._sectionModels.map { Section(original: $0.model, items: $0.items) }
   }
 
   subscript(section: Int) -> Section {
@@ -185,37 +181,37 @@ final class CombineTableViewDataSource<Section: SectionModelType>
     self._sectionModels = sections.map { SectionModelSnapshot(model: $0, items: $0.items) }
   }
 
-  ///MARK: UITableViewDataSource
+  // MARK: UITableViewDataSource
 
   func numberOfSections(in tableView: UITableView) -> Int {
-    return _sectionModels.count
+    return self._sectionModels.count
   }
 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    guard _sectionModels.count > section else { return 0 }
-    return _sectionModels[section].items.count
+    guard self._sectionModels.count > section else { return 0 }
+    return self._sectionModels[section].items.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    precondition(indexPath.item < _sectionModels[indexPath.section].items.count)
+    precondition(indexPath.item < self._sectionModels[indexPath.section].items.count)
 
-    return configureCell(self, tableView, indexPath, self[indexPath])
+    return self.configureCell(self, tableView, indexPath, self[indexPath])
   }
 
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return titleForHeaderInSection(self, section)
+    return self.titleForHeaderInSection(self, section)
   }
 
   func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-    return titleForFooterInSection(self, section)
+    return self.titleForFooterInSection(self, section)
   }
 
   func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-    return canEditRowAtIndexPath(self, indexPath)
+    return self.canEditRowAtIndexPath(self, indexPath)
   }
 
   func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-    return canMoveRowAtIndexPath(self, indexPath)
+    return self.canMoveRowAtIndexPath(self, indexPath)
   }
 
   func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -223,10 +219,10 @@ final class CombineTableViewDataSource<Section: SectionModelType>
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return heightForRowAtIndexPath(self, indexPath)
+    return self.heightForRowAtIndexPath(self, indexPath)
   }
 
-  ///MARK: UITableViewDelegate
+  // MARK: UITableViewDelegate
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.itemSelectedSubject.send(indexPath)
@@ -252,5 +248,4 @@ final class CombineTableViewDataSource<Section: SectionModelType>
       break
     }
   }
-
 }

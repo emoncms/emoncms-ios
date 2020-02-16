@@ -6,75 +6,73 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 public protocol NotificationEmitter {
-    associatedtype ElementType: RealmCollectionValue
+  associatedtype ElementType: RealmCollectionValue
 
-    /**
-     Returns a `NotificationToken`, which while retained enables change notifications for the current collection.
+  /**
+   Returns a `NotificationToken`, which while retained enables change notifications for the current collection.
 
-     - returns: `NotificationToken` - retain this value to keep notifications being emitted for the current collection.
-     */
-    func observe(_ block: @escaping (RealmCollectionChange<Self>) -> Void) -> NotificationToken
+   - returns: `NotificationToken` - retain this value to keep notifications being emitted for the current collection.
+   */
+  func observe(_ block: @escaping (RealmCollectionChange<Self>) -> Void) -> NotificationToken
 
-    func toArray() -> [ElementType]
+  func toArray() -> [ElementType]
 
-    func toAnyCollection() -> AnyRealmCollection<ElementType>
+  func toAnyCollection() -> AnyRealmCollection<ElementType>
 }
 
 extension List: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<Element> {
-        return AnyRealmCollection<Element>(self)
-    }
+  public func toAnyCollection() -> AnyRealmCollection<Element> {
+    return AnyRealmCollection<Element>(self)
+  }
 
-    public typealias ElementType = Element
-    public func toArray() -> [Element] {
-        return Array(self)
-    }
+  public typealias ElementType = Element
+  public func toArray() -> [Element] {
+    return Array(self)
+  }
 }
 
 extension AnyRealmCollection: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<Element> {
-        return AnyRealmCollection<ElementType>(self)
-    }
+  public func toAnyCollection() -> AnyRealmCollection<Element> {
+    return AnyRealmCollection<ElementType>(self)
+  }
 
-    public typealias ElementType = Element
-    public func toArray() -> [Element] {
-        return Array(self)
-    }
+  public typealias ElementType = Element
+  public func toArray() -> [Element] {
+    return Array(self)
+  }
 }
 
 extension Results: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<Element> {
-        return AnyRealmCollection<ElementType>(self)
-    }
+  public func toAnyCollection() -> AnyRealmCollection<Element> {
+    return AnyRealmCollection<ElementType>(self)
+  }
 
-    public typealias ElementType = Element
-    public func toArray() -> [Element] {
-        return Array(self)
-    }
+  public typealias ElementType = Element
+  public func toArray() -> [Element] {
+    return Array(self)
+  }
 }
 
 extension LinkingObjects: NotificationEmitter {
-    public func toAnyCollection() -> AnyRealmCollection<Element> {
-        return AnyRealmCollection<ElementType>(self)
-    }
+  public func toAnyCollection() -> AnyRealmCollection<Element> {
+    return AnyRealmCollection<ElementType>(self)
+  }
 
-    public typealias ElementType = Element
-    public func toArray() -> [Element] {
-        return Array(self)
-    }
+  public typealias ElementType = Element
+  public func toArray() -> [Element] {
+    return Array(self)
+  }
 }
 
 public extension Publishers {
-
   struct RealmCollection<Element: NotificationEmitter>: Publisher {
-
     public typealias Output = Element
     public typealias Failure = Error
 
@@ -90,12 +88,10 @@ public extension Publishers {
       let subscription = RealmCollectionSubscription(subscriber: subscriber, collection: self.collection, synchronousStart: self.synchronousStart)
       subscriber.receive(subscription: subscription)
     }
-
   }
 
   private class RealmCollectionSubscription<SubscriberType: Subscriber, Element: NotificationEmitter>: Subscription
-    where SubscriberType.Input == Element, SubscriberType.Failure == Error
-  {
+    where SubscriberType.Input == Element, SubscriberType.Failure == Error {
     var subscriber: SubscriberType?
     var observeToken: NotificationToken?
     let collection: Element
@@ -114,14 +110,14 @@ public extension Publishers {
         let value: Element
 
         switch changeset {
-        case let .initial(latestValue):
+        case .initial(let latestValue):
 //          guard !synchronousStart else { return }
           value = latestValue
 
         case .update(let latestValue, _, _, _):
           value = latestValue
 
-        case let .error(error):
+        case .error(let error):
           self.subscriber?.receive(completion: .failure(error))
           return
         }
@@ -130,19 +126,16 @@ public extension Publishers {
       }
     }
 
-    func request(_ demand: Subscribers.Demand) {
-    }
+    func request(_ demand: Subscribers.Demand) {}
 
     func cancel() {
       self.subscriber = nil
       self.observeToken = nil
     }
   }
-
 }
 
 public extension Publishers {
-
   static func collection<Element: NotificationEmitter>(from collection: Element, synchronousStart: Bool = true) -> Publishers.RealmCollection<Element> {
     return RealmCollection(collection: collection, synchronousStart: synchronousStart)
   }
@@ -152,5 +145,4 @@ public extension Publishers {
       .map { $0.toArray() }
       .eraseToAnyPublisher()
   }
-
 }

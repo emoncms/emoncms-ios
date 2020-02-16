@@ -6,11 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
-
   private let session: URLSession
 
   init(session: URLSession) {
@@ -28,7 +27,7 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
     return self.data(forRequest: request)
   }
 
-  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
+  func request(url: URL, formData: [String: String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
 
@@ -44,12 +43,12 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
         guard let httpResponse = response as? HTTPURLResponse else {
           throw HTTPRequestProviderError.networkError
         }
-        guard 200..<300 ~= httpResponse.statusCode else {
+        guard 200 ..< 300 ~= httpResponse.statusCode else {
           throw HTTPRequestProviderError.httpError(code: httpResponse.statusCode)
         }
         return data
       }
-      .mapError{ error -> HTTPRequestProviderError in
+      .mapError { error -> HTTPRequestProviderError in
         if let e = error as? HTTPRequestProviderError {
           return e
         }
@@ -68,5 +67,4 @@ final class NSURLSessionHTTPRequestProvider: HTTPRequestProvider {
       .receive(on: DispatchQueue.main)
       .eraseToAnyPublisher()
   }
-
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 
 final class MySolarDivertAppPage2ViewController: AppPageViewController {
-
   var typedViewModel: MySolarDivertAppPage2ViewModel {
     return self.viewModel as! MySolarDivertAppPage2ViewModel
   }
@@ -47,11 +46,9 @@ final class MySolarDivertAppPage2ViewController: AppPageViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }
 
 extension MySolarDivertAppPage2ViewController {
-
   private func setupCharts() {
     ChartHelpers.setupAppBarChart(self.useBarChart)
     ChartHelpers.setupAppBarChart(self.solarBarChart)
@@ -90,5 +87,4 @@ extension MySolarDivertAppPage2ViewController {
     self.solarBarChart.notifyDataSetChanged()
     self.divertBarChart.notifyDataSetChanged()
   }
-
 }

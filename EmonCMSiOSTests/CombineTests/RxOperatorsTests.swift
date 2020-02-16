@@ -6,22 +6,20 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Quick
 import Combine
-import Nimble
-import EntwineTest
 @testable import EmonCMSiOS
+import EntwineTest
+import Nimble
+import Quick
 
 enum TestError: Error {
   case generic
 }
 
 class RxOperatorsTests: QuickSpec {
-
   override func spec() {
-
     var scheduler: TestScheduler!
-    
+
     beforeEach {
       scheduler = TestScheduler(initialClock: 0)
     }
@@ -37,7 +35,7 @@ class RxOperatorsTests: QuickSpec {
         let sut = publisher
           .becomeVoid()
           .map {
-            return true
+            true
           }
 
         let results = scheduler.start { sut }
@@ -46,7 +44,7 @@ class RxOperatorsTests: QuickSpec {
           (200, .subscription),
           (210, .input(true)),
           (220, .input(true)),
-          (230, .input(true)),
+          (230, .input(true))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
@@ -82,7 +80,7 @@ class RxOperatorsTests: QuickSpec {
           (230, .input(3)),
           (240, .input(4)),
           (250, .input(5)),
-          (260, .completion(.finished)),
+          (260, .completion(.finished))
         ]
 
         expect(subscriber.recordedOutput).to(equal(expected))
@@ -108,12 +106,11 @@ class RxOperatorsTests: QuickSpec {
         let expected: TestSequence<Int, TestError> = [
           (0, .subscription),
           (210, .input(1)),
-          (220, .completion(.failure(.generic))),
+          (220, .completion(.failure(.generic)))
         ]
 
         expect(subscriber.recordedOutput).to(equal(expected))
       }
     }
   }
-
 }

@@ -6,18 +6,15 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
-import Quick
-import Nimble
 import Charts
 @testable import EmonCMSiOS
+import Foundation
+import Nimble
+import Quick
 
 class ChartDateValueFormatterTests: QuickSpec {
-
   override func spec() {
-
-    beforeEach {
-    }
+    beforeEach {}
 
     describe("chartDateValueFormatter") {
       it("should format properly for auto type") {
@@ -25,13 +22,13 @@ class ChartDateValueFormatterTests: QuickSpec {
         formatter.timeZone = TimeZone(secondsFromGMT: 0)!
         let axis = AxisBase()
 
-        axis.axisRange = 1_000
+        axis.axisRange = 1000
         expect(formatter.stringForValue(0, axis: axis)).to(equal("12:00 AM"))
 
-        axis.axisRange = 1_000_000
+        axis.axisRange = 1000000
         expect(formatter.stringForValue(0, axis: axis)).to(equal("1/1"))
 
-        axis.axisRange = 1_000_000_000
+        axis.axisRange = 1000000000
         expect(formatter.stringForValue(0, axis: axis)).to(equal("1/1/70"))
       }
 
@@ -51,7 +48,5 @@ class ChartDateValueFormatterTests: QuickSpec {
         expect(formatter.stringForValue(0, axis: nil)).to(equal("01/01/1970 00:00:00"))
       }
     }
-
   }
-
 }

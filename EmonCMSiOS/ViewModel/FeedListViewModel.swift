@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class FeedListViewModel {
-
   struct ListItem {
     let feedId: String
     let name: String
@@ -96,7 +95,7 @@ final class FeedListViewModel {
   }
 
   private func feedsToSections(_ feeds: [Feed]) -> [Section] {
-    var sectionBuilder: [String:[Feed]] = [:]
+    var sectionBuilder: [String: [Feed]] = [:]
     for feed in feeds {
       let sectionFeeds: [Feed]
       if let existingFeeds = sectionBuilder[feed.tag] {
@@ -111,7 +110,7 @@ final class FeedListViewModel {
     for section in sectionBuilder.keys.sorted() {
       let items = sectionBuilder[section]!
         .map { feed in
-          return ListItem(feedId: feed.id, name: feed.name, time: feed.time, value: feed.value.prettyFormat())
+          ListItem(feedId: feed.id, name: feed.name, time: feed.time, value: feed.value.prettyFormat())
         }
       sections.append(Section(model: section, items: items))
     }
@@ -122,5 +121,4 @@ final class FeedListViewModel {
   func feedChartViewModel(forItem item: ListItem) -> FeedChartViewModel {
     return FeedChartViewModel(account: self.account, api: self.api, feedId: item.feedId)
   }
-
 }

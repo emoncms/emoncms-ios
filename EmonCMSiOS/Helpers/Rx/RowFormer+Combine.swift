@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Former
 
 extension RowFormer {
-
   public static func publisher<E>(_ updater: @escaping (@escaping ((E) -> Void)) -> RowFormer) -> AnyPublisher<E, Never> {
     return Producer<E, Never> { observer in
       _ = updater { value in
@@ -28,5 +27,4 @@ extension RowFormer {
       }
     }.eraseToAnyPublisher()
   }
-
 }

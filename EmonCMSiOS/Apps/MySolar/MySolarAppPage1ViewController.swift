@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 
 final class MySolarAppPage1ViewController: AppPageViewController {
-
   var typedViewModel: MySolarAppPage1ViewModel {
     return self.viewModel as! MySolarAppPage1ViewModel
   }
@@ -119,11 +118,9 @@ final class MySolarAppPage1ViewController: AppPageViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }
 
 extension MySolarAppPage1ViewController {
-
   private func setupCharts() {
     ChartHelpers.setupAppLineChart(self.lineChart)
   }
@@ -149,11 +146,9 @@ extension MySolarAppPage1ViewController {
 
     self.lineChart.notifyDataSetChanged()
   }
-
 }
 
 extension MySolarAppPage1ViewController {
-
   private func setupBoxView() {
     self.solarBoxView.backgroundColor = EmonCMSColors.Apps.Solar
     self.solarBoxView.name = "SOLAR"
@@ -191,9 +186,9 @@ extension MySolarAppPage1ViewController {
     var solarToHouse = 0.0
     var gridToHouse = 0.0
 
-    DataPoint<Double>.merge(pointsFrom: [use, solar]) { (timeDelta, _, values) in
+    DataPoint<Double>.merge(pointsFrom: [use, solar]) { timeDelta, _, values in
       let wattsToKWH = { (power: Double) -> Double in
-        return (power / 1000.0) * (timeDelta / 3600.0)
+        (power / 1000.0) * (timeDelta / 3600.0)
       }
 
       let useValue = wattsToKWH(values[0])
@@ -220,5 +215,4 @@ extension MySolarAppPage1ViewController {
     self.solarToHouseArrowView.value = solarToHouse
     self.gridToHouseArrowView.value = gridToHouse
   }
-
 }

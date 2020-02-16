@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class DashboardListViewModel {
-
   struct ListItem {
     let dashboardId: String
     let name: String
@@ -99,5 +98,4 @@ final class DashboardListViewModel {
     guard let dashboardURL = URL(string: fullUrl) else { return nil }
     return dashboardURL
   }
-
 }

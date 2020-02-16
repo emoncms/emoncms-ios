@@ -6,18 +6,17 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public final class ActivityIndicatorCombine {
-
   private let lock = NSRecursiveLock()
   private var count = 0
   private let subject = PassthroughSubject<Bool, Never>()
 
   var loading: Bool {
     self.lock.lock()
-    let loading = count > 0
+    let loading = self.count > 0
     self.lock.unlock()
     return loading
   }
@@ -39,13 +38,10 @@ public final class ActivityIndicatorCombine {
     self.subject.send(self.count > 0)
     self.lock.unlock()
   }
-
 }
 
 extension Publishers {
-
   public struct TrackActivity<Upstream: Publisher>: Publisher {
-
     public typealias Output = Upstream.Output
     public typealias Failure = Upstream.Failure
 
@@ -60,12 +56,10 @@ extension Publishers {
     public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
       subscriber.receive(subscription: TrackActivitySubscription(upstream: self.upstream, downstream: subscriber, indicator: self.indicator))
     }
-
   }
 
   private class TrackActivitySubscription<Upstream: Publisher, Downstream: Subscriber>: Subscription, Subscriber
-    where Upstream.Output == Downstream.Input, Upstream.Failure == Downstream.Failure
-  {
+    where Upstream.Output == Downstream.Input, Upstream.Failure == Downstream.Failure {
     typealias Input = Upstream.Output
     typealias Failure = Upstream.Failure
 
@@ -110,13 +104,10 @@ extension Publishers {
       self.upstreamSubscription = nil
     }
   }
-
 }
 
 public extension Publisher {
-
   func trackActivity(_ indicator: ActivityIndicatorCombine) -> Publishers.TrackActivity<Self> {
     Publishers.TrackActivity(upstream: self, indicator: indicator)
   }
-
 }

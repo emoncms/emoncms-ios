@@ -11,7 +11,6 @@ import Foundation
 import Charts
 
 final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
-
   private let dateFormatter: DateFormatter
   private let relativeTo: Date?
 
@@ -25,7 +24,7 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
     super.init()
   }
 
-  override convenience init() {
+  convenience override init() {
     self.init(relativeTo: nil)
   }
 
@@ -41,7 +40,7 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
       self.dateFormatter.dateFormat = "MMM dd"
     }
 
-    let timeAdd = value * 86_400
+    let timeAdd = value * 86400
     let date: Date
     if let relativeTo = self.relativeTo {
       date = relativeTo.addingTimeInterval(timeAdd)
@@ -50,5 +49,4 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
     }
     return self.dateFormatter.string(from: date)
   }
-  
 }

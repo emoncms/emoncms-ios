@@ -11,7 +11,6 @@ import Foundation
 import RealmSwift
 
 final class Account: Object {
-
   @objc dynamic var uuid: String = UUID().uuidString
   @objc dynamic var name: String = ""
   @objc dynamic var url: String = ""
@@ -19,5 +18,4 @@ final class Account: Object {
   override class func primaryKey() -> String? {
     return "uuid"
   }
-
 }

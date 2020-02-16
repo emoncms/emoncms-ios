@@ -9,7 +9,6 @@
 import Foundation
 
 enum DateRange {
-
   case relative(DateComponents)
   case absolute(Date, Date)
 
@@ -99,5 +98,4 @@ enum DateRange {
     }
     return nil
   }
-
 }

@@ -16,7 +16,6 @@ var AppLog: XCGLogger {
 }
 
 final class LogController {
-
   static let shared = LogController()
 
   fileprivate var initialised: Bool
@@ -117,5 +116,4 @@ final class LogController {
   func flushFile() {
     self.fileDestination?.flush()
   }
-
 }

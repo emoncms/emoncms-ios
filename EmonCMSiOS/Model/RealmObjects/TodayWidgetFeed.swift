@@ -11,7 +11,6 @@ import Foundation
 import RealmSwift
 
 final class TodayWidgetFeed: Object {
-
   @objc dynamic var uuid: String = UUID().uuidString
   @objc dynamic var order: Int = 0
   @objc dynamic var accountId: String = ""
@@ -20,5 +19,4 @@ final class TodayWidgetFeed: Object {
   override class func primaryKey() -> String? {
     return "uuid"
   }
-
 }

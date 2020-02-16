@@ -6,11 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class AppListViewController: UITableViewController {
-
   var viewModel: AppListViewModel!
 
   private var emptyLabel: UILabel?
@@ -31,15 +30,15 @@ final class AppListViewController: UITableViewController {
 
   private func setupDataSource() {
     let dataSource = CombineTableViewDataSource<AppListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.category.displayName
         return cell
-    },
-      titleForHeaderInSection: { _,_  in "" },
-      canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in false })
+      },
+      titleForHeaderInSection: { _, _ in "" },
+      canEditRowAtIndexPath: { _, _ in true },
+      canMoveRowAtIndexPath: { _, _ in false })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
@@ -191,5 +190,4 @@ final class AppListViewController: UITableViewController {
     let viewController = self.viewModel.viewController(forDataWithId: appId, ofCategory: category)
     self.navigationController?.pushViewController(viewController, animated: true)
   }
-
 }

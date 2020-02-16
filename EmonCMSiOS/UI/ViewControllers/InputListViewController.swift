@@ -6,11 +6,10 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class InputListViewController: UITableViewController {
-
   var viewModel: InputListViewModel!
 
   private var dataSource: CombineTableViewDataSource<InputListViewModel.Section>!
@@ -51,11 +50,11 @@ final class InputListViewController: UITableViewController {
     self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
 
     let dataSource = CombineTableViewDataSource<InputListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
         cell.titleLabel.text = item.name
         cell.valueLabel.text = item.value
-        
+
         let secondsAgo = Int(floor(max(-item.time.timeIntervalSinceNow, 0)))
         let value: String
         let colour: UIColor
@@ -76,9 +75,9 @@ final class InputListViewController: UITableViewController {
         cell.activityCircle.backgroundColor = colour
 
         return cell
-    },
-      titleForHeaderInSection: { (ds, index) in
-        return ds.sectionModels[index].model
+      },
+      titleForHeaderInSection: { ds, index in
+        ds.sectionModels[index].model
     })
 
     self.tableView.delegate = nil
@@ -141,8 +140,7 @@ final class InputListViewController: UITableViewController {
         .removeDuplicates(),
       self.viewModel.$inputs
         .map { $0.isEmpty }
-        .removeDuplicates()
-    )
+        .removeDuplicates())
       .sink { [weak self] serverNeedsUpdate, inputsEmpty in
         guard let self = self else { return }
 
@@ -206,5 +204,4 @@ final class InputListViewController: UITableViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }

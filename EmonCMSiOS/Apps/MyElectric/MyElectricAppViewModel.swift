@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
-
   typealias Data = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint<Double>], barChartData: [DataPoint<Double>])
 
   private let realmController: RealmController
@@ -87,8 +86,7 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange }
-    )
+      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange })
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
       .flatMap { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
@@ -97,7 +95,7 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
         let update = self.update(dateRange: dateRange)
           .catch { [weak self] error -> AnyPublisher<Data, Never> in
             let actualError: AppError
-            if error == AppError.updateFailed && refreshKind == .initial {
+            if error == AppError.updateFailed, refreshKind == .initial {
               actualError = .initialFailed
             } else {
               actualError = error
@@ -152,28 +150,27 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     guard
       let useFeedId = self.appData.feed(forName: "use"),
       let kwhFeedId = self.appData.feed(forName: "kwh")
-      else {
-        return Fail(error: AppError.notConfigured).eraseToAnyPublisher()
+    else {
+      return Fail(error: AppError.notConfigured).eraseToAnyPublisher()
     }
 
     return Publishers.Zip3(
       self.fetchPowerNowAndUsageToday(useFeedId: useFeedId, kwhFeedId: kwhFeedId),
       self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId),
-      self.fetchBarChartHistory(kwhFeedId: kwhFeedId)
-    )
-    .map {
-      (powerNowAndUsageToday, lineChartData, barChartData) in
-      return Data(updateTime: Date(),
-                  powerNow: powerNowAndUsageToday.0,
-                  usageToday: powerNowAndUsageToday.1,
-                  lineChartData: lineChartData,
-                  barChartData: barChartData)
-    }
-    .mapError { error in
-      AppLog.info("Update failed: \(error)")
-      return AppError.updateFailed
-    }
-    .eraseToAnyPublisher()
+      self.fetchBarChartHistory(kwhFeedId: kwhFeedId))
+      .map {
+        powerNowAndUsageToday, lineChartData, barChartData in
+        Data(updateTime: Date(),
+             powerNow: powerNowAndUsageToday.0,
+             usageToday: powerNowAndUsageToday.1,
+             lineChartData: lineChartData,
+             barChartData: barChartData)
+      }
+      .mapError { error in
+        AppLog.info("Update failed: \(error)")
+        return AppError.updateFailed
+      }
+      .eraseToAnyPublisher()
   }
 
   private func fetchPowerNowAndUsageToday(useFeedId: String, kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError> {
@@ -206,7 +203,7 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     let feedValuesSignal = self.api.feedValue(self.account.credentials, ids: [useFeedId, kwhFeedId])
 
     return Publishers.Zip(startOfDayKwhSignal, feedValuesSignal)
-      .map { (startOfDayUsage, feedValues) in
+      .map { startOfDayUsage, feedValues in
         guard let use = feedValues[useFeedId], let useKwh = feedValues[kwhFeedId] else { return (0.0, 0.0) }
 
         return (use, useKwh - startOfDayUsage.value)
@@ -231,9 +228,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
 
     return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: 86400)
+        ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: 86400)
       }
       .eraseToAnyPublisher()
   }
-
 }

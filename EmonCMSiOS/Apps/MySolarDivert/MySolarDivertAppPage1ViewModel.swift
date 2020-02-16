@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
-
   typealias Data = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
@@ -62,37 +61,36 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
     let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange }
-    )
+      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange })
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
       .flatMap { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
-          guard let self = self else { return Empty().eraseToAnyPublisher() }
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
 
-          let update = self.update(dateRange: dateRange)
-            .catch { [weak self] error -> AnyPublisher<Data, Never> in
-              let actualError: AppError
-              if error == AppError.updateFailed && refreshKind == .initial {
-                actualError = .initialFailed
-              } else {
-                actualError = error
-              }
-              self?.errorsSubject.send(actualError)
-              return Empty().eraseToAnyPublisher()
+        let update = self.update(dateRange: dateRange)
+          .catch { [weak self] error -> AnyPublisher<Data, Never> in
+            let actualError: AppError
+            if error == AppError.updateFailed, refreshKind == .initial {
+              actualError = .initialFailed
+            } else {
+              actualError = error
             }
-            .handleEvents(receiveOutput: { [weak self] _ in
-              self?.errorsSubject.send(nil)
+            self?.errorsSubject.send(actualError)
+            return Empty().eraseToAnyPublisher()
+          }
+          .handleEvents(receiveOutput: { [weak self] _ in
+            self?.errorsSubject.send(nil)
             })
-            .map { $0 }
-            .prefix(untilOutputFrom: self.$dateRange.dropFirst())
-            .trackActivity(isRefreshingIndicator)
-            .eraseToAnyPublisher()
+          .map { $0 }
+          .prefix(untilOutputFrom: self.$dateRange.dropFirst())
+          .trackActivity(isRefreshingIndicator)
+          .eraseToAnyPublisher()
 
-          return update
-        }
-        .map { $0 as Data? }
-        .assign(to: \Self.data, on: self)
-        .store(in: &self.cancellables)
+        return update
+      }
+      .map { $0 as Data? }
+      .assign(to: \Self.data, on: self)
+      .store(in: &self.cancellables)
 
     let loading = self.isRefreshing
     let errors = self.errors
@@ -130,23 +128,22 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
 
     return Publishers.Zip(
       self.fetchPowerNow(useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId),
-      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId)
-    )
-    .map {
-      (powerNow, lineChartData) in
-      return Data(updateTime: Date(),
-                  houseNow: powerNow.0,
-                  divertNow: powerNow.1,
-                  totalUseNow: powerNow.2,
-                  importNow: powerNow.3,
-                  solarNow: powerNow.4,
-                  lineChartData: lineChartData)
-    }
-    .mapError { error in
-      AppLog.info("Update failed: \(error)")
-      return AppError.updateFailed
-    }
-    .eraseToAnyPublisher()
+      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId))
+      .map {
+        powerNow, lineChartData in
+        Data(updateTime: Date(),
+             houseNow: powerNow.0,
+             divertNow: powerNow.1,
+             totalUseNow: powerNow.2,
+             importNow: powerNow.3,
+             solarNow: powerNow.4,
+             lineChartData: lineChartData)
+      }
+      .mapError { error in
+        AppLog.info("Update failed: \(error)")
+        return AppError.updateFailed
+      }
+      .eraseToAnyPublisher()
   }
 
   private func fetchPowerNow(useFeedId: String, solarFeedId: String, divertFeedId: String) -> AnyPublisher<(Double, Double, Double, Double, Double), EmonCMSAPI.APIError> {
@@ -154,7 +151,7 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
       .map { feedValues in
         guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId], let divert = feedValues[divertFeedId] else { return (0.0, 0.0, 0.0, 0.0, 0.0) }
 
-        return (use-divert, divert, use, use-solar, solar)
+        return (use - divert, divert, use, use - solar, solar)
       }
       .eraseToAnyPublisher()
   }
@@ -171,5 +168,4 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
 
     return Publishers.Zip3(use, solar, divert).eraseToAnyPublisher()
   }
-
 }

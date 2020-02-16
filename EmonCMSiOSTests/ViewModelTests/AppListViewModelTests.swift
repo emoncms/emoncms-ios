@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class AppListViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -39,7 +37,7 @@ class AppListViewModelTests: EmonCMSTestCase {
 
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
-      viewModel = AppListViewModel(realmController: realmController,account: accountController, api: api)
+      viewModel = AppListViewModel(realmController: realmController, account: accountController, api: api)
     }
 
     describe("appHandling") {
@@ -48,7 +46,7 @@ class AppListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let app = AppData()
             app.name = "App \(i)"
             let allAppCategories = AppCategory.allCases
@@ -92,11 +90,8 @@ class AppListViewModelTests: EmonCMSTestCase {
               fail("Failure is not an option")
             }
           },
-                receiveValue: { _ in }
-        )
+                receiveValue: { _ in })
       }
     }
-
   }
-
 }

@@ -6,14 +6,13 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import Realm
 import RealmSwift
 
 final class TodayWidgetFeedsListViewModel {
-
   struct ListItem {
     let todayWidgetFeedId: String
     let accountId: String
@@ -60,7 +59,7 @@ final class TodayWidgetFeedsListViewModel {
   }
 
   private func todayWidgetFeedsToListItems(_ todayWidgetFeeds: [TodayWidgetFeed]) -> [ListItem] {
-    var accountIdToName = [String:String]()
+    var accountIdToName = [String: String]()
 
     let listItems = todayWidgetFeeds.map { todayWidgetFeed -> ListItem in
       let accountId = todayWidgetFeed.accountId
@@ -120,9 +119,9 @@ final class TodayWidgetFeedsListViewModel {
     }.eraseToAnyPublisher()
   }
 
-  func deleteTodayWidgetFeed(withId id: String) -> AnyPublisher<(), Never> {
+  func deleteTodayWidgetFeed(withId id: String) -> AnyPublisher<Void, Never> {
     let realm = self.realm
-    return Deferred { () -> Just<()> in
+    return Deferred { () -> Just<Void> in
       do {
         if let todayWidgetFeed = realm.object(ofType: TodayWidgetFeed.self, forPrimaryKey: id) {
           try realm.write {
@@ -135,14 +134,14 @@ final class TodayWidgetFeedsListViewModel {
     }.eraseToAnyPublisher()
   }
 
-  func moveTodayWidgetFeed(fromIndex oldIndex: Int, toIndex newIndex: Int) -> AnyPublisher<(), Never> {
+  func moveTodayWidgetFeed(fromIndex oldIndex: Int, toIndex newIndex: Int) -> AnyPublisher<Void, Never> {
     let realm = self.realm
-    return Deferred { () -> Just<()> in
+    return Deferred { () -> Just<Void> in
       let query = self.realm.objects(TodayWidgetFeed.self)
         .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
 
       var objects = Array(query)
-      guard oldIndex < objects.count && newIndex < objects.count else { return Just(()) }
+      guard oldIndex < objects.count, newIndex < objects.count else { return Just(()) }
 
       let moveObject = objects.remove(at: oldIndex)
       objects.insert(moveObject, at: newIndex)
@@ -164,5 +163,4 @@ final class TodayWidgetFeedsListViewModel {
   func feedListViewModel() -> FeedListViewModel {
     return FeedListViewModel(realmController: self.realmController, account: self.accountController, api: self.api)
   }
-
 }

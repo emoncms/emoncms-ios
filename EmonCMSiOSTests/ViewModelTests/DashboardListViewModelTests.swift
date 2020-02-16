@@ -6,17 +6,15 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class DashboardListViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -47,7 +45,7 @@ class DashboardListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let dashboard = Dashboard()
             dashboard.id = "\(i)"
             dashboard.alias = "\(i)"
@@ -90,11 +88,9 @@ class DashboardListViewModelTests: EmonCMSTestCase {
           (10, .input(true)),
           (20, .input(false)),
           (20, .input(true)),
-          (20, .input(false)),
+          (20, .input(false))
         ]))
       }
     }
-
   }
-
 }

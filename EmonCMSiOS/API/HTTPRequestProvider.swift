@@ -6,8 +6,8 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 enum HTTPRequestProviderError: Error, Equatable {
   case unknown
@@ -17,8 +17,6 @@ enum HTTPRequestProviderError: Error, Equatable {
 }
 
 protocol HTTPRequestProvider {
-
   func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError>
-  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError>
-
+  func request(url: URL, formData: [String: String]) -> AnyPublisher<Data, HTTPRequestProviderError>
 }

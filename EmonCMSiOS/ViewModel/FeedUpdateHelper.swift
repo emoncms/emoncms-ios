@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class FeedUpdateHelper {
-
   private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
@@ -72,5 +71,4 @@ final class FeedUpdateHelper {
     .setFailureType(to: EmonCMSAPI.APIError.self)
     .eraseToAnyPublisher()
   }
-
 }

@@ -10,11 +10,9 @@ import Combine
 import XCGLogger
 
 extension Publisher {
-
-  public func becomeVoid() -> Publishers.Map<Self, ()> {
+  public func becomeVoid() -> Publishers.Map<Self, Void> {
     return self.map { _ in () }
   }
-
 }
 
 // INSPIRED BY: https://twitter.com/peres/status/1159972724577583110
@@ -33,10 +31,10 @@ struct Producer<T, E: Error>: Publisher {
     Downstream: Combine.Subscriber,
     E == Downstream.Failure,
     T == Downstream.Input {
-      let wrap = Producer.Subscriber(downstream: AnySubscriber(subscriber))
-      let subscription = Producer.Subscription(subscriber: wrap)
-      subscriber.receive(subscription: subscription)
-      handler(wrap)
+    let wrap = Producer.Subscriber(downstream: AnySubscriber(subscriber))
+    let subscription = Producer.Subscription(subscriber: wrap)
+    subscriber.receive(subscription: subscription)
+    self.handler(wrap)
   }
 
   public class Subscriber {
@@ -63,8 +61,7 @@ struct Producer<T, E: Error>: Publisher {
       self.subscriber = subscriber
     }
 
-    func request(_ demand: Subscribers.Demand) {
-    }
+    func request(_ demand: Subscribers.Demand) {}
 
     func cancel() {
       self.subscriber?.cancelled = true

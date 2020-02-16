@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
-
   typealias Data = (updateTime: Date, barChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
@@ -62,8 +61,7 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
     let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      dateRangeSignal.dropFirst().map { _ in AppPageRefreshKind.dateRangeChange }
-    )
+      dateRangeSignal.dropFirst().map { _ in AppPageRefreshKind.dateRangeChange })
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
       .map { [weak self] (refreshKind, dateRange) -> AnyPublisher<Data, Never> in
@@ -72,7 +70,7 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
         let update = self.update(dateRange: dateRange)
           .catch { [weak self] error -> AnyPublisher<Data, Never> in
             let actualError: AppError
-            if error == AppError.updateFailed && refreshKind == .initial {
+            if error == AppError.updateFailed, refreshKind == .initial {
               actualError = .initialFailed
             } else {
               actualError = error
@@ -130,7 +128,7 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
 
     return self.fetchBarChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId)
       .map { barChartData in
-        return Data(updateTime: Date(), barChartData: barChartData)
+        Data(updateTime: Date(), barChartData: barChartData)
       }
       .mapError { error in
         AppLog.info("Update failed: \(error)")
@@ -148,18 +146,17 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
 
     let use = self.api.feedDataDaily(self.account.credentials, id: useFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
-    }
+        ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
+      }
     let solar = self.api.feedDataDaily(self.account.credentials, id: solarFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
-    }
+        ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
+      }
     let divert = self.api.feedDataDaily(self.account.credentials, id: divertFeedId, at: startTime, until: endTime)
       .map { dataPoints in
-        return ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
-    }
+        ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: interval)
+      }
 
     return Publishers.Zip3(use, solar, divert).eraseToAnyPublisher()
   }
-
 }

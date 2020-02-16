@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class InputListViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -39,7 +37,7 @@ class InputListViewModelTests: EmonCMSTestCase {
 
       requestProvider = MockHTTPRequestProvider()
       api = EmonCMSAPI(requestProvider: requestProvider)
-      viewModel = InputListViewModel(realmController: realmController,account: accountController, api: api)
+      viewModel = InputListViewModel(realmController: realmController, account: accountController, api: api)
     }
 
     describe("inputHandling") {
@@ -48,10 +46,10 @@ class InputListViewModelTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let input = Input()
             input.id = "\(i)"
-            input.nodeid = "\(i%2)"
+            input.nodeid = "\(i % 2)"
             input.name = "Input \(i)"
             input.desc = "Description \(i)"
             realm.add(input)
@@ -103,11 +101,9 @@ class InputListViewModelTests: EmonCMSTestCase {
           (10, .input(true)),
           (20, .input(false)),
           (20, .input(true)),
-          (20, .input(false)),
+          (20, .input(false))
         ]))
       }
     }
-
   }
-
 }

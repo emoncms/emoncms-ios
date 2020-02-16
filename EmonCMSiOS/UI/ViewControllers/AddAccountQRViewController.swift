@@ -6,16 +6,15 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import AVFoundation
+import UIKit
 
-protocol AddAccountQRViewControllerDelegate: class {
+protocol AddAccountQRViewControllerDelegate: AnyObject {
   func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials)
   func addAccountQRViewControllerDidCancel(controller: AddAccountQRViewController)
 }
 
 final class AddAccountQRViewController: UIViewController {
-
   weak var delegate: AddAccountQRViewControllerDelegate?
 
   @IBOutlet var playerLayerView: UIView!
@@ -29,7 +28,7 @@ final class AddAccountQRViewController: UIViewController {
 
     self.title = "Scan Code"
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.AddAccountQRView
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
+    self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -101,7 +100,7 @@ final class AddAccountQRViewController: UIViewController {
   }
 
   private func askForCameraPermission() {
-    AVCaptureDevice.requestAccess(for: AVMediaType.video) { (enabled) in
+    AVCaptureDevice.requestAccess(for: AVMediaType.video) { enabled in
       DispatchQueue.main.async {
         if enabled {
           self.setupAVStack()
@@ -128,11 +127,9 @@ final class AddAccountQRViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
-
 }
 
 extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
-
   func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
     guard self.foundAccount == false else { return }
 
@@ -141,8 +138,8 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
     guard let qrCode = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
       qrCode.type == AVMetadataObject.ObjectType.qr,
       let string = qrCode.stringValue
-      else {
-        return
+    else {
+      return
     }
 
     guard let result = EmonCMSAPI.extractAPIDetailsFromURLString(string) else {
@@ -154,5 +151,4 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
       self.delegate?.addAccountQRViewController(controller: self, didFinishWithAccountCredentials: result)
     }
   }
-
 }

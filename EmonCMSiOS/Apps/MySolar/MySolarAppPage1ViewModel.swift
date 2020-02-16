@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class MySolarAppPage1ViewModel: AppPageViewModel {
-
   typealias Data = (updateTime: Date, useNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>]))
 
   private let realmController: RealmController
@@ -62,8 +61,7 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
     let refreshSignal = Publishers.Merge3(
       timerIfActive.map { AppPageRefreshKind.update },
       feedsChangedSignal.map { AppPageRefreshKind.initial },
-      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange }
-    )
+      dateRangeSignal.map { _ in AppPageRefreshKind.dateRangeChange })
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
       .flatMap { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
@@ -72,7 +70,7 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
         let update = self.update(dateRange: dateRange)
           .catch { [weak self] error -> AnyPublisher<Data, Never> in
             let actualError: AppError
-            if error == AppError.updateFailed && refreshKind == .initial {
+            if error == AppError.updateFailed, refreshKind == .initial {
               actualError = .initialFailed
             } else {
               actualError = error
@@ -129,21 +127,20 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
 
     return Publishers.Zip(
       self.fetchPowerNow(useFeedId: useFeedId, solarFeedId: solarFeedId),
-      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId)
-    )
-    .map {
-      (powerNow, lineChartData) in
-      return Data(updateTime: Date(),
-                  useNow: powerNow.0,
-                  importNow: powerNow.1,
-                  solarNow: powerNow.2,
-                  lineChartData: lineChartData)
-    }
-    .mapError { error in
-      AppLog.info("Update failed: \(error)")
-      return AppError.updateFailed
-    }
-    .eraseToAnyPublisher()
+      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId))
+      .map {
+        powerNow, lineChartData in
+        Data(updateTime: Date(),
+             useNow: powerNow.0,
+             importNow: powerNow.1,
+             solarNow: powerNow.2,
+             lineChartData: lineChartData)
+      }
+      .mapError { error in
+        AppLog.info("Update failed: \(error)")
+        return AppError.updateFailed
+      }
+      .eraseToAnyPublisher()
   }
 
   private func fetchPowerNow(useFeedId: String, solarFeedId: String) -> AnyPublisher<(Double, Double, Double), EmonCMSAPI.APIError> {
@@ -167,5 +164,4 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
 
     return Publishers.Zip(use, solar).eraseToAnyPublisher()
   }
-
 }

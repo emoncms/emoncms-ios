@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import CoreGraphics
+import UIKit
 
 @IBDesignable final class AppBoxesArrowView: UIView {
-
   enum Direction {
     case up
     case down
@@ -26,7 +25,7 @@ import CoreGraphics
 
   private let valueLabel = UILabel(frame: .zero)
   private var internalConstraints = [NSLayoutConstraint]()
-  private var hasSetValue = false;
+  private var hasSetValue = false
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -71,7 +70,7 @@ import CoreGraphics
     let sizeA = self.arrowSize
     let sizeB = sizeA / 1.5
 
-    let path = CGMutablePath.init()
+    let path = CGMutablePath()
     switch self.direction {
     case .up:
       path.move(to: CGPoint(x: bounds.midX, y: 0))
@@ -149,5 +148,4 @@ import CoreGraphics
 
     self.addConstraints(self.internalConstraints)
   }
-
 }

@@ -6,13 +6,12 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 import RealmSwift
 
 final class DashboardUpdateHelper {
-
   private let realmController: RealmController
   private let account: AccountController
   private let api: EmonCMSAPI
@@ -65,5 +64,4 @@ final class DashboardUpdateHelper {
     .setFailureType(to: EmonCMSAPI.APIError.self)
     .eraseToAnyPublisher()
   }
-
 }

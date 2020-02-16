@@ -6,22 +6,21 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 @testable import EmonCMSiOS
 
 final class MockHTTPRequestProvider: HTTPRequestProvider {
-
   func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
-      else {
-        return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
+    else {
+      return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
     }
 
     let path = urlComponents.path
     let queryItems = urlComponents.queryItems ?? []
-    let queryValues = queryItems.reduce([String:String]()) { (dictionary, item) in
+    let queryValues = queryItems.reduce([String: String]()) { dictionary, item in
       var mutableDictionary = dictionary
       mutableDictionary[item.name] = item.value ?? ""
       return mutableDictionary
@@ -69,14 +68,13 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
     return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
   }
 
-  func request(url: URL, formData: [String:String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
+  func request(url: URL, formData: [String: String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
     guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Fail(error: .unknown).eraseToAnyPublisher() }
 
     var queryItems = components.queryItems ?? [URLQueryItem]()
-    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) } )
+    queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) })
     components.queryItems = queryItems
 
     return self.request(url: components.url!)
   }
-
 }

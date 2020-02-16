@@ -6,12 +6,12 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
-import Quick
-import Nimble
-import EntwineTest
 @testable import EmonCMSiOS
+import EntwineTest
+import Foundation
+import Nimble
+import Quick
 
 final class MockURLSessionDataTask: URLSessionDataTask {
   override func resume() { return }
@@ -19,7 +19,6 @@ final class MockURLSessionDataTask: URLSessionDataTask {
 }
 
 final class MockURLSession: URLSession {
-
   var nextData: Data?
   var nextResponse: URLResponse?
   var nextError: Error?
@@ -30,13 +29,10 @@ final class MockURLSession: URLSession {
     }
     return MockURLSessionDataTask()
   }
-
 }
 
 final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var session: MockURLSession!
     var provider: NSURLSessionHTTPRequestProvider!
@@ -181,7 +177,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
       session.nextResponse = HTTPURLResponse(url: url, statusCode: 200, httpVersion: "2.0", headerFields: nil)
       session.nextError = nil
 
-      let sut = provider.request(url: url, formData: ["foo":"bar"])
+      let sut = provider.request(url: url, formData: ["foo": "bar"])
 
       scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
       let results = scheduler.start { sut }
@@ -194,7 +190,5 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
       expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
     }
-
   }
-
 }

@@ -6,19 +6,17 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Foundation
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class FeedListHelperTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -49,7 +47,7 @@ class FeedListHelperTests: EmonCMSTestCase {
 
         let count = 10
         try! realm.write {
-          for i in 0..<count {
+          for i in 0 ..< count {
             let feed = Feed()
             feed.id = "\(i)"
             feed.name = "Feed \(i)"
@@ -86,11 +84,9 @@ class FeedListHelperTests: EmonCMSTestCase {
           (10, .input(true)),
           (20, .input(false)),
           (20, .input(true)),
-          (20, .input(false)),
+          (20, .input(false))
         ]))
       }
     }
-
   }
-
 }

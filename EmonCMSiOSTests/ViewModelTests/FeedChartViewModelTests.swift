@@ -7,17 +7,15 @@
 //
 
 import Combine
-import Quick
-import Nimble
+@testable import EmonCMSiOS
 import EntwineTest
+import Nimble
+import Quick
 import Realm
 import RealmSwift
-@testable import EmonCMSiOS
 
 class FeedChartViewModelTests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var realmController: RealmController!
     var accountController: AccountController!
@@ -79,11 +77,9 @@ class FeedChartViewModelTests: EmonCMSTestCase {
           (10, .input(true)),
           (10, .input(false)),
           (20, .input(true)),
-          (20, .input(false)),
+          (20, .input(false))
         ]))
       }
     }
-
   }
-
 }

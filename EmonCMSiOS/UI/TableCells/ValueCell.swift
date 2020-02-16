@@ -9,7 +9,6 @@
 import UIKit
 
 final class ValueCell: UITableViewCell {
-
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var valueLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
@@ -25,5 +24,4 @@ final class ValueCell: UITableViewCell {
     super.setSelected(selected, animated: animated)
     self.activityCircle.backgroundColor = colour
   }
-
 }

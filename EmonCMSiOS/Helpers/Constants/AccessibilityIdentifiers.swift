@@ -9,7 +9,6 @@
 import Foundation
 
 struct AccessibilityIdentifiers {
-
   struct Lists {
     static let Account = "AccountList"
     static let App = "AppList"
@@ -33,5 +32,4 @@ struct AccessibilityIdentifiers {
   static let AddAccountQRView = "AddAccountQRView"
   static let FeedChartView = "FeedChartView"
   static let Settings = "Settings"
-
 }

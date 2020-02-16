@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class AccountListViewController: UITableViewController {
-
   var viewModel: AccountListViewModel!
 
   private var emptyLabel: UILabel?
@@ -41,15 +40,15 @@ final class AccountListViewController: UITableViewController {
 
   private func setupDataSource() {
     let dataSource = CombineTableViewDataSource<AccountListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, indexPath, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.url
         return cell
-    },
-      titleForHeaderInSection: { _,_  in "" },
-      canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in false })
+      },
+      titleForHeaderInSection: { _, _ in "" },
+      canEditRowAtIndexPath: { _, _ in true },
+      canMoveRowAtIndexPath: { _, _ in false })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
@@ -81,7 +80,7 @@ final class AccountListViewController: UITableViewController {
         guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
         return self.viewModel.deleteAccount(withId: item.accountId).replaceError(with: ()).eraseToAnyPublisher()
       }
-      .sink() { _ in }
+      .sink { _ in }
       .store(in: &self.cancellables)
 
     self.viewModel.$accounts
@@ -201,7 +200,7 @@ final class AccountListViewController: UITableViewController {
     let settingsViewController = settingsNavController.topViewController! as! SettingsViewController
     settingsViewController.viewModel = viewModels.settings
     settingsViewController.switchAccount
-      .flatMap { logout -> AnyPublisher<(), Never> in
+      .flatMap { logout -> AnyPublisher<Void, Never> in
         if logout {
           return self.viewModel.deleteAccount(withId: accountId).becomeVoid().eraseToAnyPublisher()
         } else {
@@ -217,11 +216,9 @@ final class AccountListViewController: UITableViewController {
 
     self.present(rootViewController, animated: animated, completion: nil)
   }
-
 }
 
 extension AccountListViewController {
-
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.addAccount.rawValue {
       let data = sender as? AddAccountSegueData
@@ -231,7 +228,7 @@ extension AccountListViewController {
       addAccountViewController.finished
         .sink { [weak self] accountId in
           guard let self = self else { return }
-          self.navigationController?.popToViewController(self, animated: (data?.animated ?? true))
+          self.navigationController?.popToViewController(self, animated: data?.animated ?? true)
           if data?.accountId == nil {
             guard let accountId = accountId else { return }
             self.login(toAccountWithId: accountId)
@@ -240,5 +237,4 @@ extension AccountListViewController {
         .store(in: &self.cancellables)
     }
   }
-
 }

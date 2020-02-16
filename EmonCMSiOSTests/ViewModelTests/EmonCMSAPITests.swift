@@ -6,17 +6,15 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import Foundation
 import Combine
-import Quick
-import Nimble
-import EntwineTest
 @testable import EmonCMSiOS
+import EntwineTest
+import Foundation
+import Nimble
+import Quick
 
 class EmonCMSAPITests: EmonCMSTestCase {
-
   override func spec() {
-
     var scheduler: TestScheduler!
     var requestProvider: MockHTTPRequestProvider!
     var api: EmonCMSAPI!
@@ -39,9 +37,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
                 fail(error.localizedDescription)
               }
               done()
-          },
-            receiveValue: { _ in }
-          )
+            },
+            receiveValue: { _ in })
       }
     }
 
@@ -106,7 +103,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
       it("should fetch the data for the feed") {
         let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
 
-        let result = api.feedData(accountCredentials, id: "1", at: Date()-100, until: Date(), interval: 10)
+        let result = api.feedData(accountCredentials, id: "1", at: Date() - 100, until: Date(), interval: 10)
 
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
@@ -123,7 +120,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
       it("should fetch the data for the feed") {
         let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
 
-        let result = api.feedDataDaily(accountCredentials, id: "1", at: Date()-100, until: Date())
+        let result = api.feedDataDaily(accountCredentials, id: "1", at: Date() - 100, until: Date())
 
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
@@ -153,7 +150,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
       }
 
       it("should fetch the value for the feeds") {
-        let subscriber = scheduler.createTestableSubscriber([String:Double].self, EmonCMSAPI.APIError.self)
+        let subscriber = scheduler.createTestableSubscriber([String: Double].self, EmonCMSAPI.APIError.self)
 
         let result = api.feedValue(accountCredentials, ids: ["1", "2", "3"])
 
@@ -162,7 +159,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
           expect(results.count).to(equal(3))
           expect(results[0].1.value).notTo(beNil())
           expect(results[0].1.value!.count).to(equal(3))
-          expect(results[0].1.value!).to(equal(["1":100,"2":200,"3":300]))
+          expect(results[0].1.value!).to(equal(["1": 100, "2": 200, "3": 300]))
         }
 
         scheduler.resume()
@@ -200,7 +197,5 @@ class EmonCMSAPITests: EmonCMSTestCase {
         expect(result).to(beNil())
       }
     }
-
   }
-
 }

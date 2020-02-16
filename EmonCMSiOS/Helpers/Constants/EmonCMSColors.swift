@@ -10,7 +10,6 @@ import Foundation
 import UIKit
 
 struct EmonCMSColors {
-
   struct Chart {
     static let Blue = UIColor(hexString: "3399ff")
     static let DarkBlue = UIColor(hexString: "0779c1")
@@ -36,11 +35,9 @@ struct EmonCMSColors {
   }
 
   static let ErrorRed = UIColor(hexString: "e24522")
-
 }
 
 extension UIColor {
-
   fileprivate convenience init(hexString: String) {
     let r, g, b: CGFloat
 
@@ -57,5 +54,4 @@ extension UIColor {
       self.init(white: 0, alpha: 1)
     }
   }
-
 }

@@ -6,11 +6,10 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 final class TodayWidgetFeedsListViewController: UITableViewController {
-
   var viewModel: TodayWidgetFeedsListViewModel!
 
   private var emptyLabel: UILabel?
@@ -35,16 +34,16 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
 
   private func setupDataSource() {
     let dataSource = CombineTableViewDataSource<TodayWidgetFeedsListViewModel.Section>(
-      configureCell: { (ds, tableView, indexPath, item) in
+      configureCell: { _, tableView, _, item in
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ??
           UITableViewCell(style: .subtitle, reuseIdentifier: "Cell")
         cell.textLabel?.text = item.feedName
         cell.detailTextLabel?.text = item.accountName
         return cell
-    },
-      titleForHeaderInSection: { _,_ in "" },
-      canEditRowAtIndexPath: { _,_  in true },
-      canMoveRowAtIndexPath: { _,_  in true })
+      },
+      titleForHeaderInSection: { _, _ in "" },
+      canEditRowAtIndexPath: { _, _ in true },
+      canMoveRowAtIndexPath: { _, _ in true })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
@@ -161,5 +160,4 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
       .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItems = [self.editButtonItem, rightBarButtonItem]
   }
-
 }

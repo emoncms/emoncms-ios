@@ -6,14 +6,13 @@
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 import Charts
 import Former
 
 final class FeedChartViewController: FormViewController {
-
   var viewModel: FeedChartViewModel!
 
   private var chartRow: CustomRowFormer<ChartCell<LineChartView>>!
@@ -58,7 +57,7 @@ final class FeedChartViewController: FormViewController {
     let chartRow = CustomRowFormer<ChartCell<LineChartView>>(instantiateType: .Class) {
       ChartHelpers.setupDefaultLineChart($0.chartView)
     }.configure {
-        $0.rowHeight = 250
+      $0.rowHeight = 250
     }
 
     return chartRow
@@ -73,17 +72,17 @@ final class FeedChartViewController: FormViewController {
     let dateRangeTypeRow = SegmentedRowFormer<FormSegmentedCell>() {
       $0.titleLabel.text = "Time range type"
       $0.titleLabel.font = .boldSystemFont(ofSize: 15)
-      }.configure {
-        $0.segmentTitles = ["Absolute", "Relative"]
-        let selectedIndex: Int
-        switch startDateRange {
-        case .absolute(_, _):
-          selectedIndex = 0
-        case .relative(_):
-          selectedIndex = 1
-        }
-        $0.selectedIndex = selectedIndex
+    }.configure {
+      $0.segmentTitles = ["Absolute", "Relative"]
+      let selectedIndex: Int
+      switch startDateRange {
+      case .absolute:
+        selectedIndex = 0
+      case .relative:
+        selectedIndex = 1
       }
+      $0.selectedIndex = selectedIndex
+    }
 
     let dateFormatter = DateFormatter()
     dateFormatter.timeStyle = .short
@@ -93,33 +92,33 @@ final class FeedChartViewController: FormViewController {
       $0.titleLabel.text = "Start"
       $0.titleLabel.font = .boldSystemFont(ofSize: 15)
       $0.displayLabel.font = .systemFont(ofSize: 15)
-      }.inlineCellSetup {
-        $0.datePicker.datePickerMode = .dateAndTime
-      }.displayTextFromDate(dateFormatter.string)
+    }.inlineCellSetup {
+      $0.datePicker.datePickerMode = .dateAndTime
+    }.displayTextFromDate(dateFormatter.string)
     startDateRow.date = startDate
 
     let endDateRow = InlineDatePickerRowFormer<FormInlineDatePickerCell>() {
       $0.titleLabel.text = "End"
       $0.titleLabel.font = .boldSystemFont(ofSize: 15)
       $0.displayLabel.font = .systemFont(ofSize: 15)
-      }.inlineCellSetup {
-        $0.datePicker.datePickerMode = .dateAndTime
-      }.displayTextFromDate(dateFormatter.string)
+    }.inlineCellSetup {
+      $0.datePicker.datePickerMode = .dateAndTime
+    }.displayTextFromDate(dateFormatter.string)
     endDateRow.date = endDate
 
     let dateRelativeRow = SegmentedRowFormer<FormSegmentedCell>() {
       $0.titleLabel.text = "Relative time"
       $0.titleLabel.font = .boldSystemFont(ofSize: 15)
-      }.configure {
-        $0.segmentTitles = ["1h", "8h", "D", "M", "Y"]
-        let selectedIndex: Int?
-        switch startDateRange {
-        case .relative(let relativeTime):
-          selectedIndex = DateRange.to1h8hDMYSegmentedControlIndex(relativeTime)
-        default:
-          selectedIndex = nil
-        }
-        $0.selectedIndex = selectedIndex ?? 0
+    }.configure {
+      $0.segmentTitles = ["1h", "8h", "D", "M", "Y"]
+      let selectedIndex: Int?
+      switch startDateRange {
+      case .relative(let relativeTime):
+        selectedIndex = DateRange.to1h8hDMYSegmentedControlIndex(relativeTime)
+      default:
+        selectedIndex = nil
+      }
+      $0.selectedIndex = selectedIndex ?? 0
     }
 
     return (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow)
@@ -160,7 +159,7 @@ final class FeedChartViewController: FormViewController {
         switch dateRangeType {
         case 1:
           return DateRange.from1h8hDMYSegmentedControlIndex(dateRelative)
-        /*case 0:*/
+        /* case 0: */
         default:
           return .absolute(startDate, endDate)
         }
@@ -225,7 +224,7 @@ final class FeedChartViewController: FormViewController {
         dataSet.drawCirclesEnabled = false
         dataSet.drawFilledEnabled = true
         dataSet.drawValuesEnabled = false
-        dataSet.fillFormatter = DefaultFillFormatter(block: { (_, _) in 0 })
+        dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
         for point in dataPoints {
           let x = point.time.timeIntervalSince1970
@@ -243,5 +242,4 @@ final class FeedChartViewController: FormViewController {
       }
       .store(in: &self.cancellables)
   }
-
 }

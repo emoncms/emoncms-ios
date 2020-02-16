@@ -14,15 +14,12 @@ struct DataPoint<E: Equatable> {
 }
 
 extension DataPoint: Equatable {
-
-  static func ==(lhs: DataPoint, rhs: DataPoint) -> Bool {
+  static func == (lhs: DataPoint, rhs: DataPoint) -> Bool {
     return lhs.time == rhs.time && lhs.value == rhs.value
   }
-
 }
 
 extension DataPoint {
-
   static func from(json: [Any]) -> DataPoint<Double>? {
     guard json.count == 2 else { return nil }
 
@@ -33,11 +30,9 @@ extension DataPoint {
 
     return DataPoint<Double>(time: time, value: value)
   }
-
 }
 
 extension DataPoint {
-
   @discardableResult
   static func merge(pointsFrom points: [[DataPoint]], mergeBlock: (TimeInterval, Date, [E]) -> Void) -> [DataPoint<[E]>] {
     guard points.count > 0 else { return [] }
@@ -47,8 +42,8 @@ extension DataPoint {
     var outputPoints = [DataPoint<[E]>]()
 
     while true {
-      let finished = indices.enumerated().reduce(false) { (result, item) in
-        return result || (item.element >= points[item.offset].endIndex)
+      let finished = indices.enumerated().reduce(false) { result, item in
+        result || (item.element >= points[item.offset].endIndex)
       }
       if finished { break }
 
@@ -81,5 +76,4 @@ extension DataPoint {
 
     return outputPoints
   }
-
 }

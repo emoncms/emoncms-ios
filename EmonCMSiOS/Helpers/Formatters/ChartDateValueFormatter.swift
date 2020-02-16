@@ -11,7 +11,6 @@ import Foundation
 import Charts
 
 final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
-
   enum FormatType {
     case auto
     case format(String)
@@ -22,10 +21,10 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
   private let autoUpdateFormat: Bool
   var timeZone: TimeZone {
     get {
-      return dateFormatter.timeZone
+      return self.dateFormatter.timeZone
     }
     set {
-      dateFormatter.timeZone = newValue
+      self.dateFormatter.timeZone = newValue
     }
   }
 
@@ -33,7 +32,7 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
   private var dateRange: TimeInterval? {
     didSet {
-      if oldValue != dateRange {
+      if oldValue != self.dateRange {
         self.updateAutoFormat()
       }
     }
@@ -68,14 +67,14 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
     let range = self.dateRange ?? 0
 
-    if range < 86_400 { //< 1 day
-      dateFormatter.dateFormat = nil
-      dateFormatter.timeStyle = .short
-      dateFormatter.dateStyle = .none
+    if range < 86400 { // < 1 day
+      self.dateFormatter.dateFormat = nil
+      self.dateFormatter.timeStyle = .short
+      self.dateFormatter.dateStyle = .none
     } else {
-      dateFormatter.dateFormat = nil
-      dateFormatter.timeStyle = .none
-      dateFormatter.dateStyle = .short
+      self.dateFormatter.dateFormat = nil
+      self.dateFormatter.timeStyle = .none
+      self.dateFormatter.dateStyle = .short
     }
   }
 
@@ -86,11 +85,11 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
     if self.autoUpdateFormat {
       let range = self.dateRange ?? 0
-      if range > 86_400 {
+      if range > 86400 {
         let components = string.split(separator: "/")
         if components.count == 3 {
-          if range < 31_536_000 { //< 1 year
-            string = components[0...1].joined(separator: "/")
+          if range < 31536000 { // < 1 year
+            string = components[0 ... 1].joined(separator: "/")
           }
         }
       }
@@ -98,5 +97,4 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
 
     return string
   }
-
 }

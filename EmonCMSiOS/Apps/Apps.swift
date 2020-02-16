@@ -6,8 +6,8 @@
 //  Copyright © 2018 Matt Galloway. All rights reserved.
 //
 
-import UIKit
 import Combine
+import UIKit
 
 enum AppBannerBarState {
   case loading
@@ -29,7 +29,6 @@ enum AppPageRefreshKind {
 }
 
 protocol AppViewModel: AnyObject {
-
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
   var title: AnyPublisher<String, Never> { get }
@@ -39,11 +38,9 @@ protocol AppViewModel: AnyObject {
   var pageViewModels: [AppPageViewModel] { get }
 
   func configViewModel() -> AppConfigViewModel
-
 }
 
 protocol AppPageViewModel: AnyObject {
-
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String)
 
   var active: Bool { get set }
@@ -51,13 +48,11 @@ protocol AppPageViewModel: AnyObject {
   var errors: AnyPublisher<AppError?, Never> { get }
   var bannerBarState: AnyPublisher<AppBannerBarState, Never> { get }
   var isRefreshing: AnyPublisher<Bool, Never> { get }
-
 }
 
 typealias AppUUIDAndCategory = (uuid: String, category: AppCategory)
 
 extension AppCategory {
-
   var displayName: String {
     switch self {
     case .myElectric:
@@ -85,14 +80,14 @@ extension AppCategory {
     case .myElectric:
       return [
         AppConfigFieldFeed(id: "use", name: "Power Feed", optional: false, defaultName: "use"),
-        AppConfigFieldFeed(id: "kwh", name: "kWh Feed", optional: false, defaultName: "use_kwh"),
+        AppConfigFieldFeed(id: "kwh", name: "kWh Feed", optional: false, defaultName: "use_kwh")
       ]
     case .mySolar:
       return [
         AppConfigFieldFeed(id: "use", name: "Power Feed", optional: false, defaultName: "use"),
         AppConfigFieldFeed(id: "useKwh", name: "Power kWh Feed", optional: false, defaultName: "use_kwh"),
         AppConfigFieldFeed(id: "solar", name: "Solar Feed", optional: false, defaultName: "solar"),
-        AppConfigFieldFeed(id: "solarKwh", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
+        AppConfigFieldFeed(id: "solarKwh", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh")
       ]
     case .mySolarDivert:
       return [
@@ -101,9 +96,8 @@ extension AppCategory {
         AppConfigFieldFeed(id: "solar", name: "Solar Feed", optional: false, defaultName: "solar"),
         AppConfigFieldFeed(id: "solarKwh", name: "Solar kWh Feed", optional: false, defaultName: "solar_kwh"),
         AppConfigFieldFeed(id: "divert", name: "Divert Feed", optional: false, defaultName: "divert"),
-        AppConfigFieldFeed(id: "divertKwh", name: "Divert kWh Feed", optional: false, defaultName: "divert_kwh"),
+        AppConfigFieldFeed(id: "divertKwh", name: "Divert kWh Feed", optional: false, defaultName: "divert_kwh")
       ]
     }
   }
-
 }
