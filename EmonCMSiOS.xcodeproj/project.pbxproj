@@ -589,6 +589,7 @@
 		C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */ = {
 			isa = PBXGroup;
 			children = (
+				C96D524023F96F4C00613835 /* CombineTests */,
 				C9E7A71521F8A577008BD497 /* LogicTests */,
 				C9E7A71421F8A560008BD497 /* ViewModelTests */,
 				C9E7A71621F8A5AB008BD497 /* SnapshotTests */,
@@ -598,6 +599,14 @@
 				C9C40BA22307D45900CE2839 /* EntwineAdditions.swift */,
 			);
 			path = EmonCMSiOSTests;
+			sourceTree = "<group>";
+		};
+		C96D524023F96F4C00613835 /* CombineTests */ = {
+			isa = PBXGroup;
+			children = (
+				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
+			);
+			path = CombineTests;
 			sourceTree = "<group>";
 		};
 		C98BD5C01DE9B589000B6344 /* TableCells */ = {
@@ -831,7 +840,6 @@
 				C9E7A71021F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift */,
 				C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */,
 				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
-				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
 				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
 				C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */,
