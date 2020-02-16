@@ -118,4 +118,8 @@ final class LogController {
   func flushFile() {
     self.fileDestination?.flush()
   }
+
+  var logFileQueue: DispatchQueue? {
+    self.fileDestination?.logQueue
+  }
 }
