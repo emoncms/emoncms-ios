@@ -24,6 +24,14 @@ class LogControllerTests: QuickSpec {
 
         controller.flushFile()
 
+        if let logFileQueue = controller.logFileQueue {
+          waitUntil { done in
+            logFileQueue.async(flags: .barrier) {
+              done()
+            }
+          }
+        }
+
         let logFiles = controller.logFiles
         expect(logFiles.count).to(beGreaterThan(0))
 
