@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# Install LicensePlist first:
+#   brew install mono0926/license-plist/license-plist
+
+license-plist \
+  --cartfile-path Cartfile \
+  --package-path EmonCMSiOS.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved \
+  --output-path EmonCMSiOS/Settings.bundle \
+  --prefix Licenses
