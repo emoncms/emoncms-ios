@@ -109,6 +109,7 @@
 		C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96A1C902304987200690E4D /* SceneDelegate.swift */; };
 		C96D523D23F956B700613835 /* TimelaneCombine in Frameworks */ = {isa = PBXBuildFile; productRef = C96D523C23F956B700613835 /* TimelaneCombine */; };
 		C96D523F23F96B4300613835 /* EmoncmsDoubleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */; };
+		C96D524223F96F9000613835 /* ActivityIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96D524123F96F9000613835 /* ActivityIndicatorTests.swift */; };
 		C96DA33323004E79005B1F98 /* UIControl+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA33223004E79005B1F98 /* UIControl+Combine.swift */; };
 		C96DA3352301F4B7005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
 		C96DA33823020197005B1F98 /* CombineTableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */; };
@@ -340,6 +341,7 @@
 		C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Double+Emoncms.swift"; sourceTree = "<group>"; };
 		C96A1C902304987200690E4D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmoncmsDoubleTests.swift; sourceTree = "<group>"; };
+		C96D524123F96F9000613835 /* ActivityIndicatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityIndicatorTests.swift; sourceTree = "<group>"; };
 		C96DA33223004E79005B1F98 /* UIControl+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+Combine.swift"; sourceTree = "<group>"; };
 		C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTableViewDataSource.swift; sourceTree = "<group>"; };
 		C96DA384230345BE005B1F98 /* Charts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Charts.framework; path = Carthage/Build/iOS/Charts.framework; sourceTree = "<group>"; };
@@ -605,6 +607,7 @@
 			isa = PBXGroup;
 			children = (
 				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
+				C96D524123F96F9000613835 /* ActivityIndicatorTests.swift */,
 			);
 			path = CombineTests;
 			sourceTree = "<group>";
@@ -1176,6 +1179,7 @@
 				C96DA36E23031AB2005B1F98 /* InputUpdateHelperTests.swift in Sources */,
 				C9E7A71121F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift in Sources */,
 				C96DA3652302A649005B1F98 /* AddAccountViewModelTests.swift in Sources */,
+				C96D524223F96F9000613835 /* ActivityIndicatorTests.swift in Sources */,
 				C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */,
 				C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */,
 				C96DA36323029D50005B1F98 /* EmonCMSTestCase.swift in Sources */,
