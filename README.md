@@ -22,19 +22,19 @@ Emoncms for iOS is an app that allows you to connect to an [Emoncms](https://www
 
 ## Todo list
 
-- [x] Basic app structure
-- [x] Login
-  - [x] Manual URL + API key
-  - [x] Scan QR code
-- [x] Data caching
-- [ ] Apps
-  - [x] My Electric app
-  - [x] My Solar PV app
-  - [x] My Solar PV + Divert app
-- [x] Multi-account
-- [ ] Extensions
-  - [x] Universal app (for iPad)
-  - [ ] watchOS app
-  - [x] Today extension
-  - [ ] tvOS app
+  - [x] Basic app structure
+  - [x] Login
+    - [x] Manual URL + API key
+    - [x] Scan QR code
+  - [x] Data caching
+  - [ ] Apps
+    - [x] My Electric app
+    - [x] My Solar PV app
+    - [x] My Solar PV + Divert app
+  - [x] Multi-account
+  - [ ] Extensions
+    - [x] Universal app (for iPad)
+    - [ ] watchOS app
+    - [x] Today extension
+    - [ ] tvOS app
 
