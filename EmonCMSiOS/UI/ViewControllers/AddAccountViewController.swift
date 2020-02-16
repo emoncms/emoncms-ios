@@ -177,7 +177,8 @@ final class AddAccountViewController: FormViewController {
             case .urlNotValid:
               message = "URL is not valid."
             case .httpsRequired:
-              message = "HTTPS is required. This is a requirement of iOS. Please ensure you are using HTTPS with a valid certificate."
+              message =
+                "HTTPS is required. This is a requirement of iOS. Please ensure you are using HTTPS with a valid certificate."
             case .invalidCredentials:
               message = "The credentials are invalid."
             case .networkFailed:
@@ -224,7 +225,9 @@ extension AddAccountViewController {
 }
 
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials) {
+  func addAccountQRViewController(
+    controller: AddAccountQRViewController,
+    didFinishWithAccountCredentials accountCredentials: AccountCredentials) {
     self.updateWithAccountCredentials(accountCredentials)
     self.dismiss(animated: true, completion: nil)
   }

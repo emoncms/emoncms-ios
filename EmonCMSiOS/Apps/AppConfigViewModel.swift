@@ -29,7 +29,12 @@ final class AppConfigViewModel {
     FeedListHelper(realmController: self.realmController, account: self.account, api: self.api)
   }()
 
-  init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String?, appCategory: AppCategory) {
+  init(
+    realmController: RealmController,
+    account: AccountController,
+    api: EmonCMSAPI,
+    appDataId: String?,
+    appCategory: AppCategory) {
     self.realmController = realmController
     self.account = account
     self.api = api

@@ -147,7 +147,8 @@ extension MySolarDivertAppPage1ViewController {
     ChartHelpers.setupAppLineChart(self.lineChart)
   }
 
-  private func updateLineChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>])?) {
+  private func updateLineChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
+                                                  divert: [DataPoint<Double>])?) {
     if let dataPoints = dataPoints {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
@@ -205,7 +206,8 @@ extension MySolarDivertAppPage1ViewController {
     self.gridToHouseArrowView.direction = .down
   }
 
-  private func updateBoxViewData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>])?) {
+  private func updateBoxViewData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
+                                                divert: [DataPoint<Double>])?) {
     guard let dataPoints = dataPoints else { return }
 
     let use = dataPoints.use

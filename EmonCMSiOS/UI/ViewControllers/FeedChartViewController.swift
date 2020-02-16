@@ -50,7 +50,9 @@ final class FeedChartViewController: FormViewController {
     self.bindDateRangeSectionRows(dateOptionsRows)
     let (dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow) = dateOptionsRows
 
-    self.former.append(sectionFormer: SectionFormer(rowFormer: chartRow), SectionFormer(rowFormer: dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow))
+    self.former
+      .append(sectionFormer: SectionFormer(rowFormer: chartRow),
+              SectionFormer(rowFormer: dateRangeTypeRow, startDateRow, endDateRow, dateRelativeRow))
   }
 
   private func chartFormerSection() -> CustomRowFormer<ChartCell<LineChartView>> {
@@ -63,7 +65,10 @@ final class FeedChartViewController: FormViewController {
     return chartRow
   }
 
-  typealias DateOptionsRowTypes = (SegmentedRowFormer<FormSegmentedCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, InlineDatePickerRowFormer<FormInlineDatePickerCell>, SegmentedRowFormer<FormSegmentedCell>)
+  typealias DateOptionsRowTypes = (SegmentedRowFormer<FormSegmentedCell>,
+                                   InlineDatePickerRowFormer<FormInlineDatePickerCell>,
+                                   InlineDatePickerRowFormer<FormInlineDatePickerCell>,
+                                   SegmentedRowFormer<FormSegmentedCell>)
 
   private func dateOptionsFormerSection() -> DateOptionsRowTypes {
     let startDateRange = self.viewModel.dateRange

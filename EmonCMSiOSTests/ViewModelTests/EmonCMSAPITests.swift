@@ -20,7 +20,10 @@ class EmonCMSAPITests: EmonCMSTestCase {
     var api: EmonCMSAPI!
     var accountCredentials: AccountCredentials!
 
-    func call<T>(api: AnyPublisher<T, EmonCMSAPI.APIError>, subscriber: TestableSubscriber<T, EmonCMSAPI.APIError>, expect: @escaping () -> Void) {
+    func call<T>(
+      api: AnyPublisher<T, EmonCMSAPI.APIError>,
+      subscriber: TestableSubscriber<T, EmonCMSAPI.APIError>,
+      expect: @escaping () -> Void) {
       let sharedResult = api.share(replay: 1)
 
       sharedResult

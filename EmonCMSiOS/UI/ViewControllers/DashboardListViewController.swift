@@ -68,7 +68,8 @@ final class DashboardListViewController: UITableViewController {
 
   private func setupBindings() {
     let refreshControl = self.refreshControl!
-    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification).becomeVoid()
+    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+      .becomeVoid()
     Publishers.Merge3(self.refreshButton.publisher().becomeVoid(),
                       refreshControl.publisher(for: .valueChanged).becomeVoid(),
                       appBecameActive)
@@ -141,7 +142,9 @@ final class DashboardListViewController: UITableViewController {
           emptyLabel.textAlignment = .center
 
           if serverNeedsUpdate {
-            emptyLabel.text = "Cannot fetch dashboards.\n\nYou may need to upgrade Emoncms to be able to fetch dashboards. Please check that your Emoncms is up-to-date and then try again."
+            emptyLabel
+              .text =
+              "Cannot fetch dashboards.\n\nYou may need to upgrade Emoncms to be able to fetch dashboards. Please check that your Emoncms is up-to-date and then try again."
           } else {
             emptyLabel.text = "No dashboards"
           }

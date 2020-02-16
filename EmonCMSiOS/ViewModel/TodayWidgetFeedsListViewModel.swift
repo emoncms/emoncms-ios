@@ -84,7 +84,8 @@ final class TodayWidgetFeedsListViewModel {
         feedName = "FAILED TO FIND FEED"
       }
 
-      return ListItem(todayWidgetFeedId: todayWidgetFeed.uuid, accountId: accountId, accountName: accountName, feedId: feedId, feedName: feedName)
+      return ListItem(todayWidgetFeedId: todayWidgetFeed.uuid, accountId: accountId, accountName: accountName,
+                      feedId: feedId, feedName: feedName)
     }
 
     return listItems
@@ -93,7 +94,8 @@ final class TodayWidgetFeedsListViewModel {
   func addTodayWidgetFeed(forFeedId feedId: String) -> AnyPublisher<Bool, Never> {
     let realm = self.realm
     return Deferred { () -> Just<Bool> in
-      let query = realm.objects(TodayWidgetFeed.self).filter("accountId = %@ AND feedId = %@", self.accountController.uuid, feedId)
+      let query = realm.objects(TodayWidgetFeed.self)
+        .filter("accountId = %@ AND feedId = %@", self.accountController.uuid, feedId)
       guard query.count == 0 else { return Just(false) }
 
       let todayWidgetFeed = TodayWidgetFeed()

@@ -46,8 +46,12 @@ final class MySolarAppViewModel: AppViewModel {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
 
-    self.page1ViewModel = MySolarAppPage1ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
-    self.page2ViewModel = MySolarAppPage2ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
+    self
+      .page1ViewModel = MySolarAppPage1ViewModel(realmController: realmController, account: account, api: api,
+                                                 appDataId: appDataId)
+    self
+      .page2ViewModel = MySolarAppPage2ViewModel(realmController: realmController, account: account, api: api,
+                                                 appDataId: appDataId)
 
     self.title = self.appData.publisher(for: \.name)
       .receive(on: DispatchQueue.main)
@@ -60,6 +64,7 @@ final class MySolarAppViewModel: AppViewModel {
   }
 
   func configViewModel() -> AppConfigViewModel {
-    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolar)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api,
+                              appDataId: self.appData.uuid, appCategory: .mySolar)
   }
 }

@@ -10,7 +10,8 @@ import AVFoundation
 import UIKit
 
 protocol AddAccountQRViewControllerDelegate: AnyObject {
-  func addAccountQRViewController(controller: AddAccountQRViewController, didFinishWithAccountCredentials accountCredentials: AccountCredentials)
+  func addAccountQRViewController(controller: AddAccountQRViewController,
+                                  didFinishWithAccountCredentials accountCredentials: AccountCredentials)
   func addAccountQRViewControllerDidCancel(controller: AddAccountQRViewController)
 }
 
@@ -28,7 +29,8 @@ final class AddAccountQRViewController: UIViewController {
 
     self.title = "Scan Code"
     self.view.accessibilityIdentifier = AccessibilityIdentifiers.AddAccountQRView
-    self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+    self.navigationItem
+      .leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -112,7 +114,9 @@ final class AddAccountQRViewController: UIViewController {
   }
 
   private func presentCameraRequiredDialog() {
-    let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
+    let alert = UIAlertController(title: "Camera Required",
+                                  message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.",
+                                  preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "Go to Settings", style: .default, handler: { _ in
       if let url = URL(string: UIApplication.openSettingsURLString) {
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
@@ -123,14 +127,19 @@ final class AddAccountQRViewController: UIViewController {
   }
 
   private func presentCameraRestrictedDialog() {
-    let alert = UIAlertController(title: "Camera Required", message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.", preferredStyle: .alert)
+    let alert = UIAlertController(title: "Camera Required",
+                                  message: "Camera access is required for QR code scanning to work. Turn on camera permission in Settings.",
+                                  preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
 }
 
 extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
-  func metadataOutput(_ captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+  func metadataOutput(
+    _ captureOutput: AVCaptureMetadataOutput,
+    didOutput metadataObjects: [AVMetadataObject],
+    from connection: AVCaptureConnection) {
     guard self.foundAccount == false else { return }
 
     guard metadataObjects.count > 0 else { return }

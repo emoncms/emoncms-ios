@@ -78,7 +78,8 @@ final class AddAccountViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func validate(name: String, url: String, username: String, password: String, apiKey: String) -> AnyPublisher<AccountCredentials?, AddAccountError> {
+  private func validate(name: String, url: String, username: String, password: String,
+                        apiKey: String) -> AnyPublisher<AccountCredentials?, AddAccountError> {
     if self.account != nil {
       return Just(nil).setFailureType(to: AddAccountError.self).eraseToAnyPublisher()
     }

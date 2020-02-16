@@ -53,40 +53,41 @@ final class TodayViewModel {
       let feedsQuery = self.realm.objects(TodayWidgetFeed.self)
         .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
 
-      let listItemObservables = feedsQuery.compactMap { [weak self] todayWidgetFeed -> AnyPublisher<ListItem?, Never>? in
-        guard let self = self else { return nil }
+      let listItemObservables = feedsQuery
+        .compactMap { [weak self] todayWidgetFeed -> AnyPublisher<ListItem?, Never>? in
+          guard let self = self else { return nil }
 
-        let accountId = todayWidgetFeed.accountId
-        let feedId = todayWidgetFeed.feedId
+          let accountId = todayWidgetFeed.accountId
+          let feedId = todayWidgetFeed.feedId
 
-        guard
-          let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId),
-          let apiKey = self.keychainController.apiKey(forAccountWithId: accountId)
-        else { return nil }
+          guard
+            let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId),
+            let apiKey = self.keychainController.apiKey(forAccountWithId: accountId)
+          else { return nil }
 
-        let accountName = account.name
-        let accountCredentials = AccountCredentials(url: account.url, apiKey: apiKey)
-        let accountRealm = self.realmController.createAccountRealm(forAccountId: accountId)
+          let accountName = account.name
+          let accountCredentials = AccountCredentials(url: account.url, apiKey: apiKey)
+          let accountRealm = self.realmController.createAccountRealm(forAccountId: accountId)
 
-        guard let feed = accountRealm.object(ofType: Feed.self, forPrimaryKey: feedId) else { return nil }
+          guard let feed = accountRealm.object(ofType: Feed.self, forPrimaryKey: feedId) else { return nil }
 
-        let feedName = feed.name
+          let feedName = feed.name
 
-        let range = 3600
-        let endDate = Date()
-        let startDate = endDate.addingTimeInterval(TimeInterval(-range))
-        return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: range / 200)
-          .replaceError(with: [])
-          .map { dataPoints -> ListItem in
-            ListItem(
-              accountId: accountId,
-              accountName: accountName,
-              feedId: feedId,
-              feedName: feedName,
-              feedChartData: dataPoints)
-          }
-          .eraseToAnyPublisher()
-      }
+          let range = 3600
+          let endDate = Date()
+          let startDate = endDate.addingTimeInterval(TimeInterval(-range))
+          return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: range / 200)
+            .replaceError(with: [])
+            .map { dataPoints -> ListItem in
+              ListItem(
+                accountId: accountId,
+                accountName: accountName,
+                feedId: feedId,
+                feedName: feedName,
+                feedChartData: dataPoints)
+            }
+            .eraseToAnyPublisher()
+        }
 
       if listItemObservables.count == 0 {
         self.feeds = []

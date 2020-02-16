@@ -70,7 +70,8 @@ extension RealmController {
         let name = oldObject.value(forKey: "name"),
         let useFeedId = oldObject.value(forKey: "useFeedId"),
         let kwhFeedId = oldObject.value(forKey: "kwhFeedId"),
-        let feedsJsonData = try? JSONSerialization.data(withJSONObject: ["use": useFeedId, "kwh": kwhFeedId], options: [])
+        let feedsJsonData = try? JSONSerialization
+        .data(withJSONObject: ["use": useFeedId, "kwh": kwhFeedId], options: [])
       else {
         return
       }

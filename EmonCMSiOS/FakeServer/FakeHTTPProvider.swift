@@ -271,7 +271,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
   }
 
   func request(url: URL, formData: [String: String]) -> AnyPublisher<Data, HTTPRequestProviderError> {
-    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else { return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher() }
+    guard var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+    else { return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher() }
 
     var queryItems = components.queryItems ?? [URLQueryItem]()
     queryItems.append(contentsOf: formData.map { URLQueryItem(name: $0, value: $1) })

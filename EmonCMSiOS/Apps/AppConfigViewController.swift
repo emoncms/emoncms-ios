@@ -160,7 +160,8 @@ final class AppConfigViewController: FormViewController {
           return self.viewModel.updateWithConfigData(self.data)
             .map { $0 as AppUUIDAndCategory? }
             .catch { [weak self] error -> AnyPublisher<AppUUIDAndCategory?, Never> in
-              guard let self = self else { return Empty<AppUUIDAndCategory?, Never>(completeImmediately: false).eraseToAnyPublisher() }
+              guard let self = self
+              else { return Empty<AppUUIDAndCategory?, Never>(completeImmediately: false).eraseToAnyPublisher() }
 
               let message: String
               switch error {

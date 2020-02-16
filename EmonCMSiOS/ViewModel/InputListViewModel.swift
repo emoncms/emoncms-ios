@@ -105,7 +105,8 @@ final class InputListViewModel {
     for section in sectionBuilder.keys.sorted() {
       let items = sectionBuilder[section]!
         .map { input in
-          ListItem(inputId: input.id, name: input.name, desc: input.desc, time: input.time, value: input.value.prettyFormat())
+          ListItem(inputId: input.id, name: input.name, desc: input.desc, time: input.time,
+                   value: input.value.prettyFormat())
         }
       sections.append(Section(model: section, items: items))
     }

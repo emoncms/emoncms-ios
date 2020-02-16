@@ -92,7 +92,8 @@ final class InputListViewController: UITableViewController {
 
   private func setupBindings() {
     let refreshControl = self.refreshControl!
-    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification).becomeVoid()
+    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+      .becomeVoid()
     Publishers.Merge3(self.refreshButton.publisher().becomeVoid(),
                       refreshControl.publisher(for: .valueChanged).becomeVoid(),
                       appBecameActive)
@@ -157,7 +158,9 @@ final class InputListViewController: UITableViewController {
           emptyLabel.textAlignment = .center
 
           if serverNeedsUpdate {
-            emptyLabel.text = "Cannot fetch inputs.\n\nYou may need to upgrade Emoncms to be able to fetch inputs. Please check that your Emoncms is up-to-date and then try again."
+            emptyLabel
+              .text =
+              "Cannot fetch inputs.\n\nYou may need to upgrade Emoncms to be able to fetch inputs. Please check that your Emoncms is up-to-date and then try again."
           } else {
             emptyLabel.text = "No inputs"
           }

@@ -9,6 +9,7 @@
 --hexgrouping none
 --hexliteralcase lowercase
 --indent 2
+--maxwidth 120
 --octalgrouping none
 --operatorfunc spaced
 --patternlet inline

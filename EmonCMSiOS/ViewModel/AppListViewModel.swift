@@ -87,6 +87,7 @@ final class AppListViewModel {
   }
 
   func appConfigViewModel(forCategory category: AppCategory) -> AppConfigViewModel {
-    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: nil, appCategory: category)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api,
+                              appDataId: nil, appCategory: category)
   }
 }

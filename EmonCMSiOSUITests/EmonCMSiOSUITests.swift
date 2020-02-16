@@ -70,7 +70,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should add account successfully for valid details") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
       }
 
       it("should error for invalid credentials") {
@@ -80,7 +81,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should show QR view and then cancel properly") {
         app.tables.cells.staticTexts["Scan QR Code"].tap()
-        expect(app.otherElements[AccessibilityIdentifiers.AddAccountQRView].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.otherElements[AccessibilityIdentifiers.AddAccountQRView]
+          .waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
         app.navigationBars["Scan Code"].buttons["Cancel"].tap()
         expect(app.staticTexts["Scan QR Code"].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
       }
@@ -110,7 +112,8 @@ class EmonCMSiOSUITests: QuickSpec {
     describe("apps") {
       it("should show empty apps screen") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
         expect(app.tables[AccessibilityIdentifiers.Lists.App].cells.count).to(equal(0))
         let addAppLabel = app.staticTexts["Tap + to add a new app"]
         expect(addAppLabel.exists).to(equal(true))
@@ -118,7 +121,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should fail to add app if not all fields are selected") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolarDivert"].tap()
 
@@ -129,7 +133,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should add a MyElectric app successfully") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MyElectric"].tap()
 
@@ -153,7 +158,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should add a MySolar app successfully") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolar"].tap()
 
@@ -187,7 +193,8 @@ class EmonCMSiOSUITests: QuickSpec {
 
       it("should add a MySolarDivert app successfully") {
         loginFromAppStartWithValidCredentials()
-        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.tables[AccessibilityIdentifiers.Lists.App].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout))
+          .to(equal(true))
         app.navigationBars["Apps"].buttons["Add"].tap()
         app.sheets["Select a type"].buttons["MySolarDivert"].tap()
 
@@ -276,12 +283,14 @@ class EmonCMSiOSUITests: QuickSpec {
         let startPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let endPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.01))
         startPoint1.press(forDuration: 0, thenDragTo: endPoint1)
-        expect(chartContainer.frame.minY).toEventually(equal(chartContainerOpenY), timeout: EmonCMSiOSUITests.WaitTimeout)
+        expect(chartContainer.frame.minY)
+          .toEventually(equal(chartContainerOpenY), timeout: EmonCMSiOSUITests.WaitTimeout)
 
         let startPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         let endPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 1))
         startPoint2.press(forDuration: 0, thenDragTo: endPoint2)
-        expect(chartContainer.frame.minY).toEventually(equal(chartContainerClosedY), timeout: EmonCMSiOSUITests.WaitTimeout)
+        expect(chartContainer.frame.minY)
+          .toEventually(equal(chartContainerClosedY), timeout: EmonCMSiOSUITests.WaitTimeout)
       }
 
       it("should show feed chart view when tapping on detail disclosure") {
@@ -292,7 +301,8 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(tableView.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
 
         tableView.cells.element(boundBy: 0).buttons.element(boundBy: 0).tap()
-        expect(app.otherElements[AccessibilityIdentifiers.FeedChartView].waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        expect(app.otherElements[AccessibilityIdentifiers.FeedChartView]
+          .waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
       }
     }
 

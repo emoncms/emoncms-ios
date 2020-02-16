@@ -25,7 +25,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private static func isRunningUITests() -> Bool { return false }
   #endif
 
-  func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+  func scene(
+    _ scene: UIScene,
+    willConnectTo session: UISceneSession,
+    options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
 
     let runningTests = SceneDelegate.isRunningTests()
@@ -48,12 +51,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         startTime: Date(timeIntervalSinceNow: -3600 * 24),
         feeds: [
           FakeHTTPProvider.Config.Feed(id: "1", name: "use", tag: "Node 5", interval: 10, kwhFeed: ("2", "use_kwh")),
-          FakeHTTPProvider.Config.Feed(id: "3", name: "solar", tag: "Node 5", interval: 10, kwhFeed: ("4", "solar_kwh")),
-          FakeHTTPProvider.Config.Feed(id: "5", name: "immersion", tag: "Node 5", interval: 10, kwhFeed: ("6", "immersion_kwh"))
+          FakeHTTPProvider.Config
+            .Feed(id: "3", name: "solar", tag: "Node 5", interval: 10, kwhFeed: ("4", "solar_kwh")),
+          FakeHTTPProvider.Config
+            .Feed(id: "5", name: "immersion", tag: "Node 5", interval: 10, kwhFeed: ("6", "immersion_kwh"))
         ])
       requestProvider = FakeHTTPProvider(config: config)
     } else {
-      dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
+      dataDirectory = FileManager.default
+        .containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
       requestProvider = NSURLSessionHTTPRequestProvider()
     }
 

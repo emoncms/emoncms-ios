@@ -225,7 +225,9 @@ final class FeedListViewController: UIViewController {
       .sink { [weak self] progress, velocity, animated in
         guard let self = self else { return }
 
-        let displacement = self.chartContainerMinDisplacement + (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
+        let displacement = self
+          .chartContainerMinDisplacement +
+          (progress * (self.chartContainerMaxDisplacement - self.chartContainerMinDisplacement))
 
         self.chartContainerViewBottomConstraint.constant = displacement
         UIView.animate(withDuration: animated ? 0.3 : 0.0,
@@ -249,7 +251,8 @@ final class FeedListViewController: UIViewController {
 
   private func setupBindings() {
     let refreshControl = self.tableView.refreshControl!
-    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification).becomeVoid()
+    let appBecameActive = NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)
+      .becomeVoid()
     Publishers.Merge3(self.refreshButton.publisher().becomeVoid(),
                       refreshControl.publisher(for: .valueChanged).becomeVoid(),
                       appBecameActive)
@@ -361,7 +364,8 @@ final class FeedListViewController: UIViewController {
     self.chartViewModel
       .map { chartViewModel -> AnyPublisher<Bool, Never> in
         if let chartViewModel = chartViewModel {
-          return chartViewModel.isRefreshing.throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true).eraseToAnyPublisher()
+          return chartViewModel.isRefreshing.throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true)
+            .eraseToAnyPublisher()
         } else {
           return Empty<Bool, Never>(completeImmediately: false).eraseToAnyPublisher()
         }

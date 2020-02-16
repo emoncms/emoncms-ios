@@ -106,7 +106,11 @@ final class ChartHelpers {
     xAxis.labelCount = 14
   }
 
-  static func updateLineChart(withData data: LineChartData, forSet setIndex: Int, withPoints points: [DataPoint<Double>], configureBlock: (_ set: LineChartDataSet) -> Void) {
+  static func updateLineChart(
+    withData data: LineChartData,
+    forSet setIndex: Int,
+    withPoints points: [DataPoint<Double>],
+    configureBlock: (_ set: LineChartDataSet) -> Void) {
     let entries = points.map {
       ChartDataEntry(x: $0.time.timeIntervalSince1970, y: $0.value)
     }
@@ -133,7 +137,11 @@ final class ChartHelpers {
     }
   }
 
-  static func updateBarChart(withData data: BarChartData, forSet setIndex: Int, withPoints points: [DataPoint<Double>], configureBlock: (_ set: BarChartDataSet) -> Void) {
+  static func updateBarChart(
+    withData data: BarChartData,
+    forSet setIndex: Int,
+    withPoints points: [DataPoint<Double>],
+    configureBlock: (_ set: BarChartDataSet) -> Void) {
     var entries: [ChartDataEntry] = []
     for point in points {
       // 'x' here means the offset in days from 'today'
@@ -161,7 +169,8 @@ final class ChartHelpers {
     }
   }
 
-  static func processKWHData(_ dataPoints: [DataPoint<Double>], padTo: Int, interval: TimeInterval) -> [DataPoint<Double>] {
+  static func processKWHData(_ dataPoints: [DataPoint<Double>], padTo: Int,
+                             interval: TimeInterval) -> [DataPoint<Double>] {
     guard dataPoints.count > 0 else { return [] }
 
     var newDataPoints: [DataPoint<Double>] = []

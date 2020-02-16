@@ -42,7 +42,8 @@ class AppPageViewController: UIViewController {
 
         switch error {
         case .initialFailed:
-          let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.", preferredStyle: .alert)
+          let alert = UIAlertController(title: "Error", message: "Failed to connect to emoncms. Please try again.",
+                                        preferredStyle: .alert)
           alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
           self.present(alert, animated: true, completion: nil)
         default:

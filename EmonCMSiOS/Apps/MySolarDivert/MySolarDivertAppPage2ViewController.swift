@@ -55,7 +55,8 @@ extension MySolarDivertAppPage2ViewController {
     ChartHelpers.setupAppBarChart(self.divertBarChart)
   }
 
-  private func updateBarChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>])?) {
+  private func updateBarChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
+                                                 divert: [DataPoint<Double>])?) {
     if let dataPoints = dataPoints {
       let useData = self.useBarChart.barData ?? BarChartData()
       self.useBarChart.data = useData

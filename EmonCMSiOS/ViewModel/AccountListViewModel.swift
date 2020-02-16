@@ -59,7 +59,8 @@ final class AccountListViewModel {
   private func migrateOldAccountIfNeeded() {
     if
       let accountURL = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue),
-      let accountUUIDString = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) {
+      let accountUUIDString = UserDefaults.standard
+      .string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) {
       let account = Account()
       account.uuid = accountUUIDString
       account.name = accountURL
@@ -99,7 +100,8 @@ final class AccountListViewModel {
 
   var lastSelectedAccountId: String? {
     get {
-      return UserDefaults.standard.object(forKey: SharedConstants.UserDefaultsKeys.lastSelectedAccountUUID.rawValue) as? String
+      return UserDefaults.standard
+        .object(forKey: SharedConstants.UserDefaultsKeys.lastSelectedAccountUUID.rawValue) as? String
     }
     set {
       if let newValue = newValue {
@@ -111,17 +113,23 @@ final class AccountListViewModel {
   }
 
   func mainViewModels(forAccountWithId id: String) ->
-    (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel, dashboardList: DashboardListViewModel, settings: SettingsViewModel)? {
+    (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel,
+     dashboardList: DashboardListViewModel, settings: SettingsViewModel)? {
     guard
       let accountController = self.accountController(forAccountWithId: id)
     else {
       return nil
     }
-    let appListViewModel = AppListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-    let inputListViewModel = InputListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-    let feedListViewModel = FeedListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-    let dashboardListViewModel = DashboardListViewModel(realmController: self.realmController, account: accountController, api: self.api)
-    let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController, api: self.api)
+    let appListViewModel = AppListViewModel(realmController: self.realmController, account: accountController,
+                                            api: self.api)
+    let inputListViewModel = InputListViewModel(realmController: self.realmController, account: accountController,
+                                                api: self.api)
+    let feedListViewModel = FeedListViewModel(realmController: self.realmController, account: accountController,
+                                              api: self.api)
+    let dashboardListViewModel = DashboardListViewModel(realmController: self.realmController,
+                                                        account: accountController, api: self.api)
+    let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController,
+                                              api: self.api)
     return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
   }
 

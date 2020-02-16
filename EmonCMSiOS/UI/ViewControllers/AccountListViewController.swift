@@ -67,7 +67,9 @@ final class AccountListViewController: UITableViewController {
       .sink { [weak self] in
         guard let self = self else { return }
         if self.tableView.isEditing {
-          self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: $0.accountId, animated: true))
+          self
+            .performSegue(withIdentifier: Segues.addAccount.rawValue,
+                          sender: AddAccountSegueData(accountId: $0.accountId, animated: true))
         } else {
           self.login(toAccountWithId: $0.accountId)
         }
@@ -95,7 +97,9 @@ final class AccountListViewController: UITableViewController {
         if self.firstLoad {
           self.firstLoad = false
           if empty {
-            self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: false))
+            self
+              .performSegue(withIdentifier: Segues.addAccount.rawValue,
+                            sender: AddAccountSegueData(accountId: nil, animated: false))
           } else if let selectedAccountId = self.viewModel.lastSelectedAccountId {
             self.login(toAccountWithId: selectedAccountId, animated: false)
           }
@@ -159,7 +163,9 @@ final class AccountListViewController: UITableViewController {
     rightBarButtonItem.publisher()
       .sink { [weak self] _ in
         guard let self = self else { return }
-        self.performSegue(withIdentifier: Segues.addAccount.rawValue, sender: AddAccountSegueData(accountId: nil, animated: true))
+        self
+          .performSegue(withIdentifier: Segues.addAccount.rawValue,
+                        sender: AddAccountSegueData(accountId: nil, animated: true))
       }
       .store(in: &self.cancellables)
     self.navigationItem.rightBarButtonItem = rightBarButtonItem

@@ -17,18 +17,25 @@ class RealmMigrationTests: QuickSpec {
   }
 
   private func copyMainRealm(fromFilename: String, realmController: RealmController) throws {
-    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm") else {
+    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm")
+    else {
       throw NSError()
     }
-    try FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+    try FileManager.default
+      .createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
     try FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.mainRealmFileURL)
   }
 
-  private func copyAccountRealm(fromFilename: String, forAccountId accountId: String, realmController: RealmController) throws {
-    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm") else {
+  private func copyAccountRealm(
+    fromFilename: String,
+    forAccountId accountId: String,
+    realmController: RealmController) throws {
+    guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm")
+    else {
       throw NSError()
     }
-    try FileManager.default.createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
+    try FileManager.default
+      .createDirectory(at: realmController.dataDirectory, withIntermediateDirectories: true, attributes: nil)
     try FileManager.default.copyItem(at: oldRealmFileURL, to: realmController.realmFileURL(forAccountId: accountId))
   }
 
@@ -59,7 +66,9 @@ class RealmMigrationTests: QuickSpec {
         do {
           let schemaVersion = RealmController.schemaVersion
           try self.copyMainRealm(fromFilename: "main_v\(schemaVersion)", realmController: realmController)
-          try self.copyAccountRealm(fromFilename: "account_v\(schemaVersion)", forAccountId: uuid, realmController: realmController)
+          try self
+            .copyAccountRealm(fromFilename: "account_v\(schemaVersion)", forAccountId: uuid,
+                              realmController: realmController)
         } catch {
           fail("Failed to copy Realm file!")
         }

@@ -49,7 +49,8 @@ final class FeedChartViewModel {
         let (startDate, endDate) = dateRange.calculateDates()
         let interval = Int(endDate.timeIntervalSince(startDate) / 500)
 
-        return self.api.feedData(self.account.credentials, id: feedId, at: startDate, until: endDate, interval: interval)
+        return self.api
+          .feedData(self.account.credentials, id: feedId, at: startDate, until: endDate, interval: interval)
           .replaceError(with: [])
           .trackActivity(isRefreshingIndicator)
           .eraseToAnyPublisher()

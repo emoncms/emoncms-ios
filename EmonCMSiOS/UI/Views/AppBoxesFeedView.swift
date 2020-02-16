@@ -79,8 +79,10 @@ import UIKit
                                      views: views)
     self.internalConstraints +=
       [
-        NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0),
-        NSLayoutConstraint(item: self.containerView, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
+        NSLayoutConstraint(item: self.containerView, attribute: .centerX, relatedBy: .equal, toItem: self,
+                           attribute: .centerX, multiplier: 1, constant: 0),
+        NSLayoutConstraint(item: self.containerView, attribute: .centerY, relatedBy: .equal, toItem: self,
+                           attribute: .centerY, multiplier: 1, constant: 0)
       ]
     self.internalConstraints +=
       NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel]-2-[valueLabel]|",

@@ -34,7 +34,8 @@ class TodayViewController: UIViewController, NCWidgetProviding {
 
     self.extensionContext?.widgetLargestAvailableDisplayMode = .expanded
 
-    let dataDirectory = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
+    let dataDirectory = FileManager.default
+      .containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
     let realmController = RealmController(dataDirectory: dataDirectory)
 
     let requestProvider = NSURLSessionHTTPRequestProvider()

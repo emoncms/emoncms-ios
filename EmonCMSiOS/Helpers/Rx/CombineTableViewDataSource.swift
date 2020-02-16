@@ -84,7 +84,8 @@ final class CombineTableViewDataSource<Section: SectionModelType>:
   UITableViewDelegate {
   public typealias Item = Section.Item
 
-  public typealias ConfigureCell = (CombineTableViewDataSource<Section>, UITableView, IndexPath, Item) -> UITableViewCell
+  public typealias ConfigureCell = (CombineTableViewDataSource<Section>, UITableView, IndexPath, Item)
+    -> UITableViewCell
   public typealias TitleForHeaderInSection = (CombineTableViewDataSource<Section>, Int) -> String?
   public typealias TitleForFooterInSection = (CombineTableViewDataSource<Section>, Int) -> String?
   public typealias CanEditRowAtIndexPath = (CombineTableViewDataSource<Section>, IndexPath) -> Bool
@@ -130,18 +131,30 @@ final class CombineTableViewDataSource<Section: SectionModelType>:
   }
 
   var itemSelected: AnyPublisher<IndexPath, Never> { return self.itemSelectedSubject.eraseToAnyPublisher() }
-  var modelSelected: AnyPublisher<Item, Never> { return self.itemSelectedSubject.map(self.model(at:)).eraseToAnyPublisher() }
+  var modelSelected: AnyPublisher<Item, Never> {
+    return self.itemSelectedSubject.map(self.model(at:)).eraseToAnyPublisher()
+  }
+
   private let itemSelectedSubject = PassthroughSubject<IndexPath, Never>()
 
   var itemDeselected: AnyPublisher<IndexPath, Never> { return self.itemDeselectedSubject.eraseToAnyPublisher() }
-  var modelDeselected: AnyPublisher<Item, Never> { return self.itemDeselectedSubject.map(self.model(at:)).eraseToAnyPublisher() }
+  var modelDeselected: AnyPublisher<Item, Never> {
+    return self.itemDeselectedSubject.map(self.model(at:)).eraseToAnyPublisher()
+  }
+
   private let itemDeselectedSubject = PassthroughSubject<IndexPath, Never>()
 
-  var itemAccessoryButtonTapped: AnyPublisher<IndexPath, Never> { return self.itemAccessoryButtonTappedSubject.eraseToAnyPublisher() }
+  var itemAccessoryButtonTapped: AnyPublisher<IndexPath, Never> {
+    return self.itemAccessoryButtonTappedSubject.eraseToAnyPublisher()
+  }
+
   private let itemAccessoryButtonTappedSubject = PassthroughSubject<IndexPath, Never>()
 
   var itemDeleted: AnyPublisher<IndexPath, Never> { return self.itemDeletedSubject.eraseToAnyPublisher() }
-  var modelDeleted: AnyPublisher<Item, Never> { return self.itemDeletedSubject.map(self.model(at:)).eraseToAnyPublisher() }
+  var modelDeleted: AnyPublisher<Item, Never> {
+    return self.itemDeletedSubject.map(self.model(at:)).eraseToAnyPublisher()
+  }
+
   private let itemDeletedSubject = PassthroughSubject<IndexPath, Never>()
 
   var itemMoved: AnyPublisher<(IndexPath, IndexPath), Never> { return self.itemMovedSubject.eraseToAnyPublisher() }
@@ -236,7 +249,10 @@ final class CombineTableViewDataSource<Section: SectionModelType>:
     self.itemAccessoryButtonTappedSubject.send(indexPath)
   }
 
-  func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+  func tableView(
+    _ tableView: UITableView,
+    commit editingStyle: UITableViewCell.EditingStyle,
+    forRowAt indexPath: IndexPath) {
     switch editingStyle {
     case .delete:
       self.itemDeletedSubject.send(indexPath)

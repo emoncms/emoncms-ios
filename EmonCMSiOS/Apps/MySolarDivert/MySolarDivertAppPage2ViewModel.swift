@@ -12,7 +12,8 @@ import Foundation
 import RealmSwift
 
 final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
-  typealias Data = (updateTime: Date, barChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
+  typealias Data = (updateTime: Date,
+                    barChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
   private let account: AccountController
@@ -126,7 +127,9 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
       return Fail(error: AppError.notConfigured).eraseToAnyPublisher()
     }
 
-    return self.fetchBarChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId)
+    return self
+      .fetchBarChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId,
+                            divertFeedId: divertFeedId)
       .map { barChartData in
         Data(updateTime: Date(), barChartData: barChartData)
       }
@@ -137,7 +140,9 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String, divertFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String,
+                                    divertFeedId: String)
+    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let interval = 86400.0
     let startTime = dates.0 - interval

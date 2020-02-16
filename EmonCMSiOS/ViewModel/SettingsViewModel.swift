@@ -42,6 +42,7 @@ final class SettingsViewModel {
   }
 
   func todayWidgetFeedsListViewModel() -> TodayWidgetFeedsListViewModel {
-    return TodayWidgetFeedsListViewModel(realmController: self.realmController, accountController: self.account, api: self.api)
+    return TodayWidgetFeedsListViewModel(realmController: self.realmController, accountController: self.account,
+                                         api: self.api)
   }
 }

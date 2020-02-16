@@ -50,7 +50,8 @@ final class SettingsViewController: FormViewController {
     }.onSelected { [weak self] former in
       guard let self = self else { return }
 
-      let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?", preferredStyle: .actionSheet)
+      let actionSheet = UIAlertController(title: nil, message: "Are you sure you want to logout?",
+                                          preferredStyle: .actionSheet)
 
       actionSheet.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
         self.former.deselect(animated: true)
@@ -68,7 +69,8 @@ final class SettingsViewController: FormViewController {
 
       if let popoverController = actionSheet.popoverPresentationController {
         popoverController.sourceView = former.cell
-        popoverController.sourceRect = CGRect(x: former.cell.bounds.midX, y: former.cell.bounds.midY, width: 0, height: 0)
+        popoverController
+          .sourceRect = CGRect(x: former.cell.bounds.midX, y: former.cell.bounds.midY, width: 0, height: 0)
       }
 
       self.present(actionSheet, animated: true, completion: nil)
@@ -120,7 +122,9 @@ final class SettingsViewController: FormViewController {
 
   private func sendFeedback() {
     guard MFMailComposeViewController.canSendMail() else {
-      let alert = UIAlertController(title: "Can't send mail", message: "To send feedback you need to be able to send email from this device. Please ensure you have an email account set up.", preferredStyle: .alert)
+      let alert = UIAlertController(title: "Can't send mail",
+                                    message: "To send feedback you need to be able to send email from this device. Please ensure you have an email account set up.",
+                                    preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
       self.present(alert, animated: true, completion: nil)
       return
@@ -153,7 +157,10 @@ final class SettingsViewController: FormViewController {
 }
 
 extension SettingsViewController: MFMailComposeViewControllerDelegate {
-  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+  func mailComposeController(
+    _ controller: MFMailComposeViewController,
+    didFinishWith result: MFMailComposeResult,
+    error: Error?) {
     self.dismiss(animated: true, completion: nil)
   }
 }

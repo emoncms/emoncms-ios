@@ -12,7 +12,9 @@ import Foundation
 import RealmSwift
 
 final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
-  typealias Data = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
+  typealias Data = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double,
+                    solarNow: Double,
+                    lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
   private let account: AccountController
@@ -128,7 +130,9 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
 
     return Publishers.Zip(
       self.fetchPowerNow(useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId),
-      self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId, divertFeedId: divertFeedId))
+      self
+        .fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId, solarFeedId: solarFeedId,
+                               divertFeedId: divertFeedId))
       .map {
         powerNow, lineChartData in
         Data(updateTime: Date(),
@@ -146,25 +150,33 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchPowerNow(useFeedId: String, solarFeedId: String, divertFeedId: String) -> AnyPublisher<(Double, Double, Double, Double, Double), EmonCMSAPI.APIError> {
+  private func fetchPowerNow(useFeedId: String, solarFeedId: String,
+                             divertFeedId: String) -> AnyPublisher<(Double, Double, Double, Double, Double),
+                                                                   EmonCMSAPI.APIError> {
     return self.api.feedValue(self.account.credentials, ids: [useFeedId, solarFeedId, divertFeedId])
       .map { feedValues in
-        guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId], let divert = feedValues[divertFeedId] else { return (0.0, 0.0, 0.0, 0.0, 0.0) }
+        guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId],
+          let divert = feedValues[divertFeedId] else { return (0.0, 0.0, 0.0, 0.0, 0.0) }
 
         return (use - divert, divert, use, use - solar, solar)
       }
       .eraseToAnyPublisher()
   }
 
-  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String, divertFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String,
+                                     divertFeedId: String)
+    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 500))
 
-    let use = self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
-    let solar = self.api.feedData(self.account.credentials, id: solarFeedId, at: startTime, until: endTime, interval: interval)
-    let divert = self.api.feedData(self.account.credentials, id: divertFeedId, at: startTime, until: endTime, interval: interval)
+    let use = self.api
+      .feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
+    let solar = self.api
+      .feedData(self.account.credentials, id: solarFeedId, at: startTime, until: endTime, interval: interval)
+    let divert = self.api
+      .feedData(self.account.credentials, id: divertFeedId, at: startTime, until: endTime, interval: interval)
 
     return Publishers.Zip3(use, solar, divert).eraseToAnyPublisher()
   }

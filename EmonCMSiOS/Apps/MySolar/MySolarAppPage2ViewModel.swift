@@ -136,7 +136,9 @@ final class MySolarAppPage2ViewModel: AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+  private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String,
+                                    solarFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>]),
+                                                                         EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let interval = 86400.0
     let startTime = dates.0 - interval

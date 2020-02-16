@@ -61,7 +61,8 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
       .modelDeleted
       .flatMap { [weak self] item -> AnyPublisher<Void, Never> in
         guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
-        return self.viewModel.deleteTodayWidgetFeed(withId: item.todayWidgetFeedId).replaceError(with: ()).eraseToAnyPublisher()
+        return self.viewModel.deleteTodayWidgetFeed(withId: item.todayWidgetFeedId).replaceError(with: ())
+          .eraseToAnyPublisher()
       }
       .sink { _ in }
       .store(in: &self.cancellables)
@@ -70,7 +71,8 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
       .itemMoved
       .flatMap { [weak self] (sourceIndex, destinationIndex) -> AnyPublisher<Void, Never> in
         guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
-        return self.viewModel.moveTodayWidgetFeed(fromIndex: sourceIndex.row, toIndex: destinationIndex.row).replaceError(with: ()).eraseToAnyPublisher()
+        return self.viewModel.moveTodayWidgetFeed(fromIndex: sourceIndex.row, toIndex: destinationIndex.row)
+          .replaceError(with: ()).eraseToAnyPublisher()
       }
       .sink { _ in }
       .store(in: &self.cancellables)

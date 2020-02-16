@@ -12,7 +12,8 @@ import Foundation
 import RealmSwift
 
 final class MySolarAppPage1ViewModel: AppPageViewModel {
-  typealias Data = (updateTime: Date, useNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>]))
+  typealias Data = (updateTime: Date, useNow: Double, importNow: Double, solarNow: Double,
+                    lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>]))
 
   private let realmController: RealmController
   private let account: AccountController
@@ -143,7 +144,8 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchPowerNow(useFeedId: String, solarFeedId: String) -> AnyPublisher<(Double, Double, Double), EmonCMSAPI.APIError> {
+  private func fetchPowerNow(useFeedId: String,
+                             solarFeedId: String) -> AnyPublisher<(Double, Double, Double), EmonCMSAPI.APIError> {
     return self.api.feedValue(self.account.credentials, ids: [useFeedId, solarFeedId])
       .map { feedValues in
         guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId] else { return (0.0, 0.0, 0.0) }
@@ -153,14 +155,18 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String,
+                                     solarFeedId: String) -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>]),
+                                                                          EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1
     let interval = Int(floor((endTime.timeIntervalSince1970 - startTime.timeIntervalSince1970) / 500))
 
-    let use = self.api.feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
-    let solar = self.api.feedData(self.account.credentials, id: solarFeedId, at: startTime, until: endTime, interval: interval)
+    let use = self.api
+      .feedData(self.account.credentials, id: useFeedId, at: startTime, until: endTime, interval: interval)
+    let solar = self.api
+      .feedData(self.account.credentials, id: solarFeedId, at: startTime, until: endTime, interval: interval)
 
     return Publishers.Zip(use, solar).eraseToAnyPublisher()
   }

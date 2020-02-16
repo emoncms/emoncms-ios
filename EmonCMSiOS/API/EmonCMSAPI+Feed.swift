@@ -94,7 +94,8 @@ extension EmonCMSAPI {
     return dataPoints
   }
 
-  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date, interval: Int) -> AnyPublisher<[DataPoint<Double>], APIError> {
+  func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date,
+                interval: Int) -> AnyPublisher<[DataPoint<Double>], APIError> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -102,17 +103,19 @@ extension EmonCMSAPI {
       "interval": "\(interval)"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
-      try EmonCMSAPI.dataPoints(fromJsonData: resultData)
-    }
-    .mapError { error -> APIError in
-      if let error = error as? APIError { return error }
-      return APIError.requestFailed
-    }
-    .eraseToAnyPublisher()
+    return self.request(account, path: "feed/data", queryItems: queryItems)
+      .tryMap { resultData -> [DataPoint<Double>] in
+        try EmonCMSAPI.dataPoints(fromJsonData: resultData)
+      }
+      .mapError { error -> APIError in
+        if let error = error as? APIError { return error }
+        return APIError.requestFailed
+      }
+      .eraseToAnyPublisher()
   }
 
-  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date) -> AnyPublisher<[DataPoint<Double>], APIError> {
+  func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date,
+                     until endTime: Date) -> AnyPublisher<[DataPoint<Double>], APIError> {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -120,14 +123,15 @@ extension EmonCMSAPI {
       "mode": "daily"
     ]
 
-    return self.request(account, path: "feed/data", queryItems: queryItems).tryMap { resultData -> [DataPoint<Double>] in
-      try EmonCMSAPI.dataPoints(fromJsonData: resultData)
-    }
-    .mapError { error -> APIError in
-      if let error = error as? APIError { return error }
-      return APIError.requestFailed
-    }
-    .eraseToAnyPublisher()
+    return self.request(account, path: "feed/data", queryItems: queryItems)
+      .tryMap { resultData -> [DataPoint<Double>] in
+        try EmonCMSAPI.dataPoints(fromJsonData: resultData)
+      }
+      .mapError { error -> APIError in
+        if let error = error as? APIError { return error }
+        return APIError.requestFailed
+      }
+      .eraseToAnyPublisher()
   }
 
   func feedValue(_ account: AccountCredentials, id: String) -> AnyPublisher<Double, APIError> {

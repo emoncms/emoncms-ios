@@ -60,7 +60,8 @@ final class LogController {
     #endif
 
     let logPath: URL = self.mainLogFile
-    let fileDestination = FileDestination(writeToFile: logPath, identifier: XCGLogger.Constants.fileDestinationIdentifier)
+    let fileDestination = FileDestination(writeToFile: logPath,
+                                          identifier: XCGLogger.Constants.fileDestinationIdentifier)
     fileDestination.outputLevel = .debug
     fileDestination.showLogIdentifier = false
     fileDestination.showFunctionName = true
@@ -99,7 +100,8 @@ final class LogController {
     guard self.initialised else { return [] }
 
     let directory = self.logDirectory
-    guard let enumerator = self.fileManager.enumerator(at: directory, includingPropertiesForKeys: nil, options: [], errorHandler: nil) else {
+    guard let enumerator = self.fileManager.enumerator(at: directory, includingPropertiesForKeys: nil, options: [],
+                                                       errorHandler: nil) else {
       return []
     }
 

@@ -23,7 +23,8 @@ final class MockURLSession: URLSession {
   var nextResponse: URLResponse?
   var nextError: Error?
 
-  override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+  override func dataTask(with request: URLRequest,
+                         completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
     DispatchQueue.main.async {
       completionHandler(self.nextData, self.nextResponse, self.nextError)
     }
@@ -92,7 +93,8 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!
 
         session.nextData = data
-        session.nextResponse = URLResponse(url: url, mimeType: nil, expectedContentLength: data.count, textEncodingName: nil)
+        session
+          .nextResponse = URLResponse(url: url, mimeType: nil, expectedContentLength: data.count, textEncodingName: nil)
         session.nextError = nil
 
         let sut = provider.request(url: url)
@@ -133,7 +135,9 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         session.nextData = nil
         session.nextResponse = nil
-        session.nextError = NSError(domain: NSURLErrorDomain, code: NSURLErrorAppTransportSecurityRequiresSecureConnection, userInfo: nil)
+        session
+          .nextError = NSError(domain: NSURLErrorDomain, code: NSURLErrorAppTransportSecurityRequiresSecureConnection,
+                               userInfo: nil)
 
         let sut = provider.request(url: url)
 

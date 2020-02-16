@@ -85,7 +85,8 @@ public extension Publishers {
     }
 
     public func receive<S: Subscriber>(subscriber: S) where S.Failure == Failure, S.Input == Output {
-      let subscription = RealmCollectionSubscription(subscriber: subscriber, collection: self.collection, synchronousStart: self.synchronousStart)
+      let subscription = RealmCollectionSubscription(subscriber: subscriber, collection: self.collection,
+                                                     synchronousStart: self.synchronousStart)
       subscriber.receive(subscription: subscription)
     }
   }
@@ -136,11 +137,15 @@ public extension Publishers {
 }
 
 public extension Publishers {
-  static func collection<Element: NotificationEmitter>(from collection: Element, synchronousStart: Bool = true) -> Publishers.RealmCollection<Element> {
+  static func collection<Element: NotificationEmitter>(
+    from collection: Element,
+    synchronousStart: Bool = true) -> Publishers.RealmCollection<Element> {
     return RealmCollection(collection: collection, synchronousStart: synchronousStart)
   }
 
-  static func array<Element: NotificationEmitter>(from collection: Element, synchronousStart: Bool = true) -> AnyPublisher<[Element.ElementType], Error> {
+  static func array<Element: NotificationEmitter>(from collection: Element,
+                                                  synchronousStart: Bool = true) -> AnyPublisher<[Element.ElementType],
+                                                                                                 Error> {
     return RealmCollection(collection: collection, synchronousStart: synchronousStart)
       .map { $0.toArray() }
       .eraseToAnyPublisher()

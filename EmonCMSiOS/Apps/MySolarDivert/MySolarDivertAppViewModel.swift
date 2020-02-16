@@ -12,7 +12,10 @@ import Foundation
 import RealmSwift
 
 final class MySolarDivertAppViewModel: AppViewModel {
-  typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double, importNow: Double, solarNow: Double, lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>], divert: [DataPoint<Double>]))
+  typealias MySolarDivertData = (updateTime: Date, houseNow: Double, divertNow: Double, totalUseNow: Double,
+                                 importNow: Double, solarNow: Double,
+                                 lineChartData: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
+                                                 divert: [DataPoint<Double>]))
 
   private let realmController: RealmController
   private let account: AccountController
@@ -51,8 +54,12 @@ final class MySolarDivertAppViewModel: AppViewModel {
     self.realm = realmController.createAccountRealm(forAccountId: account.uuid)
     self.appData = self.realm.object(ofType: AppData.self, forPrimaryKey: appDataId)!
 
-    self.page1ViewModel = MySolarDivertAppPage1ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
-    self.page2ViewModel = MySolarDivertAppPage2ViewModel(realmController: realmController, account: account, api: api, appDataId: appDataId)
+    self
+      .page1ViewModel = MySolarDivertAppPage1ViewModel(realmController: realmController, account: account, api: api,
+                                                       appDataId: appDataId)
+    self
+      .page2ViewModel = MySolarDivertAppPage2ViewModel(realmController: realmController, account: account, api: api,
+                                                       appDataId: appDataId)
 
     self.title = self.appData.publisher(for: \.name)
       .receive(on: DispatchQueue.main)
@@ -65,6 +72,7 @@ final class MySolarDivertAppViewModel: AppViewModel {
   }
 
   func configViewModel() -> AppConfigViewModel {
-    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .mySolarDivert)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api,
+                              appDataId: self.appData.uuid, appCategory: .mySolarDivert)
   }
 }

@@ -12,7 +12,8 @@ import Foundation
 import RealmSwift
 
 final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
-  typealias Data = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint<Double>], barChartData: [DataPoint<Double>])
+  typealias Data = (updateTime: Date, powerNow: Double, usageToday: Double, lineChartData: [DataPoint<Double>],
+                    barChartData: [DataPoint<Double>])
 
   private let realmController: RealmController
   private let account: AccountController
@@ -143,7 +144,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
   }
 
   func configViewModel() -> AppConfigViewModel {
-    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api, appDataId: self.appData.uuid, appCategory: .myElectric)
+    return AppConfigViewModel(realmController: self.realmController, account: self.account, api: self.api,
+                              appDataId: self.appData.uuid, appCategory: .myElectric)
   }
 
   private func update(dateRange: DateRange) -> AnyPublisher<Data, AppError> {
@@ -173,7 +175,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchPowerNowAndUsageToday(useFeedId: String, kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError> {
+  private func fetchPowerNowAndUsageToday(useFeedId: String,
+                                          kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError> {
     let calendar = Calendar.current
     let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
     let midnightToday = calendar.date(from: dateComponents)!
@@ -185,7 +188,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
       let endTime = midnightToday + 43200
       let startTime = endTime - 86400
 
-      startOfDayKwhSignal = self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
+      startOfDayKwhSignal = self.api
+        .feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
         .map { dataPoints -> DataPoint<Double> in
           guard dataPoints.count > 0 else {
             // Assume that the data point doesn't exist, so it's a new feed, so zero
@@ -211,7 +215,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError> {
+  private func fetchLineChartHistory(dateRange: DateRange,
+                                     useFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError> {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1

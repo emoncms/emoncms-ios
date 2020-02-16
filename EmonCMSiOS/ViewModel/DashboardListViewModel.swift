@@ -94,7 +94,8 @@ final class DashboardListViewModel {
   }
 
   func urlForDashboard(withId id: String) -> URL? {
-    let fullUrl = self.account.credentials.url + "/dashboard/view?id=\(id)&embed=1&apikey=\(self.account.credentials.apiKey)"
+    let fullUrl = self.account.credentials
+      .url + "/dashboard/view?id=\(id)&embed=1&apikey=\(self.account.credentials.apiKey)"
     guard let dashboardURL = URL(string: fullUrl) else { return nil }
     return dashboardURL
   }

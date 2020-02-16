@@ -11,9 +11,14 @@ import UIKit
 
 @IBDesignable final class AppTitleAndValueView: UIView {
   @IBInspectable var title: String? { get { return self.titleLabel.text } set { self.titleLabel.text = newValue } }
-  @IBInspectable var titleColor: UIColor { get { return self.titleLabel.textColor } set { self.titleLabel.textColor = newValue } }
+  @IBInspectable var titleColor: UIColor {
+    get { return self.titleLabel.textColor } set { self.titleLabel.textColor = newValue }
+  }
+
   @IBInspectable var value: String? { get { return self.valueLabel.text } set { self.valueLabel.text = newValue } }
-  @IBInspectable var valueColor: UIColor { get { return self.valueLabel.textColor } set { self.valueLabel.textColor = newValue } }
+  @IBInspectable var valueColor: UIColor {
+    get { return self.valueLabel.textColor } set { self.valueLabel.textColor = newValue }
+  }
 
   var alignment: NSTextAlignment {
     get { return self.titleLabel.textAlignment }
