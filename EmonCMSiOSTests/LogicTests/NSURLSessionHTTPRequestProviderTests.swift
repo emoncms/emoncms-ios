@@ -58,6 +58,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -79,6 +80,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -99,6 +101,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -118,6 +121,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -137,6 +141,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -156,6 +161,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
         let sut = provider.request(url: url)
 
+        scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
         let results = scheduler.start { sut }
 
         let expected: TestSequence<Data, HTTPRequestProviderError> = [
@@ -177,6 +183,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
 
       let sut = provider.request(url: url, formData: ["foo":"bar"])
 
+      scheduler.schedule(after: 300) { RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1)) }
       let results = scheduler.start { sut }
 
       let expected: TestSequence<Data, HTTPRequestProviderError> = [
