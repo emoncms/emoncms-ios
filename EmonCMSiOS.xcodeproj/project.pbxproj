@@ -949,6 +949,7 @@
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
 				C949985A21FBD1AF008FB8AE /* ShellScript */,
 				C9DD825322F0B8C000CE9ABC /* Embed Frameworks */,
+				C9EDF85C23F9BD4D00F3A810 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1115,6 +1116,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
+		};
+		C9EDF85C23F9BD4D00F3A810 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint .\nelse\n  echo \"warning: SwiftFormat not installed. `brew install swiftformat`\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
