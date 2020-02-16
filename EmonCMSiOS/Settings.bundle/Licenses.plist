@@ -5,8 +5,14 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Title</key>
+			<string>Licenses</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Charts</string>
+			<string>Licenses/Charts</string>
 			<key>Title</key>
 			<string>Charts</string>
 			<key>Type</key>
@@ -14,7 +20,15 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Former</string>
+			<string>Licenses/Entwine</string>
+			<key>Title</key>
+			<string>Entwine</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Licenses/Former</string>
 			<key>Title</key>
 			<string>Former</string>
 			<key>Type</key>
@@ -22,15 +36,15 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Ios-snapshot-test-case</string>
+			<string>Licenses/ios-snapshot-test-case</string>
 			<key>Title</key>
-			<string>Ios-snapshot-test-case</string>
+			<string>ios-snapshot-test-case</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Locksmith</string>
+			<string>Licenses/Locksmith</string>
 			<key>Title</key>
 			<string>Locksmith</string>
 			<key>Type</key>
@@ -38,7 +52,7 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Nimble</string>
+			<string>Licenses/Nimble</string>
 			<key>Title</key>
 			<string>Nimble</string>
 			<key>Type</key>
@@ -46,7 +60,7 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Quick</string>
+			<string>Licenses/Quick</string>
 			<key>Title</key>
 			<string>Quick</string>
 			<key>Type</key>
@@ -54,15 +68,39 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/Realm-cocoa</string>
+			<string>Licenses/realm-cocoa</string>
 			<key>Title</key>
-			<string>Realm-cocoa</string>
+			<string>realm-cocoa</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Acknowledgements/XCGLogger</string>
+			<string>Licenses/realm-core</string>
+			<key>Title</key>
+			<string>realm-core</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Licenses/TimelaneCombine</string>
+			<key>Title</key>
+			<string>TimelaneCombine</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Licenses/TimelaneCore</string>
+			<key>Title</key>
+			<string>TimelaneCore</string>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+		</dict>
+		<dict>
+			<key>File</key>
+			<string>Licenses/XCGLogger</string>
 			<key>Title</key>
 			<string>XCGLogger</string>
 			<key>Type</key>

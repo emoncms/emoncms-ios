@@ -1,0 +1,27 @@
+name: Former, nameSpecified: , owner: ra1028, version: 1.8.0
+
+name: ios-snapshot-test-case, nameSpecified: , owner: uber, version: 6.1.0
+
+name: Locksmith, nameSpecified: , owner: matthewpalmer, version: 4.0.0
+
+name: Charts, nameSpecified: , owner: danielgindi, version: 3.4.0
+
+name: Entwine, nameSpecified: , owner: tcldr, version: 0.8.0
+
+name: Nimble, nameSpecified: , owner: Quick, version: 8.0.2
+
+name: Quick, nameSpecified: , owner: Quick, version: 2.1.0
+
+name: realm-cocoa, nameSpecified: , owner: realm, version: 3.17.3
+
+name: realm-core, nameSpecified: , owner: realm, version: 5.23.1
+
+name: TimelaneCombine, nameSpecified: , owner: icanzilb, version: 0.9.0
+
+name: TimelaneCore, nameSpecified: , owner: icanzilb, version: 0.9.0
+
+name: XCGLogger, nameSpecified: , owner: DaveWoodCom, version: 7.0.1
+
+add-version-numbers: false
+
+LicensePlist Version: 2.12.0
