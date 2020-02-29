@@ -92,12 +92,21 @@ class TodayViewController: UIViewController, NCWidgetProviding {
       .assign(to: \.isHidden, on: self.emptyLabel)
       .store(in: &self.cancellables)
 
-    self.viewModel.$feeds
-      .first()
-      .map { _ in true }
-      .prepend(false)
-      .map {
-        $0 ? "Select some feeds in Emoncms app" : "Loading\u{2026}"
+    self.viewModel.$loadingState
+      .map { loadingState in
+        switch loadingState {
+        case .loading:
+          return "Loading\u{2026}"
+        case .loaded:
+          return "Select some feeds in Emoncms app"
+        case .failed(let error):
+          switch error {
+          case .keychainLocked:
+            return "Device locked"
+          default:
+            return "Failed to fetch feed data"
+          }
+        }
       }
       .assign(to: \.text, on: self.emptyLabel)
       .store(in: &self.cancellables)

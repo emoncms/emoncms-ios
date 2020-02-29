@@ -13,8 +13,16 @@ import Realm
 import RealmSwift
 
 final class TodayViewModel {
-  enum TodayViewModel: Error {
+  enum TodayViewModelError: Error {
     case unknown
+    case keychainLocked
+    case cancelled
+  }
+
+  enum LoadingState {
+    case loading
+    case loaded
+    case failed(TodayViewModelError)
   }
 
   struct ListItem {
@@ -38,6 +46,7 @@ final class TodayViewModel {
 
   // Outputs
   @Published private(set) var feeds: [ListItem] = []
+  @Published private(set) var loadingState: LoadingState = .loading
 
   init(realmController: RealmController, api: EmonCMSAPI) {
     self.realmController = realmController
@@ -46,12 +55,21 @@ final class TodayViewModel {
     self.realm = realmController.createMainRealm()
   }
 
-  func updateData() -> AnyPublisher<Bool, Never> {
-    return Deferred { [weak self] () -> AnyPublisher<Bool, Never> in
-      guard let self = self else { return Empty<Bool, Never>().eraseToAnyPublisher() }
+  func updateData() -> AnyPublisher<Bool, TodayViewModelError> {
+    return Deferred { [weak self] () -> AnyPublisher<Bool, TodayViewModelError> in
+      guard let self = self else { return Empty<Bool, TodayViewModelError>().eraseToAnyPublisher() }
 
       let feedsQuery = self.realm.objects(TodayWidgetFeed.self)
         .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
+
+      guard let firstFeed = feedsQuery.first else {
+        self.feeds = []
+        return Just<Bool>(true).setFailureType(to: TodayViewModelError.self).eraseToAnyPublisher()
+      }
+
+      guard let _ = self.keychainController.apiKey(forAccountWithId: firstFeed.accountId) else {
+        return Fail(error: TodayViewModelError.keychainLocked).eraseToAnyPublisher()
+      }
 
       let listItemObservables = feedsQuery
         .compactMap { [weak self] todayWidgetFeed -> AnyPublisher<ListItem?, Never>? in
@@ -91,7 +109,7 @@ final class TodayViewModel {
 
       if listItemObservables.count == 0 {
         self.feeds = []
-        return Just<Bool>(true).eraseToAnyPublisher()
+        return Just<Bool>(true).setFailureType(to: TodayViewModelError.self).eraseToAnyPublisher()
       } else {
         return listItemObservables.publisher.flatMap { $0 }.collect()
           .handleEvents(receiveOutput: { [weak self] in
@@ -100,8 +118,25 @@ final class TodayViewModel {
             self.feeds = nonNils
           })
           .map { _ in true }
+          .setFailureType(to: TodayViewModelError.self)
           .eraseToAnyPublisher()
       }
-    }.eraseToAnyPublisher()
+    }
+    .handleEvents(
+      receiveSubscription: { [weak self] _ in
+        self?.loadingState = .loading
+      },
+      receiveCompletion: { [weak self] completion in
+        switch completion {
+        case .finished:
+          self?.loadingState = .loaded
+        case .failure(let error):
+          self?.loadingState = .failed(error)
+        }
+      },
+      receiveCancel: { [weak self] in
+        self?.loadingState = .failed(.cancelled)
+      })
+    .eraseToAnyPublisher()
   }
 }
