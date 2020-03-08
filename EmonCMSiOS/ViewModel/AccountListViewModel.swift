@@ -91,7 +91,7 @@ final class AccountListViewModel {
   private func accountController(forAccountWithId id: String) -> AccountController? {
     guard
       let account = self.realm.object(ofType: Account.self, forPrimaryKey: id),
-      let apiKey = self.keychainController.apiKey(forAccountWithId: id) else {
+      let apiKey = try? self.keychainController.apiKey(forAccountWithId: id) else {
       return nil
     }
     let credentials = AccountCredentials(url: account.url, apiKey: apiKey)

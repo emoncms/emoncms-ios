@@ -15,8 +15,8 @@ final class KeychainController {
   static let SharedKeychainIdentifier = "4C898RE43H.org.openenergymonitor.emoncms"
 
   enum KeychainControllerError: Error {
-    case Generic
-    case KeychainFailed
+    case generic
+    case keychainFailed
   }
 
   private func keychain(useShared: Bool = false) -> Keychain {
@@ -44,7 +44,7 @@ final class KeychainController {
       let data = try keychain.getData(account),
       let unarchivedData = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSDictionary.self, from: data),
       let dict = unarchivedData as? [String: Any] else {
-      throw KeychainControllerError.Generic
+      throw KeychainControllerError.generic
     }
     return dict
   }
@@ -59,27 +59,28 @@ final class KeychainController {
       let data = ["apikey": apiKey]
       try self.save(data: data, forUserAccount: id)
     } catch {
-      throw KeychainControllerError.KeychainFailed
+      throw KeychainControllerError.keychainFailed
     }
   }
 
-  func apiKey(forAccountWithId id: String) -> String? {
+  func apiKey(forAccountWithId id: String) throws -> String {
+    let data: [String: Any]
     do {
-      let data = try self.loadData(forUserAccount: id)
-      guard let apiKey = data["apikey"] as? String else {
-        return nil
-      }
-      return apiKey
+      data = try self.loadData(forUserAccount: id)
     } catch {
-      return nil
+      throw KeychainControllerError.keychainFailed
     }
+    guard let apiKey = data["apikey"] as? String else {
+      throw KeychainControllerError.generic
+    }
+    return apiKey
   }
 
   func logout(ofAccountWithId id: String) throws {
     do {
       try self.deleteData(forUserAccount: id)
     } catch {
-      throw KeychainControllerError.KeychainFailed
+      throw KeychainControllerError.keychainFailed
     }
   }
 }

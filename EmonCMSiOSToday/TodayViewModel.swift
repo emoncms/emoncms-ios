@@ -67,8 +67,12 @@ final class TodayViewModel {
         return Just<Bool>(true).setFailureType(to: TodayViewModelError.self).eraseToAnyPublisher()
       }
 
-      guard let _ = self.keychainController.apiKey(forAccountWithId: firstFeed.accountId) else {
+      do {
+        _ = try self.keychainController.apiKey(forAccountWithId: firstFeed.accountId)
+      } catch KeychainController.KeychainControllerError.keychainFailed {
         return Fail(error: TodayViewModelError.keychainLocked).eraseToAnyPublisher()
+      } catch {
+        return Fail(error: TodayViewModelError.unknown).eraseToAnyPublisher()
       }
 
       let listItemObservables = feedsQuery
@@ -80,7 +84,7 @@ final class TodayViewModel {
 
           guard
             let account = self.realm.object(ofType: Account.self, forPrimaryKey: accountId),
-            let apiKey = self.keychainController.apiKey(forAccountWithId: accountId)
+            let apiKey = try? self.keychainController.apiKey(forAccountWithId: accountId)
           else { return nil }
 
           let accountName = account.name
