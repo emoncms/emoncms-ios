@@ -24,6 +24,7 @@
 		C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
 		C91307D722F2D0470094147E /* Realm+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91307D622F2D0470094147E /* Realm+Combine.swift */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
+		C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CC2414EA1B00C4F9C5 /* Former */; };
 		C91CC3451D8CAE1E0048A356 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
 		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
 		C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C92010F31D89F6AD00C9974B /* Apps.storyboard */; };
@@ -74,7 +75,6 @@
 		C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
 		C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
-		C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949986121FBD6FE008FB8AE /* Former.framework */; };
 		C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; };
 		C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
@@ -326,7 +326,6 @@
 		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+User.swift"; sourceTree = "<group>"; };
 		C949985E21FBD6FE008FB8AE /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
-		C949986121FBD6FE008FB8AE /* Former.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Former.framework; path = Carthage/Build/iOS/Former.framework; sourceTree = "<group>"; };
 		C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C94998C121FD0D08008FB8AE /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -461,8 +460,8 @@
 				C96A08202303495D00B55194 /* RealmSwift in Frameworks */,
 				C96D523D23F956B700613835 /* TimelaneCombine in Frameworks */,
 				C95C50FC23511EFB00D07E80 /* Charts in Frameworks */,
+				C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */,
 				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
-				C949986C21FBD6FE008FB8AE /* Former.framework in Frameworks */,
 				C96DA37423034002005B1F98 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -507,7 +506,6 @@
 			children = (
 				C96DA384230345BE005B1F98 /* Charts.framework */,
 				C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */,
-				C949986121FBD6FE008FB8AE /* Former.framework */,
 				C949985E21FBD6FE008FB8AE /* Locksmith.framework */,
 				C97284D51DA594C20010C7B7 /* NotificationCenter.framework */,
 			);
@@ -964,6 +962,7 @@
 				C96A081F2303495D00B55194 /* RealmSwift */,
 				C95C50FB23511EFB00D07E80 /* Charts */,
 				C96D523C23F956B700613835 /* TimelaneCombine */,
+				C91B74CC2414EA1B00C4F9C5 /* Former */,
 			);
 			productName = EmonCMSiOS;
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
@@ -1040,6 +1039,7 @@
 				C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */,
 				C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */,
 				C96D523B23F956B700613835 /* XCRemoteSwiftPackageReference "TimelaneCombine" */,
+				C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */,
 			);
 			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
 			projectDirPath = "";
@@ -1105,13 +1105,11 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Former.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Former.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1755,6 +1753,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ra1028/Former";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.8.1;
+			};
+		};
 		C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
@@ -1814,6 +1820,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C91B74CC2414EA1B00C4F9C5 /* Former */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */;
+			productName = Former;
+		};
 		C95C50FB23511EFB00D07E80 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */;

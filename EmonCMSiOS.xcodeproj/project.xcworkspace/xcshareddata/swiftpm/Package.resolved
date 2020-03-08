@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "Former",
+        "repositoryURL": "https://github.com/ra1028/Former",
+        "state": {
+          "branch": null,
+          "revision": "6e9d10c0c34105990507b65916281dae4cf6b899",
+          "version": "1.8.1"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble",
         "state": {
