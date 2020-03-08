@@ -1,4 +1,2 @@
-github "matthewpalmer/Locksmith" ~> 4.0
-
 # Tests
 github "uber/ios-snapshot-test-case" ~> 6.1

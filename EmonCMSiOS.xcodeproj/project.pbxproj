@@ -25,6 +25,8 @@
 		C91307D722F2D0470094147E /* Realm+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91307D622F2D0470094147E /* Realm+Combine.swift */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
 		C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CC2414EA1B00C4F9C5 /* Former */; };
+		C91B74D02414EE6000C4F9C5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CF2414EE6000C4F9C5 /* KeychainAccess */; };
+		C91B74D22414F23200C4F9C5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74D12414F23200C4F9C5 /* KeychainAccess */; };
 		C91CC3451D8CAE1E0048A356 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
 		C92010F01D89F2E600C9974B /* AppListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C92010EF1D89F2E600C9974B /* AppListViewModel.swift */; };
 		C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C92010F31D89F6AD00C9974B /* Apps.storyboard */; };
@@ -74,7 +76,6 @@
 		C945F8F821FE52C300B99D35 /* TodayViewFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C945F8F621FE52C300B99D35 /* TodayViewFeedCell.xib */; };
 		C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
-		C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
 		C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; };
 		C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
@@ -84,7 +85,6 @@
 		C94998CF21FD10ED008FB8AE /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		C94998D021FD1221008FB8AE /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1021ED10E800C6AE9A /* Account.swift */; };
 		C94998D121FD12CC008FB8AE /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
-		C94998D321FD1C8B008FB8AE /* Locksmith.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949985E21FBD6FE008FB8AE /* Locksmith.framework */; };
 		C94998D421FD1C93008FB8AE /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
 		C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998D521FDF903008FB8AE /* AccountControllerTests.swift */; };
 		C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */; };
@@ -325,7 +325,6 @@
 		C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewModelTests.swift; sourceTree = "<group>"; };
 		C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+User.swift"; sourceTree = "<group>"; };
-		C949985E21FBD6FE008FB8AE /* Locksmith.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Locksmith.framework; path = Carthage/Build/iOS/Locksmith.framework; sourceTree = "<group>"; };
 		C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSnapshotTestCase.framework; path = Carthage/Build/iOS/FBSnapshotTestCase.framework; sourceTree = "<group>"; };
 		C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C94998C121FD0D08008FB8AE /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
@@ -430,10 +429,10 @@
 			files = (
 				C96A081C2303495000B55194 /* RealmSwift in Frameworks */,
 				C96A081A2303495000B55194 /* Realm in Frameworks */,
+				C91B74D22414F23200C4F9C5 /* KeychainAccess in Frameworks */,
 				C95C50FE2351361200D07E80 /* Charts in Frameworks */,
 				C96A08222303496700B55194 /* ObjcExceptionBridging in Frameworks */,
 				C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */,
-				C94998D321FD1C8B008FB8AE /* Locksmith.framework in Frameworks */,
 				C96A08242303496700B55194 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -457,11 +456,11 @@
 			files = (
 				C96A081E2303495D00B55194 /* Realm in Frameworks */,
 				C96DA37223034002005B1F98 /* ObjcExceptionBridging in Frameworks */,
+				C91B74D02414EE6000C4F9C5 /* KeychainAccess in Frameworks */,
 				C96A08202303495D00B55194 /* RealmSwift in Frameworks */,
 				C96D523D23F956B700613835 /* TimelaneCombine in Frameworks */,
 				C95C50FC23511EFB00D07E80 /* Charts in Frameworks */,
 				C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */,
-				C949986921FBD6FE008FB8AE /* Locksmith.framework in Frameworks */,
 				C96DA37423034002005B1F98 /* XCGLogger in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -506,7 +505,6 @@
 			children = (
 				C96DA384230345BE005B1F98 /* Charts.framework */,
 				C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */,
-				C949985E21FBD6FE008FB8AE /* Locksmith.framework */,
 				C97284D51DA594C20010C7B7 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -905,6 +903,7 @@
 				C96A08212303496700B55194 /* ObjcExceptionBridging */,
 				C96A08232303496700B55194 /* XCGLogger */,
 				C95C50FD2351361200D07E80 /* Charts */,
+				C91B74D12414F23200C4F9C5 /* KeychainAccess */,
 			);
 			productName = EmonCMSiOSToday;
 			productReference = C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */;
@@ -945,7 +944,6 @@
 				C9C041951D85F7D600E3CEC4 /* Resources */,
 				C9D6923B1D95B55B00E0B249 /* Embed Watch Content */,
 				C97284E41DA594C20010C7B7 /* Embed App Extensions */,
-				C949985A21FBD1AF008FB8AE /* ShellScript */,
 				C9DD825322F0B8C000CE9ABC /* Embed Frameworks */,
 				C9EDF85C23F9BD4D00F3A810 /* ShellScript */,
 			);
@@ -963,6 +961,7 @@
 				C95C50FB23511EFB00D07E80 /* Charts */,
 				C96D523C23F956B700613835 /* TimelaneCombine */,
 				C91B74CC2414EA1B00C4F9C5 /* Former */,
+				C91B74CF2414EE6000C4F9C5 /* KeychainAccess */,
 			);
 			productName = EmonCMSiOS;
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
@@ -1040,6 +1039,7 @@
 				C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */,
 				C96D523B23F956B700613835 /* XCRemoteSwiftPackageReference "TimelaneCombine" */,
 				C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */,
+				C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
 			projectDirPath = "";
@@ -1096,25 +1096,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		C949985A21FBD1AF008FB8AE /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Locksmith.framework",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Locksmith.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks\n";
-		};
 		C9EDF85C23F9BD4D00F3A810 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1761,6 +1742,14 @@
 				minimumVersion = 1.8.1;
 			};
 		};
+		C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 4.1.0;
+			};
+		};
 		C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielgindi/Charts";
@@ -1824,6 +1813,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */;
 			productName = Former;
+		};
+		C91B74CF2414EE6000C4F9C5 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C91B74D12414F23200C4F9C5 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
 		};
 		C95C50FB23511EFB00D07E80 /* Charts */ = {
 			isa = XCSwiftPackageProductDependency;

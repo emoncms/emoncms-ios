@@ -29,6 +29,15 @@
         }
       },
       {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
+        "state": {
+          "branch": null,
+          "revision": "b920ad7df3c73189dcdd4aa05c540849b2010dbf",
+          "version": "4.1.0"
+        }
+      },
+      {
         "package": "Nimble",
         "repositoryURL": "https://github.com/Quick/Nimble",
         "state": {

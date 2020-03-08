@@ -8,7 +8,7 @@
 
 import Foundation
 
-import Locksmith
+import KeychainAccess
 
 final class KeychainController {
   static let ServiceIdentifier = "org.openenergymonitor.emoncms"
@@ -19,77 +19,65 @@ final class KeychainController {
     case KeychainFailed
   }
 
-  struct AccountSecureStorable:
-    ReadableSecureStorable,
-    CreateableSecureStorable,
-    DeleteableSecureStorable,
-    GenericPasswordSecureStorable
-  {
-    let service = KeychainController.ServiceIdentifier
-    let account: String
-    let data: [String: Any]
-    let useShared: Bool
-    var accessGroup: String? {
-      return self.useShared ? KeychainController.SharedKeychainIdentifier : nil
+  private func keychain(useShared: Bool = false) -> Keychain {
+    let keychain: Keychain
+    if useShared {
+      keychain = Keychain(service: KeychainController.ServiceIdentifier,
+                          accessGroup: KeychainController.SharedKeychainIdentifier)
+    } else {
+      keychain = Keychain(service: KeychainController.ServiceIdentifier)
     }
-
-    init(account: String, data: [String: Any], useShared: Bool = false) {
-      self.account = account
-      self.data = data
-      self.useShared = useShared
-    }
+    return keychain
   }
 
   init() {}
 
   private func save(data: [String: Any], forUserAccount account: String) throws {
-    let storable = AccountSecureStorable(account: account, data: data)
-    try storable.createInSecureStore()
+    let keychain = self.keychain()
+    let archivedData = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+    try keychain.set(archivedData, key: account)
   }
 
-  private func update(data: [String: Any], forUserAccount account: String) throws {
-    let storable = AccountSecureStorable(account: account, data: data)
-    try storable.updateInSecureStore()
-  }
-
-  private func loadData(forUserAccount account: String) -> [String: Any]? {
-    let storable = AccountSecureStorable(account: account, data: [:])
-    return storable.readFromSecureStore()?.data
+  private func loadData(forUserAccount account: String) throws -> [String: Any] {
+    let keychain = self.keychain()
+    guard
+      let data = try keychain.getData(account),
+      let unarchivedData = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSDictionary.self, from: data),
+      let dict = unarchivedData as? [String: Any] else {
+      throw KeychainControllerError.Generic
+    }
+    return dict
   }
 
   private func deleteData(forUserAccount account: String) throws {
-    let storable = AccountSecureStorable(account: account, data: [:])
-    try storable.deleteFromSecureStore()
+    let keychain = self.keychain()
+    try keychain.remove(account)
   }
 
   func saveAccount(forId id: String, apiKey: String) throws {
     do {
       let data = ["apikey": apiKey]
-      do {
-        try self.save(data: data, forUserAccount: id)
-      } catch LocksmithError.duplicate {
-        // We already have it, let's try updating it
-        try self.update(data: data, forUserAccount: id)
-      }
+      try self.save(data: data, forUserAccount: id)
     } catch {
       throw KeychainControllerError.KeychainFailed
     }
   }
 
   func apiKey(forAccountWithId id: String) -> String? {
-    guard
-      let data = self.loadData(forUserAccount: id),
-      let apiKey = data["apikey"] as? String else {
+    do {
+      let data = try self.loadData(forUserAccount: id)
+      guard let apiKey = data["apikey"] as? String else {
+        return nil
+      }
+      return apiKey
+    } catch {
       return nil
     }
-    return apiKey
   }
 
   func logout(ofAccountWithId id: String) throws {
     do {
       try self.deleteData(forUserAccount: id)
-    } catch LocksmithError.notFound {
-      // This is OK - it wasn't there anyway
     } catch {
       throw KeychainControllerError.KeychainFailed
     }
