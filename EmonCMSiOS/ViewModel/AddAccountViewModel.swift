@@ -27,8 +27,17 @@ final class AddAccountViewModel {
   private let realm: Realm
   private let account: Account?
 
+  @Published var url = SharedConstants.EmonCMSdotOrgURL {
+    didSet {
+      var url = self.url
+      if url.range(of: "://") == nil {
+        url = "https://" + url
+        self.url = url
+      }
+    }
+  }
+
   @Published var name = ""
-  @Published var url = SharedConstants.EmonCMSdotOrgURL
   @Published var username = ""
   @Published var password = ""
   @Published var apiKey = ""

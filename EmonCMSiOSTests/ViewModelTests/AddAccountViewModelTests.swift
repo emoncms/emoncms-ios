@@ -165,6 +165,21 @@ class AddAccountViewModelTests: EmonCMSTestCase {
 
         expect(result).to(equal(true))
       }
+
+      it("should add https when there's no scheme") {
+        viewModel.url = "emoncms.org"
+        expect(viewModel.url).to(equal("https://emoncms.org"))
+      }
+
+      it("should not add https when there's alraedy https scheme") {
+        viewModel.url = "https://emoncms.org"
+        expect(viewModel.url).to(equal("https://emoncms.org"))
+      }
+
+      it("should not add https when there's http scheme") {
+        viewModel.url = "http://emoncms.org"
+        expect(viewModel.url).to(equal("http://emoncms.org"))
+      }
     }
   }
 }
