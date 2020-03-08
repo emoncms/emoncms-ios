@@ -26,7 +26,7 @@ class KeychainControllerTests: QuickSpec {
           .toNot(throwError())
         expect { try controller.saveAccount(forId: accountId, apiKey: apiKey) }
           .toNot(throwError())
-        expect(controller.apiKey(forAccountWithId: accountId)).to(equal(apiKey))
+        expect { try controller.apiKey(forAccountWithId: accountId) }.to(equal(apiKey))
       }
 
       it("should logout of account") {
@@ -38,7 +38,7 @@ class KeychainControllerTests: QuickSpec {
           .toNot(throwError())
         expect { try controller.logout(ofAccountWithId: accountId) }
           .toNot(throwError())
-        expect(controller.apiKey(forAccountWithId: accountId)).to(beNil())
+        expect { try controller.apiKey(forAccountWithId: accountId) }.to(throwError())
       }
 
       it("should update account if already exists") {
@@ -51,7 +51,7 @@ class KeychainControllerTests: QuickSpec {
           .toNot(throwError())
         expect { try controller.saveAccount(forId: accountId, apiKey: apiKey2) }
           .toNot(throwError())
-        expect(controller.apiKey(forAccountWithId: accountId)).to(equal(apiKey2))
+        expect { try controller.apiKey(forAccountWithId: accountId) }.to(equal(apiKey2))
       }
     }
   }
