@@ -53,6 +53,11 @@ class KeychainControllerTests: QuickSpec {
           .toNot(throwError())
         expect { try controller.apiKey(forAccountWithId: accountId) }.to(equal(apiKey2))
       }
+
+      it("should throw when account doesn't exist") {
+        let accountId = "no_exist_account"
+        expect { try controller.apiKey(forAccountWithId: accountId) }.to(throwError())
+      }
     }
   }
 }
