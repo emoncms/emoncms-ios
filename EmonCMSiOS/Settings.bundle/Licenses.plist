@@ -44,9 +44,9 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Licenses/Locksmith</string>
+			<string>Licenses/KeychainAccess</string>
 			<key>Title</key>
-			<string>Locksmith</string>
+			<string>KeychainAccess</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
