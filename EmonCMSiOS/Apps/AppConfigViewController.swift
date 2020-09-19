@@ -109,7 +109,7 @@ final class AppConfigViewController: FormViewController {
       }
 
       self.navigationController?.popViewController(animated: true)
-      })
+    })
     .prepend(self.data[field.id] as? String)
 
     let feeds = self.viewModel.feedListHelper.$feeds.prepend([])

@@ -82,7 +82,7 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
           }
           .handleEvents(receiveOutput: { [weak self] _ in
             self?.errorsSubject.send(nil)
-            })
+          })
           .map { $0 }
           .prefix(untilOutputFrom: self.$dateRange.dropFirst())
           .trackActivity(isRefreshingIndicator)

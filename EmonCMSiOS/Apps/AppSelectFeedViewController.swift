@@ -64,7 +64,7 @@ final class AppSelectFeedViewController: UITableViewController {
       },
       titleForHeaderInSection: { ds, index in
         ds.sectionModels[index].model
-    })
+      })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil

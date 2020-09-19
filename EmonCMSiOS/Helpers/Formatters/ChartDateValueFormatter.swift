@@ -58,7 +58,7 @@ final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
     super.init()
   }
 
-  convenience override init() {
+  override convenience init() {
     self.init(.auto)
   }
 

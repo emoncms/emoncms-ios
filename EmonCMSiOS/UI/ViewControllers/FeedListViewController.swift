@@ -137,7 +137,7 @@ final class FeedListViewController: UIViewController {
       },
       titleForHeaderInSection: { ds, index in
         ds.sectionModels[index].model
-    })
+      })
 
     self.tableView.delegate = nil
     self.tableView.dataSource = nil
@@ -239,7 +239,8 @@ final class FeedListViewController: UIViewController {
                          self.chartControlsContainerView.alpha = progress
                          self.chartLabelContainerView.alpha = 1.0 - progress
                          self.view.layoutIfNeeded()
-        }, completion: nil)
+                       },
+                       completion: nil)
       }
       .store(in: &self.cancellables)
   }
@@ -434,7 +435,7 @@ final class FeedListViewController: UIViewController {
                 let y = point.value
 
                 let yDataEntry = ChartDataEntry(x: x, y: y)
-                _ = dataSet.append(yDataEntry)
+                dataSet.append(yDataEntry)
               }
 
               let data = LineChartData()

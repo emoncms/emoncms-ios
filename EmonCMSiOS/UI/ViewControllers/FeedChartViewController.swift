@@ -236,7 +236,7 @@ final class FeedChartViewController: FormViewController {
           let y = point.value
 
           let yDataEntry = ChartDataEntry(x: x, y: y)
-          _ = dataSet.append(yDataEntry)
+          dataSet.append(yDataEntry)
         }
 
         let data = LineChartData()

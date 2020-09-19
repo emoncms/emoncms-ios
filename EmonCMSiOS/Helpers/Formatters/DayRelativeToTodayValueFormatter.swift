@@ -24,7 +24,7 @@ final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
     super.init()
   }
 
-  convenience override init() {
+  override convenience init() {
     self.init(relativeTo: nil)
   }
 

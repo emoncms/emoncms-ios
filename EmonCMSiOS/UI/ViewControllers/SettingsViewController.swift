@@ -59,13 +59,13 @@ final class SettingsViewController: FormViewController {
           self.tableView.deselectRow(at: selectedRow, animated: true)
         }
         self.switchAccountSubject.send(true)
-        }))
+      }))
 
       actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { _ in
         if let selectedRow = self.tableView.indexPathForSelectedRow {
           self.tableView.deselectRow(at: selectedRow, animated: true)
         }
-        }))
+      }))
 
       if let popoverController = actionSheet.popoverPresentationController {
         popoverController.sourceView = former.cell

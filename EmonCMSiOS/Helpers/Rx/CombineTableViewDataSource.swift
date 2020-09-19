@@ -38,12 +38,11 @@ extension SectionModel: SectionModelType {
   }
 }
 
-extension SectionModel:
-  CustomStringConvertible {
-    public var description: String {
-      return "\(self.model) > \(self.items)"
-    }
+extension SectionModel: CustomStringConvertible {
+  public var description: String {
+    return "\(self.model) > \(self.items)"
   }
+}
 
 extension SectionModel {
   public init(original: SectionModel<Section, Item>, items: [Item]) {
@@ -52,8 +51,7 @@ extension SectionModel {
   }
 }
 
-extension SectionModel:
-  Equatable where Section: Equatable, ItemType: Equatable {
+extension SectionModel: Equatable where Section: Equatable, ItemType: Equatable {
   public static func == (lhs: SectionModel, rhs: SectionModel) -> Bool {
     return lhs.model == rhs.model
       && lhs.items == rhs.items

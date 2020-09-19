@@ -139,13 +139,13 @@ final class AppListViewController: UITableViewController {
 
         return Producer<AppCategory, Never> { observer in
           alert.addAction(UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            _ = observer.receive(completion: .finished)
+            observer.receive(completion: .finished)
           })
 
           AppCategory.allCases.forEach { appCategory in
             alert.addAction(UIAlertAction(title: appCategory.displayName, style: .default) { _ in
               _ = observer.receive(appCategory)
-              _ = observer.receive(completion: .finished)
+              observer.receive(completion: .finished)
             })
           }
 
