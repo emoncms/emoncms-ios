@@ -1745,7 +1745,7 @@
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 4.1.0;
+				minimumVersion = 4.2.0;
 			};
 		};
 		C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */ = {
@@ -1753,7 +1753,7 @@
 			repositoryURL = "https://github.com/danielgindi/Charts";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 3.4.0;
+				minimumVersion = 3.5.0;
 			};
 		};
 		C96DA35F23028FC3005B1F98 /* XCRemoteSwiftPackageReference "Entwine" */ = {
@@ -1761,7 +1761,7 @@
 			repositoryURL = "https://github.com/tcldr/Entwine";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.8.0;
+				minimumVersion = 0.9.0;
 			};
 		};
 		C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */ = {
@@ -1777,15 +1777,15 @@
 			repositoryURL = "https://github.com/Quick/Quick";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 2.1.0;
+				minimumVersion = 3.0.0;
 			};
 		};
 		C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Nimble";
 			requirement = {
-				kind = exactVersion;
-				version = 8.0.2;
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.0;
 			};
 		};
 		C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
