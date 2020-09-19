@@ -45,7 +45,7 @@ final class TodayWidgetFeedsListViewModel {
 
     let todayWidgetFeedsQuery = self.realm.objects(TodayWidgetFeed.self)
       .sorted(byKeyPath: #keyPath(TodayWidgetFeed.order), ascending: true)
-    Publishers.array(from: todayWidgetFeedsQuery)
+    todayWidgetFeedsQuery.collectionPublisher
       .map(self.todayWidgetFeedsToListItems)
       .sink(
         receiveCompletion: { error in
@@ -58,7 +58,7 @@ final class TodayWidgetFeedsListViewModel {
       .store(in: &self.cancellables)
   }
 
-  private func todayWidgetFeedsToListItems(_ todayWidgetFeeds: [TodayWidgetFeed]) -> [ListItem] {
+  private func todayWidgetFeedsToListItems(_ todayWidgetFeeds: Results<TodayWidgetFeed>) -> [ListItem] {
     var accountIdToName = [String: String]()
 
     let listItems = todayWidgetFeeds.map { todayWidgetFeed -> ListItem in
@@ -88,7 +88,7 @@ final class TodayWidgetFeedsListViewModel {
                       feedId: feedId, feedName: feedName)
     }
 
-    return listItems
+    return Array(listItems)
   }
 
   func addTodayWidgetFeed(forFeedId feedId: String) -> AnyPublisher<Bool, Never> {

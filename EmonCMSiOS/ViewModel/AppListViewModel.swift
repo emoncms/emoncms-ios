@@ -41,7 +41,7 @@ final class AppListViewModel {
 
     let appQuery = self.realm.objects(AppData.self)
       .sorted(byKeyPath: #keyPath(AppData.name), ascending: true)
-    Publishers.array(from: appQuery)
+    appQuery.collectionPublisher
       .map(self.appsToListItems)
       .sink(
         receiveCompletion: { error in
@@ -54,11 +54,11 @@ final class AppListViewModel {
       .store(in: &self.cancellables)
   }
 
-  private func appsToListItems(_ apps: [AppData]) -> [ListItem] {
+  private func appsToListItems(_ apps: Results<AppData>) -> [ListItem] {
     let listItems = apps.map {
       ListItem(appId: $0.uuid, category: $0.appCategory, name: $0.name)
     }
-    return listItems
+    return Array(listItems)
   }
 
   func deleteApp(withId id: String) -> AnyPublisher<Void, Never> {

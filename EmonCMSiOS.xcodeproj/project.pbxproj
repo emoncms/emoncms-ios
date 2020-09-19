@@ -22,7 +22,6 @@
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
 		C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
-		C91307D722F2D0470094147E /* Realm+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91307D622F2D0470094147E /* Realm+Combine.swift */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
 		C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CC2414EA1B00C4F9C5 /* Former */; };
 		C91B74D02414EE6000C4F9C5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CF2414EE6000C4F9C5 /* KeychainAccess */; };
@@ -284,7 +283,6 @@
 		C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDateValueFormatter.swift; sourceTree = "<group>"; };
 		C906B4561D8B045F007FE19A /* EmonCMSColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSColors.swift; sourceTree = "<group>"; };
-		C91307D622F2D0470094147E /* Realm+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Realm+Combine.swift"; sourceTree = "<group>"; };
 		C91747A721F37A9A0054875D /* FeedListHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelperTests.swift; sourceTree = "<group>"; };
 		C91747A921F37BA50054875D /* FeedUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModelTests.swift; sourceTree = "<group>"; };
@@ -781,7 +779,6 @@
 				C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */,
 				C957CCED1D9086E40039D707 /* RowFormer+Combine.swift */,
 				C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */,
-				C91307D622F2D0470094147E /* Realm+Combine.swift */,
 				C96DA33223004E79005B1F98 /* UIControl+Combine.swift */,
 				C96DA3342301F4B7005B1F98 /* CombineTableViewDataSource.swift */,
 			);
@@ -1206,7 +1203,6 @@
 				C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
 				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,
-				C91307D722F2D0470094147E /* Realm+Combine.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
 				1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */,
 				C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */,

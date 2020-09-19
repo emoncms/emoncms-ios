@@ -42,7 +42,8 @@ final class FeedListHelper {
     let isRefreshingIndicator = ActivityIndicatorCombine()
     self.isRefreshing = isRefreshingIndicator.asPublisher()
 
-    Publishers.array(from: self.realm.objects(Feed.self))
+    self.realm.objects(Feed.self)
+      .collectionPublisher
       .map(self.feedsToListItems)
       .sink(
         receiveCompletion: { error in
@@ -67,7 +68,7 @@ final class FeedListHelper {
       .store(in: &self.cancellables)
   }
 
-  private func feedsToListItems(_ feeds: [Feed]) -> [FeedListItem] {
+  private func feedsToListItems(_ feeds: Results<Feed>) -> [FeedListItem] {
     let sortedFeedItems = feeds.sorted {
       $0.name < $1.name
     }.map {

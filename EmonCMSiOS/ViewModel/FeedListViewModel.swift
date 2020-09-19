@@ -59,7 +59,8 @@ final class FeedListViewModel {
           results = results.filter("name CONTAINS[c] %@", trimmedSearchTerm)
         }
         results = results.sorted(byKeyPath: #keyPath(Feed.name))
-        return Publishers.array(from: results)
+        return results.collectionPublisher
+          .map { Array($0) }
           .catch { error -> AnyPublisher<[Feed], Never> in
             AppLog.error("Query errored when it shouldn't! \(error)")
             return Just<[Feed]>([]).eraseToAnyPublisher()

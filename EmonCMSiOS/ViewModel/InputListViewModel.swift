@@ -53,7 +53,7 @@ final class InputListViewModel {
 
     let inputsQuery = self.realm.objects(Input.self)
       .sorted(by: [SortDescriptor(keyPath: #keyPath(Input.nodeid)), SortDescriptor(keyPath: #keyPath(Input.name))])
-    Publishers.array(from: inputsQuery)
+    inputsQuery.collectionPublisher
       .map(self.inputsToSections)
       .sink(
         receiveCompletion: { error in
@@ -89,7 +89,7 @@ final class InputListViewModel {
       .store(in: &self.cancellables)
   }
 
-  private func inputsToSections(_ inputs: [Input]) -> [Section] {
+  private func inputsToSections(_ inputs: Results<Input>) -> [Section] {
     var sectionBuilder: [String: [Input]] = [:]
     for input in inputs {
       let sectionInputs: [Input]

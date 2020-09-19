@@ -50,7 +50,7 @@ final class DashboardListViewModel {
     self.isRefreshing = isRefreshingIndicator.asPublisher()
 
     let dashboardsQuery = self.realm.objects(Dashboard.self).sorted(byKeyPath: #keyPath(Dashboard.id))
-    Publishers.array(from: dashboardsQuery)
+    dashboardsQuery.collectionPublisher
       .map(self.dashboardsToListItems)
       .sink(
         receiveCompletion: { error in
@@ -86,11 +86,11 @@ final class DashboardListViewModel {
       .store(in: &self.cancellables)
   }
 
-  private func dashboardsToListItems(_ dashboards: [Dashboard]) -> [ListItem] {
+  private func dashboardsToListItems(_ dashboards: Results<Dashboard>) -> [ListItem] {
     let listItems = dashboards.map {
       ListItem(dashboardId: $0.id, name: $0.name, desc: $0.desc)
     }
-    return listItems
+    return Array(listItems)
   }
 
   func urlForDashboard(withId id: String) -> URL? {

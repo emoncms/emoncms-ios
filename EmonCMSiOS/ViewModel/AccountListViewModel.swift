@@ -43,7 +43,7 @@ final class AccountListViewModel {
 
     let accountQuery = self.realm.objects(Account.self)
       .sorted(byKeyPath: #keyPath(Account.name), ascending: true)
-    Publishers.array(from: accountQuery)
+    accountQuery.collectionPublisher
       .map(self.accountsToListItems)
       .sink(
         receiveCompletion: { error in
@@ -81,11 +81,11 @@ final class AccountListViewModel {
     }
   }
 
-  private func accountsToListItems(_ accounts: [Account]) -> [ListItem] {
+  private func accountsToListItems(_ accounts: Results<Account>) -> [ListItem] {
     let listItems = accounts.map {
       ListItem(accountId: $0.uuid, name: $0.name, url: $0.url)
     }
-    return listItems
+    return Array(listItems)
   }
 
   private func accountController(forAccountWithId id: String) -> AccountController? {
