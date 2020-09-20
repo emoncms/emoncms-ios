@@ -103,8 +103,6 @@
 		C96A083623034BE600B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083523034BE600B55194 /* ObjcExceptionBridging */; };
 		C96A083823034BE600B55194 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083723034BE600B55194 /* XCGLogger */; };
 		C96A08392303518E00B55194 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
-		C96A083B2303E00B00B55194 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083A2303E00B00B55194 /* Realm */; };
-		C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C96A083C2303E02100B55194 /* ObjcExceptionBridging */; };
 		C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96A1C902304987200690E4D /* SceneDelegate.swift */; };
 		C96D523F23F96B4300613835 /* EmoncmsDoubleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */; };
 		C96D524223F96F9000613835 /* ActivityIndicatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96D524123F96F9000613835 /* ActivityIndicatorTests.swift */; };
@@ -440,10 +438,8 @@
 			files = (
 				C96DA3772303410F005B1F98 /* Quick in Frameworks */,
 				C96DA37A23034132005B1F98 /* Nimble in Frameworks */,
-				C96A083D2303E02100B55194 /* ObjcExceptionBridging in Frameworks */,
 				C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */,
 				C96DA36123028FC3005B1F98 /* EntwineTest in Frameworks */,
-				C96A083B2303E00B00B55194 /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -923,8 +919,6 @@
 				C96DA36023028FC3005B1F98 /* EntwineTest */,
 				C96DA3762303410F005B1F98 /* Quick */,
 				C96DA37923034132005B1F98 /* Nimble */,
-				C96A083A2303E00B00B55194 /* Realm */,
-				C96A083C2303E02100B55194 /* ObjcExceptionBridging */,
 			);
 			productName = EmonCMSiOSTests;
 			productReference = C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */;
@@ -1879,16 +1873,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
 			productName = XCGLogger;
-		};
-		C96A083A2303E00B00B55194 /* Realm */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
-			productName = Realm;
-		};
-		C96A083C2303E02100B55194 /* ObjcExceptionBridging */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
-			productName = ObjcExceptionBridging;
 		};
 		C96DA36023028FC3005B1F98 /* EntwineTest */ = {
 			isa = XCSwiftPackageProductDependency;
