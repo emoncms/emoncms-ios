@@ -22,41 +22,62 @@ class KeychainControllerTests: QuickSpec {
       it("should save account") {
         let accountId = "test_account"
         let apiKey = "test"
-        expect { try controller.logout(ofAccountWithId: accountId) }
-          .toNot(throwError())
-        expect { try controller.saveAccount(forId: accountId, apiKey: apiKey) }
-          .toNot(throwError())
-        expect { try controller.apiKey(forAccountWithId: accountId) }.to(equal(apiKey))
+        do {
+          try controller.logout(ofAccountWithId: accountId)
+          try controller.saveAccount(forId: accountId, apiKey: apiKey)
+          let fetchedKey = try controller.apiKey(forAccountWithId: accountId)
+          expect(fetchedKey).to(equal(apiKey))
+        } catch {
+          fail("Shouldn't throw")
+        }
       }
 
       it("should logout of account") {
         let accountId = "test_account"
         let apiKey = "test"
-        expect { try controller.logout(ofAccountWithId: accountId) }
-          .toNot(throwError())
-        expect { try controller.saveAccount(forId: accountId, apiKey: apiKey) }
-          .toNot(throwError())
-        expect { try controller.logout(ofAccountWithId: accountId) }
-          .toNot(throwError())
-        expect { try controller.apiKey(forAccountWithId: accountId) }.to(throwError())
+
+        do {
+          try controller.logout(ofAccountWithId: accountId)
+          try controller.saveAccount(forId: accountId, apiKey: apiKey)
+          try controller.logout(ofAccountWithId: accountId)
+        } catch {
+          fail("Shouldn't throw")
+        }
+
+        var threw = false
+        do {
+          _ = try controller.apiKey(forAccountWithId: accountId)
+        } catch {
+          threw = true
+        }
+        expect(threw).to(equal(true))
       }
 
       it("should update account if already exists") {
         let accountId = "test_account"
         let apiKey1 = "test1"
         let apiKey2 = "test2"
-        expect { try controller.logout(ofAccountWithId: accountId) }
-          .toNot(throwError())
-        expect { try controller.saveAccount(forId: accountId, apiKey: apiKey1) }
-          .toNot(throwError())
-        expect { try controller.saveAccount(forId: accountId, apiKey: apiKey2) }
-          .toNot(throwError())
-        expect { try controller.apiKey(forAccountWithId: accountId) }.to(equal(apiKey2))
+
+        do {
+          try controller.logout(ofAccountWithId: accountId)
+          try controller.saveAccount(forId: accountId, apiKey: apiKey1)
+          try controller.saveAccount(forId: accountId, apiKey: apiKey2)
+          let fetchedKey = try controller.apiKey(forAccountWithId: accountId)
+          expect(fetchedKey).to(equal(apiKey2))
+        } catch {
+          fail("Shouldn't throw")
+        }
       }
 
       it("should throw when account doesn't exist") {
         let accountId = "no_exist_account"
-        expect { try controller.apiKey(forAccountWithId: accountId) }.to(throwError())
+        var threw = false
+        do {
+          _ = try controller.apiKey(forAccountWithId: accountId)
+        } catch {
+          threw = true
+        }
+        expect(threw).to(equal(true))
       }
     }
   }
