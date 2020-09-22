@@ -42,7 +42,7 @@ struct FeedRowView: View {
         .padding(.leading, 8)
         .padding(.trailing, 4)
         .padding(.vertical, 4)
-        .frame(width: metrics.size.width * 0.5, alignment: .leading)
+        .frame(width: metrics.size.width * 0.6, alignment: .leading)
         .frame(minHeight: metrics.size.height)
 
         // Chart
@@ -51,7 +51,7 @@ struct FeedRowView: View {
             .stroke(Color(EmonCMSColors.Chart.Blue), lineWidth: 2)
             .padding(.vertical, 12)
             .padding(.horizontal, 4)
-            .frame(width: metrics.size.width * 0.3, alignment: .trailing)
+            .frame(width: metrics.size.width * 0.2, alignment: .trailing)
             .frame(minHeight: metrics.size.height)
         }
 
@@ -64,7 +64,7 @@ struct FeedRowView: View {
           .padding(.leading, 4)
           .padding(.trailing, 8)
           .padding(.vertical, 4)
-          .frame(width: metrics.size.width * (self.compressed ? 0.5 : 0.2), alignment: .trailing)
+          .frame(width: metrics.size.width * (self.compressed ? 0.4 : 0.2), alignment: .trailing)
           .frame(minHeight: metrics.size.height)
       }.frame(minHeight: metrics.size.height)
     }
