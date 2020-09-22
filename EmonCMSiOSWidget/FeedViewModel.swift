@@ -36,31 +36,36 @@ final class FeedViewModel {
   func fetchData(
     accountId: String,
     feedId: String,
-    completion: @escaping (FeedWidgetItem?, FeedViewModelError?) -> Void) {
-    self.fetchData(for: [(accountId: accountId, feedId: feedId)]) { items, error in
-      completion(items.first, error)
+    completion: @escaping (FeedWidgetItemResult) -> Void) {
+    self.fetchData(for: [(accountId: accountId, feedId: feedId)]) { results in
+      if let firstResult = results.first {
+        completion(firstResult)
+      } else {
+        completion(.failure(.unknown))
+      }
     }
   }
 
   func fetchData(
     for feeds: [(accountId: String, feedId: String)],
-    completion: @escaping ([FeedWidgetItem], FeedViewModelError?) -> Void) {
-    var items: [FeedWidgetItem] = []
+    completion: @escaping ([FeedWidgetItemResult]) -> Void) {
     feeds
-      .map { (accountId: String, feedId: String) in
+      .map { (accountId: String, feedId: String) -> AnyPublisher<FeedWidgetItemResult, Never> in
         fetchDataImpl(accountId: accountId, feedId: feedId)
+          .map { item in
+            FeedWidgetItemResult.success(item)
+          }
+          .catch { error in
+            Just<FeedWidgetItemResult>(.failure(.fetchFailed(error)))
+          }
+          .eraseToAnyPublisher()
       }
       .publisher
       .flatMap { $0 }
       .collect()
-      .sink { result in
-        switch result {
-        case .finished:
-          completion(items, nil)
-        case .failure(let error):
-          completion([], error)
-        }
-      } receiveValue: { items = $0 }
+      .sink(receiveValue: { results in
+        completion(results)
+      })
       .store(in: &self.cancellables)
   }
 

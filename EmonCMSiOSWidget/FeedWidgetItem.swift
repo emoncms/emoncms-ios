@@ -30,3 +30,25 @@ extension FeedWidgetItem: Identifiable {
     return self.accountId + "/" + self.feedId
   }
 }
+
+enum FeedWidgetItemError: Error {
+  case unknown
+  case noFeedInfo
+  case fetchFailed(FeedViewModel.FeedViewModelError)
+}
+
+enum FeedWidgetItemResult {
+  case success(FeedWidgetItem)
+  case failure(FeedWidgetItemError)
+}
+
+extension FeedWidgetItemResult: Identifiable {
+  var id: String {
+    switch self {
+    case .success(let item):
+      return item.id
+    case .failure(let error):
+      return error.localizedDescription
+    }
+  }
+}

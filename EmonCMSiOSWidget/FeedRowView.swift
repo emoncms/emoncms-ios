@@ -10,20 +10,29 @@ import SwiftUI
 import WidgetKit
 
 struct FeedRowView: View {
-  let item: FeedWidgetItem
+  let item: FeedWidgetItemResult
   let compressed: Bool
 
   public var body: some View {
+    switch self.item {
+    case .success(let item):
+      successBody(item: item)
+    case .failure(let error):
+      failureBody(error: error)
+    }
+  }
+
+  private func successBody(item: FeedWidgetItem) -> some View {
     GeometryReader { metrics in
       HStack(spacing: 0) {
         // Feed name & account name
         VStack(alignment: .leading) {
-          Text(self.item.feedName)
+          Text(item.feedName)
             .font(.caption)
             .fontWeight(.bold)
             .minimumScaleFactor(0.7)
             .lineLimit(1)
-          Text(self.item.accountName)
+          Text(item.accountName)
             .font(.caption2)
             .fontWeight(.regular)
             .minimumScaleFactor(0.7)
@@ -37,7 +46,7 @@ struct FeedRowView: View {
 
         // Chart
         if !self.compressed {
-          FeedChartView(data: self.item.feedChartData)
+          FeedChartView(data: item.feedChartData)
             .stroke(Color(EmonCMSColors.Chart.Blue), lineWidth: 2)
             .padding(.vertical, 12)
             .padding(.horizontal, 4)
@@ -46,7 +55,7 @@ struct FeedRowView: View {
         }
 
         // Feed value
-        Text(self.item.feedChartData.last?.value.prettyFormat() ?? "---")
+        Text(item.feedChartData.last?.value.prettyFormat() ?? "---")
           .font(.caption)
           .fontWeight(.bold)
           .minimumScaleFactor(0.5)
@@ -57,6 +66,29 @@ struct FeedRowView: View {
           .frame(width: metrics.size.width * (self.compressed ? 0.5 : 0.2), alignment: .trailing)
           .frame(minHeight: metrics.size.height)
       }.frame(minHeight: metrics.size.height)
+    }
+  }
+
+  private func failureBody(error: FeedWidgetItemError) -> some View {
+    VStack {
+      Text("Error loading data")
+        .font(.footnote)
+        .fontWeight(.bold)
+        .lineLimit(1)
+      switch error {
+      case .noFeedInfo, .unknown:
+        Text("No feed")
+          .font(.footnote)
+          .fontWeight(.regular)
+          .foregroundColor(Color.gray)
+          .lineLimit(1)
+      case .fetchFailed:
+        Text("No connection")
+          .font(.footnote)
+          .fontWeight(.regular)
+          .foregroundColor(Color.gray)
+          .lineLimit(1)
+      }
     }
   }
 }
@@ -77,9 +109,9 @@ struct FeedRowView_Previews: PreviewProvider {
         DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 123)
       ])
 
-    FeedRowView(item: item, compressed: true)
+    FeedRowView(item: .success(item), compressed: true)
       .previewContext(WidgetPreviewContext(family: .systemSmall))
-    FeedRowView(item: item, compressed: false)
+    FeedRowView(item: .success(item), compressed: false)
       .previewContext(WidgetPreviewContext(family: .systemMedium))
   }
 }

@@ -23,7 +23,7 @@ struct FeedListProvider: IntentTimelineProvider {
 
   func placeholder(in context: Context) -> FeedListEntry {
     let rows = FeedListView.rowsForFamily[context.family]!
-    let items = (0 ..< rows).map { _ in FeedWidgetItem.placeholder }
+    let items = (0 ..< rows).map { _ in FeedWidgetItemResult.success(FeedWidgetItem.placeholder) }
     return FeedListEntry(date: Date(), items: items)
   }
 
@@ -31,8 +31,8 @@ struct FeedListProvider: IntentTimelineProvider {
     for configuration: SelectFeedsIntent,
     in context: Context,
     completion: @escaping (FeedListEntry) -> Void) {
-    self.fetchData(for: configuration, in: context) { items in
-      let entry = FeedListEntry(date: Date(), items: items)
+    self.fetchData(for: configuration, in: context) { results in
+      let entry = FeedListEntry(date: Date(), items: results)
       completion(entry)
     }
   }
@@ -41,8 +41,8 @@ struct FeedListProvider: IntentTimelineProvider {
     for configuration: SelectFeedsIntent,
     in context: Context,
     completion: @escaping (Timeline<FeedListEntry>) -> Void) {
-    self.fetchData(for: configuration, in: context) { items in
-      let entry = FeedListEntry(date: Date(), items: items)
+    self.fetchData(for: configuration, in: context) { results in
+      let entry = FeedListEntry(date: Date(), items: results)
       let expiry = Calendar.current.date(byAdding: .minute, value: 2, to: Date()) ?? Date()
       let timeline = Timeline(entries: [entry], policy: .after(expiry))
       completion(timeline)
@@ -52,7 +52,7 @@ struct FeedListProvider: IntentTimelineProvider {
   private func fetchData(
     for configuration: SelectFeedsIntent,
     in context: Context,
-    completion: @escaping ([FeedWidgetItem]) -> Void) {
+    completion: @escaping ([FeedWidgetItemResult]) -> Void) {
     guard let feeds = configuration.feeds else {
       completion([])
       return
@@ -68,20 +68,21 @@ struct FeedListProvider: IntentTimelineProvider {
       }
       return (accountId: accountId, feedId: feedId)
     }
-    self.viewModel.fetchData(for: zipped) { items, _ in
-      completion(items)
+
+    self.viewModel.fetchData(for: zipped) { results in
+      completion(results)
     }
   }
 }
 
 struct FeedListEntry: TimelineEntry {
   let date: Date
-  let items: [FeedWidgetItem]
+  let items: [FeedWidgetItemResult]
 }
 
 struct FeedListView: View {
   @Environment(\.widgetFamily) var family
-  let items: [FeedWidgetItem]
+  let items: [FeedWidgetItemResult]
   let compressed: Bool
   let height: CGFloat
 
@@ -219,7 +220,9 @@ struct FeedListWidget_Previews: PreviewProvider {
 
     ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
       let rows = FeedListView.rowsForFamily[family]!
-      let entry = FeedListEntry(date: Date(), items: Array(items[0 ..< rows]))
+      let entry = FeedListEntry(
+        date: Date(),
+        items: Array(items[0 ..< rows]).map { FeedWidgetItemResult.success($0) })
       FeedListWidgetEntryView(entry: entry)
         .previewContext(WidgetPreviewContext(family: family))
     }

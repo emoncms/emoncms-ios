@@ -23,15 +23,15 @@ struct SingleFeedProvider: IntentTimelineProvider {
 
   func placeholder(in context: Context) -> SingleFeedEntry {
     let item = FeedWidgetItem.placeholder
-    return SingleFeedEntry(date: Date(), item: item)
+    return SingleFeedEntry(date: Date(), item: .success(item))
   }
 
   func getSnapshot(
     for configuration: SelectFeedIntent,
     in context: Context,
     completion: @escaping (SingleFeedEntry) -> Void) {
-    self.fetchData(for: configuration, in: context) { item in
-      let entry = SingleFeedEntry(date: Date(), item: item)
+    self.fetchData(for: configuration, in: context) { result in
+      let entry = SingleFeedEntry(date: Date(), item: result)
       completion(entry)
     }
   }
@@ -40,8 +40,8 @@ struct SingleFeedProvider: IntentTimelineProvider {
     for configuration: SelectFeedIntent,
     in context: Context,
     completion: @escaping (Timeline<SingleFeedEntry>) -> Void) {
-    self.fetchData(for: configuration, in: context) { item in
-      let entry = SingleFeedEntry(date: Date(), item: item)
+    self.fetchData(for: configuration, in: context) { result in
+      let entry = SingleFeedEntry(date: Date(), item: result)
       let expiry = Calendar.current.date(byAdding: .minute, value: 2, to: Date()) ?? Date()
       let timeline = Timeline(entries: [entry], policy: .after(expiry))
       completion(timeline)
@@ -51,35 +51,36 @@ struct SingleFeedProvider: IntentTimelineProvider {
   private func fetchData(
     for configuration: SelectFeedIntent,
     in context: Context,
-    completion: @escaping (FeedWidgetItem?) -> Void) {
+    completion: @escaping (FeedWidgetItemResult) -> Void) {
+    guard !context.isPreview else {
+      completion(.success(FeedWidgetItem.placeholder))
+      return
+    }
+
     guard
       let accountId = configuration.feed?.accountId,
       let feedId = configuration.feed?.feedId
     else {
-      completion(nil)
+      completion(.failure(.noFeedInfo))
       return
     }
 
-    self.viewModel.fetchData(accountId: accountId, feedId: feedId) { item, _ in
-      completion(item)
+    self.viewModel.fetchData(accountId: accountId, feedId: feedId) { result in
+      completion(result)
     }
   }
 }
 
 struct SingleFeedEntry: TimelineEntry {
   let date: Date
-  let item: FeedWidgetItem?
+  let item: FeedWidgetItemResult
 }
 
 struct SingleFeedWidgetEntryView: View {
   var entry: SingleFeedProvider.Entry
 
   var body: some View {
-    if let item = self.entry.item {
-      SingleFeedView(item: item)
-    } else {
-      Text("Error")
-    }
+    SingleFeedView(item: self.entry.item)
   }
 }
 
@@ -112,7 +113,7 @@ struct SingleFeedWidget_Previews: PreviewProvider {
         DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
         DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 3)
       ])
-    let entry = SingleFeedEntry(date: Date(), item: item)
+    let entry = SingleFeedEntry(date: Date(), item: .success(item))
 
     SingleFeedWidgetEntryView(entry: entry)
       .previewContext(WidgetPreviewContext(family: .systemSmall))
