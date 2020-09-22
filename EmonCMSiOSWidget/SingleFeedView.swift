@@ -34,6 +34,7 @@ struct SingleFeedView: View {
             Text(item.accountName)
               .font(.caption)
               .fontWeight(.regular)
+              .foregroundColor(Color.gray)
           }
           .padding(.leading, 12)
           .padding(.trailing, 12)

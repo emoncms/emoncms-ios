@@ -35,6 +35,7 @@ struct FeedRowView: View {
           Text(item.accountName)
             .font(.caption2)
             .fontWeight(.regular)
+            .foregroundColor(Color.gray)
             .minimumScaleFactor(0.7)
             .lineLimit(1)
         }
