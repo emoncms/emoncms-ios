@@ -11,6 +11,10 @@ import WidgetKit
 
 @main
 struct EmonCMSiOSWidgetBundle: WidgetBundle {
+  init() {
+    LogController.shared.initialise()
+  }
+
   @WidgetBundleBuilder
   var body: some Widget {
     FeedListWidget()
