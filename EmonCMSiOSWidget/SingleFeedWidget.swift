@@ -22,12 +22,7 @@ struct SingleFeedProvider: IntentTimelineProvider {
   }
 
   func placeholder(in context: Context) -> SingleFeedEntry {
-    let item = FeedWidgetItem(
-      accountId: "1",
-      accountName: "---",
-      feedId: "1",
-      feedName: "---",
-      feedChartData: [])
+    let item = FeedWidgetItem.placeholder
     return SingleFeedEntry(date: Date(), item: item)
   }
 

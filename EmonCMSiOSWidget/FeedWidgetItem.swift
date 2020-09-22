@@ -14,6 +14,15 @@ struct FeedWidgetItem {
   let feedId: String
   let feedName: String
   let feedChartData: [DataPoint<Double>]
+
+  static var placeholder: FeedWidgetItem {
+    FeedWidgetItem(
+      accountId: "1",
+      accountName: "---",
+      feedId: "1",
+      feedName: "---",
+      feedChartData: [])
+  }
 }
 
 extension FeedWidgetItem: Identifiable {

@@ -22,7 +22,9 @@ struct FeedListProvider: IntentTimelineProvider {
   }
 
   func placeholder(in context: Context) -> FeedListEntry {
-    return FeedListEntry(date: Date(), items: [])
+    let rows = FeedListView.rowsForFamily[context.family]!
+    let items = (0 ..< rows).map { _ in FeedWidgetItem.placeholder }
+    return FeedListEntry(date: Date(), items: items)
   }
 
   func getSnapshot(
@@ -83,7 +85,7 @@ struct FeedListView: View {
   let compressed: Bool
   let height: CGFloat
 
-  private static let rowsForFamily = [
+  fileprivate static let rowsForFamily = [
     WidgetFamily.systemSmall: 3,
     WidgetFamily.systemMedium: 3,
     WidgetFamily.systemLarge: 6
@@ -173,15 +175,59 @@ struct FeedListWidget_Previews: PreviewProvider {
           DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 2),
           DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
           DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 9000)
+        ]),
+      FeedWidgetItem(
+        accountId: "1",
+        accountName: "Account",
+        feedId: "4",
+        feedName: "Use",
+        feedChartData: [
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 0),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 3),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 3)
+        ]),
+      FeedWidgetItem(
+        accountId: "1",
+        accountName: "Account",
+        feedId: "5",
+        feedName: "Solar",
+        feedChartData: [
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 0),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 3),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 123)
+        ]),
+      FeedWidgetItem(
+        accountId: "1",
+        accountName: "Account",
+        feedId: "6",
+        feedName: "HWT",
+        feedChartData: [
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 0),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 3),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
+          DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 9000)
         ])
     ]
-    let entry = FeedListEntry(date: Date(), items: items)
 
-    FeedListWidgetEntryView(entry: entry)
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
-    FeedListWidgetEntryView(entry: entry)
-      .previewContext(WidgetPreviewContext(family: .systemMedium))
-    FeedListWidgetEntryView(entry: entry)
-      .previewContext(WidgetPreviewContext(family: .systemLarge))
+    ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
+      let rows = FeedListView.rowsForFamily[family]!
+      let entry = FeedListEntry(date: Date(), items: Array(items[0 ..< rows]))
+      FeedListWidgetEntryView(entry: entry)
+        .previewContext(WidgetPreviewContext(family: family))
+    }
+  }
+}
+
+extension WidgetFamily: Identifiable {
+  public var id: String {
+    return self.description
   }
 }
