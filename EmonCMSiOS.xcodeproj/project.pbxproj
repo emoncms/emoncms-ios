@@ -131,6 +131,25 @@
 		C97284ED1DAB87160010C7B7 /* FeedListHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */; };
 		C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */; };
 		C97284F71DAC1C7A0010C7B7 /* FeedUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */; };
+		C9841A42251934DF00708873 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
+		C9841A4A2519366300708873 /* FeedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9841A492519366300708873 /* FeedViewModel.swift */; };
+		C9841A4F25193CA100708873 /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
+		C9841A5325193CAE00708873 /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
+		C9841A5425193CAE00708873 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
+		C9841A5525193CAE00708873 /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C9841A5D25193D3800708873 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C9841A5C25193D3800708873 /* Realm */; };
+		C9841A5F25193D3800708873 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C9841A5E25193D3800708873 /* RealmSwift */; };
+		C9841A6125193D4300708873 /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C9841A6025193D4300708873 /* ObjcExceptionBridging */; };
+		C9841A6325193D4300708873 /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C9841A6225193D4300708873 /* XCGLogger */; };
+		C9841A6425193D4900708873 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
+		C9841A6825193D7C00708873 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1021ED10E800C6AE9A /* Account.swift */; };
+		C9841A6925193D7C00708873 /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
+		C9841A6D25193F7100708873 /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
+		C9841A7125193F9200708873 /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BA1DE636FA000B6344 /* Input.swift */; };
+		C9841A7225193F9200708873 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
+		C9841A7325193F9200708873 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
+		C9841A7425193F9200708873 /* TodayWidgetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */; };
+		C9841A7825193FA500708873 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
 		C98BD5C21DE9B59D000B6344 /* ValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98BD5C11DE9B59D000B6344 /* ValueCell.xib */; };
 		C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5C31DE9B5BB000B6344 /* ValueCell.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
@@ -182,6 +201,49 @@
 		C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */; };
 		C9E7A73421FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
 		C9E7A73621FA74FF008BD497 /* DashboardListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */; };
+		C9EB615125164F8400440F6F /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EB615025164F8400440F6F /* WidgetKit.framework */; };
+		C9EB615325164F8400440F6F /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9EB615225164F8400440F6F /* SwiftUI.framework */; };
+		C9EB615625164F8400440F6F /* FeedListWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB615525164F8400440F6F /* FeedListWidget.swift */; };
+		C9EB615C25164F8700440F6F /* EmonCMSiOSWidgetExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C9EB614F25164F8400440F6F /* EmonCMSiOSWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C9EB6165251659FF00440F6F /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB6164251659FF00440F6F /* Charts */; };
+		C9EB6167251659FF00440F6F /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB6166251659FF00440F6F /* KeychainAccess */; };
+		C9EB616B25165A0E00440F6F /* ObjcExceptionBridging in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB616A25165A0E00440F6F /* ObjcExceptionBridging */; };
+		C9EB616D25165A0E00440F6F /* XCGLogger in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB616C25165A0E00440F6F /* XCGLogger */; };
+		C9EB616F25165A0E00440F6F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB616E25165A0E00440F6F /* Realm */; };
+		C9EB617125165A0E00440F6F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C9EB617025165A0E00440F6F /* RealmSwift */; };
+		C9EB617825168F6300440F6F /* FeedRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB617725168F6300440F6F /* FeedRowView.swift */; };
+		C9EB617E25168FC200440F6F /* FeedWidgetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB617D25168FC200440F6F /* FeedWidgetItem.swift */; };
+		C9EB618325168FDF00440F6F /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
+		C9EB61862516906000440F6F /* Double+Emoncms.swift in Sources */ = {isa = PBXBuildFile; fileRef = C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */; };
+		C9EB6189251692C400440F6F /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
+		C9EB618C251692C800440F6F /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
+		C9EB618D251692C800440F6F /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C9EB61912517E24800440F6F /* EmonCMSiOSWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61902517E24800440F6F /* EmonCMSiOSWidgetBundle.swift */; };
+		C9EB61A32517E8CF00440F6F /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61A22517E8CF00440F6F /* IntentHandler.swift */; };
+		C9EB61A72517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C9EB61A02517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C9EB61AE2517E91D00440F6F /* SelectFeedIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61982517E6E800440F6F /* SelectFeedIntent.intentdefinition */; };
+		C9EB61C72517EDCA00440F6F /* SelectFeedIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61982517E6E800440F6F /* SelectFeedIntent.intentdefinition */; };
+		C9EB61CF2517EE2C00440F6F /* SingleFeedWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61CE2517EE2C00440F6F /* SingleFeedWidget.swift */; };
+		C9EB61D42517F02300440F6F /* FeedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61D32517F02300440F6F /* FeedChartView.swift */; };
+		C9EB61D92517F20600440F6F /* SingleFeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9EB61D82517F20600440F6F /* SingleFeedView.swift */; };
+		C9EB61E4251931C400440F6F /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
+		C9EB61E5251931C400440F6F /* NSURLSessionHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9D9CA0F1DA3B34F0087754A /* NSURLSessionHTTPRequestProvider.swift */; };
+		C9EB61E6251931C400440F6F /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
+		C9EB61E7251931C400440F6F /* EmonCMSAPI+Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70721F662AA008BD497 /* EmonCMSAPI+Feed.swift */; };
+		C9EB61E8251931C400440F6F /* EmonCMSAPI+Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A70521F6627B008BD497 /* EmonCMSAPI+Input.swift */; };
+		C9EB61E9251931C400440F6F /* EmonCMSAPI+Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */; };
+		C9EB61EA251931C400440F6F /* EmonCMSAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834F1D869DCA0058C059 /* EmonCMSAPI.swift */; };
+		C9EB61EE251931E100440F6F /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
+		C9EB61EF251931E100440F6F /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1021ED10E800C6AE9A /* Account.swift */; };
+		C9EB61F0251931E100440F6F /* TodayWidgetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */; };
+		C9EB61F1251931E100440F6F /* Input.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5BA1DE636FA000B6344 /* Input.swift */; };
+		C9EB61F2251931E100440F6F /* Feed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83531D86AA3E0058C059 /* Feed.swift */; };
+		C9EB61F3251931E100440F6F /* DateRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9C240CD1D917CA500BC302C /* DateRange.swift */; };
+		C9EB61F4251931E100440F6F /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
+		C9EB61F5251931E100440F6F /* AccountController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB834C1D869CC80058C059 /* AccountController.swift */; };
+		C9EB61F92519320500440F6F /* KeychainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83681D87F5630058C059 /* KeychainController.swift */; };
+		C9EB61FA2519320500440F6F /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
+		C9EB61FB2519320500440F6F /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		C9F14ABA220F109A0005869F /* main_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB8220F109A0005869F /* main_v1.realm */; };
 		C9F14ABB220F109A0005869F /* account_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB9220F109A0005869F /* account_v1.realm */; };
 /* End PBXBuildFile section */
@@ -207,6 +269,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = C9C041961D85F7D600E3CEC4;
 			remoteInfo = EmonCMSiOS;
+		};
+		C9EB615A25164F8700440F6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9EB614E25164F8400440F6F;
+			remoteInfo = EmonCMSiOSWidgetExtension;
+		};
+		C9EB61A52517E8CF00440F6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C9C0418F1D85F7D600E3CEC4 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C9EB619F2517E8CF00440F6F;
+			remoteInfo = EmonCMSiOSSelectFeedIntent;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -236,7 +312,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				C9EB61A72517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex in Embed App Extensions */,
 				C94998C921FD0D08008FB8AE /* EmonCMSiOSToday.appex in Embed App Extensions */,
+				C9EB615C25164F8700440F6F /* EmonCMSiOSWidgetExtension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -343,6 +421,9 @@
 		C97284EC1DAB87160010C7B7 /* FeedListHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelper.swift; sourceTree = "<group>"; };
 		C97284F01DAB97800010C7B7 /* AppConfigViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConfigViewController.swift; sourceTree = "<group>"; };
 		C97284F61DAC1C7A0010C7B7 /* FeedUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedUpdateHelper.swift; sourceTree = "<group>"; };
+		C9841A492519366300708873 /* FeedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewModel.swift; sourceTree = "<group>"; };
+		C9841A7C251940CB00708873 /* EmonCMSiOSWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSiOSWidgetExtension.entitlements; sourceTree = "<group>"; };
+		C9841A80251940E500708873 /* EmonCMSiOSSelectFeedIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = EmonCMSiOSSelectFeedIntent.entitlements; sourceTree = "<group>"; };
 		C98BD5B61DE63638000B6344 /* InputListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewController.swift; sourceTree = "<group>"; };
 		C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewModel.swift; sourceTree = "<group>"; };
 		C98BD5BA1DE636FA000B6344 /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
@@ -400,6 +481,21 @@
 		C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardUpdateHelper.swift; sourceTree = "<group>"; };
 		C9E7A73321FA74A1008BD497 /* EmonCMSAPI+Dashboard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmonCMSAPI+Dashboard.swift"; sourceTree = "<group>"; };
 		C9E7A73521FA74FF008BD497 /* DashboardListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashboardListViewController.swift; sourceTree = "<group>"; };
+		C9EB614F25164F8400440F6F /* EmonCMSiOSWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9EB615025164F8400440F6F /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C9EB615225164F8400440F6F /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		C9EB615525164F8400440F6F /* FeedListWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListWidget.swift; sourceTree = "<group>"; };
+		C9EB615925164F8700440F6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9EB617725168F6300440F6F /* FeedRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedRowView.swift; sourceTree = "<group>"; };
+		C9EB617D25168FC200440F6F /* FeedWidgetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedWidgetItem.swift; sourceTree = "<group>"; };
+		C9EB61902517E24800440F6F /* EmonCMSiOSWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSiOSWidgetBundle.swift; sourceTree = "<group>"; };
+		C9EB61982517E6E800440F6F /* SelectFeedIntent.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = SelectFeedIntent.intentdefinition; sourceTree = "<group>"; };
+		C9EB61A02517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = EmonCMSiOSSelectFeedIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9EB61A22517E8CF00440F6F /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		C9EB61A42517E8CF00440F6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C9EB61CE2517EE2C00440F6F /* SingleFeedWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFeedWidget.swift; sourceTree = "<group>"; };
+		C9EB61D32517F02300440F6F /* FeedChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedChartView.swift; sourceTree = "<group>"; };
+		C9EB61D82517F20600440F6F /* SingleFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFeedView.swift; sourceTree = "<group>"; };
 		C9F14AB8220F109A0005869F /* main_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v1.realm; sourceTree = "<group>"; };
 		C9F14AB9220F109A0005869F /* account_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v1.realm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -457,6 +553,32 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9EB614C25164F8400440F6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9EB617125165A0E00440F6F /* RealmSwift in Frameworks */,
+				C9EB616F25165A0E00440F6F /* Realm in Frameworks */,
+				C9EB6167251659FF00440F6F /* KeychainAccess in Frameworks */,
+				C9EB615325164F8400440F6F /* SwiftUI.framework in Frameworks */,
+				C9EB616B25165A0E00440F6F /* ObjcExceptionBridging in Frameworks */,
+				C9EB6165251659FF00440F6F /* Charts in Frameworks */,
+				C9EB615125164F8400440F6F /* WidgetKit.framework in Frameworks */,
+				C9EB616D25165A0E00440F6F /* XCGLogger in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9EB619D2517E8CF00440F6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9841A5F25193D3800708873 /* RealmSwift in Frameworks */,
+				C9841A5D25193D3800708873 /* Realm in Frameworks */,
+				C9841A6125193D4300708873 /* ObjcExceptionBridging in Frameworks */,
+				C9841A6325193D4300708873 /* XCGLogger in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -498,6 +620,8 @@
 				C96DA384230345BE005B1F98 /* Charts.framework */,
 				C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */,
 				C97284D51DA594C20010C7B7 /* NotificationCenter.framework */,
+				C9EB615025164F8400440F6F /* WidgetKit.framework */,
+				C9EB615225164F8400440F6F /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -698,10 +822,13 @@
 		C9C0418E1D85F7D600E3CEC4 = {
 			isa = PBXGroup;
 			children = (
+				C9841A7C251940CB00708873 /* EmonCMSiOSWidgetExtension.entitlements */,
 				C9C041991D85F7D600E3CEC4 /* EmonCMSiOS */,
 				C95640AB1D8A9C7D003B9757 /* EmonCMSiOSTests */,
 				C925517921F4AB2A008342D8 /* EmonCMSiOSUITests */,
 				C94998C021FD0D08008FB8AE /* EmonCMSiOSToday */,
+				C9EB615425164F8400440F6F /* EmonCMSiOSWidget */,
+				C9EB61A12517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent */,
 				C9C041981D85F7D600E3CEC4 /* Products */,
 				83130A8D04C98BB39AF4F2A0 /* Frameworks */,
 			);
@@ -714,6 +841,8 @@
 				C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */,
 				C925517821F4AB2A008342D8 /* EmonCMSiOSUITests.xctest */,
 				C94998BE21FD0D08008FB8AE /* EmonCMSiOSToday.appex */,
+				C9EB614F25164F8400440F6F /* EmonCMSiOSWidgetExtension.appex */,
+				C9EB61A02517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -845,6 +974,33 @@
 			path = SnapshotTests;
 			sourceTree = "<group>";
 		};
+		C9EB615425164F8400440F6F /* EmonCMSiOSWidget */ = {
+			isa = PBXGroup;
+			children = (
+				C9EB61902517E24800440F6F /* EmonCMSiOSWidgetBundle.swift */,
+				C9EB615525164F8400440F6F /* FeedListWidget.swift */,
+				C9EB61CE2517EE2C00440F6F /* SingleFeedWidget.swift */,
+				C9841A492519366300708873 /* FeedViewModel.swift */,
+				C9EB617D25168FC200440F6F /* FeedWidgetItem.swift */,
+				C9EB617725168F6300440F6F /* FeedRowView.swift */,
+				C9EB61D82517F20600440F6F /* SingleFeedView.swift */,
+				C9EB61D32517F02300440F6F /* FeedChartView.swift */,
+				C9EB61982517E6E800440F6F /* SelectFeedIntent.intentdefinition */,
+				C9EB615925164F8700440F6F /* Info.plist */,
+			);
+			path = EmonCMSiOSWidget;
+			sourceTree = "<group>";
+		};
+		C9EB61A12517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent */ = {
+			isa = PBXGroup;
+			children = (
+				C9841A80251940E500708873 /* EmonCMSiOSSelectFeedIntent.entitlements */,
+				C9EB61A22517E8CF00440F6F /* IntentHandler.swift */,
+				C9EB61A42517E8CF00440F6F /* Info.plist */,
+			);
+			path = EmonCMSiOSSelectFeedIntent;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -940,6 +1096,8 @@
 			);
 			dependencies = (
 				C94998C821FD0D08008FB8AE /* PBXTargetDependency */,
+				C9EB615B25164F8700440F6F /* PBXTargetDependency */,
+				C9EB61A62517E8CF00440F6F /* PBXTargetDependency */,
 			);
 			name = EmonCMSiOS;
 			packageProductDependencies = (
@@ -955,13 +1113,61 @@
 			productReference = C9C041971D85F7D600E3CEC4 /* EmonCMSiOS.app */;
 			productType = "com.apple.product-type.application";
 		};
+		C9EB614E25164F8400440F6F /* EmonCMSiOSWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9EB615D25164F8700440F6F /* Build configuration list for PBXNativeTarget "EmonCMSiOSWidgetExtension" */;
+			buildPhases = (
+				C9EB614B25164F8400440F6F /* Sources */,
+				C9EB614C25164F8400440F6F /* Frameworks */,
+				C9EB614D25164F8400440F6F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EmonCMSiOSWidgetExtension;
+			packageProductDependencies = (
+				C9EB6164251659FF00440F6F /* Charts */,
+				C9EB6166251659FF00440F6F /* KeychainAccess */,
+				C9EB616A25165A0E00440F6F /* ObjcExceptionBridging */,
+				C9EB616C25165A0E00440F6F /* XCGLogger */,
+				C9EB616E25165A0E00440F6F /* Realm */,
+				C9EB617025165A0E00440F6F /* RealmSwift */,
+			);
+			productName = EmonCMSiOSWidgetExtension;
+			productReference = C9EB614F25164F8400440F6F /* EmonCMSiOSWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		C9EB619F2517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C9EB61A82517E8CF00440F6F /* Build configuration list for PBXNativeTarget "EmonCMSiOSSelectFeedIntent" */;
+			buildPhases = (
+				C9EB619C2517E8CF00440F6F /* Sources */,
+				C9EB619D2517E8CF00440F6F /* Frameworks */,
+				C9EB619E2517E8CF00440F6F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EmonCMSiOSSelectFeedIntent;
+			packageProductDependencies = (
+				C9841A5C25193D3800708873 /* Realm */,
+				C9841A5E25193D3800708873 /* RealmSwift */,
+				C9841A6025193D4300708873 /* ObjcExceptionBridging */,
+				C9841A6225193D4300708873 /* XCGLogger */,
+			);
+			productName = EmonCMSiOSSelectFeedIntent;
+			productReference = C9EB61A02517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		C9C0418F1D85F7D600E3CEC4 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1010;
+				LastSwiftUpdateCheck = 1200;
 				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = "Matt Galloway";
 				TargetAttributes = {
@@ -1007,6 +1213,12 @@
 							};
 						};
 					};
+					C9EB614E25164F8400440F6F = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					C9EB619F2517E8CF00440F6F = {
+						CreatedOnToolsVersion = 12.0;
+					};
 				};
 			};
 			buildConfigurationList = C9C041921D85F7D600E3CEC4 /* Build configuration list for PBXProject "EmonCMSiOS" */;
@@ -1036,6 +1248,8 @@
 				C95640A91D8A9C7D003B9757 /* EmonCMSiOSTests */,
 				C925517721F4AB2A008342D8 /* EmonCMSiOSUITests */,
 				C94998BD21FD0D08008FB8AE /* EmonCMSiOSToday */,
+				C9EB614E25164F8400440F6F /* EmonCMSiOSWidgetExtension */,
+				C9EB619F2517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent */,
 			);
 		};
 /* End PBXProject section */
@@ -1077,6 +1291,20 @@
 				C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */,
 				C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */,
 				C98BD5C21DE9B59D000B6344 /* ValueCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9EB614D25164F8400440F6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9EB619E2517E8CF00440F6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1271,6 +1499,68 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C9EB614B25164F8400440F6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9EB61E4251931C400440F6F /* EmonCMSAPI+User.swift in Sources */,
+				C9EB61EF251931E100440F6F /* Account.swift in Sources */,
+				C9EB61E9251931C400440F6F /* EmonCMSAPI+Dashboard.swift in Sources */,
+				C9EB61C72517EDCA00440F6F /* SelectFeedIntent.intentdefinition in Sources */,
+				C9EB61FB2519320500440F6F /* RealmController.swift in Sources */,
+				C9841A4A2519366300708873 /* FeedViewModel.swift in Sources */,
+				C9EB618C251692C800440F6F /* SharedConstants.swift in Sources */,
+				C9EB61862516906000440F6F /* Double+Emoncms.swift in Sources */,
+				C9EB61F2251931E100440F6F /* Feed.swift in Sources */,
+				C9EB61F5251931E100440F6F /* AccountController.swift in Sources */,
+				C9EB61F1251931E100440F6F /* Input.swift in Sources */,
+				C9EB61F4251931E100440F6F /* AppData.swift in Sources */,
+				C9EB61F0251931E100440F6F /* TodayWidgetFeed.swift in Sources */,
+				C9EB61E8251931C400440F6F /* EmonCMSAPI+Input.swift in Sources */,
+				C9841A42251934DF00708873 /* CombineOperators.swift in Sources */,
+				C9EB61FA2519320500440F6F /* LogController.swift in Sources */,
+				C9EB61CF2517EE2C00440F6F /* SingleFeedWidget.swift in Sources */,
+				C9EB618D251692C800440F6F /* EmonCMSColors.swift in Sources */,
+				C9EB615625164F8400440F6F /* FeedListWidget.swift in Sources */,
+				C9EB61D92517F20600440F6F /* SingleFeedView.swift in Sources */,
+				C9EB61E6251931C400440F6F /* HTTPRequestProvider.swift in Sources */,
+				C9EB617E25168FC200440F6F /* FeedWidgetItem.swift in Sources */,
+				C9EB61D42517F02300440F6F /* FeedChartView.swift in Sources */,
+				C9EB61912517E24800440F6F /* EmonCMSiOSWidgetBundle.swift in Sources */,
+				C9EB61F92519320500440F6F /* KeychainController.swift in Sources */,
+				C9EB6189251692C400440F6F /* AccessibilityIdentifiers.swift in Sources */,
+				C9EB61E7251931C400440F6F /* EmonCMSAPI+Feed.swift in Sources */,
+				C9EB61E5251931C400440F6F /* NSURLSessionHTTPRequestProvider.swift in Sources */,
+				C9EB61F3251931E100440F6F /* DateRange.swift in Sources */,
+				C9EB618325168FDF00440F6F /* DataPoint.swift in Sources */,
+				C9EB617825168F6300440F6F /* FeedRowView.swift in Sources */,
+				C9EB61EE251931E100440F6F /* Dashboard.swift in Sources */,
+				C9EB61EA251931C400440F6F /* EmonCMSAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9EB619C2517E8CF00440F6F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C9841A5525193CAE00708873 /* EmonCMSColors.swift in Sources */,
+				C9841A7325193F9200708873 /* Dashboard.swift in Sources */,
+				C9841A6925193D7C00708873 /* Feed.swift in Sources */,
+				C9841A5325193CAE00708873 /* SharedConstants.swift in Sources */,
+				C9841A7125193F9200708873 /* Input.swift in Sources */,
+				C9841A7425193F9200708873 /* TodayWidgetFeed.swift in Sources */,
+				C9841A6425193D4900708873 /* LogController.swift in Sources */,
+				C9841A4F25193CA100708873 /* RealmController.swift in Sources */,
+				C9841A6D25193F7100708873 /* Double+Emoncms.swift in Sources */,
+				C9841A7825193FA500708873 /* CombineOperators.swift in Sources */,
+				C9841A5425193CAE00708873 /* AccessibilityIdentifiers.swift in Sources */,
+				C9841A6825193D7C00708873 /* Account.swift in Sources */,
+				C9EB61AE2517E91D00440F6F /* SelectFeedIntent.intentdefinition in Sources */,
+				C9EB61A32517E8CF00440F6F /* IntentHandler.swift in Sources */,
+				C9841A7225193F9200708873 /* AppData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1288,6 +1578,16 @@
 			isa = PBXTargetDependency;
 			target = C9C041961D85F7D600E3CEC4 /* EmonCMSiOS */;
 			targetProxy = C95640AF1D8A9C7D003B9757 /* PBXContainerItemProxy */;
+		};
+		C9EB615B25164F8700440F6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9EB614E25164F8400440F6F /* EmonCMSiOSWidgetExtension */;
+			targetProxy = C9EB615A25164F8700440F6F /* PBXContainerItemProxy */;
+		};
+		C9EB61A62517E8CF00440F6F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C9EB619F2517E8CF00440F6F /* EmonCMSiOSSelectFeedIntent */;
+			targetProxy = C9EB61A52517E8CF00440F6F /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1671,6 +1971,132 @@
 			};
 			name = Release;
 		};
+		C9EB615E25164F8700440F6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOSWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_TEAM = 4C898RE43H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmonCMSiOSWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9EB615F25164F8700440F6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOSWidgetExtension.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_TEAM = 4C898RE43H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmonCMSiOSWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C9EB61A92517E8CF00440F6F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOSSelectFeedIntent/EmonCMSiOSSelectFeedIntent.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_TEAM = 4C898RE43H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmonCMSiOSSelectFeedIntent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSSelectFeedIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C9EB61AA2517E8CF00440F6F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = EmonCMSiOSSelectFeedIntent/EmonCMSiOSSelectFeedIntent.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 23;
+				DEVELOPMENT_TEAM = 4C898RE43H;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = EmonCMSiOSSelectFeedIntent/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.1;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSSelectFeedIntent;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1715,6 +2141,24 @@
 			buildConfigurations = (
 				C9C041AA1D85F7D600E3CEC4 /* Debug */,
 				C9C041AB1D85F7D600E3CEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9EB615D25164F8700440F6F /* Build configuration list for PBXNativeTarget "EmonCMSiOSWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9EB615E25164F8700440F6F /* Debug */,
+				C9EB615F25164F8700440F6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C9EB61A82517E8CF00440F6F /* Build configuration list for PBXNativeTarget "EmonCMSiOSSelectFeedIntent" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C9EB61A92517E8CF00440F6F /* Debug */,
+				C9EB61AA2517E8CF00440F6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1898,6 +2342,56 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */;
 			productName = Nimble;
+		};
+		C9841A5C25193D3800708873 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		C9841A5E25193D3800708873 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
+		};
+		C9841A6025193D4300708873 /* ObjcExceptionBridging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = ObjcExceptionBridging;
+		};
+		C9841A6225193D4300708873 /* XCGLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = XCGLogger;
+		};
+		C9EB6164251659FF00440F6F /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		C9EB6166251659FF00440F6F /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		C9EB616A25165A0E00440F6F /* ObjcExceptionBridging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = ObjcExceptionBridging;
+		};
+		C9EB616C25165A0E00440F6F /* XCGLogger */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37023034002005B1F98 /* XCRemoteSwiftPackageReference "XCGLogger" */;
+			productName = XCGLogger;
+		};
+		C9EB616E25165A0E00440F6F /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = Realm;
+		};
+		C9EB617025165A0E00440F6F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */;
+			productName = RealmSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
