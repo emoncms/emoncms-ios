@@ -1,7 +1,5 @@
 --swiftversion 5
 
---exclude Carthage
-
 --binarygrouping none
 --closingparen same-line
 --commas inline

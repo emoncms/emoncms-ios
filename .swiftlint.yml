@@ -1,6 +1,5 @@
 opt_in_rules:
   - explicit_self
 excluded:
-  - Carthage
   - EmonCMSiOSTests
   - EmonCMSiOSUITests

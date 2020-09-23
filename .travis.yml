@@ -1,9 +1,6 @@
 language: objective-c
 osx_image: xcode12
 os: osx
-cache:
-  directories:
-    - Carthage
 before_install:
   - gem install xcpretty-travis-formatter
 script:

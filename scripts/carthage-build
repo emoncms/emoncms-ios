@@ -1,2 +1,0 @@
-#!/bin/bash
-carthage build --platform ios
