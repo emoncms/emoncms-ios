@@ -1,2 +1,2 @@
 update:
-	./scripts/ackack.py
+	./scripts/generate_licenses
