@@ -41,8 +41,7 @@ final class FeedChartViewModel {
     let refreshSignal = Publishers.Merge(self.refresh, becameActive)
 
     Publishers.CombineLatest(refreshSignal, $dateRange)
-      .map { $1 }
-      .map { [weak self] dateRange -> AnyPublisher<[DataPoint<Double>], Never> in
+      .map { [weak self] (_, dateRange) -> AnyPublisher<[DataPoint<Double>], Never> in
         guard let self = self else { return Empty().eraseToAnyPublisher() }
 
         let feedId = self.feedId
