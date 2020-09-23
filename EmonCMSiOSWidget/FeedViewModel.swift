@@ -50,8 +50,9 @@ final class FeedViewModel {
     for feeds: [(accountId: String, feedId: String)],
     completion: @escaping ([FeedWidgetItemResult]) -> Void) {
     feeds
-      .map { (accountId: String, feedId: String) -> AnyPublisher<FeedWidgetItemResult, Never> in
-        fetchDataImpl(accountId: accountId, feedId: feedId)
+      .reduce(Empty<FeedWidgetItemResult, Never>()
+        .eraseToAnyPublisher()) { (allPublishers, feed) -> AnyPublisher<FeedWidgetItemResult, Never> in
+        let fetch = fetchDataImpl(accountId: feed.accountId, feedId: feed.feedId)
           .map { item in
             FeedWidgetItemResult.success(item)
           }
@@ -59,9 +60,10 @@ final class FeedViewModel {
             Just<FeedWidgetItemResult>(.failure(.fetchFailed(error)))
           }
           .eraseToAnyPublisher()
+        return allPublishers
+          .append(fetch)
+          .eraseToAnyPublisher()
       }
-      .publisher
-      .flatMap { $0 }
       .collect()
       .sink(receiveValue: { results in
         completion(results)
