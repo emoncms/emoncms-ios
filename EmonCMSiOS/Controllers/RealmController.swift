@@ -59,10 +59,12 @@ final class RealmController {
   }
 }
 
+final class MyElectricAppData: Object {}
+
 extension RealmController {
   private func account_migrate_0_1(_ migration: Migration) {
     // Migrate the apps to new data model
-    migration.enumerateObjects(ofType: "MyElectricAppData") { oldObject, _ in
+    migration.enumerateObjects(ofType: MyElectricAppData.className()) { oldObject, _ in
       guard let oldObject = oldObject else { return }
 
       guard
