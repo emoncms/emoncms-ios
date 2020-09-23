@@ -36,14 +36,6 @@
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Licenses/ios-snapshot-test-case</string>
-			<key>Title</key>
-			<string>ios-snapshot-test-case</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
 			<string>Licenses/KeychainAccess</string>
 			<key>Title</key>
 			<string>KeychainAccess</string>
@@ -70,7 +62,7 @@
 			<key>File</key>
 			<string>Licenses/realm-cocoa</string>
 			<key>Title</key>
-			<string>realm-cocoa</string>
+			<string>Realm</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
@@ -78,23 +70,15 @@
 			<key>File</key>
 			<string>Licenses/realm-core</string>
 			<key>Title</key>
-			<string>realm-core</string>
+			<string>RealmCore</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>
 		<dict>
 			<key>File</key>
-			<string>Licenses/TimelaneCombine</string>
+			<string>Licenses/swift-snapshot-testing</string>
 			<key>Title</key>
-			<string>TimelaneCombine</string>
-			<key>Type</key>
-			<string>PSChildPaneSpecifier</string>
-		</dict>
-		<dict>
-			<key>File</key>
-			<string>Licenses/TimelaneCore</string>
-			<key>Title</key>
-			<string>TimelaneCore</string>
+			<string>SnapshotTesting</string>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
 		</dict>

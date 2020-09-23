@@ -1,27 +1,23 @@
-name: ios-snapshot-test-case, nameSpecified: , owner: uber, version: 6.1.0
+name: Charts, nameSpecified: Charts, owner: danielgindi, version: 3.5.0
 
-name: Charts, nameSpecified: , owner: danielgindi, version: 3.4.0
+name: Entwine, nameSpecified: Entwine, owner: tcldr, version: 0.9.1
 
-name: Entwine, nameSpecified: , owner: tcldr, version: 0.8.0
+name: Former, nameSpecified: Former, owner: ra1028, version: 1.8.1
 
-name: Former, nameSpecified: , owner: ra1028, version: 1.8.1
+name: KeychainAccess, nameSpecified: KeychainAccess, owner: kishikawakatsumi, version: 4.2.1
 
-name: KeychainAccess, nameSpecified: , owner: kishikawakatsumi, version: 4.1.0
+name: Nimble, nameSpecified: Nimble, owner: Quick, version: 8.1.2
 
-name: Nimble, nameSpecified: , owner: Quick, version: 8.0.2
+name: Quick, nameSpecified: Quick, owner: Quick, version: 3.0.0
 
-name: Quick, nameSpecified: , owner: Quick, version: 2.1.0
+name: realm-cocoa, nameSpecified: Realm, owner: realm, version: 5.4.2
 
-name: realm-cocoa, nameSpecified: , owner: realm, version: 3.17.3
+name: realm-core, nameSpecified: RealmCore, owner: realm, version: 6.0.26
 
-name: realm-core, nameSpecified: , owner: realm, version: 5.23.1
+name: swift-snapshot-testing, nameSpecified: SnapshotTesting, owner: pointfreeco, version: 1.8.2
 
-name: TimelaneCombine, nameSpecified: , owner: icanzilb, version: 0.9.0
-
-name: TimelaneCore, nameSpecified: , owner: icanzilb, version: 0.9.0
-
-name: XCGLogger, nameSpecified: , owner: DaveWoodCom, version: 7.0.1
+name: XCGLogger, nameSpecified: XCGLogger, owner: DaveWoodCom, version: 7.0.1
 
 add-version-numbers: false
 
-LicensePlist Version: 2.12.0
+LicensePlist Version: 2.16.0
