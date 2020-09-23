@@ -7,12 +7,13 @@
 //
 
 @testable import EmonCMSiOS
-import FBSnapshotTestCase
+import SnapshotTesting
+import XCTest
 
-class AppBoxViewsTests: FBSnapshotTestCase {
+class AppBoxViewsTests: XCTestCase {
   override func setUp() {
     super.setUp()
-    self.recordMode = false
+    isRecording = false
   }
 
   func testArrowViewUp() {
@@ -21,7 +22,7 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.value = 100
     view.unit = "kWh"
     view.direction = .up
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 
   func testArrowViewDown() {
@@ -30,7 +31,7 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.value = 100
     view.unit = "kWh"
     view.direction = .down
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 
   func testArrowViewLeft() {
@@ -39,7 +40,7 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.value = 100
     view.unit = "kWh"
     view.direction = .left
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 
   func testArrowViewRight() {
@@ -48,7 +49,7 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.value = 100
     view.unit = "kWh"
     view.direction = .right
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 
   func testArrowViewArrowColor() {
@@ -58,7 +59,7 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.unit = "kWh"
     view.direction = .up
     view.arrowColor = .red
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 
   func testFeedView() {
@@ -67,6 +68,6 @@ class AppBoxViewsTests: FBSnapshotTestCase {
     view.name = "Feed"
     view.unit = "kWh"
     view.value = 100
-    FBSnapshotVerifyView(view)
+    assertSnapshot(matching: view, as: .image)
   }
 }

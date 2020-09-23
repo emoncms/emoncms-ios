@@ -22,6 +22,7 @@
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
 		C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4561D8B045F007FE19A /* EmonCMSColors.swift */; };
+		C911F46B251BEE8A003BB728 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C911F46A251BEE8A003BB728 /* SnapshotTesting */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
 		C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CC2414EA1B00C4F9C5 /* Former */; };
 		C91B74D02414EE6000C4F9C5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CF2414EE6000C4F9C5 /* KeychainAccess */; };
@@ -75,8 +76,6 @@
 		C945F8F821FE52C300B99D35 /* TodayViewFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C945F8F621FE52C300B99D35 /* TodayViewFeedCell.xib */; };
 		C945F8F921FE52C300B99D35 /* TodayViewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8F721FE52C300B99D35 /* TodayViewFeedCell.swift */; };
 		C949985921FBA745008FB8AE /* EmonCMSAPI+User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C949985821FBA744008FB8AE /* EmonCMSAPI+User.swift */; };
-		C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; };
-		C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C949987121FBD717008FB8AE /* FBSnapshotTestCase.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C94998BF21FD0D08008FB8AE /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C97284D51DA594C20010C7B7 /* NotificationCenter.framework */; };
 		C94998C221FD0D08008FB8AE /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C94998C121FD0D08008FB8AE /* TodayViewController.swift */; };
 		C94998C521FD0D08008FB8AE /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C94998C321FD0D08008FB8AE /* MainInterface.storyboard */; };
@@ -287,16 +286,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		C94998AA21FC65BB008FB8AE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C94998AD21FC65D0008FB8AE /* FBSnapshotTestCase.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C94998AE21FC65D4008FB8AE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -532,9 +521,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C911F46B251BEE8A003BB728 /* SnapshotTesting in Frameworks */,
 				C96DA3772303410F005B1F98 /* Quick in Frameworks */,
 				C96DA37A23034132005B1F98 /* Nimble in Frameworks */,
-				C949987421FBD717008FB8AE /* FBSnapshotTestCase.framework in Frameworks */,
 				C96DA36123028FC3005B1F98 /* EntwineTest in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1063,7 +1052,6 @@
 				C95640A61D8A9C7D003B9757 /* Sources */,
 				C95640A71D8A9C7D003B9757 /* Frameworks */,
 				C95640A81D8A9C7D003B9757 /* Resources */,
-				C94998AA21FC65BB008FB8AE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -1075,6 +1063,7 @@
 				C96DA36023028FC3005B1F98 /* EntwineTest */,
 				C96DA3762303410F005B1F98 /* Quick */,
 				C96DA37923034132005B1F98 /* Nimble */,
+				C911F46A251BEE8A003BB728 /* SnapshotTesting */,
 			);
 			productName = EmonCMSiOSTests;
 			productReference = C95640AA1D8A9C7D003B9757 /* EmonCMSiOSTests.xctest */;
@@ -1239,6 +1228,7 @@
 				C95C50FA23511EFA00D07E80 /* XCRemoteSwiftPackageReference "Charts" */,
 				C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */,
 				C91B74CE2414EE6000C4F9C5 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				C911F469251BEE8A003BB728 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
 			);
 			productRefGroup = C9C041981D85F7D600E3CEC4 /* Products */;
 			projectDirPath = "";
@@ -2166,6 +2156,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		C911F469251BEE8A003BB728 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.8.2;
+			};
+		};
 		C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ra1028/Former";
@@ -2233,6 +2231,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		C911F46A251BEE8A003BB728 /* SnapshotTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C911F469251BEE8A003BB728 /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;
+			productName = SnapshotTesting;
+		};
 		C91B74CC2414EA1B00C4F9C5 /* Former */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C91B74CB2414EA1B00C4F9C5 /* XCRemoteSwiftPackageReference "Former" */;
