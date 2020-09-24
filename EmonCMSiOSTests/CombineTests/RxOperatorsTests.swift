@@ -63,7 +63,7 @@ class RxOperatorsTests: QuickSpec {
         scheduler.schedule(after: 230) { _ = observer.receive(3) }
         scheduler.schedule(after: 240) { _ = observer.receive(4) }
         scheduler.schedule(after: 250) { _ = observer.receive(5) }
-        scheduler.schedule(after: 260) { _ = observer.receive(completion: .finished) }
+        scheduler.schedule(after: 260) { observer.receive(completion: .finished) }
 
         var options = TestableSubscriberOptions.default
         options.subsequentDemand = Subscribers.Demand.unlimited
@@ -93,7 +93,7 @@ class RxOperatorsTests: QuickSpec {
         }
 
         scheduler.schedule(after: 210) { _ = observer.receive(1) }
-        scheduler.schedule(after: 220) { _ = observer.receive(completion: .failure(.generic)) }
+        scheduler.schedule(after: 220) { observer.receive(completion: .failure(.generic)) }
 
         var options = TestableSubscriberOptions.default
         options.subsequentDemand = Subscribers.Demand.unlimited
