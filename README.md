@@ -16,6 +16,10 @@ Emoncms for iOS is an app that allows you to connect to an [Emoncms](https://www
 
 ![](images/app1.png) ![](images/app2.png) ![](images/app3.png) ![](images/app4.png) ![](images/app5.png)
 
+### Widgets
+
+![](images/widget1.png) ![](images/widget2.png)
+
 ### Today Widget
 
 ![](images/today1.png)
