@@ -53,6 +53,12 @@ struct FeedListProvider: IntentTimelineProvider {
     for configuration: SelectFeedsIntent,
     in context: Context,
     completion: @escaping ([FeedWidgetItemResult]) -> Void) {
+    guard !context.isPreview else {
+      let rows = FeedListView.rowsForFamily[context.family]!
+      completion(Array(repeating: FeedWidgetItemResult.success(FeedWidgetItem.placeholder), count: rows))
+      return
+    }
+
     guard let feeds = configuration.feeds else {
       completion([])
       return
@@ -95,12 +101,15 @@ struct FeedListView: View {
   var body: some View {
     let rows: CGFloat = CGFloat(Self.rowsForFamily[self.family]!)
     VStack(spacing: 0) {
-      ForEach(self.items) { item in
+      ForEach(Array(zip(self.items.indices, self.items)), id: \.1) { index, item in
         VStack(spacing: 0) {
+          if index > 0 {
+            Divider()
+              .background(Color.gray)
+          }
           FeedRowView(item: item, compressed: self.compressed)
-            .frame(minHeight: (self.height - (rows - 1)) / rows)
-          Divider()
-            .background(Color.gray)
+            .frame(height: (self.height - (rows - 1)) / rows)
+            .fixedSize(horizontal: false, vertical: true)
         }
       }
     }
@@ -130,7 +139,7 @@ struct FeedListWidget: Widget {
       FeedListWidgetEntryView(entry: entry)
     }
     .configurationDisplayName("Feed List Widget")
-    .description("Display data from up to 3 of your EmonCMS feeds.")
+    .description("Display data from many of your EmonCMS feeds.")
     .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
   }
 }
