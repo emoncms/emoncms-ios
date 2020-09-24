@@ -90,7 +90,6 @@ extension Publishers {
     func receive(subscription: Subscription) {
       self.upstreamSubscription = subscription
       self.indicator.increment()
-      subscription.request(.unlimited)
     }
 
     func receive(_ input: Input) -> Subscribers.Demand {
