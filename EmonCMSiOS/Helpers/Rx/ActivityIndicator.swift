@@ -54,9 +54,11 @@ extension Publishers {
     }
 
     public func receive<S: Subscriber>(subscriber: S) where Failure == S.Failure, Output == S.Input {
-      subscriber
-        .receive(subscription: TrackActivitySubscription(upstream: self.upstream, downstream: subscriber,
-                                                         indicator: self.indicator))
+      let subscription = TrackActivitySubscription(
+        upstream: self.upstream,
+        downstream: subscriber,
+        indicator: self.indicator)
+      subscriber.receive(subscription: subscription)
     }
   }
 
