@@ -62,6 +62,7 @@ struct SingleFeedView: View {
         }
       }
     }
+    .widgetURL(URL(string: "emoncms://feed?accountId=\(item.accountId)&feedId=\(item.feedId)")!)
   }
 
   private func failureBody(error: FeedWidgetItemError) -> some View {
