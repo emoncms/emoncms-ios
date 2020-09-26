@@ -27,6 +27,15 @@ final class AccountListViewController: UITableViewController {
     let animated: Bool
   }
 
+  func switchToAccount(
+    withId id: String,
+    animated: Bool = true,
+    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in }) {
+    self.dismiss(animated: animated) {
+      self.login(toAccountWithId: id, animated: animated, completion: completion)
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -171,7 +180,10 @@ final class AccountListViewController: UITableViewController {
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   }
 
-  private func login(toAccountWithId accountId: String, animated: Bool = true) {
+  private func login(
+    toAccountWithId accountId: String,
+    animated: Bool = true,
+    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in }) {
     guard let viewModels = self.viewModel.mainViewModels(forAccountWithId: accountId) else {
       return
     }
@@ -220,7 +232,17 @@ final class AccountListViewController: UITableViewController {
       }
       .store(in: &self.cancellables)
 
-    self.present(rootViewController, animated: animated, completion: nil)
+    let viewControllers = AccountViewControllers(
+      tabBar: rootViewController,
+      appList: appListViewController,
+      inputList: inputListViewController,
+      feedList: feedListViewController,
+      dashboardList: dashboardListViewController,
+      settings: settingsViewController)
+
+    self.present(rootViewController, animated: animated) {
+      completion(viewControllers)
+    }
   }
 }
 
@@ -242,5 +264,19 @@ extension AccountListViewController {
         }
         .store(in: &self.cancellables)
     }
+  }
+}
+
+struct AccountViewControllers {
+  let tabBar: UITabBarController
+  let appList: AppListViewController
+  let inputList: InputListViewController
+  let feedList: FeedListViewController
+  let dashboardList: DashboardListViewController
+  let settings: SettingsViewController
+
+  func showFeed(withId id: String, animated: Bool = true) {
+    self.tabBar.selectedViewController = self.feedList.navigationController
+    self.feedList.showFeed(withId: id, animated: animated)
   }
 }

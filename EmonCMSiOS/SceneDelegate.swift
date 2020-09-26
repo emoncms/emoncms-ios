@@ -11,6 +11,8 @@ import UIKit
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
 
+  private var accountListViewController: AccountListViewController?
+
   #if DEBUG
     private static func isRunningTests() -> Bool {
       return ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
@@ -71,11 +73,51 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     let accountListViewController = rootViewController.topViewController! as! AccountListViewController
     accountListViewController.viewModel = AccountListViewModel(realmController: realmController, api: api)
+    self.accountListViewController = accountListViewController
 
     let window = UIWindow(windowScene: windowScene)
     self.window = window
 
     window.rootViewController = rootViewController
     window.makeKeyAndVisible()
+
+    self.scene(scene, openURLContexts: connectionOptions.urlContexts)
+  }
+
+  func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+    guard let accountListViewController = self.accountListViewController else {
+      return
+    }
+
+    guard
+      let url = URLContexts.first?.url,
+      let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
+      let type = components.host else {
+      return
+    }
+
+    if type == "feed" {
+      guard let queryItems = components.queryItems else {
+        return
+      }
+
+      var maybeAccountId: String?
+      var maybeFeedId: String?
+      for item in queryItems {
+        if item.name == "accountId" {
+          maybeAccountId = item.value
+        } else if item.name == "feedId" {
+          maybeFeedId = item.value
+        }
+      }
+
+      guard let accountId = maybeAccountId, let feedId = maybeFeedId else {
+        return
+      }
+
+      accountListViewController.switchToAccount(withId: accountId, animated: false) { viewControllers in
+        viewControllers.showFeed(withId: feedId, animated: false)
+      }
+    }
   }
 }

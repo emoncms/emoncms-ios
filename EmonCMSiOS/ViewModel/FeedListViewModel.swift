@@ -119,7 +119,7 @@ final class FeedListViewModel {
     return sections
   }
 
-  func feedChartViewModel(forItem item: ListItem) -> FeedChartViewModel {
-    return FeedChartViewModel(account: self.account, api: self.api, feedId: item.feedId)
+  func feedChartViewModel(forFeedId feedId: String) -> FeedChartViewModel {
+    return FeedChartViewModel(account: self.account, api: self.api, feedId: feedId)
   }
 }

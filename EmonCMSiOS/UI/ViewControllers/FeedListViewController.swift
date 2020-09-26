@@ -46,6 +46,10 @@ final class FeedListViewController: UIViewController {
     return self.chartView.frame.maxY + 8
   }
 
+  func showFeed(withId id: String, animated: Bool = true) {
+    self.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: id)
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -161,7 +165,7 @@ final class FeedListViewController: UIViewController {
         self.searchController.searchBar.resignFirstResponder()
 
         let item = self.dataSource.model(at: indexPath)
-        let chartViewModel = self.viewModel.feedChartViewModel(forItem: item)
+        let chartViewModel = self.viewModel.feedChartViewModel(forFeedId: item.feedId)
         return chartViewModel
       }
       .subscribe(self.chartViewModel)
@@ -172,7 +176,7 @@ final class FeedListViewController: UIViewController {
       .sink { [weak self] indexPath in
         guard let self = self else { return }
         let item = dataSource.model(at: indexPath)
-        self.performSegue(withIdentifier: Segues.showFeed.rawValue, sender: item)
+        self.showFeed(withId: item.feedId)
       }
       .store(in: &self.cancellables)
   }
@@ -481,8 +485,8 @@ extension FeedListViewController {
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     if segue.identifier == Segues.showFeed.rawValue {
       let feedViewController = segue.destination as! FeedChartViewController
-      let item = sender as! FeedListViewModel.ListItem
-      let viewModel = self.viewModel.feedChartViewModel(forItem: item)
+      let feedId = sender as! String
+      let viewModel = self.viewModel.feedChartViewModel(forFeedId: feedId)
       feedViewController.viewModel = viewModel
     }
   }
