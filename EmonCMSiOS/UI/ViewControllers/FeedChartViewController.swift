@@ -223,9 +223,9 @@ final class FeedChartViewController: FormViewController {
         }
 
         let dataSet = LineChartDataSet(entries: [], label: nil)
-        dataSet.valueTextColor = .lightGray
-        dataSet.fillColor = .black
-        dataSet.setColor(.black)
+        dataSet.valueTextColor = .systemGray3
+        dataSet.fillColor = .label
+        dataSet.setColor(.label)
         dataSet.drawCirclesEnabled = false
         dataSet.drawFilledEnabled = true
         dataSet.drawValuesEnabled = false

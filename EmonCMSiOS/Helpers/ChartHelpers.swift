@@ -59,7 +59,7 @@ final class ChartHelpers {
     lineChart.rightAxis.enabled = false
     lineChart.chartDescription = nil
     lineChart.noDataText = "Loading data\u{2026}"
-    lineChart.noDataTextColor = .black
+    lineChart.noDataTextColor = .label
     lineChart.isUserInteractionEnabled = false
 
     let xAxis = lineChart.xAxis
@@ -67,7 +67,7 @@ final class ChartHelpers {
     xAxis.drawGridLinesEnabled = false
     xAxis.drawLabelsEnabled = true
     xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .black
+    xAxis.labelTextColor = .label
     xAxis.valueFormatter = ChartDateValueFormatter(.auto)
     xAxis.granularity = 3600
 
@@ -77,7 +77,7 @@ final class ChartHelpers {
     yAxis.drawZeroLineEnabled = true
     yAxis.drawGridLinesEnabled = false
     yAxis.drawAxisLineEnabled = false
-    yAxis.labelTextColor = .black
+    yAxis.labelTextColor = .label
     yAxis.spaceTop = 0.01
     yAxis.spaceBottom = 0.01
   }
@@ -89,7 +89,7 @@ final class ChartHelpers {
     barChart.rightAxis.enabled = false
     barChart.chartDescription = nil
     barChart.noDataText = "Loading data\u{2026}"
-    barChart.noDataTextColor = .black
+    barChart.noDataTextColor = .label
     barChart.isUserInteractionEnabled = false
     barChart.extraBottomOffset = 0
     barChart.drawValueAboveBarEnabled = true
@@ -97,7 +97,7 @@ final class ChartHelpers {
     let xAxis = barChart.xAxis
     xAxis.avoidFirstLastClippingEnabled = true
     xAxis.labelPosition = .bottom
-    xAxis.labelTextColor = .black
+    xAxis.labelTextColor = .label
     xAxis.valueFormatter = DayRelativeToTodayValueFormatter()
     xAxis.drawGridLinesEnabled = false
     xAxis.drawAxisLineEnabled = false
@@ -126,7 +126,7 @@ final class ChartHelpers {
     } else {
       let dataSet = LineChartDataSet(entries: entries, label: nil)
       configureBlock(dataSet)
-      dataSet.valueTextColor = .black
+      dataSet.valueTextColor = .label
       dataSet.drawFilledEnabled = true
       dataSet.drawCirclesEnabled = false
       dataSet.drawValuesEnabled = false
@@ -163,7 +163,7 @@ final class ChartHelpers {
     } else {
       let dataSet = BarChartDataSet(entries: entries, label: "kWh")
       configureBlock(dataSet)
-      dataSet.valueTextColor = .black
+      dataSet.valueTextColor = .label
 
       data.addDataSet(dataSet)
     }

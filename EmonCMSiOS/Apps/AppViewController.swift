@@ -31,8 +31,8 @@ class AppViewController: UIViewController {
     self.view.accessibilityIdentifier = self.viewModel.accessibilityIdentifier
 
     let pageControlAppearance = UIPageControl.appearance(whenContainedInInstancesOf: [AppViewController.self])
-    pageControlAppearance.pageIndicatorTintColor = .lightGray
-    pageControlAppearance.currentPageIndicatorTintColor = .black
+    pageControlAppearance.pageIndicatorTintColor = .systemGray4
+    pageControlAppearance.currentPageIndicatorTintColor = .systemGray
 
     self.setupBindings()
     self.setupNavigation()

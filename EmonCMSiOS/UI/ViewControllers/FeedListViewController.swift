@@ -65,7 +65,6 @@ final class FeedListViewController: UIViewController {
     self.chartContainerView.accessibilityIdentifier = AccessibilityIdentifiers.FeedList.ChartContainer
     self.chartContainerView.layer.cornerRadius = 20.0
     self.chartContainerView.clipsToBounds = true
-    self.chartContainerView.layer.borderColor = UIColor(white: 0.7, alpha: 1.0).cgColor
     self.chartContainerView.layer.borderWidth = 1.0
 
     self.chartContainerViewBottomConstraint.constant = self.chartContainerMinDisplacement
@@ -75,6 +74,12 @@ final class FeedListViewController: UIViewController {
     self.setupChartView()
     self.setupBindings()
     self.setupChartBindings()
+    self.updateForCurrentTraitCollection()
+  }
+
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    super.traitCollectionDidChange(previousTraitCollection)
+    self.updateForCurrentTraitCollection()
   }
 
   override func viewDidLayoutSubviews() {
@@ -315,7 +320,7 @@ final class FeedListViewController: UIViewController {
           emptyLabel.translatesAutoresizingMaskIntoConstraints = false
           emptyLabel.text = "No feeds"
           emptyLabel.numberOfLines = 0
-          emptyLabel.textColor = .lightGray
+          emptyLabel.textColor = .systemGray3
           self.emptyLabel = emptyLabel
 
           let tableView = self.tableView!
@@ -422,9 +427,9 @@ final class FeedListViewController: UIViewController {
               }
 
               let dataSet = LineChartDataSet(entries: [], label: nil)
-              dataSet.valueTextColor = .lightGray
-              dataSet.fillColor = .black
-              dataSet.setColor(.black)
+              dataSet.valueTextColor = .systemGray3
+              dataSet.fillColor = .label
+              dataSet.setColor(.label)
               dataSet.drawCirclesEnabled = false
               dataSet.drawFilledEnabled = true
               dataSet.drawValuesEnabled = false
@@ -458,6 +463,17 @@ final class FeedListViewController: UIViewController {
       .switchToLatest()
       .sink { _ in }
       .store(in: &self.cancellables)
+  }
+
+  private func updateForCurrentTraitCollection() {
+    switch self.traitCollection.userInterfaceStyle {
+    case .light, .unspecified:
+      self.chartContainerView.layer.borderColor = UIColor(white: 0.7, alpha: 1.0).cgColor
+    case .dark:
+      self.chartContainerView.layer.borderColor = UIColor(white: 0.2, alpha: 1.0).cgColor
+    @unknown default:
+      self.chartContainerView.layer.borderColor = UIColor(white: 0.7, alpha: 1.0).cgColor
+    }
   }
 }
 
