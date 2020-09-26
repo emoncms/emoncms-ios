@@ -70,7 +70,7 @@ class AppPageViewController: UIViewController {
           self.bannerView.backgroundColor = EmonCMSColors.ErrorRed
         case .loaded(let updateTime):
           self.bannerSpinner.stopAnimating()
-          self.bannerLabel.text = "Last updated: \(dateFormatter.string(from: updateTime))"
+          self.bannerLabel.text = "\(dateFormatter.string(from: updateTime))"
           self.bannerView.backgroundColor = UIColor.lightGray
         }
       })
