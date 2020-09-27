@@ -272,28 +272,24 @@ class EmonCMSiOSUITests: QuickSpec {
         let tableView = app.tables[AccessibilityIdentifiers.Lists.Feed]
         expect(tableView.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
 
-        let chartContainer = app.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer]
-        let chartContainerClosedY = chartContainer.frame.minY
+        let cell1 = tableView.cells.element(boundBy: 0)
+        let cell2 = tableView.cells.element(boundBy: 1)
 
-        tableView.cells.element(boundBy: 0).tap()
+        expect(cell1.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(false))
+        cell1.tap()
+        expect(cell1.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(true))
+        cell1.tap()
+        expect(cell1.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(false))
+        cell1.tap()
 
-        let chartContainerOpenY = chartContainer.frame.minY
-        expect(chartContainerOpenY).to(beLessThan(chartContainerClosedY))
-
-        let startPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let endPoint1 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0.01))
-        startPoint1.press(forDuration: 0, thenDragTo: endPoint1)
-        expect(chartContainer.frame.minY)
-          .toEventually(equal(chartContainerOpenY), timeout: EmonCMSiOSUITests.WaitTimeout)
-
-        let startPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-        let endPoint2 = chartContainer.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 1))
-        startPoint2.press(forDuration: 0, thenDragTo: endPoint2)
-        expect(chartContainer.frame.minY)
-          .toEventually(equal(chartContainerClosedY), timeout: EmonCMSiOSUITests.WaitTimeout)
+        expect(cell1.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(true))
+        expect(cell2.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(false))
+        cell2.tap()
+        expect(cell1.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(false))
+        expect(cell2.otherElements[AccessibilityIdentifiers.FeedList.ChartContainer].isHittable).to(equal(true))
       }
 
-      it("should show feed chart view when tapping on detail disclosure") {
+      it("should show feed chart view when tapping on info button") {
         loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Feeds"].tap()
 

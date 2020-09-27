@@ -47,11 +47,11 @@ final class InputListViewController: UITableViewController {
   }
 
   private func setupDataSource() {
-    self.tableView.register(UINib(nibName: "ValueCell", bundle: nil), forCellReuseIdentifier: "ValueCell")
+    self.tableView.register(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: "InputCell")
 
     let dataSource = CombineTableViewDataSource<InputListViewModel.Section>(
       configureCell: { _, tableView, indexPath, item in
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ValueCell", for: indexPath) as! ValueCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "InputCell", for: indexPath) as! InputCell
         cell.titleLabel.text = item.name
         cell.valueLabel.text = item.value
 

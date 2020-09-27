@@ -38,6 +38,8 @@
 		C925518821F4BD99008342D8 /* AccessibilityIdentifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */; };
 		C9290B6021DBB824006E899D /* AppConfigViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */; };
 		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
+		C9301FD82520D00900703B19 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9301FD62520D00900703B19 /* InputCell.xib */; };
+		C9301FD92520D00900703B19 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9301FD72520D00900703B19 /* InputCell.swift */; };
 		C936955E2200F3ED0094FDA2 /* MySolarAppPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */; };
 		C9369560220103110094FDA2 /* MySolarAppPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */; };
 		C9369562220269A70094FDA2 /* MySolarAppPage1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */; };
@@ -149,8 +151,8 @@
 		C9841A7325193F9200708873 /* Dashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9E7A72D21FA72CA008BD497 /* Dashboard.swift */; };
 		C9841A7425193F9200708873 /* TodayWidgetFeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C945F8DB21FE1BFA00B99D35 /* TodayWidgetFeed.swift */; };
 		C9841A7825193FA500708873 /* CombineOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = C91CC3441D8CAE1E0048A356 /* CombineOperators.swift */; };
-		C98BD5C21DE9B59D000B6344 /* ValueCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98BD5C11DE9B59D000B6344 /* ValueCell.xib */; };
-		C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5C31DE9B5BB000B6344 /* ValueCell.swift */; };
+		C98BD5C21DE9B59D000B6344 /* FeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98BD5C11DE9B59D000B6344 /* FeedCell.xib */; };
+		C98BD5C41DE9B5BB000B6344 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5C31DE9B5BB000B6344 /* FeedCell.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
@@ -366,6 +368,8 @@
 		C925518621F4BC40008342D8 /* AccessibilityIdentifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifiers.swift; sourceTree = "<group>"; };
 		C9290B5F21DBB824006E899D /* AppConfigViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigViewModel.swift; sourceTree = "<group>"; };
 		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
+		C9301FD62520D00900703B19 /* InputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
+		C9301FD72520D00900703B19 /* InputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
 		C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage2ViewController.swift; sourceTree = "<group>"; };
 		C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewController.swift; sourceTree = "<group>"; };
 		C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewModel.swift; sourceTree = "<group>"; };
@@ -415,8 +419,8 @@
 		C98BD5B81DE6365D000B6344 /* InputListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputListViewModel.swift; sourceTree = "<group>"; };
 		C98BD5BA1DE636FA000B6344 /* Input.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputUpdateHelper.swift; sourceTree = "<group>"; };
-		C98BD5C11DE9B59D000B6344 /* ValueCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ValueCell.xib; sourceTree = "<group>"; };
-		C98BD5C31DE9B5BB000B6344 /* ValueCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueCell.swift; sourceTree = "<group>"; };
+		C98BD5C11DE9B59D000B6344 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCell.xib; sourceTree = "<group>"; };
+		C98BD5C31DE9B5BB000B6344 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		C9921AF41D9BBCEE003353A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -712,8 +716,10 @@
 		C98BD5C01DE9B589000B6344 /* TableCells */ = {
 			isa = PBXGroup;
 			children = (
-				C98BD5C31DE9B5BB000B6344 /* ValueCell.swift */,
-				C98BD5C11DE9B59D000B6344 /* ValueCell.xib */,
+				C9301FD72520D00900703B19 /* InputCell.swift */,
+				C9301FD62520D00900703B19 /* InputCell.xib */,
+				C98BD5C31DE9B5BB000B6344 /* FeedCell.swift */,
+				C98BD5C11DE9B59D000B6344 /* FeedCell.xib */,
 			);
 			path = TableCells;
 			sourceTree = "<group>";
@@ -1274,9 +1280,10 @@
 				C9C041A51D85F7D600E3CEC4 /* LaunchScreen.storyboard in Resources */,
 				C9C041A21D85F7D600E3CEC4 /* Assets.xcassets in Resources */,
 				C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */,
+				C9301FD82520D00900703B19 /* InputCell.xib in Resources */,
 				C92010F51D89F6AD00C9974B /* Apps.storyboard in Resources */,
 				C9C041A01D85F7D600E3CEC4 /* Main.storyboard in Resources */,
-				C98BD5C21DE9B59D000B6344 /* ValueCell.xib in Resources */,
+				C98BD5C21DE9B59D000B6344 /* FeedCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1410,7 +1417,8 @@
 				C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */,
 				C957CCEE1D9086E40039D707 /* RowFormer+Combine.swift in Sources */,
 				C9C240C61D91730100BC302C /* SettingsViewController.swift in Sources */,
-				C98BD5C41DE9B5BB000B6344 /* ValueCell.swift in Sources */,
+				C9301FD92520D00900703B19 /* InputCell.swift in Sources */,
+				C98BD5C41DE9B5BB000B6344 /* FeedCell.swift in Sources */,
 				C9C240C41D91730100BC302C /* FeedListViewController.swift in Sources */,
 				1EE02C0B21ECEFE800C6AE9A /* AppBoxesFeedView.swift in Sources */,
 				C9E7A72221FA4F17008BD497 /* AppTitleAndValueView.swift in Sources */,

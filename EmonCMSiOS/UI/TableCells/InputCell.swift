@@ -1,14 +1,17 @@
 //
-//  ValueCell.swift
+//  InputCell.swift
 //  EmonCMSiOS
 //
-//  Created by Matt Galloway on 26/11/2016.
+//  Created by Matt Galloway on 27/09/2020.
 //  Copyright © 2016 Matt Galloway. All rights reserved.
 //
 
+import Combine
 import UIKit
 
-final class ValueCell: UITableViewCell {
+import Charts
+
+final class InputCell: UITableViewCell {
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var valueLabel: UILabel!
   @IBOutlet var timeLabel: UILabel!
