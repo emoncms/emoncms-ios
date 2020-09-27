@@ -50,6 +50,8 @@ class FeedCellTests: EmonCMSTestCase {
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
           cell.chartViewModel.send(nil)
         }
+        tableView.layoutIfNeeded()
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
         assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
 
@@ -61,6 +63,8 @@ class FeedCellTests: EmonCMSTestCase {
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
           cell.chartViewModel.send(self.makeFeedChartViewModel())
         }
+        tableView.layoutIfNeeded()
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
         assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
     }

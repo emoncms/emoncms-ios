@@ -47,6 +47,8 @@ class InputCellTests: EmonCMSTestCase {
           cell.timeLabel.text = "10 seconds ago"
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
         }
+        tableView.layoutIfNeeded()
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.1))
         assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
     }
