@@ -45,7 +45,8 @@ struct SingleFeedView: View {
 
         // Chart
         FeedChartView(data: item.feedChartData)
-          .stroke(Color(EmonCMSColors.Chart.Blue), lineWidth: 2)
+          .color(Color(EmonCMSColors.Chart.Blue))
+          .lineWidth(2)
           .padding(.vertical, 8)
           .padding(.horizontal, 12)
 

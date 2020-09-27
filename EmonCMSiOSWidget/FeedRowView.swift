@@ -49,7 +49,8 @@ struct FeedRowView: View {
           // Chart
           if !self.compressed {
             FeedChartView(data: item.feedChartData)
-              .stroke(Color(EmonCMSColors.Chart.Blue), lineWidth: 2)
+              .color(Color(EmonCMSColors.Chart.Blue))
+              .lineWidth(2)
               .padding(.vertical, 12)
               .padding(.horizontal, 4)
               .frame(width: metrics.size.width * 0.2, alignment: .trailing)
