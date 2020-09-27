@@ -69,17 +69,20 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bl8-N9-uU7" userLabel="Chart Container View">
-                        <rect key="frame" x="0.0" y="56.5" width="375" height="160"/>
+                        <rect key="frame" x="0.0" y="56.5" width="375" height="185"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWi-dn-SVe" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="138"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="DWi-dn-SVe" secondAttribute="height" multiplier="125:46" priority="750" id="m5u-GH-K8M"/>
+                                </constraints>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Mv1-kA-wQ7">
-                                <rect key="frame" x="177.5" y="70" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="82.5" width="20" height="20"/>
                             </activityIndicatorView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="UeT-HJ-hIa">
-                                <rect key="frame" x="60.5" y="121" width="254" height="32"/>
+                                <rect key="frame" x="60.5" y="146" width="254" height="32"/>
                                 <segments>
                                     <segment title="1h" width="50"/>
                                     <segment title="8h" width="50"/>
@@ -94,16 +97,17 @@
                             <bool key="isElement" value="YES"/>
                         </accessibility>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="DWi-dn-SVe" secondAttribute="trailing" id="FmE-lU-PT0"/>
+                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="DWi-dn-SVe" secondAttribute="trailing" id="FmE-lU-PT0"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UeT-HJ-hIa" secondAttribute="trailing" constant="8" id="LMx-3h-HuH"/>
                             <constraint firstItem="UeT-HJ-hIa" firstAttribute="centerX" secondItem="bl8-N9-uU7" secondAttribute="centerX" id="O0E-Nw-2un"/>
                             <constraint firstItem="DWi-dn-SVe" firstAttribute="top" secondItem="bl8-N9-uU7" secondAttribute="top" id="V7c-7f-XWW"/>
+                            <constraint firstItem="DWi-dn-SVe" firstAttribute="centerX" secondItem="bl8-N9-uU7" secondAttribute="centerX" id="XLZ-ge-ouH"/>
                             <constraint firstItem="UeT-HJ-hIa" firstAttribute="top" secondItem="DWi-dn-SVe" secondAttribute="bottom" constant="8" symbolType="layoutAnchor" id="Zra-Cj-B8i"/>
                             <constraint firstItem="Mv1-kA-wQ7" firstAttribute="centerY" secondItem="bl8-N9-uU7" secondAttribute="centerY" id="ahP-Sv-Bon"/>
                             <constraint firstAttribute="bottom" secondItem="UeT-HJ-hIa" secondAttribute="bottom" constant="8" id="cXJ-Qa-j0D"/>
                             <constraint firstItem="Mv1-kA-wQ7" firstAttribute="centerX" secondItem="bl8-N9-uU7" secondAttribute="centerX" id="chK-yN-xhz"/>
-                            <constraint firstAttribute="height" constant="160" id="k1b-0G-c85"/>
-                            <constraint firstItem="DWi-dn-SVe" firstAttribute="leading" secondItem="bl8-N9-uU7" secondAttribute="leading" id="qwR-Ek-kzP"/>
+                            <constraint firstAttribute="height" constant="185" id="k1b-0G-c85"/>
+                            <constraint firstItem="DWi-dn-SVe" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bl8-N9-uU7" secondAttribute="leading" id="qwR-Ek-kzP"/>
                             <constraint firstItem="UeT-HJ-hIa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bl8-N9-uU7" secondAttribute="leading" constant="8" id="uEP-BS-55P"/>
                         </constraints>
                     </view>
