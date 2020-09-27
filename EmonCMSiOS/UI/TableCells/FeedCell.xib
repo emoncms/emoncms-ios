@@ -69,17 +69,17 @@
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bl8-N9-uU7" userLabel="Chart Container View">
-                        <rect key="frame" x="0.0" y="56.5" width="375" height="187.5"/>
+                        <rect key="frame" x="0.0" y="56.5" width="375" height="160"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DWi-dn-SVe" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="140.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="113"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="Mv1-kA-wQ7">
-                                <rect key="frame" x="177.5" y="84" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="70" width="20" height="20"/>
                             </activityIndicatorView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" translatesAutoresizingMaskIntoConstraints="NO" id="UeT-HJ-hIa">
-                                <rect key="frame" x="60.5" y="148.5" width="254" height="32"/>
+                                <rect key="frame" x="60.5" y="121" width="254" height="32"/>
                                 <segments>
                                     <segment title="1h" width="50"/>
                                     <segment title="8h" width="50"/>
@@ -102,9 +102,9 @@
                             <constraint firstItem="Mv1-kA-wQ7" firstAttribute="centerY" secondItem="bl8-N9-uU7" secondAttribute="centerY" id="ahP-Sv-Bon"/>
                             <constraint firstAttribute="bottom" secondItem="UeT-HJ-hIa" secondAttribute="bottom" constant="8" id="cXJ-Qa-j0D"/>
                             <constraint firstItem="Mv1-kA-wQ7" firstAttribute="centerX" secondItem="bl8-N9-uU7" secondAttribute="centerX" id="chK-yN-xhz"/>
+                            <constraint firstAttribute="height" constant="160" id="k1b-0G-c85"/>
                             <constraint firstItem="DWi-dn-SVe" firstAttribute="leading" secondItem="bl8-N9-uU7" secondAttribute="leading" id="qwR-Ek-kzP"/>
                             <constraint firstItem="UeT-HJ-hIa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="bl8-N9-uU7" secondAttribute="leading" constant="8" id="uEP-BS-55P"/>
-                            <constraint firstAttribute="width" secondItem="bl8-N9-uU7" secondAttribute="height" multiplier="2:1" id="vVz-79-aSc"/>
                         </constraints>
                     </view>
                 </subviews>
