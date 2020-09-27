@@ -40,6 +40,7 @@
 		C9290B6221DBD31B006E899D /* AppSelectFeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */; };
 		C9301FD82520D00900703B19 /* InputCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9301FD62520D00900703B19 /* InputCell.xib */; };
 		C9301FD92520D00900703B19 /* InputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9301FD72520D00900703B19 /* InputCell.swift */; };
+		C9301FE72520D9B500703B19 /* XCUIElement+EmonCMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9301FE62520D9B500703B19 /* XCUIElement+EmonCMS.swift */; };
 		C936955E2200F3ED0094FDA2 /* MySolarAppPage2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */; };
 		C9369560220103110094FDA2 /* MySolarAppPage1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */; };
 		C9369562220269A70094FDA2 /* MySolarAppPage1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */; };
@@ -370,6 +371,7 @@
 		C9290B6121DBD31B006E899D /* AppSelectFeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSelectFeedViewController.swift; sourceTree = "<group>"; };
 		C9301FD62520D00900703B19 /* InputCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputCell.xib; sourceTree = "<group>"; };
 		C9301FD72520D00900703B19 /* InputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputCell.swift; sourceTree = "<group>"; };
+		C9301FE62520D9B500703B19 /* XCUIElement+EmonCMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+EmonCMS.swift"; sourceTree = "<group>"; };
 		C936955D2200F3EC0094FDA2 /* MySolarAppPage2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage2ViewController.swift; sourceTree = "<group>"; };
 		C936955F220103110094FDA2 /* MySolarAppPage1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewController.swift; sourceTree = "<group>"; };
 		C9369561220269A70094FDA2 /* MySolarAppPage1ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppPage1ViewModel.swift; sourceTree = "<group>"; };
@@ -636,6 +638,7 @@
 			isa = PBXGroup;
 			children = (
 				C925517A21F4AB2A008342D8 /* EmonCMSiOSUITests.swift */,
+				C9301FE62520D9B500703B19 /* XCUIElement+EmonCMS.swift */,
 				C925517C21F4AB2A008342D8 /* Info.plist */,
 			);
 			path = EmonCMSiOSUITests;
@@ -1328,6 +1331,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9301FE72520D9B500703B19 /* XCUIElement+EmonCMS.swift in Sources */,
 				C925518821F4BD99008342D8 /* AccessibilityIdentifiers.swift in Sources */,
 				C925517B21F4AB2A008342D8 /* EmonCMSiOSUITests.swift in Sources */,
 			);
