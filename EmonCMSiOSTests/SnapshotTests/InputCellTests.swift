@@ -22,12 +22,19 @@ class InputCellTests: EmonCMSTestCase {
 
   override func spec() {
     var tableView: UITableView!
+    var traits: UITraitCollection!
 
     beforeEach {
       tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
       tableView.dataSource = self
       tableView.delegate = self
       tableView.register(UINib(nibName: "InputCell", bundle: nil), forCellReuseIdentifier: "InputCell")
+
+      traits =
+        UITraitCollection(traitsFrom: [
+          UITraitCollection(displayScale: 2.0),
+          UITraitCollection(userInterfaceStyle: .light)
+        ])
 
       self.cellSetup = { _ in }
     }
@@ -40,7 +47,7 @@ class InputCellTests: EmonCMSTestCase {
           cell.timeLabel.text = "10 seconds ago"
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
         }
-        assertSnapshot(matching: tableView, as: .image(traits: .init(userInterfaceStyle: .light)))
+        assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
     }
   }

@@ -24,12 +24,19 @@ class FeedCellTests: EmonCMSTestCase {
 
   override func spec() {
     var tableView: UITableView!
+    var traits: UITraitCollection!
 
     beforeEach {
       tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
       tableView.dataSource = self
       tableView.delegate = self
       tableView.register(UINib(nibName: "FeedCell", bundle: nil), forCellReuseIdentifier: "FeedCell")
+
+      traits =
+        UITraitCollection(traitsFrom: [
+          UITraitCollection(displayScale: 2.0),
+          UITraitCollection(userInterfaceStyle: .light)
+        ])
 
       self.cellSetup = { _ in }
     }
@@ -43,7 +50,7 @@ class FeedCellTests: EmonCMSTestCase {
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
           cell.chartViewModel.send(nil)
         }
-        assertSnapshot(matching: tableView, as: .image(traits: .init(userInterfaceStyle: .light)))
+        assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
 
       it("Should display expanded") {
@@ -54,7 +61,7 @@ class FeedCellTests: EmonCMSTestCase {
           cell.activityCircle.backgroundColor = EmonCMSColors.ActivityIndicator.Green
           cell.chartViewModel.send(self.makeFeedChartViewModel())
         }
-        assertSnapshot(matching: tableView, as: .image(traits: .init(userInterfaceStyle: .light)))
+        assertSnapshot(matching: tableView, as: .image(traits: traits))
       }
     }
   }
