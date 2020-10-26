@@ -1710,7 +1710,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSToday;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.today;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1739,7 +1739,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSToday;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.today;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -1978,7 +1978,7 @@
 				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2010,7 +2010,7 @@
 				);
 				MARKETING_VERSION = 1.1;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSWidget;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2041,7 +2041,7 @@
 				MARKETING_VERSION = 1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSSelectFeedIntent;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.selectfeedintent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -2071,7 +2071,7 @@
 				);
 				MARKETING_VERSION = 1.1;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.EmonCMSiOSSelectFeedIntent;
+				PRODUCT_BUNDLE_IDENTIFIER = org.openenergymonitor.emoncms.selectfeedintent;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
