@@ -12,7 +12,7 @@ import Realm
 import RealmSwift
 
 final class RealmController {
-  static let schemaVersion: UInt64 = 1
+  static let schemaVersion: UInt64 = 2
 
   let dataDirectory: URL
 
@@ -27,6 +27,12 @@ final class RealmController {
   private func mainRealmConfiguration() -> Realm.Configuration {
     var config = Realm.Configuration(fileURL: self.mainRealmFileURL)
     config.schemaVersion = RealmController.schemaVersion
+    config.migrationBlock = { migration, oldSchemaVersion in
+      if oldSchemaVersion <= 1 {
+        self.main_migrate_1_2(migration)
+      }
+    }
+
     return config
   }
 
@@ -46,6 +52,9 @@ final class RealmController {
     config.migrationBlock = { migration, oldSchemaVersion in
       if oldSchemaVersion == 0 {
         self.account_migrate_0_1(migration)
+      }
+      if oldSchemaVersion <= 1 {
+        self.account_migrate_1_2(migration)
       }
     }
 
@@ -68,6 +77,10 @@ final class MyElectricAppData: Object {
   override class func primaryKey() -> String? {
     return "uuid"
   }
+}
+
+extension RealmController {
+  private func main_migrate_1_2(_ migration: Migration) {}
 }
 
 extension RealmController {
@@ -94,4 +107,6 @@ extension RealmController {
       newAppData.setValue(feedsJsonData, forKey: "feedsJson")
     }
   }
+
+  private func account_migrate_1_2(_ migration: Migration) {}
 }
