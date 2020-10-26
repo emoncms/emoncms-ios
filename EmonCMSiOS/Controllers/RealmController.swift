@@ -59,7 +59,16 @@ final class RealmController {
   }
 }
 
-final class MyElectricAppData: Object {}
+final class MyElectricAppData: Object {
+  @objc dynamic var uuid: String = UUID().uuidString
+  @objc dynamic var name: String = "MyElectric"
+  @objc dynamic var useFeedId: String?
+  @objc dynamic var kwhFeedId: String?
+
+  override class func primaryKey() -> String? {
+    return "uuid"
+  }
+}
 
 extension RealmController {
   private func account_migrate_0_1(_ migration: Migration) {
