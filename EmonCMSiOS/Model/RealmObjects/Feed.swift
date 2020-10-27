@@ -16,9 +16,45 @@ final class Feed: Object {
   @objc dynamic var tag: String = ""
   @objc dynamic var time: Date = Date()
   @objc dynamic var value: Double = 0
+  @objc private dynamic var widgetChartPointsJson: Data?
+
+  var widgetChartPoints: [DataPoint<Double>] {
+    get {
+      var dataPoints: [DataPoint<Double>] = []
+      guard let dataJson = self.widgetChartPointsJson else {
+        return dataPoints
+      }
+      do {
+        if let data = try JSONSerialization.jsonObject(with: dataJson, options: []) as? [[Double]] {
+          for d in data {
+            dataPoints.append(DataPoint<Double>(time: Date(timeIntervalSince1970: d[0]), value: d[1]))
+          }
+          return dataPoints
+        }
+      } catch {}
+      return dataPoints
+    }
+
+    set {
+      do {
+        var toSerialise: [[Double]] = []
+        for dataPoint in newValue {
+          toSerialise.append([dataPoint.time.timeIntervalSince1970, dataPoint.value])
+        }
+        let data = try JSONSerialization.data(withJSONObject: toSerialise, options: [])
+        self.widgetChartPointsJson = data
+      } catch {
+        self.widgetChartPointsJson = nil
+      }
+    }
+  }
 
   override class func primaryKey() -> String? {
     return "id"
+  }
+
+  override class func ignoredProperties() -> [String] {
+    return ["widgetChartPoints"]
   }
 }
 

@@ -101,15 +101,12 @@ final class FeedViewModel {
     let startDate = endDate.addingTimeInterval(TimeInterval(-range))
     return self.api.feedData(accountCredentials, id: feedId, at: startDate, until: endDate, interval: range / 200)
       .map { dataPoints -> FeedWidgetItem in
-        if let lastDataPoint = dataPoints.last {
-          do {
-            try accountRealm.write {
-              feed.time = lastDataPoint.time
-              feed.value = lastDataPoint.value
-            }
-          } catch {
-            AppLog.error("Failed to save feed.")
+        do {
+          try accountRealm.write {
+            feed.widgetChartPoints = dataPoints
           }
+        } catch {
+          AppLog.error("Failed to save feed.")
         }
 
         return FeedWidgetItem(
@@ -120,14 +117,13 @@ final class FeedViewModel {
           feedChartData: dataPoints)
       }
       .catch { _ -> AnyPublisher<FeedWidgetItem, FeedViewModelError> in
-        let dataPoints = [DataPoint<Double>(time: feed.time, value: feed.value)]
-        return Just<FeedWidgetItem>(
+        Just<FeedWidgetItem>(
           FeedWidgetItem(
             accountId: accountId,
             accountName: accountName,
             feedId: feedId,
             feedName: feedName,
-            feedChartData: dataPoints))
+            feedChartData: feed.widgetChartPoints))
           .setFailureType(to: FeedViewModelError.self)
           .eraseToAnyPublisher()
       }

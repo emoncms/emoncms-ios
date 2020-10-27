@@ -159,6 +159,8 @@
 		C98BD5C21DE9B59D000B6344 /* FeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C98BD5C11DE9B59D000B6344 /* FeedCell.xib */; };
 		C98BD5C41DE9B5BB000B6344 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C98BD5C31DE9B5BB000B6344 /* FeedCell.swift */; };
 		C9921AF51D9BBCEE003353A0 /* LogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9921AF41D9BBCEE003353A0 /* LogController.swift */; };
+		C9976C872548CAD700456333 /* DataPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9BB83711D8883480058C059 /* DataPoint.swift */; };
+		C9976C8D2548CC4D00456333 /* FeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9976C8C2548CC4D00456333 /* FeedTests.swift */; };
 		C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */; };
 		C99DF40F1D90210000BBF80D /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */; };
 		C99DF4141D9042CE00BBF80D /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C99DF4131D9042CE00BBF80D /* ChartCell.swift */; };
@@ -432,6 +434,7 @@
 		C98BD5C11DE9B59D000B6344 /* FeedCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FeedCell.xib; sourceTree = "<group>"; };
 		C98BD5C31DE9B5BB000B6344 /* FeedCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		C9921AF41D9BBCEE003353A0 /* LogController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogController.swift; sourceTree = "<group>"; };
+		C9976C8C2548CC4D00456333 /* FeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTests.swift; sourceTree = "<group>"; };
 		C99DF40C1D90197700BBF80D /* FeedChartViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModel.swift; sourceTree = "<group>"; };
 		C99DF40E1D90210000BBF80D /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
 		C99DF4131D9042CE00BBF80D /* ChartCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartCell.swift; sourceTree = "<group>"; };
@@ -962,6 +965,7 @@
 				C9E7A71D21F920A7008BD497 /* DateRangeTests.swift */,
 				C9E7A71021F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift */,
 				C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */,
+				C9976C8C2548CC4D00456333 /* FeedTests.swift */,
 				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
 				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
@@ -1411,6 +1415,7 @@
 				C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */,
 				C9C40BA32307D45900CE2839 /* EntwineAdditions.swift in Sources */,
 				C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */,
+				C9976C8D2548CC4D00456333 /* FeedTests.swift in Sources */,
 				C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */,
 				C96DA3682302EA14005B1F98 /* FeedChartViewModelTests.swift in Sources */,
 				C96DA3672302E9A5005B1F98 /* DashboardUpdateHelperTests.swift in Sources */,
@@ -1571,6 +1576,7 @@
 				C9841A6825193D7C00708873 /* Account.swift in Sources */,
 				C9EB61AE2517E91D00440F6F /* SelectFeedIntent.intentdefinition in Sources */,
 				C9EB61A32517E8CF00440F6F /* IntentHandler.swift in Sources */,
+				C9976C872548CAD700456333 /* DataPoint.swift in Sources */,
 				C9841A7225193F9200708873 /* AppData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
