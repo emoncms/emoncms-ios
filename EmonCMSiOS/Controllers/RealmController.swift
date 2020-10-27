@@ -100,7 +100,7 @@ extension RealmController {
         return
       }
 
-      let newAppData = migration.create("AppData")
+      let newAppData = migration.create(AppData.className())
       newAppData.setValue(uuid, forKey: "uuid")
       newAppData.setValue(name, forKey: "name")
       newAppData.setValue(AppCategory.myElectric.rawValue, forKey: "category")
