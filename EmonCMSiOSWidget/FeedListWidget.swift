@@ -101,13 +101,13 @@ struct FeedListView: View {
   var body: some View {
     let rows: CGFloat = CGFloat(Self.rowsForFamily[self.family]!)
     VStack(spacing: 0) {
-      ForEach(Array(zip(self.items.indices, self.items)), id: \.1) { index, item in
+      ForEach(self.items.startIndex..<self.items.endIndex) { i in
         VStack(spacing: 0) {
-          if index > 0 {
+          if i > 0 {
             Divider()
               .background(Color.gray)
           }
-          FeedRowView(item: item, compressed: self.compressed)
+          FeedRowView(item: self.items[i], compressed: self.compressed)
             .frame(height: (self.height - (rows - 1)) / rows)
             .fixedSize(horizontal: false, vertical: true)
         }
@@ -122,10 +122,15 @@ struct FeedListWidgetEntryView: View {
 
   var body: some View {
     GeometryReader { metrics in
-      FeedListView(
-        items: entry.items,
-        compressed: self.family == .systemSmall,
-        height: metrics.size.height)
+      HStack {
+        Spacer(minLength: 0)
+        FeedListView(
+          items: entry.items,
+          compressed: self.family == .systemSmall,
+          height: metrics.size.height)
+        Spacer(minLength: 0)
+      }
+      .frame(width: metrics.size.width)
     }
   }
 }
@@ -242,9 +247,18 @@ struct FeedListWidget_Previews: PreviewProvider {
         items: [
           FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
           FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
+          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed))
+        ]))
+      .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
+
+    FeedListWidgetEntryView(
+      entry: FeedListEntry(
+        date: Date(),
+        items: [
           FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
-        ])
-    )
+          FeedWidgetItemResult.failure(.noFeedInfo),
+          FeedWidgetItemResult.failure(.unknown)
+        ]))
       .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
   }
 }
