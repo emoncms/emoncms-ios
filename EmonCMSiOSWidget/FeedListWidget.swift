@@ -235,6 +235,17 @@ struct FeedListWidget_Previews: PreviewProvider {
       FeedListWidgetEntryView(entry: entry)
         .previewContext(WidgetPreviewContext(family: family))
     }
+
+    FeedListWidgetEntryView(
+      entry: FeedListEntry(
+        date: Date(),
+        items: [
+          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
+          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
+          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
+        ])
+    )
+      .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
   }
 }
 
