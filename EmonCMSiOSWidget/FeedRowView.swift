@@ -74,25 +74,24 @@ struct FeedRowView: View {
   }
 
   private func failureBody(error: FeedWidgetItemError) -> some View {
-    VStack {
+    let errorText: String
+    switch error {
+    case .noFeedInfo, .unknown:
+      errorText = "No feed"
+    case .fetchFailed:
+      errorText = "No connection"
+    }
+
+    return VStack {
       Text("Error loading data")
         .font(.footnote)
         .fontWeight(.bold)
         .lineLimit(1)
-      switch error {
-      case .noFeedInfo, .unknown:
-        Text("No feed")
-          .font(.footnote)
-          .fontWeight(.regular)
-          .foregroundColor(Color.gray)
-          .lineLimit(1)
-      case .fetchFailed:
-        Text("No connection")
-          .font(.footnote)
-          .fontWeight(.regular)
-          .foregroundColor(Color.gray)
-          .lineLimit(1)
-      }
+      Text(errorText)
+        .font(.footnote)
+        .fontWeight(.regular)
+        .foregroundColor(Color.gray)
+        .lineLimit(1)
     }
   }
 }
