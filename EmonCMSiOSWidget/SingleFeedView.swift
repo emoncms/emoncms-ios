@@ -67,25 +67,27 @@ struct SingleFeedView: View {
   }
 
   private func failureBody(error: FeedWidgetItemError) -> some View {
-    VStack {
-      Text("Error loading data")
+    let titleText: String
+    let errorText: String
+    switch error {
+    case .noFeedInfo, .unknown:
+      titleText = "No feed"
+      errorText = "Select a feed"
+    case .fetchFailed:
+      titleText = "Error loading data"
+      errorText = "No connection"
+    }
+
+    return VStack {
+      Text(titleText)
         .font(.footnote)
         .fontWeight(.bold)
         .lineLimit(1)
-      switch error {
-      case .noFeedInfo, .unknown:
-        Text("No feed")
-          .font(.footnote)
-          .fontWeight(.regular)
-          .foregroundColor(Color.gray)
-          .lineLimit(1)
-      case .fetchFailed:
-        Text("No connection")
-          .font(.footnote)
-          .fontWeight(.regular)
-          .foregroundColor(Color.gray)
-          .lineLimit(1)
-      }
+      Text(errorText)
+        .font(.footnote)
+        .fontWeight(.regular)
+        .foregroundColor(Color.gray)
+        .lineLimit(1)
     }
   }
 }
