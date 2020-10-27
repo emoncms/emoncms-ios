@@ -101,7 +101,7 @@ struct FeedListView: View {
   var body: some View {
     let rows: CGFloat = CGFloat(Self.rowsForFamily[self.family]!)
     VStack(spacing: 0) {
-      ForEach(self.items.startIndex..<self.items.endIndex) { i in
+      ForEach(self.items.startIndex ..< self.items.endIndex) { i in
         VStack(spacing: 0) {
           if i > 0 {
             Divider()
