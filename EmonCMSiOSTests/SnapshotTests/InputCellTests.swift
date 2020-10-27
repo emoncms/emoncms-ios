@@ -6,13 +6,13 @@
 //  Copyright © 2020 Matt Galloway. All rights reserved.
 //
 
-//@testable import EmonCMSiOS
-//import Nimble
-//import Quick
-//import SnapshotTesting
-//import UIKit
+// @testable import EmonCMSiOS
+// import Nimble
+// import Quick
+// import SnapshotTesting
+// import UIKit
 //
-//class InputCellTests: EmonCMSTestCase {
+// class InputCellTests: EmonCMSTestCase {
 //  private var cellSetup: (InputCell) -> Void = { _ in }
 //
 //  override func setUp() {
@@ -53,9 +53,9 @@
 //      }
 //    }
 //  }
-//}
+// }
 //
-//extension InputCellTests: UITableViewDataSource, UITableViewDelegate {
+// extension InputCellTests: UITableViewDataSource, UITableViewDelegate {
 //  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //    return 1
 //  }
@@ -65,4 +65,4 @@
 //    self.cellSetup(cell)
 //    return cell
 //  }
-//}
+// }

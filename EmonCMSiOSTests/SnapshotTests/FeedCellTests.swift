@@ -6,15 +6,15 @@
 //  Copyright © 2020 Matt Galloway. All rights reserved.
 //
 
-//@testable import EmonCMSiOS
-//import Nimble
-//import Quick
-//import Realm
-//import RealmSwift
-//import SnapshotTesting
-//import UIKit
+// @testable import EmonCMSiOS
+// import Nimble
+// import Quick
+// import Realm
+// import RealmSwift
+// import SnapshotTesting
+// import UIKit
 //
-//class FeedCellTests: EmonCMSTestCase {
+// class FeedCellTests: EmonCMSTestCase {
 //  private var cellSetup: (FeedCell) -> Void = { _ in }
 //
 //  override func setUp() {
@@ -83,9 +83,9 @@
 //    let api = EmonCMSAPI(requestProvider: requestProvider)
 //    return FeedChartViewModel(account: accountController, api: api, feedId: "1")
 //  }
-//}
+// }
 //
-//extension FeedCellTests: UITableViewDataSource, UITableViewDelegate {
+// extension FeedCellTests: UITableViewDataSource, UITableViewDelegate {
 //  func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 //    return 1
 //  }
@@ -95,4 +95,4 @@
 //    self.cellSetup(cell)
 //    return cell
 //  }
-//}
+// }

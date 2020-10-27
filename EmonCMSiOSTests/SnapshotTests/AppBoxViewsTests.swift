@@ -6,11 +6,11 @@
 //  Copyright © 2019 Matt Galloway. All rights reserved.
 //
 
-//@testable import EmonCMSiOS
-//import SnapshotTesting
-//import XCTest
+// @testable import EmonCMSiOS
+// import SnapshotTesting
+// import XCTest
 //
-//class AppBoxViewsTests: XCTestCase {
+// class AppBoxViewsTests: XCTestCase {
 //  override func setUp() {
 //    super.setUp()
 //    isRecording = false
@@ -70,4 +70,4 @@
 //    view.value = 100
 //    assertSnapshot(matching: view, as: .image)
 //  }
-//}
+// }
