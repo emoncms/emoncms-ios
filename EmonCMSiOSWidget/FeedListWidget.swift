@@ -241,13 +241,27 @@ struct FeedListWidget_Previews: PreviewProvider {
         .previewContext(WidgetPreviewContext(family: family))
     }
 
+    ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
+      let rows = FeedListView.rowsForFamily[family]!
+      let entry = FeedListEntry(
+        date: Date(),
+        items: Array(items[0 ..< rows]).map { _ in FeedWidgetItemResult.success(FeedWidgetItem(
+          accountId: "1",
+          accountName: "Account",
+          feedId: "1",
+          feedName: "Use",
+          feedChartData: [])) })
+      FeedListWidgetEntryView(entry: entry)
+        .previewContext(WidgetPreviewContext(family: family))
+    }
+
     FeedListWidgetEntryView(
       entry: FeedListEntry(
         date: Date(),
         items: [
-          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
-          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
-          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed))
+          FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked)),
+          FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked)),
+          FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked))
         ]))
       .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
 
@@ -255,7 +269,7 @@ struct FeedListWidget_Previews: PreviewProvider {
       entry: FeedListEntry(
         date: Date(),
         items: [
-          FeedWidgetItemResult.failure(.fetchFailed(.fetchFailed)),
+          FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked)),
           FeedWidgetItemResult.failure(.noFeedInfo),
           FeedWidgetItemResult.failure(.unknown)
         ]))
