@@ -53,14 +53,15 @@ struct FeedListProvider: IntentTimelineProvider {
     for configuration: SelectFeedsIntent,
     in context: Context,
     completion: @escaping ([FeedWidgetItemResult]) -> Void) {
+    let rowCount = FeedListView.rowsForFamily[context.family]!
+
     guard !context.isPreview else {
-      let rows = FeedListView.rowsForFamily[context.family]!
-      completion(Array(repeating: FeedWidgetItemResult.success(FeedWidgetItem.placeholder), count: rows))
+      completion(Array(repeating: FeedWidgetItemResult.success(FeedWidgetItem.placeholder), count: rowCount))
       return
     }
 
     guard let feeds = configuration.feeds else {
-      completion([])
+      completion(Array(repeating: FeedWidgetItemResult.failure(.noFeedInfo), count: rowCount))
       return
     }
 
@@ -69,14 +70,18 @@ struct FeedListProvider: IntentTimelineProvider {
         let accountId = feed.accountId,
         let feedId = feed.feedId
       else {
-        completion([])
+        completion(Array(repeating: FeedWidgetItemResult.failure(.noFeedInfo), count: rowCount))
         return nil
       }
       return (accountId: accountId, feedId: feedId)
     }
 
     self.viewModel.fetchData(for: zipped) { results in
-      completion(results)
+      var allResults = results
+      if allResults.count < rowCount {
+        allResults += Array(repeating: FeedWidgetItemResult.failure(.noFeedInfo), count: rowCount - allResults.count)
+      }
+      completion(allResults)
     }
   }
 }
