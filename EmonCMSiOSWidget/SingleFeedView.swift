@@ -40,7 +40,7 @@ struct SingleFeedView: View {
           }
           .padding(.leading, 16)
           .padding(.trailing, 16)
-          .padding(.top, 16)
+          .padding(.top, 14)
 
           Spacer()
         }
@@ -61,7 +61,7 @@ struct SingleFeedView: View {
             .minimumScaleFactor(0.5)
             .padding(.leading, 16)
             .padding(.trailing, 16)
-            .padding(.bottom, 8)
+            .padding(.bottom, 6)
         }
       }
     }
