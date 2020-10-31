@@ -41,7 +41,8 @@ struct FeedWidgetItem {
       let startTime = lastDataPoint?.time ?? Date(timeIntervalSince1970: 0)
       let lastValue = lastDataPoint?.value ?? Double.random(in: 0 ..< 50)
       let startValue = lastValue
-      let endValue = Double.random(in: lastValue - 25 ..< lastValue + 25)
+      let nextMinValue = max(lastValue - 25, 0)
+      let endValue = Double.random(in: nextMinValue ..< nextMinValue + 50)
       let section = Self.randomChartData(between: startValue, and: endValue, count: length, startTime: startTime)
       return result + section
     }
