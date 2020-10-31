@@ -96,7 +96,7 @@ struct SingleFeedView: View {
 
 struct SingleFeedView_Previews: PreviewProvider {
   static var previews: some View {
-    let item = FeedWidgetItem.placeholder
+    let item = FeedWidgetItem.makePlaceholder()
 
     SingleFeedView(item: FeedWidgetItemResult.success(item))
       .previewContext(WidgetPreviewContext(family: .systemSmall))

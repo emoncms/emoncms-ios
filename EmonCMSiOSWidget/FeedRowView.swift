@@ -101,7 +101,7 @@ struct FeedRowView: View {
 
 struct FeedRowView_Previews: PreviewProvider {
   static var previews: some View {
-    let item = FeedWidgetItem.placeholder
+    let item = FeedWidgetItem.makePlaceholder()
 
     FeedRowView(item: .success(item), compressed: true)
       .previewContext(WidgetPreviewContext(family: .systemSmall))

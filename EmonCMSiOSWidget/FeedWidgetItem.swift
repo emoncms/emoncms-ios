@@ -15,12 +15,12 @@ struct FeedWidgetItem {
   let feedName: String
   let feedChartData: [DataPoint<Double>]
 
-  static var placeholder: FeedWidgetItem {
+  static func makePlaceholder() -> FeedWidgetItem {
     FeedWidgetItem(
       accountId: "1",
       accountName: "EmonCMS",
       feedId: "1",
-      feedName: placeholderFeedNames.randomElement() ?? "Feed name",
+      feedName: self.placeholderFeedNames.randomElement() ?? "Feed name",
       feedChartData: Self.randomChartData())
   }
 

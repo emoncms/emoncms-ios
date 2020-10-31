@@ -23,7 +23,7 @@ struct FeedListProvider: IntentTimelineProvider {
 
   func placeholder(in context: Context) -> FeedListEntry {
     let rows = FeedListView.rowsForFamily[context.family]!
-    let items = (0 ..< rows).map { _ in FeedWidgetItemResult.success(FeedWidgetItem.placeholder) }
+    let items = (0 ..< rows).map { _ in FeedWidgetItemResult.success(FeedWidgetItem.makePlaceholder()) }
     return FeedListEntry(date: Date(), items: items)
   }
 
@@ -56,7 +56,8 @@ struct FeedListProvider: IntentTimelineProvider {
     let rowCount = FeedListView.rowsForFamily[context.family]!
 
     guard !context.isPreview else {
-      completion(Array(repeating: FeedWidgetItemResult.success(FeedWidgetItem.placeholder), count: rowCount))
+      let items = (0 ..< rowCount).map { _ in FeedWidgetItemResult.success(FeedWidgetItem.makePlaceholder()) }
+      completion(items)
       return
     }
 
@@ -165,7 +166,7 @@ struct FeedListWidget: Widget {
 
 struct FeedListWidget_Previews: PreviewProvider {
   static var previews: some View {
-    let items = (0 ..< 6).map { _ in FeedWidgetItem.placeholder }
+    let items = (0 ..< 6).map { _ in FeedWidgetItem.makePlaceholder() }
 
     Group {
       ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in

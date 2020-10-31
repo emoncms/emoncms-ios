@@ -22,7 +22,7 @@ struct SingleFeedProvider: IntentTimelineProvider {
   }
 
   func placeholder(in context: Context) -> SingleFeedEntry {
-    let item = FeedWidgetItem.placeholder
+    let item = FeedWidgetItem.makePlaceholder()
     return SingleFeedEntry(date: Date(), item: .success(item))
   }
 
@@ -53,7 +53,7 @@ struct SingleFeedProvider: IntentTimelineProvider {
     in context: Context,
     completion: @escaping (FeedWidgetItemResult) -> Void) {
     guard !context.isPreview else {
-      completion(.success(FeedWidgetItem.placeholder))
+      completion(.success(FeedWidgetItem.makePlaceholder()))
       return
     }
 
@@ -109,7 +109,7 @@ struct SingleFeedWidget: Widget {
 
 struct SingleFeedWidget_Previews: PreviewProvider {
   static var previews: some View {
-    let item = FeedWidgetItem.placeholder
+    let item = FeedWidgetItem.makePlaceholder()
     let entry = SingleFeedEntry(date: Date(), item: .success(item))
 
     SingleFeedWidgetEntryView(entry: entry)
