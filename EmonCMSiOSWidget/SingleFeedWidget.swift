@@ -77,10 +77,19 @@ struct SingleFeedEntry: TimelineEntry {
 }
 
 struct SingleFeedWidgetEntryView: View {
+  @Environment(\.colorScheme) var colorScheme
+
   var entry: SingleFeedProvider.Entry
 
   var body: some View {
-    SingleFeedView(item: self.entry.item)
+    ZStack {
+      self.background
+      SingleFeedView(item: self.entry.item)
+    }
+  }
+
+  private var background: some View {
+    self.colorScheme == .dark ? Color(white: 0.15) : Color.white
   }
 }
 
@@ -117,5 +126,10 @@ struct SingleFeedWidget_Previews: PreviewProvider {
 
     SingleFeedWidgetEntryView(entry: entry)
       .previewContext(WidgetPreviewContext(family: .systemSmall))
+      .environment(\.colorScheme, .light)
+
+    SingleFeedWidgetEntryView(entry: entry)
+      .previewContext(WidgetPreviewContext(family: .systemSmall))
+      .environment(\.colorScheme, .dark)
   }
 }

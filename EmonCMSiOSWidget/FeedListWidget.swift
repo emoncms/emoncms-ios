@@ -123,20 +123,29 @@ struct FeedListView: View {
 
 struct FeedListWidgetEntryView: View {
   @Environment(\.widgetFamily) var family
+  @Environment(\.colorScheme) var colorScheme
+
   var entry: FeedListProvider.Entry
 
   var body: some View {
-    GeometryReader { metrics in
-      HStack {
-        Spacer(minLength: 0)
-        FeedListView(
-          items: entry.items,
-          compressed: self.family == .systemSmall,
-          height: metrics.size.height)
-        Spacer(minLength: 0)
+    ZStack {
+      self.background
+      GeometryReader { metrics in
+        HStack {
+          Spacer(minLength: 0)
+          FeedListView(
+            items: entry.items,
+            compressed: self.family == .systemSmall,
+            height: metrics.size.height)
+          Spacer(minLength: 0)
+        }
+        .frame(width: metrics.size.width)
       }
-      .frame(width: metrics.size.width)
     }
+  }
+
+  private var background: some View {
+    self.colorScheme == .dark ? Color(white: 0.15) : Color.white
   }
 }
 
@@ -237,13 +246,28 @@ struct FeedListWidget_Previews: PreviewProvider {
         ])
     ]
 
-    ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
-      let rows = FeedListView.rowsForFamily[family]!
-      let entry = FeedListEntry(
-        date: Date(),
-        items: Array(items[0 ..< rows]).map { FeedWidgetItemResult.success($0) })
-      FeedListWidgetEntryView(entry: entry)
-        .previewContext(WidgetPreviewContext(family: family))
+    Group {
+      ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
+        let rows = FeedListView.rowsForFamily[family]!
+        let entry = FeedListEntry(
+          date: Date(),
+          items: Array(items[0 ..< rows]).map { FeedWidgetItemResult.success($0) })
+        FeedListWidgetEntryView(entry: entry)
+          .previewContext(WidgetPreviewContext(family: family))
+          .environment(\.colorScheme, .light)
+      }
+    }
+
+    Group {
+      ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in
+        let rows = FeedListView.rowsForFamily[family]!
+        let entry = FeedListEntry(
+          date: Date(),
+          items: Array(items[0 ..< rows]).map { FeedWidgetItemResult.success($0) })
+        FeedListWidgetEntryView(entry: entry)
+          .previewContext(WidgetPreviewContext(family: family))
+          .environment(\.colorScheme, .dark)
+      }
     }
 
     ForEach([WidgetFamily.systemSmall, WidgetFamily.systemMedium, WidgetFamily.systemLarge]) { family in

@@ -36,9 +36,9 @@ struct SingleFeedView: View {
               .fontWeight(.regular)
               .foregroundColor(Color.gray)
           }
-          .padding(.leading, 12)
-          .padding(.trailing, 12)
-          .padding(.top, 12)
+          .padding(.leading, 16)
+          .padding(.trailing, 16)
+          .padding(.top, 16)
 
           Spacer()
         }
@@ -48,7 +48,7 @@ struct SingleFeedView: View {
           .color(Color(EmonCMSColors.Chart.Blue))
           .lineWidth(2)
           .padding(.vertical, 8)
-          .padding(.horizontal, 12)
+          .padding(.horizontal, 0)
 
         // Feed value
         HStack(spacing: 0) {
@@ -57,9 +57,9 @@ struct SingleFeedView: View {
             .font(.system(size: 40))
             .fontWeight(.medium)
             .minimumScaleFactor(0.5)
-            .padding(.leading, 8)
-            .padding(.trailing, 8)
-            .padding(.vertical, 4)
+            .padding(.leading, 16)
+            .padding(.trailing, 16)
+            .padding(.bottom, 8)
         }
       }
     }
