@@ -39,8 +39,9 @@ struct FeedWidgetItem {
     return sectionLengths.reduce([DataPoint<Double>]()) { result, length in
       let lastDataPoint = result.last
       let startTime = lastDataPoint?.time ?? Date(timeIntervalSince1970: 0)
-      let startValue = lastDataPoint?.value ?? Double.random(in: 0 ..< 50)
-      let endValue = Double.random(in: 0 ..< 50)
+      let lastValue = lastDataPoint?.value ?? Double.random(in: 0 ..< 50)
+      let startValue = lastValue
+      let endValue = Double.random(in: lastValue - 25 ..< lastValue + 25)
       let section = Self.randomChartData(between: startValue, and: endValue, count: length, startTime: startTime)
       return result + section
     }
