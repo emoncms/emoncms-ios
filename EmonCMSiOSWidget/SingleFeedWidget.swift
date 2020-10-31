@@ -109,19 +109,7 @@ struct SingleFeedWidget: Widget {
 
 struct SingleFeedWidget_Previews: PreviewProvider {
   static var previews: some View {
-    let item = FeedWidgetItem(
-      accountId: "1",
-      accountName: "Account",
-      feedId: "1",
-      feedName: "Use",
-      feedChartData: [
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 0),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 3),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 2),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 3)
-      ])
+    let item = FeedWidgetItem.placeholder
     let entry = SingleFeedEntry(date: Date(), item: .success(item))
 
     SingleFeedWidgetEntryView(entry: entry)

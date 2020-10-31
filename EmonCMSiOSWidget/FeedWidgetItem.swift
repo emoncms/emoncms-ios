@@ -20,24 +20,45 @@ struct FeedWidgetItem {
       accountId: "1",
       accountName: "EmonCMS",
       feedId: "1",
-      feedName: "Solar",
-      feedChartData: [
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 0),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 3),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 4),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: 2),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 5),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 6), value: 6),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 7), value: 4),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 8), value: 7),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 9), value: 6),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 10), value: 3),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 11), value: 4),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 12), value: 6),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 13), value: 8),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 14), value: 7)
-      ])
+      feedName: placeholderFeedNames.randomElement() ?? "Feed name",
+      feedChartData: Self.randomChartData())
+  }
+
+  private static var placeholderFeedNames = [
+    "Total use",
+    "Divert use",
+    "Solar generation",
+    "Wind generation",
+    "Temperature",
+    "Outside temperature"
+  ]
+
+  private static func randomChartData() -> [DataPoint<Double>] {
+    let sectionCount = 5
+    let sectionLengths = (0 ..< sectionCount).map { _ in Int.random(in: 5 ..< 30) }
+    return sectionLengths.reduce([DataPoint<Double>]()) { result, length in
+      let lastDataPoint = result.last
+      let startTime = lastDataPoint?.time ?? Date(timeIntervalSince1970: 0)
+      let startValue = lastDataPoint?.value ?? Double.random(in: 0 ..< 50)
+      let endValue = Double.random(in: 0 ..< 50)
+      let section = Self.randomChartData(between: startValue, and: endValue, count: length, startTime: startTime)
+      return result + section
+    }
+  }
+
+  private static func randomChartData(between start: Double, and end: Double, count: Int,
+                                      startTime: Date) -> [DataPoint<Double>] {
+    let maxDivergence = abs(end - start) / 5.0
+    return (0 ..< count).reduce(into: [DataPoint<Double>]()) { result, i in
+      let time = startTime.addingTimeInterval(TimeInterval(i))
+
+      let interpolatedValue = start + (Double(i) * (end - start) / Double(count))
+      let divergence = Double.random(in: -maxDivergence ..< maxDivergence)
+      let offsetValue = interpolatedValue + divergence
+      let value = offsetValue
+
+      result.append(DataPoint<Double>(time: time, value: value))
+    }
   }
 }
 

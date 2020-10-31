@@ -31,9 +31,11 @@ struct SingleFeedView: View {
             Text(item.feedName)
               .font(.footnote)
               .fontWeight(.bold)
+              .minimumScaleFactor(0.5)
             Text(item.accountName)
               .font(.caption)
               .fontWeight(.regular)
+              .minimumScaleFactor(0.5)
               .foregroundColor(Color.gray)
           }
           .padding(.leading, 16)
@@ -94,19 +96,7 @@ struct SingleFeedView: View {
 
 struct SingleFeedView_Previews: PreviewProvider {
   static var previews: some View {
-    let item = FeedWidgetItem(
-      accountId: "1",
-      accountName: "Account",
-      feedId: "1",
-      feedName: "Use",
-      feedChartData: [
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 0), value: 8721),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 1), value: 1000),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 2), value: 5678),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 3), value: 9283),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: -1020),
-        DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 1234)
-      ])
+    let item = FeedWidgetItem.placeholder
 
     SingleFeedView(item: FeedWidgetItemResult.success(item))
       .previewContext(WidgetPreviewContext(family: .systemSmall))
