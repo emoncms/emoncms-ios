@@ -100,5 +100,11 @@ struct SingleFeedView_Previews: PreviewProvider {
 
     SingleFeedView(item: FeedWidgetItemResult.success(item))
       .previewContext(WidgetPreviewContext(family: .systemSmall))
+
+    SingleFeedView(item: FeedWidgetItemResult.failure(.noFeedInfo))
+      .previewContext(WidgetPreviewContext(family: .systemSmall))
+
+    SingleFeedView(item: FeedWidgetItemResult.failure(.fetchFailed(.invalidFeed)))
+      .previewContext(WidgetPreviewContext(family: .systemSmall))
   }
 }
