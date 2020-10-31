@@ -30,12 +30,12 @@ struct FeedRowView: View {
           VStack(alignment: .leading) {
             Text(item.feedName)
               .font(.caption)
-              .fontWeight(.bold)
+              .fontWeight(.semibold)
               .minimumScaleFactor(0.7)
               .lineLimit(1)
             Text(item.accountName)
               .font(.caption2)
-              .fontWeight(.regular)
+              .fontWeight(.light)
               .foregroundColor(Color.gray)
               .minimumScaleFactor(0.7)
               .lineLimit(1)
@@ -60,7 +60,7 @@ struct FeedRowView: View {
           // Feed value
           Text(item.feedChartData.last?.value.prettyFormat() ?? "---")
             .font(.caption)
-            .fontWeight(.bold)
+            .fontWeight(.semibold)
             .minimumScaleFactor(0.5)
             .lineLimit(1)
             .padding(.leading, 2)

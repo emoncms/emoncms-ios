@@ -30,11 +30,11 @@ struct SingleFeedView: View {
           VStack(alignment: .leading) {
             Text(item.feedName)
               .font(.footnote)
-              .fontWeight(.bold)
+              .fontWeight(.semibold)
               .minimumScaleFactor(0.5)
             Text(item.accountName)
               .font(.caption)
-              .fontWeight(.regular)
+              .fontWeight(.light)
               .minimumScaleFactor(0.5)
               .foregroundColor(Color.gray)
           }
