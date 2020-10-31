@@ -57,7 +57,7 @@ struct SingleFeedView: View {
           Spacer()
           Text(item.feedChartData.last?.value.prettyFormat() ?? "---")
             .font(.system(size: 40))
-            .fontWeight(.medium)
+            .fontWeight(.regular)
             .minimumScaleFactor(0.5)
             .padding(.leading, 16)
             .padding(.trailing, 16)
