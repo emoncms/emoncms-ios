@@ -27,7 +27,7 @@ final class KeychainController {
     } else {
       keychain = Keychain(service: KeychainController.ServiceIdentifier)
     }
-    return keychain
+    return keychain.accessibility(.afterFirstUnlock)
   }
 
   init() {}
@@ -46,6 +46,13 @@ final class KeychainController {
       let dict = unarchivedData as? [String: Any] else {
       throw KeychainControllerError.generic
     }
+
+    if let attributes = keychain[attributes: account] {
+      if attributes.accessible != Accessibility.afterFirstUnlock.rawValue {
+        try? self.save(data: dict, forUserAccount: account)
+      }
+    }
+
     return dict
   }
 
