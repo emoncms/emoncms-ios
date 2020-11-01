@@ -54,6 +54,10 @@
 		C936956B22039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956922039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift */; };
 		C936956C22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C936956A22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift */; };
 		C93C92B31D98196C009FE70D /* SharedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C93C92B21D98196C009FE70D /* SharedConstants.swift */; };
+		C940C8CB254F587A00B1A43D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C940C8CA254F587A00B1A43D /* DataController.swift */; };
+		C940C8D8254F58C000B1A43D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C940C8CA254F587A00B1A43D /* DataController.swift */; };
+		C940C8DD254F58C000B1A43D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C940C8CA254F587A00B1A43D /* DataController.swift */; };
+		C940C8DE254F58C100B1A43D /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C940C8CA254F587A00B1A43D /* DataController.swift */; };
 		C941631321D52EB700FEF2B6 /* MySolarAppViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */; };
 		C941631521D65A6F00FEF2B6 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631421D65A6F00FEF2B6 /* AppData.swift */; };
 		C941631D21DA540A00FEF2B6 /* Apps.swift in Sources */ = {isa = PBXBuildFile; fileRef = C941631C21DA540A00FEF2B6 /* Apps.swift */; };
@@ -391,6 +395,7 @@
 		C936956922039B8C0094FDA2 /* MySolarDivertAppPage1ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage1ViewModel.swift; sourceTree = "<group>"; };
 		C936956A22039B8C0094FDA2 /* MySolarDivertAppPage2ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarDivertAppPage2ViewModel.swift; sourceTree = "<group>"; };
 		C93C92B21D98196C009FE70D /* SharedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedConstants.swift; sourceTree = "<group>"; };
+		C940C8CA254F587A00B1A43D /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		C941630F21D52EB700FEF2B6 /* MySolarAppViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MySolarAppViewModel.swift; sourceTree = "<group>"; };
 		C941631421D65A6F00FEF2B6 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C941631C21DA540A00FEF2B6 /* Apps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Apps.swift; sourceTree = "<group>"; };
@@ -817,6 +822,7 @@
 		C9BB83651D87F52E0058C059 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C940C8CA254F587A00B1A43D /* DataController.swift */,
 				C9BB83681D87F5630058C059 /* KeychainController.swift */,
 				C9921AF41D9BBCEE003353A0 /* LogController.swift */,
 				1EE02C1221ED116900C6AE9A /* RealmController.swift */,
@@ -1372,6 +1378,7 @@
 				C945F8DF21FE1E3B00B99D35 /* Feed.swift in Sources */,
 				C945F8E421FE2A5900B99D35 /* DateRange.swift in Sources */,
 				C94998C221FD0D08008FB8AE /* TodayViewController.swift in Sources */,
+				C940C8D8254F58C000B1A43D /* DataController.swift in Sources */,
 				C945F8EC21FE2ABF00B99D35 /* AppData.swift in Sources */,
 				C945F8D521FE1AE100B99D35 /* TodayViewModel.swift in Sources */,
 				C96DA33823020197005B1F98 /* CombineTableViewDataSource.swift in Sources */,
@@ -1481,6 +1488,7 @@
 				C9BB834D1D869CC80058C059 /* AccountController.swift in Sources */,
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */,
+				C940C8CB254F587A00B1A43D /* DataController.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9E7A72821FA6B71008BD497 /* Input.swift in Sources */,
 				C9E7A72921FA6B71008BD497 /* InputListViewModel.swift in Sources */,
@@ -1529,6 +1537,7 @@
 				C9EB61FB2519320500440F6F /* RealmController.swift in Sources */,
 				C9841A4A2519366300708873 /* FeedViewModel.swift in Sources */,
 				C9EB618C251692C800440F6F /* SharedConstants.swift in Sources */,
+				C940C8DD254F58C000B1A43D /* DataController.swift in Sources */,
 				C9EB61862516906000440F6F /* Double+Emoncms.swift in Sources */,
 				C9EB61F2251931E100440F6F /* Feed.swift in Sources */,
 				C9EB61F5251931E100440F6F /* AccountController.swift in Sources */,
@@ -1569,6 +1578,7 @@
 				C9841A7125193F9200708873 /* Input.swift in Sources */,
 				C9841A7425193F9200708873 /* TodayWidgetFeed.swift in Sources */,
 				C9841A6425193D4900708873 /* LogController.swift in Sources */,
+				C940C8DE254F58C100B1A43D /* DataController.swift in Sources */,
 				C9841A4F25193CA100708873 /* RealmController.swift in Sources */,
 				C9841A6D25193F7100708873 /* Double+Emoncms.swift in Sources */,
 				C9841A7825193FA500708873 /* CombineOperators.swift in Sources */,

@@ -15,8 +15,7 @@ class IntentHandler: INExtension, SelectFeedIntentHandling, SelectFeedsIntentHan
   private let realmController: RealmController
 
   override init() {
-    let dataDirectory = FileManager.default
-      .containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
+    let dataDirectory = DataController.sharedDataDirectory
     self.realmController = RealmController(dataDirectory: dataDirectory)
 
     super.init()

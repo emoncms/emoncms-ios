@@ -13,8 +13,7 @@ struct SingleFeedProvider: IntentTimelineProvider {
   private let viewModel: FeedViewModel
 
   init() {
-    let dataDirectory = FileManager.default
-      .containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
+    let dataDirectory = DataController.sharedDataDirectory
     let realmController = RealmController(dataDirectory: dataDirectory)
     let requestProvider = NSURLSessionHTTPRequestProvider()
     let api = EmonCMSAPI(requestProvider: requestProvider)

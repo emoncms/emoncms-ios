@@ -60,8 +60,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         ])
       requestProvider = FakeHTTPProvider(config: config)
     } else {
-      dataDirectory = FileManager.default
-        .containerURL(forSecurityApplicationGroupIdentifier: SharedConstants.SharedApplicationGroupIdentifier)!
+      dataDirectory = DataController.sharedDataDirectory
       requestProvider = NSURLSessionHTTPRequestProvider()
     }
 
