@@ -24,37 +24,53 @@ class IntentHandler: INExtension, SelectFeedIntentHandling, SelectFeedsIntentHan
   func provideFeedOptionsCollection(
     for intent: SelectFeedIntent,
     with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void) {
-    let feedIntents = self.fetchFeeds()
-    let collection = INObjectCollection(items: Array(feedIntents))
+    let collection = self.fetchFeeds()
     completion(collection, nil)
   }
 
   func provideFeedsOptionsCollection(
     for intent: SelectFeedsIntent,
     with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void) {
-    let feedIntents = self.fetchFeeds()
-    let collection = INObjectCollection(items: Array(feedIntents))
+    let collection = self.fetchFeeds()
     completion(collection, nil)
   }
 
-  private func fetchFeeds() -> [FeedIntent] {
+  private func fetchFeeds() -> INObjectCollection<FeedIntent> {
     let mainRealm = self.realmController.createMainRealm()
     let accounts = mainRealm.objects(Account.self).sorted(byKeyPath: "name")
-    let feedIntents = accounts.flatMap { account -> [FeedIntent] in
+
+    var sections: [INObjectSection<FeedIntent>] = []
+
+    accounts.forEach { account in
       let accountRealm = self.realmController.createAccountRealm(forAccountId: account.uuid)
       let feeds = accountRealm.objects(Feed.self).sorted(byKeyPath: "name")
-      return feeds.map { feed in
+
+      var feedIntentsByTag: [String: [FeedIntent]] = [:]
+      feeds.forEach { feed in
+        let identifier = account.uuid + "/" + feed.id
+        let display = feed.name
+        let subtitle = feed.tag
+
         let feedIntent = FeedIntent(
-          identifier: account.uuid + "/" + feed.id,
-          display: feed.name,
-          subtitle: account.name,
+          identifier: identifier,
+          display: display,
+          subtitle: subtitle,
           image: nil)
         feedIntent.accountId = account.uuid
         feedIntent.feedId = feed.id
-        return feedIntent
+
+        var feedIntents = feedIntentsByTag[feed.tag, default: []]
+        feedIntents.append(feedIntent)
+        feedIntentsByTag[feed.tag] = feedIntents
       }
+
+      let sortedTags = feedIntentsByTag.keys.sorted { $0.compare($1, options: .numeric) == .orderedAscending }
+      let feedIntents = sortedTags.reduce(into: [FeedIntent]()) { $0 += feedIntentsByTag[$1]! }
+
+      sections.append(INObjectSection(title: account.name, items: feedIntents))
     }
-    return Array(feedIntents)
+
+    return INObjectCollection(sections: sections)
   }
 
   func resolveFeed(for intent: SelectFeedIntent, with completion: @escaping (FeedIntentResolutionResult) -> Void) {}
