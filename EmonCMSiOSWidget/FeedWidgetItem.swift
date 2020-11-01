@@ -92,7 +92,7 @@ enum FeedWidgetItemError: Error {
       return "Select a feed"
     case .fetchFailed(let error):
       switch error {
-      case .cancelled, .unknown:
+      case .unknown:
         return "Connection error"
       case .invalidFeed:
         return "Invalid feed"

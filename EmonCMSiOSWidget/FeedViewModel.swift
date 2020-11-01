@@ -17,7 +17,6 @@ final class FeedViewModel {
     case unknown
     case invalidFeed
     case keychainLocked
-    case cancelled
   }
 
   private let realmController: RealmController
