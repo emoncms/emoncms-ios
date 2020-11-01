@@ -81,6 +81,26 @@ enum FeedWidgetItemError: Error {
   case unknown
   case noFeedInfo
   case fetchFailed(FeedViewModel.FeedViewModelError)
+
+  var displayTitle: String {
+    return "Error loading data"
+  }
+
+  var displayDescription: String {
+    switch self {
+    case .noFeedInfo, .unknown:
+      return "Select a feed"
+    case .fetchFailed(let error):
+      switch error {
+      case .cancelled, .unknown:
+        return "Connection error"
+      case .invalidFeed:
+        return "Invalid feed"
+      case .keychainLocked:
+        return "Keychain locked"
+      }
+    }
+  }
 }
 
 extension FeedWidgetItemError: Equatable {}
