@@ -123,3 +123,16 @@ enum DateRange {
     return nil
   }
 }
+
+extension DateRange: Equatable {
+  static func == (lhs: DateRange, rhs: DateRange) -> Bool {
+    switch (lhs, rhs) {
+    case (.relative(let x), .relative(let y)):
+      return x == y
+    case (.absolute(let a, let b), .absolute(let x, let y)):
+      return a == x && b == y
+    default:
+      return false
+    }
+  }
+}

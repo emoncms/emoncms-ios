@@ -95,5 +95,31 @@ class DateRangeTests: QuickSpec {
         }
       }
     }
+
+    describe("equatable") {
+      it("should say identical values are equal") {
+        let a = DateRange.relative(DateComponents(hour: -8))
+        let b = DateRange.relative(DateComponents(hour: -8))
+        expect(a).to(equal(b))
+
+        let c = DateRange.absolute(Date(timeIntervalSince1970: 0), Date(timeIntervalSince1970: 100))
+        let d = DateRange.absolute(Date(timeIntervalSince1970: 0), Date(timeIntervalSince1970: 100))
+        expect(c).to(equal(d))
+      }
+
+      it("should say non-identical values are not equal") {
+        let a = DateRange.relative(DateComponents(hour: -8))
+        let b = DateRange.relative(DateComponents(hour: -12))
+        expect(a).toNot(equal(b))
+
+        let c = DateRange.absolute(Date(timeIntervalSince1970: 0), Date(timeIntervalSince1970: 100))
+        let d = DateRange.absolute(Date(timeIntervalSince1970: 100), Date(timeIntervalSince1970: 200))
+        expect(c).toNot(equal(d))
+
+        let e = DateRange.relative(DateComponents(hour: -8))
+        let f = DateRange.absolute(Date(timeIntervalSince1970: 0), Date(timeIntervalSince1970: 100))
+        expect(e).toNot(equal(f))
+      }
+    }
   }
 }
