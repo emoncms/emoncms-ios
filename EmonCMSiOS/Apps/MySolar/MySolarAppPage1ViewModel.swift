@@ -48,7 +48,7 @@ final class MySolarAppPage1ViewModel: AppPageViewModel {
     let timerIfActive = $active
       .map { active -> AnyPublisher<Date, Never> in
         if active {
-          return Timer.publish(every: 10, on: .main, in: .common).eraseToAnyPublisher()
+          return Timer.publish(every: 10, on: .main, in: .common).autoconnect().eraseToAnyPublisher()
         } else {
           return Empty(completeImmediately: false).eraseToAnyPublisher()
         }
