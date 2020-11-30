@@ -23,6 +23,8 @@ struct AccessibilityIdentifiers {
     static let MyElectric = "MyElectricApp"
     static let MySolar = "MySolar"
     static let MySolarDivert = "MySolarDivert"
+
+    static let TimeBannerLabel = "AppsTimeBannerLabel"
   }
 
   struct FeedList {

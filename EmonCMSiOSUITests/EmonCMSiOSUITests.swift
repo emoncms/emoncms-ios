@@ -135,11 +135,37 @@ class EmonCMSiOSUITests: QuickSpec {
         let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MyElectric]
         expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
 
+        let timeBannerLabel = viewQuery.staticTexts[AccessibilityIdentifiers.Apps.TimeBannerLabel]
+        var currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["1h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["8h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["D"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["M"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["Y"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(12)
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
       }
 
       it("should add a MySolar app successfully") {
@@ -166,11 +192,37 @@ class EmonCMSiOSUITests: QuickSpec {
         let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MySolar]
         expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
 
+        let timeBannerLabel = viewQuery.staticTexts[AccessibilityIdentifiers.Apps.TimeBannerLabel]
+        var currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["1h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["8h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["D"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["M"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["Y"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(12)
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
 
         let startPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 1.0, dy: 0.5))
         let endPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.5))
@@ -207,11 +259,37 @@ class EmonCMSiOSUITests: QuickSpec {
         let viewQuery = app.otherElements[AccessibilityIdentifiers.Apps.MySolarDivert]
         expect(viewQuery.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
 
+        let timeBannerLabel = viewQuery.staticTexts[AccessibilityIdentifiers.Apps.TimeBannerLabel]
+        var currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["1h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["8h"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["D"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["M"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(1)
         viewQuery.segmentedControls.buttons["Y"].tap()
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
+
+        sleep(12)
+        expect(timeBannerLabel.label).toNot(equal(currentLabelText))
+        currentLabelText = timeBannerLabel.label
 
         let startPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 1.0, dy: 0.5))
         let endPoint = app.coordinate(withNormalizedOffset: CGVector(dx: 0.0, dy: 0.5))

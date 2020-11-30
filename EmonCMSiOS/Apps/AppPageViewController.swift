@@ -21,6 +21,8 @@ class AppPageViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    self.bannerLabel.accessibilityIdentifier = AccessibilityIdentifiers.Apps.TimeBannerLabel
+
     self.setupBindings()
   }
 
