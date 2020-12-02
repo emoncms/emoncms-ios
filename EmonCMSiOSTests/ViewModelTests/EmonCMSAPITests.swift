@@ -39,6 +39,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
               case .failure(let error):
                 fail(error.localizedDescription)
               }
+              expect()
               done()
             },
             receiveValue: { _ in })
@@ -61,8 +62,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!.count).to(equal(2))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!.count).to(equal(2))
         }
 
         scheduler.resume()
@@ -78,7 +79,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
+          expect(results[1].1.value).notTo(beNil())
         }
 
         scheduler.resume()
@@ -94,8 +95,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!).to(equal("use"))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!).to(equal("use"))
         }
 
         scheduler.resume()
@@ -111,8 +112,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!.count).to(equal(10))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!.count).to(equal(10))
         }
 
         scheduler.resume()
@@ -128,8 +129,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!.count).to(equal(3))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!.count).to(equal(3))
         }
 
         scheduler.resume()
@@ -145,8 +146,8 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!).to(equal(100))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!).to(equal(100))
         }
 
         scheduler.resume()
@@ -160,9 +161,9 @@ class EmonCMSAPITests: EmonCMSTestCase {
         call(api: result, subscriber: subscriber) {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
-          expect(results[0].1.value).notTo(beNil())
-          expect(results[0].1.value!.count).to(equal(3))
-          expect(results[0].1.value!).to(equal(["1": 100, "2": 200, "3": 300]))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!.count).to(equal(3))
+          expect(results[1].1.value!).to(equal(["1": 100, "2": 200, "3": 300]))
         }
 
         scheduler.resume()
