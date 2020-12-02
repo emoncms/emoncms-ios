@@ -18,6 +18,7 @@
 		1EE02C1321ED116900C6AE9A /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		1EE02C1521ED251000C6AE9A /* AccountListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1421ED251000C6AE9A /* AccountListViewModel.swift */; };
 		1EE02C1721ED262700C6AE9A /* AccountListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1621ED262700C6AE9A /* AccountListViewController.swift */; };
+		C90118972578314B003966D7 /* EmonCMSAPIFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C90118962578314B003966D7 /* EmonCMSAPIFailureTests.swift */; };
 		C906B44F1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */; };
 		C906B4511D8AD295007FE19A /* HTTPRequestProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */; };
 		C906B4551D8B0316007FE19A /* ChartDateValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */; };
@@ -357,6 +358,7 @@
 		1EE02C1221ED116900C6AE9A /* RealmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmController.swift; sourceTree = "<group>"; };
 		1EE02C1421ED251000C6AE9A /* AccountListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewModel.swift; sourceTree = "<group>"; };
 		1EE02C1621ED262700C6AE9A /* AccountListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountListViewController.swift; sourceTree = "<group>"; };
+		C90118962578314B003966D7 /* EmonCMSAPIFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmonCMSAPIFailureTests.swift; sourceTree = "<group>"; };
 		C906B44E1D8AA4A2007FE19A /* MockHTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockHTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4501D8AD295007FE19A /* HTTPRequestProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPRequestProvider.swift; sourceTree = "<group>"; };
 		C906B4541D8B0316007FE19A /* ChartDateValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDateValueFormatter.swift; sourceTree = "<group>"; };
@@ -945,13 +947,14 @@
 		C9E7A71421F8A560008BD497 /* ViewModelTests */ = {
 			isa = PBXGroup;
 			children = (
-				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
-				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
 				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
 				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
 				C91747AD21F3C42B0054875D /* AppListViewModelTests.swift */,
 				C949985521FA7FFA008FB8AE /* DashboardListViewModelTests.swift */,
 				C949985421FA7FFA008FB8AE /* DashboardUpdateHelperTests.swift */,
+				C90118962578314B003966D7 /* EmonCMSAPIFailureTests.swift */,
+				C95640AC1D8A9C7D003B9757 /* EmonCMSAPITests.swift */,
+				C925518221F4B3F1008342D8 /* EmonCMSTestCase.swift */,
 				C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */,
 				C91747A721F37A9A0054875D /* FeedListHelperTests.swift */,
 				1EA783C721F04C9A002D6A3A /* FeedListViewModelTests.swift */,
@@ -972,10 +975,10 @@
 				C9E7A71021F8691E008BD497 /* DayRelativeToTodayValueFormatter.swift */,
 				C96D523E23F96B4300613835 /* EmoncmsDoubleTests.swift */,
 				C9976C8C2548CC4D00456333 /* FeedTests.swift */,
-				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
 				C9E7A6FF21F524E4008BD497 /* KeychainControllerTests.swift */,
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
 				C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */,
+				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
 			);
 			path = LogicTests;
 			sourceTree = "<group>";
@@ -1416,6 +1419,7 @@
 				C96DA3652302A649005B1F98 /* AddAccountViewModelTests.swift in Sources */,
 				C96D524223F96F9000613835 /* ActivityIndicatorTests.swift in Sources */,
 				C9E7A70021F524E4008BD497 /* KeychainControllerTests.swift in Sources */,
+				C90118972578314B003966D7 /* EmonCMSAPIFailureTests.swift in Sources */,
 				C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */,
 				C96DA36323029D50005B1F98 /* EmonCMSTestCase.swift in Sources */,
 				C9E7A70F21F864E1008BD497 /* ChartDateValueFormatterTests.swift in Sources */,
