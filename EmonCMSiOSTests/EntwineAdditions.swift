@@ -17,4 +17,19 @@ extension Signal {
     guard case .input(let v) = self else { return nil }
     return v
   }
+
+  var completion: Subscribers.Completion<Failure>? {
+    guard case .completion(let c) = self else { return nil }
+    return c
+  }
+
+  var completionError: Failure? {
+    guard case .completion(let c) = self else { return nil }
+    switch c {
+    case .finished:
+      return nil
+    case .failure(let e):
+      return e
+    }
+  }
 }
