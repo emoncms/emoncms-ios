@@ -12,7 +12,15 @@ import UIKit
 @testable import EmonCMSiOS
 
 final class MockHTTPRequestProvider: HTTPRequestProvider {
+  var nextError: HTTPRequestProviderError?
+  var nextResponseOverride: String?
+
   func request(url: URL) -> AnyPublisher<Data, HTTPRequestProviderError> {
+    if let nextError = self.nextError {
+      self.nextError = nil
+      return Fail<Data, HTTPRequestProviderError>(error: nextError).eraseToAnyPublisher()
+    }
+
     guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
     else {
       return Empty<Data, HTTPRequestProviderError>().eraseToAnyPublisher()
@@ -64,6 +72,10 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
       responseString = "{\"success\":true,\"apikey_read\":\"abcdef\"}"
     default:
       break
+    }
+
+    if let nextResponseOverride = self.nextResponseOverride {
+      responseString = nextResponseOverride
     }
 
     if let responseString = responseString, let responseData = responseString.data(using: .utf8) {
