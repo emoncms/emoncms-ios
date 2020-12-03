@@ -259,6 +259,8 @@
 		C9EB61FB2519320500440F6F /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		C9F14ABA220F109A0005869F /* main_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB8220F109A0005869F /* main_v1.realm */; };
 		C9F14ABB220F109A0005869F /* account_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB9220F109A0005869F /* account_v1.realm */; };
+		C9FDBE2C25797D720015B2C1 /* UIControlCombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */; };
+		C9FDBE32257980230015B2C1 /* CombineTableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -509,6 +511,8 @@
 		C9EB61D82517F20600440F6F /* SingleFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFeedView.swift; sourceTree = "<group>"; };
 		C9F14AB8220F109A0005869F /* main_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v1.realm; sourceTree = "<group>"; };
 		C9F14AB9220F109A0005869F /* account_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v1.realm; sourceTree = "<group>"; };
+		C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlCombineTests.swift; sourceTree = "<group>"; };
+		C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTableViewDataSourceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -730,6 +734,8 @@
 			children = (
 				C9E7A71221F86BA5008BD497 /* RxOperatorsTests.swift */,
 				C96D524123F96F9000613835 /* ActivityIndicatorTests.swift */,
+				C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */,
+				C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */,
 			);
 			path = CombineTests;
 			sourceTree = "<group>";
@@ -1424,8 +1430,10 @@
 				C96DA36323029D50005B1F98 /* EmonCMSTestCase.swift in Sources */,
 				C9E7A70F21F864E1008BD497 /* ChartDateValueFormatterTests.swift in Sources */,
 				C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */,
+				C9FDBE32257980230015B2C1 /* CombineTableViewDataSourceTests.swift in Sources */,
 				C9C40BA32307D45900CE2839 /* EntwineAdditions.swift in Sources */,
 				C9E7A71A21F8A90E008BD497 /* LogControllerTests.swift in Sources */,
+				C9FDBE2C25797D720015B2C1 /* UIControlCombineTests.swift in Sources */,
 				C9976C8D2548CC4D00456333 /* FeedTests.swift in Sources */,
 				C94998D621FDF903008FB8AE /* AccountControllerTests.swift in Sources */,
 				C96DA3682302EA14005B1F98 /* FeedChartViewModelTests.swift in Sources */,
