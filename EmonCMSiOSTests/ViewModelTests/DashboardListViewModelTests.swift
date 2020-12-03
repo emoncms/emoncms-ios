@@ -91,6 +91,11 @@ class DashboardListViewModelTests: EmonCMSTestCase {
           (20, .input(false))
         ]))
       }
+
+      it("should generate urls correctly") {
+        let url = viewModel.urlForDashboard(withId: "1")
+        expect(url).to(equal(URL(string: "https://test/dashboard/view?id=1&embed=1&apikey=ilikecats")!))
+      }
     }
   }
 }
