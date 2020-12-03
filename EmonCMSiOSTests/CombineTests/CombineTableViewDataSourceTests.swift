@@ -121,11 +121,11 @@ class CombineTableViewDataSourceTests: QuickSpec {
         }
 
         scheduler.schedule(after: 260) {
-          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 1))
+          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
         }
 
         scheduler.schedule(after: 270) {
-          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 2))
+          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
         }
 
         let sut = dataSource.itemSelected
@@ -134,8 +134,46 @@ class CombineTableViewDataSourceTests: QuickSpec {
         let expected: TestSequence<IndexPath, Never> = [
           (200, .subscription),
           (250, .input(IndexPath(row: 0, section: 0))),
-          (260, .input(IndexPath(row: 0, section: 1))),
-          (270, .input(IndexPath(row: 0, section: 2)))
+          (260, .input(IndexPath(row: 1, section: 0))),
+          (270, .input(IndexPath(row: 2, section: 0)))
+        ]
+
+        expect(results.recordedOutput).to(equal(expected))
+      }
+
+      it("should fire selected models publisher correctly") {
+        typealias Model = SectionModel<String, String>
+
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
+
+        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+          UITableViewCell(style: .default, reuseIdentifier: nil)
+        }
+
+        let items = Just<[Model]>([Model(model: "section1", items: ["foo", "bar", "baz"])]).eraseToAnyPublisher()
+        dataSource.assign(toTableView: tableView, items: items)
+        tableView.layoutIfNeeded()
+
+        scheduler.schedule(after: 250) {
+          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 0, section: 0))
+        }
+
+        scheduler.schedule(after: 260) {
+          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 1, section: 0))
+        }
+
+        scheduler.schedule(after: 270) {
+          tableView.delegate?.tableView?(tableView, didSelectRowAt: IndexPath(row: 2, section: 0))
+        }
+
+        let sut = dataSource.modelSelected
+        let results = scheduler.start { sut }
+
+        let expected: TestSequence<String, Never> = [
+          (200, .subscription),
+          (250, .input("foo")),
+          (260, .input("bar")),
+          (270, .input("baz"))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
@@ -159,11 +197,11 @@ class CombineTableViewDataSourceTests: QuickSpec {
         }
 
         scheduler.schedule(after: 260) {
-          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 0, section: 1))
+          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
         }
 
         scheduler.schedule(after: 270) {
-          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 0, section: 2))
+          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 2, section: 0))
         }
 
         let sut = dataSource.itemDeselected
@@ -172,8 +210,46 @@ class CombineTableViewDataSourceTests: QuickSpec {
         let expected: TestSequence<IndexPath, Never> = [
           (200, .subscription),
           (250, .input(IndexPath(row: 0, section: 0))),
-          (260, .input(IndexPath(row: 0, section: 1))),
-          (270, .input(IndexPath(row: 0, section: 2)))
+          (260, .input(IndexPath(row: 1, section: 0))),
+          (270, .input(IndexPath(row: 2, section: 0)))
+        ]
+
+        expect(results.recordedOutput).to(equal(expected))
+      }
+
+      it("should fire deselected models publisher correctly") {
+        typealias Model = SectionModel<String, String>
+
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
+
+        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+          UITableViewCell(style: .default, reuseIdentifier: nil)
+        }
+
+        let items = Just<[Model]>([Model(model: "section1", items: ["foo", "bar", "baz"])]).eraseToAnyPublisher()
+        dataSource.assign(toTableView: tableView, items: items)
+        tableView.layoutIfNeeded()
+
+        scheduler.schedule(after: 250) {
+          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 0, section: 0))
+        }
+
+        scheduler.schedule(after: 260) {
+          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 1, section: 0))
+        }
+
+        scheduler.schedule(after: 270) {
+          tableView.delegate?.tableView?(tableView, didDeselectRowAt: IndexPath(row: 2, section: 0))
+        }
+
+        let sut = dataSource.modelDeselected
+        let results = scheduler.start { sut }
+
+        let expected: TestSequence<String, Never> = [
+          (200, .subscription),
+          (250, .input("foo")),
+          (260, .input("bar")),
+          (270, .input("baz"))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
@@ -197,11 +273,11 @@ class CombineTableViewDataSourceTests: QuickSpec {
         }
 
         scheduler.schedule(after: 260) {
-          tableView.delegate?.tableView?(tableView, accessoryButtonTappedForRowWith: IndexPath(row: 0, section: 1))
+          tableView.delegate?.tableView?(tableView, accessoryButtonTappedForRowWith: IndexPath(row: 1, section: 0))
         }
 
         scheduler.schedule(after: 270) {
-          tableView.delegate?.tableView?(tableView, accessoryButtonTappedForRowWith: IndexPath(row: 0, section: 2))
+          tableView.delegate?.tableView?(tableView, accessoryButtonTappedForRowWith: IndexPath(row: 2, section: 0))
         }
 
         let sut = dataSource.itemAccessoryButtonTapped
@@ -210,8 +286,84 @@ class CombineTableViewDataSourceTests: QuickSpec {
         let expected: TestSequence<IndexPath, Never> = [
           (200, .subscription),
           (250, .input(IndexPath(row: 0, section: 0))),
-          (260, .input(IndexPath(row: 0, section: 1))),
-          (270, .input(IndexPath(row: 0, section: 2)))
+          (260, .input(IndexPath(row: 1, section: 0))),
+          (270, .input(IndexPath(row: 2, section: 0)))
+        ]
+
+        expect(results.recordedOutput).to(equal(expected))
+      }
+
+      it("should fire item deleted publisher correctly") {
+        typealias Model = SectionModel<String, String>
+
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
+
+        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+          UITableViewCell(style: .default, reuseIdentifier: nil)
+        }
+
+        let items = Just<[Model]>([Model(model: "section1", items: ["foo", "bar", "baz"])]).eraseToAnyPublisher()
+        dataSource.assign(toTableView: tableView, items: items)
+        tableView.layoutIfNeeded()
+
+        scheduler.schedule(after: 250) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        }
+
+        scheduler.schedule(after: 260) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 1, section: 0))
+        }
+
+        scheduler.schedule(after: 270) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 2, section: 0))
+        }
+
+        let sut = dataSource.itemDeleted
+        let results = scheduler.start { sut }
+
+        let expected: TestSequence<IndexPath, Never> = [
+          (200, .subscription),
+          (250, .input(IndexPath(row: 0, section: 0))),
+          (260, .input(IndexPath(row: 1, section: 0))),
+          (270, .input(IndexPath(row: 2, section: 0)))
+        ]
+
+        expect(results.recordedOutput).to(equal(expected))
+      }
+
+      it("should fire model deleted publisher correctly") {
+        typealias Model = SectionModel<String, String>
+
+        let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
+
+        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+          UITableViewCell(style: .default, reuseIdentifier: nil)
+        }
+
+        let items = Just<[Model]>([Model(model: "section1", items: ["foo", "bar", "baz"])]).eraseToAnyPublisher()
+        dataSource.assign(toTableView: tableView, items: items)
+        tableView.layoutIfNeeded()
+
+        scheduler.schedule(after: 250) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
+        }
+
+        scheduler.schedule(after: 260) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 1, section: 0))
+        }
+
+        scheduler.schedule(after: 270) {
+          tableView.dataSource?.tableView?(tableView, commit: .delete, forRowAt: IndexPath(row: 2, section: 0))
+        }
+
+        let sut = dataSource.modelDeleted
+        let results = scheduler.start { sut }
+
+        let expected: TestSequence<String, Never> = [
+          (200, .subscription),
+          (250, .input("foo")),
+          (260, .input("bar")),
+          (270, .input("baz"))
         ]
 
         expect(results.recordedOutput).to(equal(expected))
