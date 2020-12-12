@@ -26,6 +26,9 @@ final class AddAccountViewModel {
   private let api: EmonCMSAPI
   private let realm: Realm
   private let account: Account?
+  private var changedCredentials = false
+
+  private var cancellables = Set<AnyCancellable>()
 
   @Published var url = SharedConstants.EmonCMSdotOrgURL {
     didSet {
@@ -58,6 +61,14 @@ final class AddAccountViewModel {
     } else {
       self.account = nil
     }
+
+    Publishers.Merge3(
+      $username.becomeVoid().dropFirst(),
+      $password.becomeVoid().dropFirst(),
+      $apiKey.becomeVoid().dropFirst())
+      .map { true }
+      .assign(to: \.changedCredentials, on: self)
+      .store(in: &self.cancellables)
   }
 
   func canSave() -> AnyPublisher<Bool, Never> {
@@ -89,7 +100,7 @@ final class AddAccountViewModel {
 
   private func validate(name: String, url: String, username: String, password: String,
                         apiKey: String) -> AnyPublisher<AccountCredentials?, AddAccountError> {
-    if self.account != nil {
+    if !self.changedCredentials {
       return Just(nil).setFailureType(to: AddAccountError.self).eraseToAnyPublisher()
     }
 
