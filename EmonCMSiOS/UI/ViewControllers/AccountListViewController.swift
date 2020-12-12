@@ -53,6 +53,7 @@ final class AccountListViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         cell.textLabel?.text = item.name
         cell.detailTextLabel?.text = item.url
+        cell.imageView?.image = item.hasApiKey ? nil : UIImage(named: "warning")
         return cell
       },
       titleForHeaderInSection: { _, _ in "" },
@@ -75,7 +76,7 @@ final class AccountListViewController: UITableViewController {
       .modelSelected
       .sink { [weak self] in
         guard let self = self else { return }
-        if self.tableView.isEditing {
+        if self.tableView.isEditing || !$0.hasApiKey {
           self
             .performSegue(withIdentifier: Segues.addAccount.rawValue,
                           sender: AddAccountSegueData(accountId: $0.accountId, animated: true))

@@ -17,6 +17,7 @@ final class AccountListViewModel {
     let accountId: String
     let name: String
     let url: String
+    let hasApiKey: Bool
   }
 
   typealias Section = SectionModel<String, ListItem>
@@ -82,8 +83,10 @@ final class AccountListViewModel {
   }
 
   private func accountsToListItems(_ accounts: Results<Account>) -> [ListItem] {
-    let listItems = accounts.map {
-      ListItem(accountId: $0.uuid, name: $0.name, url: $0.url)
+    let listItems = accounts.map { account -> ListItem in
+      let apiKey = try? self.keychainController.apiKey(forAccountWithId: account.uuid)
+      let hasApiKey = apiKey != nil
+      return ListItem(accountId: account.uuid, name: account.name, url: account.url, hasApiKey: hasApiKey)
     }
     return Array(listItems)
   }
