@@ -60,17 +60,17 @@
         "repositoryURL": "https://github.com/realm/realm-cocoa",
         "state": {
           "branch": null,
-          "revision": "f64ac045d8cb171d8e317d9b854df7215aed7466",
-          "version": "5.4.2"
+          "revision": "7a3e25994d4d917efe30fa4496775d3f024b71b6",
+          "version": "10.13.0"
         }
       },
       {
-        "package": "RealmCore",
+        "package": "RealmDatabase",
         "repositoryURL": "https://github.com/realm/realm-core",
         "state": {
           "branch": null,
-          "revision": "e051fc73c56830bf3ab0b8a82f7a613968cec6c6",
-          "version": "6.0.26"
+          "revision": "9a7d09994e85b7eda8e3553b444bcfef6ec3f9ea",
+          "version": "11.3.0"
         }
       },
       {
