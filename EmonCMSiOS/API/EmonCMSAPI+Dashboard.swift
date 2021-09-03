@@ -13,14 +13,16 @@ extension EmonCMSAPI {
   func dashboardList(_ account: AccountCredentials) -> AnyPublisher<[Dashboard], APIError> {
     return self.request(account, path: "dashboard/list").tryMap { resultData -> [Dashboard] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
-        let json = anyJson as? [Any] else {
+            let json = anyJson as? [Any]
+      else {
         throw APIError.invalidResponse
       }
 
       var dashboards: [Dashboard] = []
       for i in json {
         if let dashboardJson = i as? [String: Any],
-          let dashboard = Dashboard.from(json: dashboardJson) {
+           let dashboard = Dashboard.from(json: dashboardJson)
+        {
           dashboards.append(dashboard)
         }
       }

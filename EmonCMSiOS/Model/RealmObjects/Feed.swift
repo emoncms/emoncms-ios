@@ -14,7 +14,7 @@ final class Feed: Object {
   @objc dynamic var id: String = ""
   @objc dynamic var name: String = ""
   @objc dynamic var tag: String = ""
-  @objc dynamic var time: Date = Date()
+  @objc dynamic var time = Date()
   @objc dynamic var value: Double = 0
   @objc private dynamic var widgetChartPointsJson: Data?
 
@@ -64,9 +64,9 @@ extension Feed {
     guard let name = json["name"] as? String else { return nil }
     guard let tag = json["tag"] as? String else { return nil }
     guard let timeAny = json["time"],
-      let timeDouble = Double.from(timeAny) else { return nil }
+          let timeDouble = Double.from(timeAny) else { return nil }
     guard let valueAny = json["value"],
-      let value = Double.from(valueAny) else { return nil }
+          let value = Double.from(valueAny) else { return nil }
 
     let time = Date(timeIntervalSince1970: timeDouble)
 

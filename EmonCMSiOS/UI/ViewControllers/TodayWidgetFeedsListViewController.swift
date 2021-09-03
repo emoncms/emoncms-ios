@@ -69,7 +69,7 @@ final class TodayWidgetFeedsListViewController: UITableViewController {
 
     self.dataSource
       .itemMoved
-      .flatMap { [weak self] (sourceIndex, destinationIndex) -> AnyPublisher<Void, Never> in
+      .flatMap { [weak self] sourceIndex, destinationIndex -> AnyPublisher<Void, Never> in
         guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
         return self.viewModel.moveTodayWidgetFeed(fromIndex: sourceIndex.row, toIndex: destinationIndex.row)
           .replaceError(with: ()).eraseToAnyPublisher()

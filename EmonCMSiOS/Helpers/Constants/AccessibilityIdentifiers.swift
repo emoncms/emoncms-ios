@@ -9,7 +9,7 @@
 import Foundation
 
 struct AccessibilityIdentifiers {
-  struct Lists {
+  enum Lists {
     static let Account = "AccountList"
     static let App = "AppList"
     static let Feed = "FeedList"
@@ -19,7 +19,7 @@ struct AccessibilityIdentifiers {
     static let AppSelectFeed = "AppSelectFeedList"
   }
 
-  struct Apps {
+  enum Apps {
     static let MyElectric = "MyElectricApp"
     static let MySolar = "MySolar"
     static let MySolarDivert = "MySolarDivert"
@@ -27,7 +27,7 @@ struct AccessibilityIdentifiers {
     static let TimeBannerLabel = "AppsTimeBannerLabel"
   }
 
-  struct FeedList {
+  enum FeedList {
     static let ChartContainer = "FeedListChartContainer"
   }
 

@@ -17,9 +17,9 @@ import UIKit
     case right
   }
 
-  @IBInspectable var value: Double = 0 { didSet { hasSetValue = true; self.updateLabels() } }
+  @IBInspectable var value: Double = 0 { didSet { self.hasSetValue = true; self.updateLabels() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
-  @IBInspectable var arrowColor: UIColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
+  @IBInspectable var arrowColor = UIColor.darkGray { didSet { self.setNeedsDisplay() } }
   @IBInspectable var arrowSize: CGFloat = 10.0 { didSet { self.setNeedsUpdateConstraints() } }
   var direction: Direction = .up { didSet { self.setNeedsUpdateConstraints(); self.setNeedsDisplay() } }
 

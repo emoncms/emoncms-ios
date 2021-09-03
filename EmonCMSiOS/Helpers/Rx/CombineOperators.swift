@@ -9,8 +9,8 @@
 import Combine
 import XCGLogger
 
-extension Publisher {
-  public func becomeVoid() -> Publishers.Map<Self, Void> {
+public extension Publisher {
+  func becomeVoid() -> Publishers.Map<Self, Void> {
     return self.map { _ in () }
   }
 }
@@ -30,7 +30,8 @@ struct Producer<T, E: Error>: Publisher {
     where
     Downstream: Combine.Subscriber,
     E == Downstream.Failure,
-    T == Downstream.Input {
+    T == Downstream.Input
+  {
     let wrap = Producer.Subscriber(downstream: AnySubscriber(subscriber))
     let subscription = Producer.Subscription(subscriber: wrap)
     subscriber.receive(subscription: subscription)

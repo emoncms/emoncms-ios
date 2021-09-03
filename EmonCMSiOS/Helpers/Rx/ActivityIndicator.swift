@@ -63,7 +63,8 @@ extension Publishers {
   }
 
   private class TrackActivitySubscription<Upstream: Publisher, Downstream: Subscriber>: Subscription, Subscriber
-    where Upstream.Output == Downstream.Input, Upstream.Failure == Downstream.Failure {
+    where Upstream.Output == Downstream.Input, Upstream.Failure == Downstream.Failure
+  {
     typealias Input = Upstream.Output
     typealias Failure = Upstream.Failure
 

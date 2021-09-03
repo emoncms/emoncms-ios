@@ -160,7 +160,8 @@ extension SettingsViewController: MFMailComposeViewControllerDelegate {
   func mailComposeController(
     _ controller: MFMailComposeViewController,
     didFinishWith result: MFMailComposeResult,
-    error: Error?) {
+    error: Error?)
+  {
     self.dismiss(animated: true, completion: nil)
   }
 }

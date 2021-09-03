@@ -44,8 +44,8 @@ extension SectionModel: CustomStringConvertible {
   }
 }
 
-extension SectionModel {
-  public init(original: SectionModel<Section, Item>, items: [Item]) {
+public extension SectionModel {
+  init(original: SectionModel<Section, Item>, items: [Item]) {
     self.model = original.model
     self.items = items
   }
@@ -79,7 +79,8 @@ extension Array where Element: SectionModelType {
 final class CombineTableViewDataSource<Section: SectionModelType>:
   NSObject,
   UITableViewDataSource,
-  UITableViewDelegate {
+  UITableViewDelegate
+{
   public typealias Item = Section.Item
 
   public typealias ConfigureCell = (CombineTableViewDataSource<Section>, UITableView, IndexPath, Item)
@@ -106,7 +107,8 @@ final class CombineTableViewDataSource<Section: SectionModelType>:
     titleForFooterInSection: @escaping TitleForFooterInSection = { _, _ in nil },
     canEditRowAtIndexPath: @escaping CanEditRowAtIndexPath = { _, _ in false },
     canMoveRowAtIndexPath: @escaping CanMoveRowAtIndexPath = { _, _ in false },
-    heightForRowAtIndexPath: @escaping HeightForRowAtIndexPath = { _, _ in UITableView.automaticDimension }) {
+    heightForRowAtIndexPath: @escaping HeightForRowAtIndexPath = { _, _ in UITableView.automaticDimension })
+  {
     self.configureCell = configureCell
     self.titleForHeaderInSection = titleForHeaderInSection
     self.titleForFooterInSection = titleForFooterInSection
@@ -250,7 +252,8 @@ final class CombineTableViewDataSource<Section: SectionModelType>:
   func tableView(
     _ tableView: UITableView,
     commit editingStyle: UITableViewCell.EditingStyle,
-    forRowAt indexPath: IndexPath) {
+    forRowAt indexPath: IndexPath)
+  {
     switch editingStyle {
     case .delete:
       self.itemDeletedSubject.send(indexPath)

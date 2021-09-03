@@ -34,7 +34,8 @@ final class AppConfigViewModel {
     account: AccountController,
     api: EmonCMSAPI,
     appDataId: String?,
-    appCategory: AppCategory) {
+    appCategory: AppCategory)
+  {
     self.realmController = realmController
     self.account = account
     self.api = api

@@ -84,6 +84,7 @@ final class ChartCell<ChartViewType: ChartViewBase>: UITableViewCell {
         constant: 0))
   }
 
+  @available(*, unavailable)
   required init?(coder aDecoder: NSCoder) {
     fatalError("Must be initialised programatically")
   }

@@ -49,7 +49,8 @@ struct FeedWidgetItem {
   }
 
   private static func randomChartData(between start: Double, and end: Double, count: Int,
-                                      startTime: Date) -> [DataPoint<Double>] {
+                                      startTime: Date) -> [DataPoint<Double>]
+  {
     let maxDivergence = abs(end - start) / 5.0
     return (0 ..< count).reduce(into: [DataPoint<Double>]()) { result, i in
       let time = startTime.addingTimeInterval(TimeInterval(i))

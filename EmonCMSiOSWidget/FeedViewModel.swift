@@ -34,7 +34,8 @@ final class FeedViewModel {
   func fetchData(
     accountId: String,
     feedId: String,
-    completion: @escaping (FeedWidgetItemResult) -> Void) {
+    completion: @escaping (FeedWidgetItemResult) -> Void)
+  {
     self.fetchData(for: [(accountId: accountId, feedId: feedId)]) { results in
       if let firstResult = results.first {
         completion(firstResult)
@@ -46,21 +47,22 @@ final class FeedViewModel {
 
   func fetchData(
     for feeds: [(accountId: String, feedId: String)],
-    completion: @escaping ([FeedWidgetItemResult]) -> Void) {
+    completion: @escaping ([FeedWidgetItemResult]) -> Void)
+  {
     feeds
       .reduce(Empty<FeedWidgetItemResult, Never>()
-        .eraseToAnyPublisher()) { (allPublishers, feed) -> AnyPublisher<FeedWidgetItemResult, Never> in
-        let fetch = fetchDataImpl(accountId: feed.accountId, feedId: feed.feedId)
-          .map { item in
-            FeedWidgetItemResult.success(item)
-          }
-          .catch { error in
-            Just<FeedWidgetItemResult>(.failure(.fetchFailed(error)))
-          }
-          .eraseToAnyPublisher()
-        return allPublishers
-          .append(fetch)
-          .eraseToAnyPublisher()
+        .eraseToAnyPublisher()) { allPublishers, feed -> AnyPublisher<FeedWidgetItemResult, Never> in
+          let fetch = fetchDataImpl(accountId: feed.accountId, feedId: feed.feedId)
+            .map { item in
+              FeedWidgetItemResult.success(item)
+            }
+            .catch { error in
+              Just<FeedWidgetItemResult>(.failure(.fetchFailed(error)))
+            }
+            .eraseToAnyPublisher()
+          return allPublishers
+            .append(fetch)
+            .eraseToAnyPublisher()
       }
       .collect()
       .sink(receiveValue: { results in

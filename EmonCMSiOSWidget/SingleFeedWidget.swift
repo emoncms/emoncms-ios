@@ -28,7 +28,8 @@ struct SingleFeedProvider: IntentTimelineProvider {
   func getSnapshot(
     for configuration: SelectFeedIntent,
     in context: Context,
-    completion: @escaping (SingleFeedEntry) -> Void) {
+    completion: @escaping (SingleFeedEntry) -> Void)
+  {
     self.fetchData(for: configuration, in: context) { result in
       let entry = SingleFeedEntry(date: Date(), item: result)
       completion(entry)
@@ -38,7 +39,8 @@ struct SingleFeedProvider: IntentTimelineProvider {
   func getTimeline(
     for configuration: SelectFeedIntent,
     in context: Context,
-    completion: @escaping (Timeline<SingleFeedEntry>) -> Void) {
+    completion: @escaping (Timeline<SingleFeedEntry>) -> Void)
+  {
     self.fetchData(for: configuration, in: context) { result in
       let entry = SingleFeedEntry(date: Date(), item: result)
       let expiry = Calendar.current.date(byAdding: .minute, value: 2, to: Date()) ?? Date()
@@ -50,7 +52,8 @@ struct SingleFeedProvider: IntentTimelineProvider {
   private func fetchData(
     for configuration: SelectFeedIntent,
     in context: Context,
-    completion: @escaping (FeedWidgetItemResult) -> Void) {
+    completion: @escaping (FeedWidgetItemResult) -> Void)
+  {
     guard !context.isPreview else {
       completion(.success(FeedWidgetItem.makePlaceholder()))
       return
@@ -98,7 +101,7 @@ struct SingleFeedWidget: Widget {
       kind: "SingleFeedWidget",
       intent: SelectFeedIntent.self,
       provider: SingleFeedProvider()) { entry in
-      SingleFeedWidgetEntryView(entry: entry)
+        SingleFeedWidgetEntryView(entry: entry)
     }
     .configurationDisplayName("Feed Widget")
     .description("Display data from a single EmonCMS feed.")

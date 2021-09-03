@@ -65,7 +65,7 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
       dateRangeSignal.dropFirst().map { _ in AppPageRefreshKind.dateRangeChange })
 
     Publishers.CombineLatest(refreshSignal, dateRangeSignal)
-      .map { [weak self] (refreshKind, dateRange) -> AnyPublisher<Data, Never> in
+      .map { [weak self] refreshKind, dateRange -> AnyPublisher<Data, Never> in
         guard let self = self else { return Empty().eraseToAnyPublisher() }
 
         let update = self.update(dateRange: dateRange)
@@ -142,7 +142,8 @@ final class MySolarDivertAppPage2ViewModel: AppPageViewModel {
 
   private func fetchBarChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String,
                                     divertFeedId: String)
-    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError>
+  {
     let dates = dateRange.calculateDates()
     let interval = 86400.0
     let startTime = dates.0 - interval

@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 struct EmonCMSColors {
-  struct Chart {
+  enum Chart {
     static let Blue = UIColor(hexString: "3399ff")
     static let DarkBlue = UIColor(hexString: "0779c1")
     static let Yellow = UIColor(hexString: "dccc1f")
     static let Orange = UIColor(hexString: "fb7b50")
   }
 
-  struct Apps {
+  enum Apps {
     static let Solar = UIColor(hexString: "dccc1f")
     static let Grid = UIColor(hexString: "d52e2e")
     static let House = UIColor(hexString: "82cbfc")
@@ -27,7 +27,7 @@ struct EmonCMSColors {
     static let Export = UIColor(hexString: "2ed52e")
   }
 
-  struct ActivityIndicator {
+  enum ActivityIndicator {
     static let Green = UIColor(red: 0.196, green: 0.784, blue: 0.196, alpha: 1.0)
     static let Yellow = UIColor(red: 0.94, green: 0.71, blue: 0.078, alpha: 1.0)
     static let Orange = UIColor(red: 1.0, green: 0.49, blue: 0.078, alpha: 1.0)
@@ -37,8 +37,8 @@ struct EmonCMSColors {
   static let ErrorRed = UIColor(hexString: "e24522")
 }
 
-extension UIColor {
-  fileprivate convenience init(hexString: String) {
+private extension UIColor {
+  convenience init(hexString: String) {
     let r, g, b: CGFloat
 
     let scanner = Scanner(string: hexString)

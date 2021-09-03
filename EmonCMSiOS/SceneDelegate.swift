@@ -30,7 +30,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   func scene(
     _ scene: UIScene,
     willConnectTo session: UISceneSession,
-    options connectionOptions: UIScene.ConnectionOptions) {
+    options connectionOptions: UIScene.ConnectionOptions)
+  {
     guard let windowScene = (scene as? UIWindowScene) else { return }
 
     let runningTests = SceneDelegate.isRunningTests()
@@ -91,7 +92,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     guard
       let url = URLContexts.first?.url,
       let components = NSURLComponents(url: url, resolvingAgainstBaseURL: true),
-      let type = components.host else {
+      let type = components.host
+    else {
       return
     }
 

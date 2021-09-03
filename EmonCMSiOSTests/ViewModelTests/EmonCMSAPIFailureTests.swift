@@ -23,7 +23,8 @@ class EmonCMSAPIFailureTests: EmonCMSTestCase {
     func call<T>(
       api: AnyPublisher<T, EmonCMSAPI.APIError>,
       subscriber: TestableSubscriber<T, EmonCMSAPI.APIError>,
-      expect: @escaping () -> Void) {
+      expect: @escaping () -> Void)
+    {
       let sharedResult = api.share(replay: 1)
 
       sharedResult

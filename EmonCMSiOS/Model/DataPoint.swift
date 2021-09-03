@@ -35,7 +35,8 @@ extension DataPoint {
 extension DataPoint {
   @discardableResult
   static func merge(pointsFrom points: [[DataPoint]],
-                    mergeBlock: (TimeInterval, Date, [E]) -> Void) -> [DataPoint<[E]>] {
+                    mergeBlock: (TimeInterval, Date, [E]) -> Void) -> [DataPoint<[E]>]
+  {
     guard points.count > 0 else { return [] }
     var indices = points.map { $0.startIndex }
     var lastTime: Date?

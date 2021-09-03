@@ -15,7 +15,7 @@ final class Input: Object {
   @objc dynamic var nodeid: String = ""
   @objc dynamic var name: String = ""
   @objc dynamic var desc: String = ""
-  @objc dynamic var time: Date = Date()
+  @objc dynamic var time = Date()
   @objc dynamic var value: Double = 0
 
   override class func primaryKey() -> String? {
@@ -30,9 +30,9 @@ extension Input {
     guard let name = json["name"] as? String else { return nil }
     guard let desc = json["description"] as? String else { return nil }
     guard let timeAny = json["time"],
-      let timeDouble = Double.from(timeAny) else { return nil }
+          let timeDouble = Double.from(timeAny) else { return nil }
     guard let valueAny = json["value"],
-      let value = Double.from(valueAny) else { return nil }
+          let value = Double.from(valueAny) else { return nil }
 
     let time = Date(timeIntervalSince1970: timeDouble)
 

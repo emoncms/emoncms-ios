@@ -176,7 +176,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
   }
 
   private func fetchPowerNowAndUsageToday(useFeedId: String,
-                                          kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError> {
+                                          kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError>
+  {
     let calendar = Calendar.current
     let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
     let midnightToday = calendar.date(from: dateComponents)!
@@ -216,7 +217,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
   }
 
   private func fetchLineChartHistory(dateRange: DateRange,
-                                     useFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError> {
+                                     useFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError>
+  {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1

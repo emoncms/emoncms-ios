@@ -13,14 +13,16 @@ extension EmonCMSAPI {
   func inputList(_ account: AccountCredentials) -> AnyPublisher<[Input], APIError> {
     return self.request(account, path: "input/list").tryMap { resultData -> [Input] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
-        let json = anyJson as? [Any] else {
+            let json = anyJson as? [Any]
+      else {
         throw APIError.invalidResponse
       }
 
       var inputs: [Input] = []
       for i in json {
         if let inputJson = i as? [String: Any],
-          let input = Input.from(json: inputJson) {
+           let input = Input.from(json: inputJson)
+        {
           inputs.append(input)
         }
       }

@@ -42,7 +42,8 @@ struct FeedChartView: View {
   private func path(forSize size: CGSize, type: PathType) -> Path {
     guard
       let minTime = self.data.first?.time,
-      let maxTime = self.data.last?.time else {
+      let maxTime = self.data.last?.time
+    else {
       return Path()
     }
 

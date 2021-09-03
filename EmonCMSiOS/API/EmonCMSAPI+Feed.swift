@@ -13,14 +13,16 @@ extension EmonCMSAPI {
   func feedList(_ account: AccountCredentials) -> AnyPublisher<[Feed], APIError> {
     return self.request(account, path: "feed/list").tryMap { resultData -> [Feed] in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
-        let json = anyJson as? [Any] else {
+            let json = anyJson as? [Any]
+      else {
         throw APIError.invalidResponse
       }
 
       var feeds: [Feed] = []
       for i in json {
         if let feedJson = i as? [String: Any],
-          let feed = Feed.from(json: feedJson) {
+           let feed = Feed.from(json: feedJson)
+        {
           feeds.append(feed)
         }
       }
@@ -41,8 +43,9 @@ extension EmonCMSAPI {
 
     return self.request(account, path: "feed/aget", queryItems: queryItems).tryMap { resultData -> Feed in
       guard let anyJson = try? JSONSerialization.jsonObject(with: resultData, options: []),
-        let json = anyJson as? [String: Any],
-        let feed = Feed.from(json: json) else {
+            let json = anyJson as? [String: Any],
+            let feed = Feed.from(json: json)
+      else {
         throw APIError.invalidResponse
       }
 
@@ -63,7 +66,8 @@ extension EmonCMSAPI {
 
     return self.request(account, path: "feed/get", queryItems: queryItems).tryMap { resultData -> String in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
-        let value = json as? String else {
+            let value = json as? String
+      else {
         throw APIError.invalidResponse
       }
 
@@ -78,7 +82,8 @@ extension EmonCMSAPI {
 
   private static func dataPoints(fromJsonData data: Data) throws -> [DataPoint<Double>] {
     guard let json = try? JSONSerialization.jsonObject(with: data),
-      let dataPointsJson = json as? [Any] else {
+          let dataPointsJson = json as? [Any]
+    else {
       throw APIError.invalidResponse
     }
 
@@ -95,7 +100,8 @@ extension EmonCMSAPI {
   }
 
   func feedData(_ account: AccountCredentials, id: String, at startTime: Date, until endTime: Date,
-                interval: Int) -> AnyPublisher<[DataPoint<Double>], APIError> {
+                interval: Int) -> AnyPublisher<[DataPoint<Double>], APIError>
+  {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -115,7 +121,8 @@ extension EmonCMSAPI {
   }
 
   func feedDataDaily(_ account: AccountCredentials, id: String, at startTime: Date,
-                     until endTime: Date) -> AnyPublisher<[DataPoint<Double>], APIError> {
+                     until endTime: Date) -> AnyPublisher<[DataPoint<Double>], APIError>
+  {
     let queryItems = [
       "id": id,
       "start": "\(UInt64(startTime.timeIntervalSince1970 * 1000))",
@@ -141,7 +148,8 @@ extension EmonCMSAPI {
 
     return self.request(account, path: "feed/value", queryItems: queryItems).tryMap { resultData -> Double in
       guard let json = try? JSONSerialization.jsonObject(with: resultData, options: [.allowFragments]),
-        let value = Double.from(json) else {
+            let value = Double.from(json)
+      else {
         throw APIError.invalidResponse
       }
 
@@ -161,7 +169,8 @@ extension EmonCMSAPI {
 
     return self.request(account, path: "feed/fetch", queryItems: queryItems).tryMap { resultData -> [String: Double] in
       guard let json = try? JSONSerialization.jsonObject(with: resultData),
-        let array = json as? [Any] else {
+            let array = json as? [Any]
+      else {
         throw APIError.invalidResponse
       }
 

@@ -82,14 +82,14 @@ class AppListViewModelTests: EmonCMSTestCase {
 
         _ = viewModel.deleteApp(withId: uuid)
           .sink(receiveCompletion: { completion in
-            switch completion {
-            case .finished:
-              let appQuery2 = realm.objects(AppData.self)
-              expect(appQuery2.count).to(equal(0))
-            case .failure:
-              fail("Failure is not an option")
-            }
-          },
+                  switch completion {
+                  case .finished:
+                    let appQuery2 = realm.objects(AppData.self)
+                    expect(appQuery2.count).to(equal(0))
+                  case .failure:
+                    fail("Failure is not an option")
+                  }
+                },
                 receiveValue: { _ in })
       }
     }

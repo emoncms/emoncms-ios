@@ -11,9 +11,10 @@ import Foundation
 
 import Former
 
-extension RowFormer {
-  public static func publisher<E>(_ updater: @escaping (@escaping ((E) -> Void)) -> RowFormer)
-    -> AnyPublisher<E, Never> {
+public extension RowFormer {
+  static func publisher<E>(_ updater: @escaping (@escaping ((E) -> Void)) -> RowFormer)
+    -> AnyPublisher<E, Never>
+  {
     return Producer<E, Never> { observer in
       _ = updater { value in
         _ = observer.receive(value)
@@ -21,9 +22,12 @@ extension RowFormer {
     }.eraseToAnyPublisher()
   }
 
-  public static func publisher<E,
-                               F>(_ updater: @escaping (@escaping ((E, F) -> Void)) -> RowFormer) -> AnyPublisher<(E, F),
-                                                                                                                  Never> {
+  static func publisher<
+    E,
+    F
+  >(_ updater: @escaping (@escaping ((E, F) -> Void)) -> RowFormer) -> AnyPublisher<(E, F),
+    Never>
+  {
     return Producer<(E, F), Never> { observer in
       _ = updater { e, f in
         _ = observer.receive((e, f))

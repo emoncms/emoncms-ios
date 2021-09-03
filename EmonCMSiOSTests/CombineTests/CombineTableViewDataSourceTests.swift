@@ -55,20 +55,20 @@ class CombineTableViewDataSourceTests: QuickSpec {
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
         var cells: [IndexPath: UITableViewCell] = [:]
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, indexPath, item) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, indexPath, item -> UITableViewCell in
           let cell = UITableViewCell(style: .default, reuseIdentifier: nil)
           cell.textLabel?.text = item
           cells[indexPath] = cell
           return cell
-        } titleForHeaderInSection: { (_, _) -> String? in
+        } titleForHeaderInSection: { _, _ -> String? in
           nil
-        } titleForFooterInSection: { (_, _) -> String? in
+        } titleForFooterInSection: { _, _ -> String? in
           nil
-        } canEditRowAtIndexPath: { (_, _) -> Bool in
+        } canEditRowAtIndexPath: { _, _ -> Bool in
           true
-        } canMoveRowAtIndexPath: { (_, _) -> Bool in
+        } canMoveRowAtIndexPath: { _, _ -> Bool in
           true
-        } heightForRowAtIndexPath: { (_, _) -> CGFloat in
+        } heightForRowAtIndexPath: { _, _ -> CGFloat in
           44.0
         }
 
@@ -87,7 +87,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -108,7 +108,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -146,7 +146,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -184,7 +184,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -222,7 +222,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -260,7 +260,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -298,7 +298,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 
@@ -336,7 +336,7 @@ class CombineTableViewDataSourceTests: QuickSpec {
 
         let tableView = UITableView(frame: CGRect(x: 0, y: 0, width: 375, height: 700), style: .plain)
 
-        let dataSource = CombineTableViewDataSource<Model> { (_, _, _, _) -> UITableViewCell in
+        let dataSource = CombineTableViewDataSource<Model> { _, _, _, _ -> UITableViewCell in
           UITableViewCell(style: .default, reuseIdentifier: nil)
         }
 

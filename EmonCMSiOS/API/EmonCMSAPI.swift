@@ -72,7 +72,8 @@ final class EmonCMSAPI {
   }
 
   func request(_ account: AccountCredentials, path: String,
-               queryItems: [String: String] = [:]) -> AnyPublisher<Data, APIError> {
+               queryItems: [String: String] = [:]) -> AnyPublisher<Data, APIError>
+  {
     guard let url = EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems) else {
       return Fail(error: APIError.failedToCreateURL).eraseToAnyPublisher()
     }

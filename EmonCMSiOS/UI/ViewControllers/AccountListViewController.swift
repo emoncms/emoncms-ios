@@ -30,7 +30,8 @@ final class AccountListViewController: UITableViewController {
   func switchToAccount(
     withId id: String,
     animated: Bool = true,
-    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in }) {
+    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in })
+  {
     self.dismiss(animated: animated) {
       self.login(toAccountWithId: id, animated: animated, completion: completion)
     }
@@ -184,7 +185,8 @@ final class AccountListViewController: UITableViewController {
   private func login(
     toAccountWithId accountId: String,
     animated: Bool = true,
-    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in }) {
+    completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in })
+  {
     guard let viewModels = self.viewModel.mainViewModels(forAccountWithId: accountId) else {
       return
     }

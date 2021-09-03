@@ -152,14 +152,16 @@ final class FakeHTTPProvider: HTTPRequestProvider {
 
     if
       let intervalString = query["interval"],
-      let interval = Int(intervalString) {
+      let interval = Int(intervalString)
+    {
       return self.feedEngine.getData(id: id, start: start, end: end, interval: interval)
         .map { point in
           [point.time, point.value ?? 0]
         }
     } else if
       let modeString = query["mode"],
-      let mode = FakeEmonCMSFeedEngine.DMYMode(rawValue: modeString) {
+      let mode = FakeEmonCMSFeedEngine.DMYMode(rawValue: modeString)
+    {
       return self.feedEngine.getDataDMY(id: id, start: start, end: end, mode: mode)
         .map { point in
           [point.time, point.value ?? 0]
@@ -263,7 +265,8 @@ final class FakeHTTPProvider: HTTPRequestProvider {
 
     if
       let responseObject = try? routeFunc(queryValues),
-      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: []) {
+      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: [])
+    {
       return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
     }
 

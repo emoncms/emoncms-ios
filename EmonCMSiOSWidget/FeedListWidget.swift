@@ -29,7 +29,8 @@ struct FeedListProvider: IntentTimelineProvider {
   func getSnapshot(
     for configuration: SelectFeedsIntent,
     in context: Context,
-    completion: @escaping (FeedListEntry) -> Void) {
+    completion: @escaping (FeedListEntry) -> Void)
+  {
     self.fetchData(for: configuration, in: context) { results in
       let entry = FeedListEntry(date: Date(), items: results)
       completion(entry)
@@ -39,7 +40,8 @@ struct FeedListProvider: IntentTimelineProvider {
   func getTimeline(
     for configuration: SelectFeedsIntent,
     in context: Context,
-    completion: @escaping (Timeline<FeedListEntry>) -> Void) {
+    completion: @escaping (Timeline<FeedListEntry>) -> Void)
+  {
     self.fetchData(for: configuration, in: context) { results in
       let entry = FeedListEntry(date: Date(), items: results)
       let expiry = Calendar.current.date(byAdding: .minute, value: 2, to: Date()) ?? Date()
@@ -51,7 +53,8 @@ struct FeedListProvider: IntentTimelineProvider {
   private func fetchData(
     for configuration: SelectFeedsIntent,
     in context: Context,
-    completion: @escaping ([FeedWidgetItemResult]) -> Void) {
+    completion: @escaping ([FeedWidgetItemResult]) -> Void)
+  {
     let rowCount = FeedListView.rowsForFamily[context.family]!
 
     guard !context.isPreview else {
@@ -104,7 +107,7 @@ struct FeedListView: View {
   ]
 
   var body: some View {
-    let rows: CGFloat = CGFloat(Self.rowsForFamily[self.family]!)
+    let rows = CGFloat(Self.rowsForFamily[self.family]!)
     VStack(spacing: 0) {
       ForEach(self.items.startIndex ..< self.items.endIndex) { i in
         VStack(spacing: 0) {
@@ -155,7 +158,7 @@ struct FeedListWidget: Widget {
       kind: "FeedListWidget",
       intent: SelectFeedsIntent.self,
       provider: FeedListProvider()) { entry in
-      FeedListWidgetEntryView(entry: entry)
+        FeedListWidgetEntryView(entry: entry)
     }
     .configurationDisplayName("Feed List Widget")
     .description("Display data from many of your EmonCMS feeds.")

@@ -61,7 +61,8 @@ final class AccountListViewModel {
     if
       let accountURL = UserDefaults.standard.string(forKey: SharedConstants.UserDefaultsKeys.accountURL.rawValue),
       let accountUUIDString = UserDefaults.standard
-      .string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue) {
+      .string(forKey: SharedConstants.UserDefaultsKeys.accountUUID.rawValue)
+    {
       let account = Account()
       account.uuid = accountUUIDString
       account.name = accountURL
@@ -94,7 +95,8 @@ final class AccountListViewModel {
   private func accountController(forAccountWithId id: String) -> AccountController? {
     guard
       let account = self.realm.object(ofType: Account.self, forPrimaryKey: id),
-      let apiKey = try? self.keychainController.apiKey(forAccountWithId: id) else {
+      let apiKey = try? self.keychainController.apiKey(forAccountWithId: id)
+    else {
       return nil
     }
     let credentials = AccountCredentials(url: account.url, apiKey: apiKey)
@@ -117,7 +119,8 @@ final class AccountListViewModel {
 
   func mainViewModels(forAccountWithId id: String) ->
     (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel,
-     dashboardList: DashboardListViewModel, settings: SettingsViewModel)? {
+     dashboardList: DashboardListViewModel, settings: SettingsViewModel)?
+  {
     guard
       let accountController = self.accountController(forAccountWithId: id)
     else {

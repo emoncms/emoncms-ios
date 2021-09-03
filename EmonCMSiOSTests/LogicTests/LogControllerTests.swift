@@ -34,7 +34,8 @@ class LogControllerTests: QuickSpec {
         if
           let logFile = logFiles.first,
           let data = try? Data(contentsOf: logFile),
-          let string = String(data: data, encoding: .utf8) {
+          let string = String(data: data, encoding: .utf8)
+        {
           expect(string.contains(thingToLog)).to(equal(true))
         } else {
           fail("Failed to get log file data")

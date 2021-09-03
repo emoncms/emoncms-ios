@@ -148,7 +148,8 @@ extension MySolarDivertAppPage1ViewController {
   }
 
   private func updateLineChartData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
-                                                  divert: [DataPoint<Double>])?) {
+                                                  divert: [DataPoint<Double>])?)
+  {
     if let dataPoints = dataPoints {
       let data = self.lineChart.lineData ?? LineChartData()
       self.lineChart.data = data
@@ -207,7 +208,8 @@ extension MySolarDivertAppPage1ViewController {
   }
 
   private func updateBoxViewData(_ dataPoints: (use: [DataPoint<Double>], solar: [DataPoint<Double>],
-                                                divert: [DataPoint<Double>])?) {
+                                                divert: [DataPoint<Double>])?)
+  {
     guard let dataPoints = dataPoints else { return }
 
     let use = dataPoints.use
@@ -245,7 +247,7 @@ extension MySolarDivertAppPage1ViewController {
         gridToHouse += importValue
         solarToHouse += solarValue
       } else { // Exporting
-        solarToGrid += (-importValue)
+        solarToGrid += -importValue
         solarToHouse += houseUseValue
       }
     }

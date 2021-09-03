@@ -52,7 +52,8 @@ struct UIControlPublisher: Publisher {
   }
 
   func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIControlPublisher.Failure,
-    S.Input == UIControlPublisher.Output {
+    S.Input == UIControlPublisher.Output
+  {
     let subscription = UIControlSubscription(subscriber: subscriber, control: control, event: controlEvents)
     subscriber.receive(subscription: subscription)
   }
@@ -66,7 +67,8 @@ extension UIControl {
 }
 
 final class UIBarButtonItemSubscription<SubscriberType: Subscriber>: Subscription
-  where SubscriberType.Input == UIBarButtonItem {
+  where SubscriberType.Input == UIBarButtonItem
+{
   private var subscriber: SubscriberType?
   private let control: UIBarButtonItem
 
@@ -102,7 +104,8 @@ struct UIBarButtonItemPublisher: Publisher {
   }
 
   func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIBarButtonItemPublisher.Failure,
-    S.Input == UIBarButtonItemPublisher.Output {
+    S.Input == UIBarButtonItemPublisher.Output
+  {
     let subscription = UIBarButtonItemSubscription(subscriber: subscriber, control: control)
     subscriber.receive(subscription: subscription)
   }
@@ -115,7 +118,8 @@ extension UIBarButtonItem {
 }
 
 final class UIGestureRecognizerSubscription<SubscriberType: Subscriber, Recognizer: UIGestureRecognizer>: Subscription
-  where SubscriberType.Input == Recognizer {
+  where SubscriberType.Input == Recognizer
+{
   private var subscriber: SubscriberType?
   private let control: Recognizer
 
@@ -150,7 +154,8 @@ struct UIGestureRecognizerPublisher<Recognizer: UIGestureRecognizer>: Publisher 
   }
 
   func receive<S>(subscriber: S) where S: Subscriber, S.Failure == UIGestureRecognizerPublisher.Failure,
-    S.Input == UIGestureRecognizerPublisher.Output {
+    S.Input == UIGestureRecognizerPublisher.Output
+  {
     let subscription = UIGestureRecognizerSubscription(subscriber: subscriber, control: control)
     subscriber.receive(subscription: subscription)
   }

@@ -14,8 +14,8 @@ import Nimble
 import Quick
 
 final class MockURLSessionDataTask: URLSessionDataTask {
-  override func resume() { return }
-  override func cancel() { return }
+  override func resume() {}
+  override func cancel() {}
 }
 
 final class MockURLSession: URLSession {
@@ -24,7 +24,8 @@ final class MockURLSession: URLSession {
   var nextError: Error?
 
   override func dataTask(with request: URLRequest,
-                         completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+                         completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask
+  {
     DispatchQueue.main.async {
       completionHandler(self.nextData, self.nextResponse, self.nextError)
     }

@@ -227,7 +227,8 @@ extension AddAccountViewController {
 extension AddAccountViewController: AddAccountQRViewControllerDelegate {
   func addAccountQRViewController(
     controller: AddAccountQRViewController,
-    didFinishWithAccountCredentials accountCredentials: AccountCredentials) {
+    didFinishWithAccountCredentials accountCredentials: AccountCredentials)
+  {
     self.updateWithAccountCredentials(accountCredentials)
     self.dismiss(animated: true, completion: nil)
   }

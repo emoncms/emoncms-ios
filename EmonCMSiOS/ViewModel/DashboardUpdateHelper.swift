@@ -38,7 +38,8 @@ final class DashboardUpdateHelper {
   }
 
   private func saveDashboards(_ dashboards: [Dashboard],
-                              inRealm realm: Realm) -> AnyPublisher<Void, EmonCMSAPI.APIError> {
+                              inRealm realm: Realm) -> AnyPublisher<Void, EmonCMSAPI.APIError>
+  {
     return Deferred<Just<Void>> {
       let existingDashboards = realm.objects(Dashboard.self).filter {
         var inNewArray = false

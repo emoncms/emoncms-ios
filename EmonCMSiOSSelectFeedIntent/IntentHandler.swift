@@ -23,14 +23,16 @@ class IntentHandler: INExtension, SelectFeedIntentHandling, SelectFeedsIntentHan
 
   func provideFeedOptionsCollection(
     for intent: SelectFeedIntent,
-    with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void) {
+    with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void)
+  {
     let collection = self.fetchFeeds()
     completion(collection, nil)
   }
 
   func provideFeedsOptionsCollection(
     for intent: SelectFeedsIntent,
-    with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void) {
+    with completion: @escaping (INObjectCollection<FeedIntent>?, Error?) -> Void)
+  {
     let collection = self.fetchFeeds()
     completion(collection, nil)
   }

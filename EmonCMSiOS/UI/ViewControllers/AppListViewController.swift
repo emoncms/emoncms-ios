@@ -161,7 +161,7 @@ final class AppListViewController: UITableViewController {
         .eraseToAnyPublisher()
       }
       .switchToLatest()
-      .map { [weak self] (appCategory) -> AnyPublisher<AppUUIDAndCategory?, Never> in
+      .map { [weak self] appCategory -> AnyPublisher<AppUUIDAndCategory?, Never> in
         guard let self = self else { return Empty<AppUUIDAndCategory?, Never>().eraseToAnyPublisher() }
 
         let viewModel = self.viewModel.appConfigViewModel(forCategory: appCategory)

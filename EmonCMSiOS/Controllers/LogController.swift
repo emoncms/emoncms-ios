@@ -101,7 +101,8 @@ final class LogController {
 
     let directory = self.logDirectory
     guard let enumerator = self.fileManager.enumerator(at: directory, includingPropertiesForKeys: nil, options: [],
-                                                       errorHandler: nil) else {
+                                                       errorHandler: nil)
+    else {
       return []
     }
 

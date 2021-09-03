@@ -29,7 +29,8 @@ class RealmMigrationTests: QuickSpec {
   private func copyAccountRealm(
     fromFilename: String,
     forAccountId accountId: String,
-    realmController: RealmController) throws {
+    realmController: RealmController) throws
+  {
     guard let oldRealmFileURL = Bundle(for: type(of: self)).url(forResource: fromFilename, withExtension: "realm")
     else {
       throw NSError()

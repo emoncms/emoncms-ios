@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable final class AppBoxesFeedView: UIView {
   @IBInspectable var name: String = "FEED" { didSet { self.updateLabels() } }
-  @IBInspectable var value: Double = 0 { didSet { hasSetValue = true; self.updateLabels() } }
+  @IBInspectable var value: Double = 0 { didSet { self.hasSetValue = true; self.updateLabels() } }
   @IBInspectable var unit: String = "kWh" { didSet { self.updateLabels() } }
 
   private let containerView = UIView(frame: .zero)

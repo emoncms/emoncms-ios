@@ -43,7 +43,8 @@ final class KeychainController {
     guard
       let data = try keychain.getData(account),
       let unarchivedData = try NSKeyedUnarchiver.unarchivedObject(ofClass: NSDictionary.self, from: data),
-      let dict = unarchivedData as? [String: Any] else {
+      let dict = unarchivedData as? [String: Any]
+    else {
       throw KeychainControllerError.generic
     }
 

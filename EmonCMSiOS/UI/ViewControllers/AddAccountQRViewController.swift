@@ -139,14 +139,15 @@ extension AddAccountQRViewController: AVCaptureMetadataOutputObjectsDelegate {
   func metadataOutput(
     _ captureOutput: AVCaptureMetadataOutput,
     didOutput metadataObjects: [AVMetadataObject],
-    from connection: AVCaptureConnection) {
+    from connection: AVCaptureConnection)
+  {
     guard self.foundAccount == false else { return }
 
     guard metadataObjects.count > 0 else { return }
 
     guard let qrCode = metadataObjects[0] as? AVMetadataMachineReadableCodeObject,
-      qrCode.type == AVMetadataObject.ObjectType.qr,
-      let string = qrCode.stringValue
+          qrCode.type == AVMetadataObject.ObjectType.qr,
+          let string = qrCode.stringValue
     else {
       return
     }

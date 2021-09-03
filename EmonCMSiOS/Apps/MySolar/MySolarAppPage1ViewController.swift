@@ -203,7 +203,7 @@ extension MySolarAppPage1ViewController {
         gridToHouse += importValue
         solarToHouse += solarValue
       } else { // Exporting
-        solarToGrid += (-importValue)
+        solarToGrid += -importValue
         solarToHouse += useValue
       }
     }

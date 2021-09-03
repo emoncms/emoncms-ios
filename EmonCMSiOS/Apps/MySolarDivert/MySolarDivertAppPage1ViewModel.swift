@@ -152,11 +152,12 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
 
   private func fetchPowerNow(useFeedId: String, solarFeedId: String,
                              divertFeedId: String) -> AnyPublisher<(Double, Double, Double, Double, Double),
-                                                                   EmonCMSAPI.APIError> {
+    EmonCMSAPI.APIError>
+  {
     return self.api.feedValue(self.account.credentials, ids: [useFeedId, solarFeedId, divertFeedId])
       .map { feedValues in
         guard let use = feedValues[useFeedId], let solar = feedValues[solarFeedId],
-          let divert = feedValues[divertFeedId] else { return (0.0, 0.0, 0.0, 0.0, 0.0) }
+              let divert = feedValues[divertFeedId] else { return (0.0, 0.0, 0.0, 0.0, 0.0) }
 
         return (use - divert, divert, use, use - solar, solar)
       }
@@ -165,7 +166,8 @@ final class MySolarDivertAppPage1ViewModel: AppPageViewModel {
 
   private func fetchLineChartHistory(dateRange: DateRange, useFeedId: String, solarFeedId: String,
                                      divertFeedId: String)
-    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError> {
+    -> AnyPublisher<([DataPoint<Double>], [DataPoint<Double>], [DataPoint<Double>]), EmonCMSAPI.APIError>
+  {
     let dates = dateRange.calculateDates()
     let startTime = dates.0
     let endTime = dates.1
