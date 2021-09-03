@@ -65,7 +65,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.finished))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
 
       it("should error when response code is an error code") {
@@ -86,7 +86,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.failure(.httpError(code: 401))))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
 
       it("should error when response is non-HTTP") {
@@ -108,7 +108,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.failure(.networkError)))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
 
       it("should error when no data or response") {
@@ -128,7 +128,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.failure(.unknown)))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
 
       it("should error when ATS failure") {
@@ -150,7 +150,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.failure(.atsFailed)))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
 
       it("should error when random NSError") {
@@ -170,7 +170,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
           (300, .completion(.failure(.unknown)))
         ]
 
-        expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+        expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
       }
     }
 
@@ -193,7 +193,7 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
         (300, .completion(.finished))
       ]
 
-      expect(results.recordedOutput).toEventually(equal(expected), timeout: 1)
+      expect(results.recordedOutput).toEventually(equal(expected), timeout: .seconds(1))
     }
   }
 }
