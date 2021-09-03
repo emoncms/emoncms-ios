@@ -2237,15 +2237,15 @@
 			repositoryURL = "https://github.com/Quick/Quick";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 3.0.0;
+				minimumVersion = 4.0.0;
 			};
 		};
 		C96DA37823034132005B1F98 /* XCRemoteSwiftPackageReference "Nimble" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Quick/Nimble";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.1.0;
+				kind = upToNextMinorVersion;
+				minimumVersion = 9.2.0;
 			};
 		};
 		C96DA37F23034254005B1F98 /* XCRemoteSwiftPackageReference "realm-cocoa" */ = {
