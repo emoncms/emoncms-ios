@@ -10,7 +10,7 @@ import Foundation
 
 import Charts
 
-final class DayRelativeToTodayValueFormatter: NSObject, IAxisValueFormatter {
+final class DayRelativeToTodayValueFormatter: NSObject, AxisValueFormatter {
   private let dateFormatter: DateFormatter
   private let relativeTo: Date?
 

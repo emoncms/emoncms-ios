@@ -17,7 +17,6 @@ final class ChartHelpers {
     lineChart.pinchZoomEnabled = false
     lineChart.highlightPerTapEnabled = false
     lineChart.setScaleEnabled(false)
-    lineChart.chartDescription = nil
     lineChart.drawGridBackgroundEnabled = false
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
@@ -57,7 +56,6 @@ final class ChartHelpers {
     lineChart.drawGridBackgroundEnabled = false
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
-    lineChart.chartDescription = nil
     lineChart.noDataText = "Loading data\u{2026}"
     lineChart.noDataTextColor = .label
     lineChart.isUserInteractionEnabled = false
@@ -87,7 +85,6 @@ final class ChartHelpers {
     barChart.legend.enabled = false
     barChart.leftAxis.enabled = false
     barChart.rightAxis.enabled = false
-    barChart.chartDescription = nil
     barChart.noDataText = "Loading data\u{2026}"
     barChart.noDataTextColor = .label
     barChart.isUserInteractionEnabled = false
@@ -115,7 +112,7 @@ final class ChartHelpers {
       ChartDataEntry(x: $0.time.timeIntervalSince1970, y: $0.value)
     }
 
-    if let dataSet = data.getDataSetByIndex(setIndex) {
+    if let dataSet = data.dataSet(at: setIndex) {
       dataSet.clear()
       for entry in entries {
         _ = dataSet.addEntry(entry)
@@ -124,7 +121,7 @@ final class ChartHelpers {
       dataSet.notifyDataSetChanged()
       data.notifyDataChanged()
     } else {
-      let dataSet = LineChartDataSet(entries: entries, label: nil)
+      let dataSet = LineChartDataSet(entries: entries)
       configureBlock(dataSet)
       dataSet.valueTextColor = .label
       dataSet.drawFilledEnabled = true
@@ -133,7 +130,7 @@ final class ChartHelpers {
       dataSet.highlightEnabled = false
       dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
-      data.addDataSet(dataSet)
+      data.append(dataSet)
     }
   }
 
@@ -152,7 +149,7 @@ final class ChartHelpers {
       entries.append(yDataEntry)
     }
 
-    if let dataSet = data.getDataSetByIndex(setIndex) {
+    if let dataSet = data.dataSet(at: setIndex) {
       dataSet.clear()
       for entry in entries {
         _ = dataSet.addEntry(entry)
@@ -165,7 +162,7 @@ final class ChartHelpers {
       configureBlock(dataSet)
       dataSet.valueTextColor = .label
 
-      data.addDataSet(dataSet)
+      data.append(dataSet)
     }
   }
 

@@ -10,7 +10,7 @@ import Foundation
 
 import Charts
 
-final class ChartDateValueFormatter: NSObject, IAxisValueFormatter {
+final class ChartDateValueFormatter: NSObject, AxisValueFormatter {
   enum FormatType {
     case auto
     case format(String)

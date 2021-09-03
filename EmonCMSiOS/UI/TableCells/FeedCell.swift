@@ -114,10 +114,10 @@ final class FeedCell: UITableViewCell {
                 return
               }
 
-              let dataSet = LineChartDataSet(entries: [], label: nil)
-              dataSet.valueTextColor = .systemGray3
-              dataSet.fillColor = .label
-              dataSet.setColor(.label)
+              let dataSet = LineChartDataSet(entries: [])
+              dataSet.valueTextColor = UIColor.systemGray3
+              dataSet.fillColor = UIColor.label
+              dataSet.setColor(UIColor.label)
               dataSet.drawCirclesEnabled = false
               dataSet.drawFilledEnabled = true
               dataSet.drawValuesEnabled = false
@@ -132,7 +132,7 @@ final class FeedCell: UITableViewCell {
               }
 
               let data = LineChartData()
-              data.addDataSet(dataSet)
+              data.append(dataSet)
               chartView.data = data
 
               chartView.notifyDataSetChanged()

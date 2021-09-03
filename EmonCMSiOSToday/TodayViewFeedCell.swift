@@ -29,7 +29,7 @@ final class TodayViewFeedCell: UITableViewCell {
     let data = self.chartView.lineData ?? LineChartData()
     self.chartView.data = data
 
-    if let dataSet = data.getDataSetByIndex(0) {
+    if let dataSet = data.dataSet(at: 0) {
       dataSet.clear()
       for entry in entries {
         _ = dataSet.addEntry(entry)
@@ -38,7 +38,7 @@ final class TodayViewFeedCell: UITableViewCell {
       dataSet.notifyDataSetChanged()
       data.notifyDataChanged()
     } else {
-      let dataSet = LineChartDataSet(entries: entries, label: nil)
+      let dataSet = LineChartDataSet(entries: entries)
       dataSet.setColor(EmonCMSColors.Chart.Blue)
       dataSet.valueTextColor = .black
       dataSet.drawFilledEnabled = false
@@ -47,7 +47,7 @@ final class TodayViewFeedCell: UITableViewCell {
       dataSet.highlightEnabled = false
       dataSet.fillFormatter = DefaultFillFormatter(block: { _, _ in 0 })
 
-      data.addDataSet(dataSet)
+      data.append(dataSet)
     }
 
     self.chartView.notifyDataSetChanged()
@@ -58,7 +58,6 @@ final class TodayViewFeedCell: UITableViewCell {
     lineChart.drawGridBackgroundEnabled = false
     lineChart.legend.enabled = false
     lineChart.rightAxis.enabled = false
-    lineChart.chartDescription = nil
     lineChart.noDataText = "Loading data\u{2026}"
     lineChart.noDataTextColor = .black
     lineChart.isUserInteractionEnabled = false
