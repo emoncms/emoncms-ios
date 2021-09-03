@@ -25,50 +25,60 @@ struct FeedRowView: View {
   private func successBody(item: FeedWidgetItem) -> some View {
     GeometryReader { metrics in
       Link(destination: URL(string: "emoncms://feed?accountId=\(item.accountId)&feedId=\(item.feedId)")!) {
-        HStack(spacing: 0) {
-          // Feed name & account name
-          VStack(alignment: .leading) {
-            Text(item.feedName)
-              .font(.caption)
-              .fontWeight(.semibold)
-              .minimumScaleFactor(0.7)
-              .lineLimit(1)
-            Text(item.accountName)
-              .font(.caption2)
-              .fontWeight(.light)
-              .foregroundColor(Color.gray)
-              .minimumScaleFactor(0.7)
-              .lineLimit(1)
-          }
-          .padding(.leading, 12)
-          .padding(.trailing, 2)
-          .padding(.vertical, 4)
-          .frame(width: metrics.size.width * (self.compressed ? 0.7 : 0.6), alignment: .leading)
-          .frame(minHeight: metrics.size.height)
-
-          // Chart
-          if !self.compressed {
+        ZStack {
+          if self.compressed {
             FeedChartView(data: item.feedChartData)
               .color(Color(EmonCMSColors.Chart.Blue))
               .lineWidth(2)
               .padding(.vertical, 12)
-              .padding(.horizontal, 2)
-              .frame(width: metrics.size.width * 0.2, alignment: .trailing)
-              .frame(minHeight: metrics.size.height)
+              .opacity(0.5)
+              .frame(width: metrics.size.width, height: metrics.size.height)
           }
-
-          // Feed value
-          Text(item.feedChartData.last?.value.prettyFormat() ?? "---")
-            .font(.caption)
-            .fontWeight(.semibold)
-            .minimumScaleFactor(0.5)
-            .lineLimit(1)
-            .padding(.leading, 2)
-            .padding(.trailing, 12)
+          HStack(spacing: 0) {
+            // Feed name & account name
+            VStack(alignment: .leading) {
+              Text(item.feedName)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .minimumScaleFactor(0.7)
+                .lineLimit(1)
+              Text(item.accountName)
+                .font(.caption2)
+                .fontWeight(.light)
+                .foregroundColor(Color.gray)
+                .minimumScaleFactor(0.7)
+                .lineLimit(1)
+            }
+            .padding(.leading, 12)
+            .padding(.trailing, 2)
             .padding(.vertical, 4)
-            .frame(width: metrics.size.width * (self.compressed ? 0.3 : 0.2), alignment: .trailing)
+            .frame(width: metrics.size.width * (self.compressed ? 0.7 : 0.6), alignment: .leading)
             .frame(minHeight: metrics.size.height)
-        }.frame(minHeight: metrics.size.height)
+
+            // Chart
+            if !self.compressed {
+              FeedChartView(data: item.feedChartData)
+                .color(Color(EmonCMSColors.Chart.Blue))
+                .lineWidth(2)
+                .padding(.vertical, 12)
+                .padding(.horizontal, 2)
+                .frame(width: metrics.size.width * 0.2, alignment: .trailing)
+                .frame(minHeight: metrics.size.height)
+            }
+
+            // Feed value
+            Text(item.feedChartData.last?.value.prettyFormat() ?? "---")
+              .font(.caption)
+              .fontWeight(.semibold)
+              .minimumScaleFactor(0.5)
+              .lineLimit(1)
+              .padding(.leading, 2)
+              .padding(.trailing, 12)
+              .padding(.vertical, 4)
+              .frame(width: metrics.size.width * (self.compressed ? 0.3 : 0.2), alignment: .trailing)
+              .frame(minHeight: metrics.size.height)
+          }.frame(minHeight: metrics.size.height)
+        }
       }
     }
   }
