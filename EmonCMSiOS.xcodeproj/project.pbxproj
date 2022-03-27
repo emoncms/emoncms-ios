@@ -1355,7 +1355,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftformat >/dev/null; then\n  swiftformat --lint . || true\nelse\n  echo \"warning: SwiftFormat not installed. Run: brew install swiftformat\"\nfi\n";
+			shellScript = "if [ -f /opt/homebrew/bin/swiftformat ]; then\n  swiftformat --lint . || true\nelse\n  echo \"warning: SwiftFormat not installed. Run: brew install swiftformat\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
