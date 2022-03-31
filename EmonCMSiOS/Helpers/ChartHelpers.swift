@@ -24,7 +24,7 @@ final class ChartHelpers {
     let xAxis = lineChart.xAxis
     xAxis.drawGridLinesEnabled = false
     xAxis.labelPosition = .bottom
-    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
+    xAxis.valueFormatter = ChartDateValueFormatter(.auto(nil))
 
     let yAxis = lineChart.leftAxis
     yAxis.drawGridLinesEnabled = false
@@ -66,7 +66,7 @@ final class ChartHelpers {
     xAxis.drawLabelsEnabled = true
     xAxis.labelPosition = .bottom
     xAxis.labelTextColor = .label
-    xAxis.valueFormatter = ChartDateValueFormatter(.auto)
+    xAxis.valueFormatter = ChartDateValueFormatter(.auto(nil))
     xAxis.granularity = 3600
 
     let yAxis = lineChart.leftAxis

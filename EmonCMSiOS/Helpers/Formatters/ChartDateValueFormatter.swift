@@ -12,7 +12,7 @@ import Charts
 
 final class ChartDateValueFormatter: NSObject, AxisValueFormatter {
   enum FormatType {
-    case auto
+    case auto(Locale?)
     case format(String)
     case formatter(DateFormatter)
   }
@@ -41,8 +41,9 @@ final class ChartDateValueFormatter: NSObject, AxisValueFormatter {
   init(_ type: FormatType) {
     let dateFormatter: DateFormatter
     switch type {
-    case .auto:
+    case .auto(let locale):
       dateFormatter = DateFormatter()
+      dateFormatter.locale = locale
       self.autoUpdateFormat = true
     case .format(let formatString):
       dateFormatter = DateFormatter()
@@ -59,7 +60,7 @@ final class ChartDateValueFormatter: NSObject, AxisValueFormatter {
   }
 
   override convenience init() {
-    self.init(.auto)
+    self.init(.auto(nil))
   }
 
   private func updateAutoFormat() {

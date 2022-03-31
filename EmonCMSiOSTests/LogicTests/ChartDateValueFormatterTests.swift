@@ -18,7 +18,7 @@ class ChartDateValueFormatterTests: QuickSpec {
 
     describe("chartDateValueFormatter") {
       it("should format properly for auto type") {
-        let formatter = ChartDateValueFormatter(.auto)
+        let formatter = ChartDateValueFormatter(.auto(Locale(identifier: "en_US_POSIX")))
         formatter.timeZone = TimeZone(secondsFromGMT: 0)!
         let axis = AxisBase()
 
