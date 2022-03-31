@@ -51,7 +51,8 @@ final class FeedViewModel {
   {
     feeds
       .reduce(Empty<FeedWidgetItemResult, Never>()
-        .eraseToAnyPublisher()) { allPublishers, feed -> AnyPublisher<FeedWidgetItemResult, Never> in
+        .eraseToAnyPublisher())
+      { allPublishers, feed -> AnyPublisher<FeedWidgetItemResult, Never> in
           let fetch = fetchDataImpl(accountId: feed.accountId, feedId: feed.feedId)
             .map { item in
               FeedWidgetItemResult.success(item)

@@ -25,9 +25,10 @@ final class AppConfigViewModel {
   private let appData: AppData
   private let appCategory: AppCategory
 
-  lazy var feedListHelper: FeedListHelper = {
-    FeedListHelper(realmController: self.realmController, account: self.account, api: self.api)
-  }()
+  lazy var feedListHelper: FeedListHelper = .init(
+    realmController: self.realmController,
+    account: self.account,
+    api: self.api)
 
   init(
     realmController: RealmController,

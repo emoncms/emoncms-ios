@@ -14,9 +14,7 @@ import Former
 final class AddAccountViewController: FormViewController {
   var viewModel: AddAccountViewModel!
 
-  lazy var finished: AnyPublisher<String?, Never> = {
-    self.finishedSubject.eraseToAnyPublisher()
-  }()
+  lazy var finished: AnyPublisher<String?, Never> = self.finishedSubject.eraseToAnyPublisher()
 
   private var finishedSubject = PassthroughSubject<String?, Never>()
 

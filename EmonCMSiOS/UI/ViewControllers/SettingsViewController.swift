@@ -15,9 +15,7 @@ import Former
 final class SettingsViewController: FormViewController {
   var viewModel: SettingsViewModel!
 
-  lazy var switchAccount: AnyPublisher<Bool, Never> = {
-    self.switchAccountSubject.eraseToAnyPublisher()
-  }()
+  lazy var switchAccount: AnyPublisher<Bool, Never> = self.switchAccountSubject.eraseToAnyPublisher()
 
   private var switchAccountSubject = PassthroughSubject<Bool, Never>()
 

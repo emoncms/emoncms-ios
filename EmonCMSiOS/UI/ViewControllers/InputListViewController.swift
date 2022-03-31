@@ -142,69 +142,69 @@ final class InputListViewController: UITableViewController {
       self.viewModel.$inputs
         .map { $0.isEmpty }
         .removeDuplicates())
-            .sink { [weak self] serverNeedsUpdate, inputsEmpty in
-              guard let self = self else { return }
+      .sink { [weak self] serverNeedsUpdate, inputsEmpty in
+        guard let self = self else { return }
 
-              let showLabel = serverNeedsUpdate || inputsEmpty
+        let showLabel = serverNeedsUpdate || inputsEmpty
 
-              self.tableView.tableHeaderView?.isHidden = showLabel
+        self.tableView.tableHeaderView?.isHidden = showLabel
 
-              if showLabel {
-                let emptyLabel = self.emptyLabel ?? UILabel(frame: CGRect.zero)
-                self.emptyLabel = emptyLabel
-                emptyLabel.translatesAutoresizingMaskIntoConstraints = false
-                emptyLabel.numberOfLines = 0
-                emptyLabel.textColor = .lightGray
-                emptyLabel.textAlignment = .center
+        if showLabel {
+          let emptyLabel = self.emptyLabel ?? UILabel(frame: CGRect.zero)
+          self.emptyLabel = emptyLabel
+          emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+          emptyLabel.numberOfLines = 0
+          emptyLabel.textColor = .lightGray
+          emptyLabel.textAlignment = .center
 
-                if serverNeedsUpdate {
-                  emptyLabel
-                    .text =
-                    "Cannot fetch inputs.\n\nYou may need to upgrade Emoncms to be able to fetch inputs. Please check that your Emoncms is up-to-date and then try again."
-                } else {
-                  emptyLabel.text = "No inputs"
-                }
+          if serverNeedsUpdate {
+            emptyLabel
+              .text =
+              "Cannot fetch inputs.\n\nYou may need to upgrade Emoncms to be able to fetch inputs. Please check that your Emoncms is up-to-date and then try again."
+          } else {
+            emptyLabel.text = "No inputs"
+          }
 
-                self.view.addSubview(emptyLabel)
-                self.view.addConstraint(NSLayoutConstraint(
-                  item: emptyLabel,
-                  attribute: .centerX,
-                  relatedBy: .equal,
-                  toItem: self.view,
-                  attribute: .centerX,
-                  multiplier: 1,
-                  constant: 0))
-                self.view.addConstraint(NSLayoutConstraint(
-                  item: emptyLabel,
-                  attribute: .leading,
-                  relatedBy: .greaterThanOrEqual,
-                  toItem: self.view,
-                  attribute: .leading,
-                  multiplier: 1,
-                  constant: 8))
-                self.view.addConstraint(NSLayoutConstraint(
-                  item: emptyLabel,
-                  attribute: .trailing,
-                  relatedBy: .lessThanOrEqual,
-                  toItem: self.view,
-                  attribute: .trailing,
-                  multiplier: 1,
-                  constant: 8))
-                self.view.addConstraint(NSLayoutConstraint(
-                  item: emptyLabel,
-                  attribute: .centerY,
-                  relatedBy: .equal,
-                  toItem: self.view,
-                  attribute: .top,
-                  multiplier: 1,
-                  constant: 44.0 * 1.5))
-                self.view.layoutIfNeeded()
-              } else {
-                if let emptyLabel = self.emptyLabel {
-                  emptyLabel.removeFromSuperview()
-                }
-              }
-            }
-            .store(in: &self.cancellables)
+          self.view.addSubview(emptyLabel)
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerX,
+            relatedBy: .equal,
+            toItem: self.view,
+            attribute: .centerX,
+            multiplier: 1,
+            constant: 0))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .leading,
+            relatedBy: .greaterThanOrEqual,
+            toItem: self.view,
+            attribute: .leading,
+            multiplier: 1,
+            constant: 8))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .trailing,
+            relatedBy: .lessThanOrEqual,
+            toItem: self.view,
+            attribute: .trailing,
+            multiplier: 1,
+            constant: 8))
+          self.view.addConstraint(NSLayoutConstraint(
+            item: emptyLabel,
+            attribute: .centerY,
+            relatedBy: .equal,
+            toItem: self.view,
+            attribute: .top,
+            multiplier: 1,
+            constant: 44.0 * 1.5))
+          self.view.layoutIfNeeded()
+        } else {
+          if let emptyLabel = self.emptyLabel {
+            emptyLabel.removeFromSuperview()
+          }
+        }
+      }
+      .store(in: &self.cancellables)
   }
 }

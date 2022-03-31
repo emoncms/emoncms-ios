@@ -18,9 +18,7 @@ final class AppSelectFeedViewController: UITableViewController {
   private var dataSource: CombineTableViewDataSource<FeedListViewModel.Section>!
   private var cancellables = Set<AnyCancellable>()
 
-  lazy var finished: AnyPublisher<String?, Never> = {
-    self.finishedSubject.eraseToAnyPublisher()
-  }()
+  lazy var finished: AnyPublisher<String?, Never> = self.finishedSubject.eraseToAnyPublisher()
 
   private var finishedSubject = PassthroughSubject<String?, Never>()
 

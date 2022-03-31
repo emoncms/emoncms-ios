@@ -159,10 +159,10 @@ struct FeedListWidget: Widget {
       intent: SelectFeedsIntent.self,
       provider: FeedListProvider()) { entry in
         FeedListWidgetEntryView(entry: entry)
-    }
-    .configurationDisplayName("Feed List Widget")
-    .description("Display data from many of your EmonCMS feeds.")
-    .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+      }
+      .configurationDisplayName("Feed List Widget")
+      .description("Display data from many of your EmonCMS feeds.")
+      .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
   }
 }
 
@@ -216,7 +216,7 @@ struct FeedListWidget_Previews: PreviewProvider {
           FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked)),
           FeedWidgetItemResult.failure(.fetchFailed(.keychainLocked))
         ]))
-      .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
+        .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
 
     FeedListWidgetEntryView(
       entry: FeedListEntry(
@@ -226,7 +226,7 @@ struct FeedListWidget_Previews: PreviewProvider {
           FeedWidgetItemResult.failure(.noFeedInfo),
           FeedWidgetItemResult.failure(.unknown)
         ]))
-      .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
+        .previewContext(WidgetPreviewContext(family: WidgetFamily.systemMedium))
   }
 }
 

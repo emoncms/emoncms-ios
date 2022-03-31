@@ -109,9 +109,9 @@ struct FeedChartView_Previews: PreviewProvider {
       DataPoint<Double>(time: Date(timeIntervalSince1970: 4), value: -1020),
       DataPoint<Double>(time: Date(timeIntervalSince1970: 5), value: 1234)
     ])
-      .color(Color.blue)
-      .lineWidth(2)
-      .padding(12)
-      .previewContext(WidgetPreviewContext(family: .systemSmall))
+    .color(Color.blue)
+    .lineWidth(2)
+    .padding(12)
+    .previewContext(WidgetPreviewContext(family: .systemSmall))
   }
 }

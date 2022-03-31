@@ -102,10 +102,10 @@ struct SingleFeedWidget: Widget {
       intent: SelectFeedIntent.self,
       provider: SingleFeedProvider()) { entry in
         SingleFeedWidgetEntryView(entry: entry)
-    }
-    .configurationDisplayName("Feed Widget")
-    .description("Display data from a single EmonCMS feed.")
-    .supportedFamilies([.systemSmall])
+      }
+      .configurationDisplayName("Feed Widget")
+      .description("Display data from a single EmonCMS feed.")
+      .supportedFamilies([.systemSmall])
   }
 }
 

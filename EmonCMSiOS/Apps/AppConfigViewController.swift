@@ -14,9 +14,7 @@ import Former
 final class AppConfigViewController: FormViewController {
   var viewModel: AppConfigViewModel!
 
-  lazy var finished: AnyPublisher<AppUUIDAndCategory?, Never> = {
-    self.finishedSubject.eraseToAnyPublisher()
-  }()
+  lazy var finished: AnyPublisher<AppUUIDAndCategory?, Never> = self.finishedSubject.eraseToAnyPublisher()
 
   private var finishedSubject = PassthroughSubject<AppUUIDAndCategory?, Never>()
 

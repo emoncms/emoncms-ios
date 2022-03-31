@@ -84,7 +84,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
       }
 
       it("should delete accounts properly") {
-        var uuid: String = ""
+        var uuid = ""
         try! realm.write {
           let account = Account()
           account.name = "Account"
@@ -114,7 +114,7 @@ class AccountListViewModelTests: EmonCMSTestCase {
       }
 
       it("should delete today widget feeds for deleted accounts") {
-        var uuid: String = ""
+        var uuid = ""
         try! realm.write {
           let account = Account()
           account.name = "Account"
