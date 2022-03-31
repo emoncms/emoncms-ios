@@ -23,6 +23,8 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
 
   private var cancellables = Set<AnyCancellable>()
 
+  static let barChartDaysToDisplay = 15 // Needs to be 1 more than we actually want to ensure we get the right data
+
   var accessibilityIdentifier: String {
     return AccessibilityIdentifiers.Apps.MyElectric
   }
@@ -48,8 +50,6 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
   var bannerBarState: AnyPublisher<AppBannerBarState, Never> { return self.bannerBarStateSubject.eraseToAnyPublisher() }
   private let bannerBarStateSubject = CurrentValueSubject<AppBannerBarState, Never>(.loading)
   let isRefreshing: AnyPublisher<Bool, Never>
-
-  private var startOfDayKwh: DataPoint<Double>?
 
   init(realmController: RealmController, account: AccountController, api: EmonCMSAPI, appDataId: String) {
     self.realmController = realmController
@@ -157,16 +157,19 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
     }
 
     return Publishers.Zip3(
-      self.fetchPowerNowAndUsageToday(useFeedId: useFeedId, kwhFeedId: kwhFeedId),
+      self.fetchPowerNowAndKwhNow(useFeedId: useFeedId, kwhFeedId: kwhFeedId),
       self.fetchLineChartHistory(dateRange: dateRange, useFeedId: useFeedId),
       self.fetchBarChartHistory(kwhFeedId: kwhFeedId))
       .map {
-        powerNowAndUsageToday, lineChartData, barChartData in
+        powerNowAndKwhNow, lineChartData, barChartData in
         Data(updateTime: Date(),
-             powerNow: powerNowAndUsageToday.0,
-             usageToday: powerNowAndUsageToday.1,
+             powerNow: powerNowAndKwhNow.0,
+             usageToday: powerNowAndKwhNow.1 - (barChartData.last?.value ?? 0),
              lineChartData: lineChartData,
-             barChartData: barChartData)
+             barChartData: ChartHelpers.processKWHData(
+               barChartData,
+               padTo: Self.barChartDaysToDisplay,
+               interval: 86400))
       }
       .mapError { error in
         AppLog.info("Update failed: \(error)")
@@ -175,43 +178,13 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
       .eraseToAnyPublisher()
   }
 
-  private func fetchPowerNowAndUsageToday(useFeedId: String,
-                                          kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError>
+  private func fetchPowerNowAndKwhNow(useFeedId: String,
+                                      kwhFeedId: String) -> AnyPublisher<(Double, Double), EmonCMSAPI.APIError>
   {
-    let calendar = Calendar.current
-    let dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
-    let midnightToday = calendar.date(from: dateComponents)!
-
-    let startOfDayKwhSignal: AnyPublisher<DataPoint<Double>, EmonCMSAPI.APIError>
-    if let startOfDayKwh = self.startOfDayKwh, startOfDayKwh.time == midnightToday {
-      startOfDayKwhSignal = Just(startOfDayKwh).setFailureType(to: EmonCMSAPI.APIError.self).eraseToAnyPublisher()
-    } else {
-      let endTime = midnightToday + 43200
-      let startTime = endTime - 86400
-
-      startOfDayKwhSignal = self.api
-        .feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
-        .map { dataPoints -> DataPoint<Double> in
-          guard dataPoints.count > 0 else {
-            // Assume that the data point doesn't exist, so it's a new feed, so zero
-            return DataPoint(time: midnightToday, value: 0)
-          }
-          return dataPoints[0]
-        }
-        .handleEvents(receiveOutput: { [weak self] in
-          guard let self = self else { return }
-          self.startOfDayKwh = $0
-        })
-        .eraseToAnyPublisher()
-    }
-
-    let feedValuesSignal = self.api.feedValue(self.account.credentials, ids: [useFeedId, kwhFeedId])
-
-    return Publishers.Zip(startOfDayKwhSignal, feedValuesSignal)
-      .map { startOfDayUsage, feedValues in
-        guard let use = feedValues[useFeedId], let useKwh = feedValues[kwhFeedId] else { return (0.0, 0.0) }
-
-        return (use, useKwh - startOfDayUsage.value)
+    return self.api.feedValue(self.account.credentials, ids: [useFeedId, kwhFeedId])
+      .map { feedValues in
+        guard let use = feedValues[useFeedId], let kwh = feedValues[kwhFeedId] else { return (0.0, 0.0) }
+        return (use, kwh)
       }
       .eraseToAnyPublisher()
   }
@@ -229,14 +202,10 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
   }
 
   private func fetchBarChartHistory(kwhFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError> {
-    let daysToDisplay = 15 // Needs to be 1 more than we actually want to ensure we get the right data
     let endTime = Date()
-    let startTime = endTime - Double(daysToDisplay * 86400)
+    let startTime = endTime - Double(Self.barChartDaysToDisplay * 86400)
 
     return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
-      .map { dataPoints in
-        ChartHelpers.processKWHData(dataPoints, padTo: daysToDisplay, interval: 86400)
-      }
       .eraseToAnyPublisher()
   }
 }
