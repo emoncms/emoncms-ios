@@ -123,6 +123,9 @@ extension MyElectricAppViewController {
 
       ChartHelpers.updateBarChart(withData: data, forSet: 0, withPoints: dataPoints) {
         $0.setColor(EmonCMSColors.Chart.Blue)
+        if let formatter = $0.valueFormatter as? DefaultValueFormatter {
+          formatter.decimals = 0
+        }
       }
     } else {
       self.barChart.data = nil

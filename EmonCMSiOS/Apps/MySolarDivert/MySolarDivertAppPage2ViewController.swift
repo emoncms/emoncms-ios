@@ -64,6 +64,9 @@ extension MySolarDivertAppPage2ViewController {
 
       ChartHelpers.updateBarChart(withData: useData, forSet: 0, withPoints: dataPoints.use) {
         $0.setColor(EmonCMSColors.Chart.Blue)
+        if let formatter = $0.valueFormatter as? DefaultValueFormatter {
+          formatter.decimals = 0
+        }
       }
 
       let solarData = self.solarBarChart.barData ?? BarChartData()
@@ -71,6 +74,9 @@ extension MySolarDivertAppPage2ViewController {
 
       ChartHelpers.updateBarChart(withData: solarData, forSet: 0, withPoints: dataPoints.solar) {
         $0.setColor(EmonCMSColors.Chart.Yellow)
+        if let formatter = $0.valueFormatter as? DefaultValueFormatter {
+          formatter.decimals = 0
+        }
       }
 
       let divertData = self.divertBarChart.barData ?? BarChartData()
@@ -78,6 +84,9 @@ extension MySolarDivertAppPage2ViewController {
 
       ChartHelpers.updateBarChart(withData: divertData, forSet: 0, withPoints: dataPoints.divert) {
         $0.setColor(EmonCMSColors.Chart.Orange)
+        if let formatter = $0.valueFormatter as? DefaultValueFormatter {
+          formatter.decimals = 0
+        }
       }
     } else {
       self.useBarChart.data = nil
