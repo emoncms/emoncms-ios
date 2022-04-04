@@ -9,6 +9,7 @@
 import Foundation
 
 import Charts
+import CoreMedia
 
 final class ChartHelpers {
   static func setupDefaultLineChart(_ lineChart: LineChartView) {
@@ -173,27 +174,34 @@ final class ChartHelpers {
   {
     guard dataPoints.count > 0 else { return [] }
 
-    var newDataPoints: [DataPoint<Double>] = []
-    var lastValue: Double = dataPoints.first?.value ?? 0
+    var deltaDataPoints: [DataPoint<Double>] = []
 
-    let extraPadding = padTo - dataPoints.count
-    if extraPadding > 0 {
-      let thisDataPoint = dataPoints[0]
-      newDataPoints.append(thisDataPoint)
-      var time = thisDataPoint.time
-      for _ in 1 ..< extraPadding {
-        time = time - Double(interval)
-        newDataPoints.append(DataPoint<Double>(time: time, value: 0))
+    // Calculate how many extra data points we need to get to the required padding.
+    let extraPadding = padTo - (dataPoints.count - 1)
+    if extraPadding > 0, let firstDataPoint = dataPoints.first {
+      var time = firstDataPoint.time - (interval * Double(extraPadding - 1))
+
+      // More than 1 padding points, these will all be zeros.
+      if extraPadding > 1 {
+        for _ in 2 ... extraPadding {
+          deltaDataPoints.append(DataPoint<Double>(time: time, value: 0))
+          time += interval
+        }
       }
+
+      // Last point to add has delta value of the value of the first input data point.
+      deltaDataPoints.append(DataPoint<Double>(time: time, value: firstDataPoint.value))
     }
 
+    // Now add all the deltas from the input
+    var lastValue: Double = dataPoints.first?.value ?? 0
     for i in 1 ..< dataPoints.count {
       let thisDataPoint = dataPoints[i]
       let differenceValue = thisDataPoint.value - lastValue
       lastValue = thisDataPoint.value
-      newDataPoints.append(DataPoint<Double>(time: thisDataPoint.time, value: differenceValue))
+      deltaDataPoints.append(DataPoint<Double>(time: thisDataPoint.time, value: differenceValue))
     }
 
-    return newDataPoints
+    return deltaDataPoints
   }
 }

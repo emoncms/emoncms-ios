@@ -23,7 +23,7 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
 
   private var cancellables = Set<AnyCancellable>()
 
-  static let barChartDaysToDisplay = 15 // Needs to be 1 more than we actually want to ensure we get the right data
+  static let barChartDaysToDisplay = 14
 
   var accessibilityIdentifier: String {
     return AccessibilityIdentifiers.Apps.MyElectric
@@ -203,7 +203,9 @@ final class MyElectricAppViewModel: AppViewModel, AppPageViewModel {
 
   private func fetchBarChartHistory(kwhFeedId: String) -> AnyPublisher<[DataPoint<Double>], EmonCMSAPI.APIError> {
     let endTime = Date()
-    let startTime = endTime - Double(Self.barChartDaysToDisplay * 86400)
+    let startTime = endTime -
+      Double((Self.barChartDaysToDisplay + 1) *
+        86400) // Needs to be 1 more than we actually want to ensure we get the right data
 
     return self.api.feedDataDaily(self.account.credentials, id: kwhFeedId, at: startTime, until: endTime)
       .eraseToAnyPublisher()
