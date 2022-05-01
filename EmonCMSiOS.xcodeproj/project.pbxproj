@@ -26,6 +26,8 @@
 		C911A4CF2547782D0010BCE9 /* account_v2.realm in Resources */ = {isa = PBXBuildFile; fileRef = C911A4CE2547782D0010BCE9 /* account_v2.realm */; };
 		C911A4D9254778350010BCE9 /* main_v2.realm in Resources */ = {isa = PBXBuildFile; fileRef = C911A4D8254778350010BCE9 /* main_v2.realm */; };
 		C911F46B251BEE8A003BB728 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C911F46A251BEE8A003BB728 /* SnapshotTesting */; };
+		C915F926281B258000282966 /* account_v3.realm in Resources */ = {isa = PBXBuildFile; fileRef = C915F924281B257800282966 /* account_v3.realm */; };
+		C915F927281B258200282966 /* main_v3.realm in Resources */ = {isa = PBXBuildFile; fileRef = C915F925281B257C00282966 /* main_v3.realm */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
 		C91B74CD2414EA1B00C4F9C5 /* Former in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CC2414EA1B00C4F9C5 /* Former */; };
 		C91B74D02414EE6000C4F9C5 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = C91B74CF2414EE6000C4F9C5 /* KeychainAccess */; };
@@ -373,6 +375,8 @@
 		C906B4561D8B045F007FE19A /* EmonCMSColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSColors.swift; sourceTree = "<group>"; };
 		C911A4CE2547782D0010BCE9 /* account_v2.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v2.realm; sourceTree = "<group>"; };
 		C911A4D8254778350010BCE9 /* main_v2.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v2.realm; sourceTree = "<group>"; };
+		C915F924281B257800282966 /* account_v3.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v3.realm; sourceTree = "<group>"; };
+		C915F925281B257C00282966 /* main_v3.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v3.realm; sourceTree = "<group>"; };
 		C91747A721F37A9A0054875D /* FeedListHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelperTests.swift; sourceTree = "<group>"; };
 		C91747A921F37BA50054875D /* FeedUpdateHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedUpdateHelperTests.swift; sourceTree = "<group>"; };
 		C91747AB21F3B9620054875D /* FeedChartViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedChartViewModelTests.swift; sourceTree = "<group>"; };
@@ -925,8 +929,10 @@
 				C9E7A6F721F50873008BD497 /* account_v0.realm */,
 				C9F14AB9220F109A0005869F /* account_v1.realm */,
 				C911A4CE2547782D0010BCE9 /* account_v2.realm */,
+				C915F924281B257800282966 /* account_v3.realm */,
 				C9F14AB8220F109A0005869F /* main_v1.realm */,
 				C911A4D8254778350010BCE9 /* main_v2.realm */,
+				C915F925281B257C00282966 /* main_v3.realm */,
 			);
 			path = Realms;
 			sourceTree = "<group>";
@@ -1315,6 +1321,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C915F927281B258200282966 /* main_v3.realm in Resources */,
+				C915F926281B258000282966 /* account_v3.realm in Resources */,
 				C911A4D9254778350010BCE9 /* main_v2.realm in Resources */,
 				C9F14ABB220F109A0005869F /* account_v1.realm in Resources */,
 				C9E7A6F821F50873008BD497 /* account_v0.realm in Resources */,

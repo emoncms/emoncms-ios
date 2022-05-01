@@ -14,6 +14,7 @@ final class Account: Object {
   @objc dynamic var uuid: String = UUID().uuidString
   @objc dynamic var name: String = ""
   @objc dynamic var url: String = ""
+  @objc dynamic var serverVersion: String?
 
   override class func primaryKey() -> String? {
     return "uuid"

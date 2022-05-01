@@ -12,7 +12,7 @@ import Realm
 import RealmSwift
 
 final class RealmController {
-  static let schemaVersion: UInt64 = 2
+  static let schemaVersion: UInt64 = 3
 
   let dataDirectory: URL
 
@@ -30,6 +30,9 @@ final class RealmController {
     config.migrationBlock = { migration, oldSchemaVersion in
       if oldSchemaVersion <= 1 {
         self.main_migrate_1_2(migration)
+      }
+      if oldSchemaVersion <= 2 {
+        self.main_migrate_2_3(migration)
       }
     }
 
@@ -56,6 +59,9 @@ final class RealmController {
       if oldSchemaVersion <= 1 {
         self.account_migrate_1_2(migration)
       }
+      if oldSchemaVersion <= 2 {
+        self.account_migrate_2_3(migration)
+      }
     }
 
     return config
@@ -81,6 +87,8 @@ final class MyElectricAppData: Object {
 
 extension RealmController {
   private func main_migrate_1_2(_ migration: Migration) {}
+
+  private func main_migrate_2_3(_ migration: Migration) {}
 }
 
 extension RealmController {
@@ -109,4 +117,6 @@ extension RealmController {
   }
 
   private func account_migrate_1_2(_ migration: Migration) {}
+
+  private func account_migrate_2_3(_ migration: Migration) {}
 }

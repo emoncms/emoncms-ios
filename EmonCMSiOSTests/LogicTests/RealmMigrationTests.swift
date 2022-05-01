@@ -92,6 +92,17 @@ class RealmMigrationTests: QuickSpec {
         expect(realm.isEmpty).to(beFalse())
       }
 
+      it("main should migrate from v2") {
+        do {
+          try self.copyMainRealm(fromFilename: "main_v2", realmController: realmController)
+        } catch {
+          fail("Failed to copy Realm file!")
+        }
+
+        let realm = realmController.createMainRealm()
+        expect(realm.isEmpty).to(beFalse())
+      }
+
       it("account should migrate from v0") {
         do {
           try self.copyAccountRealm(fromFilename: "account_v0", forAccountId: uuid, realmController: realmController)
@@ -117,6 +128,17 @@ class RealmMigrationTests: QuickSpec {
       it("account should migrate from v1") {
         do {
           try self.copyAccountRealm(fromFilename: "account_v1", forAccountId: uuid, realmController: realmController)
+        } catch {
+          fail("Failed to copy Realm file!")
+        }
+
+        let realm = realmController.createAccountRealm(forAccountId: uuid)
+        expect(realm.isEmpty).to(beFalse())
+      }
+
+      it("account should migrate from v2") {
+        do {
+          try self.copyAccountRealm(fromFilename: "account_v2", forAccountId: uuid, realmController: realmController)
         } catch {
           fail("Failed to copy Realm file!")
         }
