@@ -20,12 +20,29 @@ final class EmonCMSAPI {
     case invalidResponse
   }
 
+  enum RequestContentType {
+    case plain
+    case json
+  }
+
   init(requestProvider: HTTPRequestProvider) {
     self.requestProvider = requestProvider
   }
 
-  private class func buildURL(_ account: AccountCredentials, path: String, queryItems: [String: String] = [:]) -> URL? {
-    let fullUrl = account.url + "/" + path + ".json"
+  private class func buildURL(
+    _ account: AccountCredentials,
+    path: String,
+    contentType: RequestContentType,
+    queryItems: [String: String] = [:]) -> URL?
+  {
+    let suffix: String
+    switch contentType {
+    case .plain:
+      suffix = ""
+    case .json:
+      suffix = ".json"
+    }
+    let fullUrl = account.url + "/" + path + suffix
     guard var urlBuilder = URLComponents(string: fullUrl) else {
       return nil
     }
@@ -71,10 +88,10 @@ final class EmonCMSAPI {
       .eraseToAnyPublisher()
   }
 
-  func request(_ account: AccountCredentials, path: String,
+  func request(_ account: AccountCredentials, path: String, contentType: RequestContentType = .json,
                queryItems: [String: String] = [:]) -> AnyPublisher<Data, APIError>
   {
-    guard let url = EmonCMSAPI.buildURL(account, path: path, queryItems: queryItems) else {
+    guard let url = EmonCMSAPI.buildURL(account, path: path, contentType: contentType, queryItems: queryItems) else {
       return Fail(error: APIError.failedToCreateURL).eraseToAnyPublisher()
     }
 
