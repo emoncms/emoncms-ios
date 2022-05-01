@@ -26,6 +26,7 @@
 		C911A4CF2547782D0010BCE9 /* account_v2.realm in Resources */ = {isa = PBXBuildFile; fileRef = C911A4CE2547782D0010BCE9 /* account_v2.realm */; };
 		C911A4D9254778350010BCE9 /* main_v2.realm in Resources */ = {isa = PBXBuildFile; fileRef = C911A4D8254778350010BCE9 /* main_v2.realm */; };
 		C911F46B251BEE8A003BB728 /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = C911F46A251BEE8A003BB728 /* SnapshotTesting */; };
+		C915F921281AD4DC00282966 /* AccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C915F920281AD4DC00282966 /* AccountViewModel.swift */; };
 		C915F926281B258000282966 /* account_v3.realm in Resources */ = {isa = PBXBuildFile; fileRef = C915F924281B257800282966 /* account_v3.realm */; };
 		C915F927281B258200282966 /* main_v3.realm in Resources */ = {isa = PBXBuildFile; fileRef = C915F925281B257C00282966 /* main_v3.realm */; };
 		C918C9961DDC587F00A0E2AD /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C918C9951DDC587F00A0E2AD /* Settings.bundle */; };
@@ -267,6 +268,7 @@
 		C9F14ABB220F109A0005869F /* account_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB9220F109A0005869F /* account_v1.realm */; };
 		C9F8C82C281C2D8F00541C43 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8C82B281C2D8F00541C43 /* SemanticVersion.swift */; };
 		C9F8C82F281C2DCC00541C43 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8C82E281C2DCC00541C43 /* SemanticVersionTests.swift */; };
+		C9F8C831281C79DD00541C43 /* AccountViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8C830281C79DD00541C43 /* AccountViewModelTests.swift */; };
 		C9FDBE2C25797D720015B2C1 /* UIControlCombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */; };
 		C9FDBE32257980230015B2C1 /* CombineTableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */; };
 /* End PBXBuildFile section */
@@ -375,6 +377,7 @@
 		C906B4561D8B045F007FE19A /* EmonCMSColors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmonCMSColors.swift; sourceTree = "<group>"; };
 		C911A4CE2547782D0010BCE9 /* account_v2.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v2.realm; sourceTree = "<group>"; };
 		C911A4D8254778350010BCE9 /* main_v2.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v2.realm; sourceTree = "<group>"; };
+		C915F920281AD4DC00282966 /* AccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModel.swift; sourceTree = "<group>"; };
 		C915F924281B257800282966 /* account_v3.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v3.realm; sourceTree = "<group>"; };
 		C915F925281B257C00282966 /* main_v3.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v3.realm; sourceTree = "<group>"; };
 		C91747A721F37A9A0054875D /* FeedListHelperTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedListHelperTests.swift; sourceTree = "<group>"; };
@@ -525,6 +528,7 @@
 		C9F14AB9220F109A0005869F /* account_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v1.realm; sourceTree = "<group>"; };
 		C9F8C82B281C2D8F00541C43 /* SemanticVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersion.swift; sourceTree = "<group>"; };
 		C9F8C82E281C2DCC00541C43 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
+		C9F8C830281C79DD00541C43 /* AccountViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewModelTests.swift; sourceTree = "<group>"; };
 		C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlCombineTests.swift; sourceTree = "<group>"; };
 		C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTableViewDataSourceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -839,6 +843,7 @@
 				C98BD5BC1DE63768000B6344 /* InputUpdateHelper.swift */,
 				C9E7A73121FA7354008BD497 /* DashboardUpdateHelper.swift */,
 				C945F8F021FE438C00B99D35 /* TodayWidgetFeedsListViewModel.swift */,
+				C915F920281AD4DC00282966 /* AccountViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -971,6 +976,7 @@
 		C9E7A71421F8A560008BD497 /* ViewModelTests */ = {
 			isa = PBXGroup;
 			children = (
+				C9F8C830281C79DD00541C43 /* AccountViewModelTests.swift */,
 				1EA783C521EFD8E3002D6A3A /* AccountListViewModelTests.swift */,
 				C9AE4CB91DB6CD4800F3A629 /* AddAccountViewModelTests.swift */,
 				C91747AD21F3C42B0054875D /* AppListViewModelTests.swift */,
@@ -1440,6 +1446,7 @@
 				C96DA36A230318C9005B1F98 /* FeedListViewModelTests.swift in Sources */,
 				C96DA36D23031A39005B1F98 /* InputListViewModelTests.swift in Sources */,
 				C96DA36B230319C2005B1F98 /* FeedUpdateHelperTests.swift in Sources */,
+				C9F8C831281C79DD00541C43 /* AccountViewModelTests.swift in Sources */,
 				C9E7A72021F92363008BD497 /* DataPointTests.swift in Sources */,
 				C96DA3662302E8D7005B1F98 /* AppListViewModelTests.swift in Sources */,
 				C96DA3642302A458005B1F98 /* AccountListViewModelTests.swift in Sources */,
@@ -1527,6 +1534,7 @@
 				C9BB83541D86AA3E0058C059 /* Feed.swift in Sources */,
 				C9E7A73221FA7354008BD497 /* DashboardUpdateHelper.swift in Sources */,
 				C940C8CB254F587A00B1A43D /* DataController.swift in Sources */,
+				C915F921281AD4DC00282966 /* AccountViewModel.swift in Sources */,
 				C99DF40D1D90197700BBF80D /* FeedChartViewModel.swift in Sources */,
 				C9E7A72821FA6B71008BD497 /* Input.swift in Sources */,
 				C9E7A72921FA6B71008BD497 /* InputListViewModel.swift in Sources */,
