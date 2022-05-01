@@ -62,7 +62,7 @@ final class AppListViewController: UITableViewController {
     self.dataSource
       .modelDeleted
       .flatMap { [weak self] item -> AnyPublisher<Void, Never> in
-        guard let self = self else { return Empty<Void, Never>().eraseToAnyPublisher() }
+        guard let self = self else { return Empty().eraseToAnyPublisher() }
         return self.viewModel.deleteApp(withId: item.appId).replaceError(with: ()).eraseToAnyPublisher()
       }
       .sink { _ in }
