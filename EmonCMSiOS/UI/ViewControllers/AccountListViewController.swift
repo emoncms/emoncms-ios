@@ -188,6 +188,7 @@ final class AccountListViewController: UITableViewController {
     completion: @escaping (_ viewControllers: AccountViewControllers) -> Void = { _ in })
   {
     guard let viewModels = self.viewModel.mainViewModels(forAccountWithId: accountId) else {
+      // TODO: Show error alert?
       return
     }
 
