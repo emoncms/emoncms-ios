@@ -118,7 +118,8 @@ final class AccountListViewModel {
   }
 
   func mainViewModels(forAccountWithId id: String) ->
-    (appList: AppListViewModel, inputList: InputListViewModel, feedList: FeedListViewModel,
+    (accountViewModel: AccountViewModel, appList: AppListViewModel, inputList: InputListViewModel,
+     feedList: FeedListViewModel,
      dashboardList: DashboardListViewModel, settings: SettingsViewModel)?
   {
     guard
@@ -126,6 +127,12 @@ final class AccountListViewModel {
     else {
       return nil
     }
+
+    let accountViewModel = AccountViewModel(
+      realmController: self.realmController,
+      account: accountController,
+      api: self.api)
+
     let appListViewModel = AppListViewModel(realmController: self.realmController, account: accountController,
                                             api: self.api)
     let inputListViewModel = InputListViewModel(realmController: self.realmController, account: accountController,
@@ -136,7 +143,14 @@ final class AccountListViewModel {
                                                         account: accountController, api: self.api)
     let settingsViewModel = SettingsViewModel(realmController: self.realmController, account: accountController,
                                               api: self.api)
-    return (appListViewModel, inputListViewModel, feedListViewModel, dashboardListViewModel, settingsViewModel)
+
+    return (
+      accountViewModel,
+      appListViewModel,
+      inputListViewModel,
+      feedListViewModel,
+      dashboardListViewModel,
+      settingsViewModel)
   }
 
   func addAccountViewModel(accountId: String? = nil) -> AddAccountViewModel {
