@@ -35,6 +35,10 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     self.createFeeds()
   }
 
+  private func version(query: [String: String]) -> Any {
+    return "11.0.5"
+  }
+
   struct Feed {
     let id: String
     let name: String
@@ -240,34 +244,56 @@ final class FakeHTTPProvider: HTTPRequestProvider {
     self.createFeedData(untilTime: Date())
 
     let routeFunc: (_ query: [String: String]) throws -> Any
+    let contentType: EmonCMSAPI.RequestContentType
     switch path {
+    case "/version":
+      routeFunc = self.version
+      contentType = .plain
     case "/feed/list.json":
       routeFunc = self.feedList
+      contentType = .json
     case "/feed/aget.json":
       routeFunc = self.feedAGet
+      contentType = .json
     case "/feed/get.json":
       routeFunc = self.feedGet
+      contentType = .json
     case "/feed/data.json":
       routeFunc = self.feedData
+      contentType = .json
     case "/feed/value.json":
       routeFunc = self.feedValue
+      contentType = .json
     case "/feed/fetch.json":
       routeFunc = self.feedFetch
+      contentType = .json
     case "/input/list.json":
       routeFunc = self.inputList
+      contentType = .json
     case "/dashboard/list.json":
       routeFunc = self.dashboardList
+      contentType = .json
     case "/user/auth.json":
       routeFunc = self.userAuth
+      contentType = .json
     default:
       routeFunc = self.error
+      contentType = .plain
     }
 
-    if
-      let responseObject = try? routeFunc(queryValues),
-      let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: [])
-    {
-      return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
+    if let responseObject = try? routeFunc(queryValues) {
+      switch contentType {
+      case .plain:
+        if let responseObjectString = responseObject as? String,
+           let responseData = responseObjectString.data(using: .utf8)
+        {
+          return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
+        }
+      case .json:
+        if let responseData = try? JSONSerialization.data(withJSONObject: responseObject, options: []) {
+          return Just(responseData).setFailureType(to: HTTPRequestProviderError.self).eraseToAnyPublisher()
+        }
+      }
     }
 
     return Fail(error: HTTPRequestProviderError.unknown).eraseToAnyPublisher()
