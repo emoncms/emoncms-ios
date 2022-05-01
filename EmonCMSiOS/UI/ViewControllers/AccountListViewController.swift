@@ -235,6 +235,25 @@ final class AccountListViewController: UITableViewController {
       }
       .store(in: &self.cancellables)
 
+    viewModels.accountViewModel.checkEmoncmsServerVersion()
+      .sink { completion in
+        switch completion {
+        case .failure(let error):
+          switch error {
+          case .versionNotSupported(let version):
+            let alert = UIAlertController(
+              title: "Emoncms Server Unsupported",
+              message: "Your Emoncms server is out-of-date (\(version.string)).\n\nThe minimum supported version is \(AccountViewModel.minimumSupportedServerVersion.string).\n\nYou may encounter issues using this app. Please upgrade your server.",
+              preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel))
+            rootViewController.present(alert, animated: true)
+          }
+        case .finished:
+          break
+        }
+      } receiveValue: { _ in }
+      .store(in: &self.cancellables)
+
     let viewControllers = AccountViewControllers(
       tabBar: rootViewController,
       appList: appListViewController,
