@@ -263,6 +263,8 @@
 		C9EB61FB2519320500440F6F /* RealmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EE02C1221ED116900C6AE9A /* RealmController.swift */; };
 		C9F14ABA220F109A0005869F /* main_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB8220F109A0005869F /* main_v1.realm */; };
 		C9F14ABB220F109A0005869F /* account_v1.realm in Resources */ = {isa = PBXBuildFile; fileRef = C9F14AB9220F109A0005869F /* account_v1.realm */; };
+		C9F8C82C281C2D8F00541C43 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8C82B281C2D8F00541C43 /* SemanticVersion.swift */; };
+		C9F8C82F281C2DCC00541C43 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9F8C82E281C2DCC00541C43 /* SemanticVersionTests.swift */; };
 		C9FDBE2C25797D720015B2C1 /* UIControlCombineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */; };
 		C9FDBE32257980230015B2C1 /* CombineTableViewDataSourceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */; };
 /* End PBXBuildFile section */
@@ -517,6 +519,8 @@
 		C9EB61D82517F20600440F6F /* SingleFeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleFeedView.swift; sourceTree = "<group>"; };
 		C9F14AB8220F109A0005869F /* main_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = main_v1.realm; sourceTree = "<group>"; };
 		C9F14AB9220F109A0005869F /* account_v1.realm */ = {isa = PBXFileReference; lastKnownFileType = file; path = account_v1.realm; sourceTree = "<group>"; };
+		C9F8C82B281C2D8F00541C43 /* SemanticVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersion.swift; sourceTree = "<group>"; };
+		C9F8C82E281C2DCC00541C43 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
 		C9FDBE2B25797D720015B2C1 /* UIControlCombineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIControlCombineTests.swift; sourceTree = "<group>"; };
 		C9FDBE31257980230015B2C1 /* CombineTableViewDataSourceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineTableViewDataSourceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -810,6 +814,7 @@
 				C9E7A70B21F86489008BD497 /* Rx */,
 				C96233FE1DB4B06B004C17E8 /* Double+Emoncms.swift */,
 				1EA783C121EF78F7002D6A3A /* ChartHelpers.swift */,
+				C9F8C82B281C2D8F00541C43 /* SemanticVersion.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -993,6 +998,7 @@
 				C9E7A71921F8A90E008BD497 /* LogControllerTests.swift */,
 				C9E7A71B21F8C810008BD497 /* NSURLSessionHTTPRequestProviderTests.swift */,
 				C9E7A6F921F50892008BD497 /* RealmMigrationTests.swift */,
+				C9F8C82E281C2DCC00541C43 /* SemanticVersionTests.swift */,
 			);
 			path = LogicTests;
 			sourceTree = "<group>";
@@ -1438,6 +1444,7 @@
 				C9E7A71E21F920A7008BD497 /* DateRangeTests.swift in Sources */,
 				C96DA36323029D50005B1F98 /* EmonCMSTestCase.swift in Sources */,
 				C9E7A70F21F864E1008BD497 /* ChartDateValueFormatterTests.swift in Sources */,
+				C9F8C82F281C2DCC00541C43 /* SemanticVersionTests.swift in Sources */,
 				C93830C527FB1A1300E2B91F /* ChartHelpersTests.swift in Sources */,
 				C9E7A71821F8A5EC008BD497 /* AppBoxViewsTests.swift in Sources */,
 				C9FDBE32257980230015B2C1 /* CombineTableViewDataSourceTests.swift in Sources */,
@@ -1491,6 +1498,7 @@
 				C97284F11DAB97800010C7B7 /* AppConfigViewController.swift in Sources */,
 				C9BB83691D87F5630058C059 /* KeychainController.swift in Sources */,
 				C906B4571D8B045F007FE19A /* EmonCMSColors.swift in Sources */,
+				C9F8C82C281C2D8F00541C43 /* SemanticVersion.swift in Sources */,
 				C9E7A70821F662AA008BD497 /* EmonCMSAPI+Feed.swift in Sources */,
 				C9C240C21D91730100BC302C /* AppListViewController.swift in Sources */,
 				C96A1C912304987200690E4D /* SceneDelegate.swift in Sources */,
