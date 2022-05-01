@@ -54,6 +54,23 @@ class EmonCMSAPITests: EmonCMSTestCase {
       accountCredentials = AccountCredentials(url: "http://test", apiKey: "ilikecats")
     }
 
+    describe("version") {
+      it("should return version") {
+        let subscriber = scheduler.createTestableSubscriber(String.self, EmonCMSAPI.APIError.self)
+
+        let result = api.version(accountCredentials)
+
+        call(api: result, subscriber: subscriber) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(3))
+          expect(results[1].1.value).notTo(beNil())
+          expect(results[1].1.value!).to(equal("11.0.5"))
+        }
+
+        scheduler.resume()
+      }
+    }
+
     describe("feedList") {
       it("should return feeds") {
         let subscriber = scheduler.createTestableSubscriber([Feed].self, EmonCMSAPI.APIError.self)
