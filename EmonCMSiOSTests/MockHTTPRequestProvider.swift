@@ -43,6 +43,8 @@ final class MockHTTPRequestProvider: HTTPRequestProvider {
 
     var responseString: String?
     switch path {
+    case "/version":
+      responseString = "11.0.5"
     case "/feed/list.json":
       responseString =
         "[{\"id\":\"1\",\"userid\":\"1\",\"name\":\"use\",\"datatype\":\"1\",\"tag\":\"Node 5\",\"public\":\"0\",\"size\":\"154624\",\"engine\":\"5\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"1186\"},{\"id\":\"2\",\"userid\":\"1\",\"name\":\"use_kwh\",\"datatype\":\"1\",\"tag\":\"Node 5\",\"public\":\"0\",\"size\":\"154624\",\"engine\":\"5\",\"processList\":\"\",\"time\":\"1473934060\",\"value\":\"189.12940747385\"}]"
