@@ -11,13 +11,14 @@ import Foundation
 
 extension EmonCMSAPI {
   func version(_ account: AccountCredentials) -> AnyPublisher<String, APIError> {
-    return self.request(account, path: "version").tryMap { resultData -> String in
-      String(data: resultData, encoding: .utf8) ?? "0"
-    }
-    .mapError { error -> APIError in
-      if let error = error as? APIError { return error }
-      return APIError.requestFailed
-    }
-    .eraseToAnyPublisher()
+    return self.request(account, path: "version", contentType: .plain)
+      .tryMap { resultData -> String in
+        String(data: resultData, encoding: .utf8) ?? "0"
+      }
+      .mapError { error -> APIError in
+        if let error = error as? APIError { return error }
+        return APIError.requestFailed
+      }
+      .eraseToAnyPublisher()
   }
 }
