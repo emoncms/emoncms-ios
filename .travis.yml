@@ -4,7 +4,7 @@ os: osx
 before_install:
   - gem install xcpretty-travis-formatter
 script:
-  - sh scripts/ci.sh
+  - sh scripts/travis-ci.sh
 after_success:
   - bash <(curl -s https://codecov.io/bash) -J '^EmonCMSiOS$'
 env:
