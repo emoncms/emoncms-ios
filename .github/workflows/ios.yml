@@ -25,7 +25,7 @@ jobs:
           xcodebuild build-for-testing -scheme "$scheme" -project "$project" -destination "platform=$platform,name=$device" -enableCodeCoverage YES
       - name: Test
         env:
-          scheme: ${{ 'default' }}
+          scheme: ${{ 'EmonCMSiOS' }}
           platform: ${{ 'iOS Simulator' }}
           project: ${{ 'EmonCMSiOS.xcodeproj' }}
         run: |
