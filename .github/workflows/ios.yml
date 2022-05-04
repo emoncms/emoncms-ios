@@ -32,7 +32,12 @@ jobs:
           # xcrun xctrace returns via stderr, not the expected stdout (see https://developer.apple.com/forums/thread/663959)
           device=`xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+' | head -1 | awk '{$1=$1;print}' | sed -e "s/ Simulator$//"`
           xcodebuild test-without-building -scheme "$scheme" -project "$project" -destination "platform=$platform,name=$device" -enableCodeCoverage YES
+      - uses: sersoft-gmbh/swift-coverage-action@v2
+        id: coverage-files
+        with:
+          target-name-filter: '^EmonCMSiOS$'
       - name: Upload code coverage
         uses: codecov/codecov-action@v3
         with:
           verbose: true
+          files: ${{ join(fromJSON(steps.coverage-files.outputs.files), ',') }}
