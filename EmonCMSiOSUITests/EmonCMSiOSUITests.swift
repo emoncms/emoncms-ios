@@ -381,6 +381,20 @@ class EmonCMSiOSUITests: QuickSpec {
         expect(accountTable.cells.count).to(equal(0))
       }
 
+      it("should not logout if cancelled") {
+        loginFromAppStartWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+
+        let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
+        expect(settingsTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        settingsTable.staticTexts["Logout"].tap()
+        app.sheets.buttons["Cancel"].tap()
+
+        let accountTable = app.tables[AccessibilityIdentifiers.Lists.Account]
+        expect(accountTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(false))
+        expect(settingsTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+      }
+
       it("should switch account") {
         loginFromAppStartWithValidCredentials()
         app.tabBars.buttons["Settings"].tap()
@@ -453,6 +467,17 @@ class EmonCMSiOSUITests: QuickSpec {
         deleteUse.tap()
         app.tables.buttons["Delete"].tap()
         expect(todayWidgetFeedTable.cells.count).to(equal(2))
+      }
+
+      it("should send feedback") {
+        loginFromAppStartWithValidCredentials()
+        app.tabBars.buttons["Settings"].tap()
+
+        let settingsTable = app.tables[AccessibilityIdentifiers.Settings]
+        expect(settingsTable.waitForExistence(timeout: EmonCMSiOSUITests.WaitTimeout)).to(equal(true))
+        settingsTable.staticTexts["Send Feedback"].tap()
+
+        expect(app.alerts["Can't send mail"].exists).to(equal(true))
       }
     }
   }
