@@ -46,6 +46,10 @@ final class NSURLSessionHTTPRequestProviderTests: QuickSpec {
     }
 
     describe("NSURLSessionHTTPRequestProvider") {
+      it("should create successfully") {
+        _ = NSURLSessionHTTPRequestProvider()
+      }
+
       it("should return data") {
         let url = URL(string: "http://localhost")!
         let data = Data(base64Encoded: "ZW1vbmNtcyByb2NrcyE=")!

@@ -23,6 +23,7 @@ class EmonCMSAPITests: EmonCMSTestCase {
     func call<T>(
       api: AnyPublisher<T, EmonCMSAPI.APIError>,
       subscriber: TestableSubscriber<T, EmonCMSAPI.APIError>,
+      allowFail: Bool = false,
       expect: @escaping () -> Void)
     {
       let sharedResult = api.share(replay: 1)
@@ -34,11 +35,13 @@ class EmonCMSAPITests: EmonCMSTestCase {
         _ = sharedResult
           .sink(
             receiveCompletion: { completion in
-              switch completion {
-              case .finished:
-                break
-              case .failure(let error):
-                fail(error.localizedDescription)
+              if !allowFail {
+                switch completion {
+                case .finished:
+                  break
+                case .failure(let error):
+                  fail(error.localizedDescription)
+                }
               }
               expect()
               done()
@@ -69,6 +72,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
 
         scheduler.resume()
       }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber(String.self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.version(accountCredentials)
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
+        }
+
+        scheduler.resume()
+      }
     }
 
     describe("feedList") {
@@ -86,6 +105,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
 
         scheduler.resume()
       }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber([Feed].self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedList(accountCredentials)
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
+        }
+
+        scheduler.resume()
+      }
     }
 
     describe("feedFields") {
@@ -98,6 +133,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
           let results = subscriber.recordedOutput
           expect(results.count).to(equal(3))
           expect(results[1].1.value).notTo(beNil())
+        }
+
+        scheduler.resume()
+      }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber(Feed.self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedFields(accountCredentials, id: "1")
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
         }
 
         scheduler.resume()
@@ -119,6 +170,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
 
         scheduler.resume()
       }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber(String.self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedField(accountCredentials, id: "1", fieldName: "name")
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
+        }
+
+        scheduler.resume()
+      }
     }
 
     describe("feedData") {
@@ -136,6 +203,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
 
         scheduler.resume()
       }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedData(accountCredentials, id: "1", at: Date() - 100, until: Date(), interval: 10)
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
+        }
+
+        scheduler.resume()
+      }
     }
 
     describe("feedDataDaily") {
@@ -149,6 +232,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
           expect(results.count).to(equal(3))
           expect(results[1].1.value).notTo(beNil())
           expect(results[1].1.value!.count).to(equal(3))
+        }
+
+        scheduler.resume()
+      }
+
+      it("should fail properly") {
+        let subscriber = scheduler.createTestableSubscriber([DataPoint<Double>].self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedDataDaily(accountCredentials, id: "1", at: Date() - 100, until: Date())
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
         }
 
         scheduler.resume()
@@ -171,6 +270,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
         scheduler.resume()
       }
 
+      it("should fail properly for single feed") {
+        let subscriber = scheduler.createTestableSubscriber(Double.self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedValue(accountCredentials, id: "1")
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
+        }
+
+        scheduler.resume()
+      }
+
       it("should fetch the value for the feeds") {
         let subscriber = scheduler.createTestableSubscriber([String: Double].self, EmonCMSAPI.APIError.self)
 
@@ -182,6 +297,22 @@ class EmonCMSAPITests: EmonCMSTestCase {
           expect(results[1].1.value).notTo(beNil())
           expect(results[1].1.value!.count).to(equal(3))
           expect(results[1].1.value!).to(equal(["1": 100, "2": 200, "3": 300]))
+        }
+
+        scheduler.resume()
+      }
+
+      it("should fail properly for multiple feeds") {
+        let subscriber = scheduler.createTestableSubscriber([String: Double].self, EmonCMSAPI.APIError.self)
+
+        requestProvider.nextError = .networkError
+        let result = api.feedValue(accountCredentials, ids: ["1", "2", "3"])
+
+        call(api: result, subscriber: subscriber, allowFail: true) {
+          let results = subscriber.recordedOutput
+          expect(results.count).to(equal(2))
+          expect(results[1].1.completion).notTo(beNil())
+          expect(results[1].1.completion!).to(equal(.failure(.requestFailed)))
         }
 
         scheduler.resume()
